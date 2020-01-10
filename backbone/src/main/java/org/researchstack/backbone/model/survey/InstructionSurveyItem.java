@@ -1,5 +1,7 @@
 package org.researchstack.backbone.model.survey;
 
+import android.widget.ImageView;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -17,6 +19,9 @@ public class InstructionSurveyItem extends SurveyItem<String> {
     @SerializedName("isImageAnimated")
     public boolean isImageAnimated;
 
+    @SerializedName("animationRepeatDuration")
+    public long animationRepeatDuration;
+
     @SerializedName("iconImage")
     public String iconImage;
 
@@ -29,6 +34,13 @@ public class InstructionSurveyItem extends SurveyItem<String> {
 
     @SerializedName("learnMoreHTMLContentURL")
     public String learnMoreHTMLContentURL;
+
+    /**
+     * Defaults to centerInside, but can be any scale type in the form of
+     * CENTER, CENTER_CROP, etc...
+     */
+    @SerializedName("scaleType")
+    public ImageView.ScaleType scaleType;
 
     /* Default constructor needed for serialization/deserialization of object */
     public InstructionSurveyItem() {

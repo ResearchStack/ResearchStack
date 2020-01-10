@@ -1,13 +1,14 @@
 package org.researchstack.backbone.step.active.recorder;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.MainThread;
+import android.support.v4.content.LocalBroadcastManager;
 
 import org.researchstack.backbone.result.Result;
 import org.researchstack.backbone.step.Step;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.UUID;
 
 /**
@@ -88,7 +89,7 @@ public abstract class Recorder {
         super();
     }
 
-    Recorder(String identifier, Step step, File outputDirectory) {
+    protected Recorder(String identifier, Step step, File outputDirectory) {
         super();
         setIdentifier(identifier);
         setStep(step);
@@ -187,6 +188,15 @@ public abstract class Recorder {
     protected void onRecorderFailed(Throwable throwable) {
         if (recorderListener != null) {
             recorderListener.onFail(this, throwable);
+        }
+    }
+
+    protected void sendBroadcast(Intent intent) {
+        if (recorderListener != null) {
+            Context context = recorderListener.getBroadcastContext();
+            if (context != null) {
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+            }
         }
     }
 

@@ -1,0 +1,5 @@
+{
+  "identifier": "email",
+  "type": "emailTextField",
+  "title": "Personal Email"
+}

@@ -48,7 +48,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Communicate w/ host
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    private StepCallbacks callbacks;
+    protected StepCallbacks callbacks;
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Child Views
@@ -275,9 +275,8 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
-                                        getStep(),
-                                        stepBody.getStepResult(false));
+                stepResult = stepBody.getStepResult(false);
+                callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, getStep(), stepResult);
             }
         }, 100);
     }

@@ -41,7 +41,7 @@ public class DataLogger {
             throw new IllegalStateException("Thread was started while another was running, " +
                     "check your application logic, because this is not allowed");
         }
-
+        
         dataLoggerWriterThread = new DataLoggerFileWriterThread(
                 file, fileHeader, fileFooter,
                 new DataWriteListener()
@@ -92,8 +92,7 @@ public class DataLogger {
     }
 
     private void dataLoggerFailed(Throwable throwable) {
-        LogExt.e(getClass(), "Data logger failed " +
-                throwable.getLocalizedMessage() + throwable.getStackTrace().toString());
+        LogExt.e(getClass(), "Data logger failed ", throwable);
         DataLoggerManager.getInstance().dataLoggerTaskFinished(DataLogger.this, throwable);
         dataWriteListener.onWriteError(throwable);
         dataLoggerWriterThread = null;

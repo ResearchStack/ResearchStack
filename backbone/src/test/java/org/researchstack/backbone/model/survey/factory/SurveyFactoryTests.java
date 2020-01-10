@@ -1,17 +1,15 @@
 package org.researchstack.backbone.model.survey.factory;
 
 import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
+import android.text.InputType;
 
 import com.google.gson.reflect.TypeToken;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -20,14 +18,18 @@ import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.answerformat.BooleanAnswerFormat;
 import org.researchstack.backbone.answerformat.ChoiceAnswerFormat;
 import org.researchstack.backbone.answerformat.EmailAnswerFormat;
+import org.researchstack.backbone.answerformat.IntegerAnswerFormat;
 import org.researchstack.backbone.answerformat.PasswordAnswerFormat;
 import org.researchstack.backbone.answerformat.TextAnswerFormat;
 import org.researchstack.backbone.model.ConsentDocument;
 import org.researchstack.backbone.model.ConsentSection;
 import org.researchstack.backbone.model.ProfileInfoOption;
+import org.researchstack.backbone.model.survey.IntegerRangeSurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItem;
 import org.researchstack.backbone.onboarding.MockResourceManager;
 import org.researchstack.backbone.onboarding.ReConsentInstructionStep;
+import org.researchstack.backbone.result.StepResult;
+import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.ConsentDocumentStep;
 import org.researchstack.backbone.step.ConsentReviewSubstepListStep;
 import org.researchstack.backbone.step.ConsentSharingStep;
@@ -35,6 +37,8 @@ import org.researchstack.backbone.step.ConsentSignatureStep;
 import org.researchstack.backbone.step.EmailVerificationStep;
 import org.researchstack.backbone.step.InstructionStep;
 import org.researchstack.backbone.step.LoginStep;
+import org.researchstack.backbone.step.NavigationFormStep;
+import org.researchstack.backbone.step.NavigationSubtaskStep;
 import org.researchstack.backbone.step.PasscodeStep;
 import org.researchstack.backbone.step.PermissionsStep;
 import org.researchstack.backbone.step.ProfileStep;
@@ -42,18 +46,14 @@ import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.RegistrationStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.SubtaskStep;
-import org.researchstack.backbone.step.ToggleFormStep;
-import org.researchstack.backbone.step.NavigationSubtaskStep;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.lang.reflect.Type;
+import java.util.Collections;
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 
 /**
@@ -83,6 +83,10 @@ public class SurveyFactoryTests {
         mockManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "survey_factory_consent");
         mockManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "consentdocument");
         mockManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "custom_consentdocument");
+        mockManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "survey_item_textfield");
+        mockManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "survey_item_compound");
+        mockManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "survey_item_email");
+        mockManager.addReference(ResourcePathManager.Resource.TYPE_JSON, "survey_item_integerrange");
 
         mockFingerprintManager = Mockito.mock(FingerprintManagerCompat.class);
         Mockito.when(mockFingerprintManager.isHardwareDetected()).thenReturn(true);
@@ -108,8 +112,8 @@ public class SurveyFactoryTests {
         assertTrue(stepList.size() > 0);
         assertEquals(3, stepList.size());
 
-        assertTrue(stepList.get(0) instanceof ToggleFormStep);
-        ToggleFormStep quizStep = (ToggleFormStep) stepList.get(0);
+        assertTrue(stepList.get(0) instanceof NavigationFormStep);
+        NavigationFormStep quizStep = (NavigationFormStep) stepList.get(0);
         assertEquals("eligibleInstruction", quizStep.getSkipToStepIdentifier());
         assertTrue(quizStep.getSkipIfPassed());
 
@@ -147,7 +151,7 @@ public class SurveyFactoryTests {
 
         assertNotNull(stepList);
         assertTrue(stepList.size() > 0);
-        assertEquals(6, stepList.size());
+        assertEquals(7, stepList.size());
 
         assertTrue(stepList.get(0) instanceof LoginStep);
         assertEquals("login", stepList.get(0).getIdentifier());
@@ -186,6 +190,20 @@ public class SurveyFactoryTests {
 
         assertTrue(stepList.get(5) instanceof InstructionStep);
         assertEquals("onboardingCompletion", stepList.get(5).getIdentifier());
+
+        // This doesn't usually happen *after* onboarding completion (and never with login w/ email
+        // and password), but for the sake of this test, we're adding it here.
+        assertTrue(stepList.get(6) instanceof LoginStep);
+        assertEquals("externalID", stepList.get(6).getIdentifier());
+        LoginStep externalIdLoginStep = (LoginStep) stepList.get(6);
+        assertEquals(1, externalIdLoginStep.getProfileInfoOptions().size());
+        assertEquals(ProfileInfoOption.EXTERNAL_ID, externalIdLoginStep.getProfileInfoOptions()
+                .get(0));
+        assertEquals(1, externalIdLoginStep.getFormSteps().size());
+        assertTrue(externalIdLoginStep.getFormSteps().get(0).getAnswerFormat()
+                instanceof TextAnswerFormat);
+        assertEquals(SurveyFactory.EXTERNAL_ID_MAX_LENGTH, ((TextAnswerFormat) externalIdLoginStep
+                .getFormSteps().get(0).getAnswerFormat()).getMaximumLength());
     }
 
     @Test
@@ -271,5 +289,97 @@ public class SurveyFactoryTests {
 
         assertEquals(ConsentSection.Type.Custom, consentDoc.getSections().get(3).getType());
         assertEquals("custom_step_identifier2", consentDoc.getSections().get(3).getTypeIdentifier());
+    }
+
+    @Test
+    public void testSurveyItem_textfield() {
+        String textfieldJson = getJsonResource("survey_item_textfield");
+        SurveyItem surveyItem = helper.gson.fromJson(textfieldJson, SurveyItem.class);
+        SurveyFactory factory = new SurveyFactory();
+        List<Step> stepList = factory.createSurveySteps(helper.mockContext, Collections.singletonList(surveyItem));
+
+        assertNotNull(stepList);
+        assertEquals(1, stepList.size());
+
+        assertTrue(stepList.get(0) instanceof QuestionStep);
+        QuestionStep step = (QuestionStep)stepList.get(0);
+        assertEquals("birthdate_month", step.getIdentifier());
+        assertEquals("Month", step.getTitle());
+
+        assertTrue(step.getAnswerFormat() instanceof TextAnswerFormat);
+        TextAnswerFormat format = (TextAnswerFormat)step.getAnswerFormat();
+        assertEquals("^[0-9]*$", format.validationRegex());
+        assertEquals(3, format.getMaximumLength());
+        assertEquals(InputType.TYPE_CLASS_NUMBER, format.getInputType());
+    }
+
+    @Test
+    public void testSurveyItem_integerRange() {
+        String textfieldJson = getJsonResource("survey_item_integerrange");
+        SurveyItem surveyItem = helper.gson.fromJson(textfieldJson, SurveyItem.class);
+        SurveyFactory factory = new SurveyFactory();
+        List<Step> stepList = factory.createSurveySteps(helper.mockContext, Collections.singletonList(surveyItem));
+
+        assertNotNull(stepList);
+        assertEquals(1, stepList.size());
+
+        assertTrue(stepList.get(0) instanceof QuestionStep);
+        QuestionStep step = (QuestionStep)stepList.get(0);
+        assertEquals("weight", step.getIdentifier());
+
+        assertTrue(step.getAnswerFormat() instanceof IntegerAnswerFormat);
+        IntegerAnswerFormat format = (IntegerAnswerFormat)step.getAnswerFormat();
+        assertEquals(50, format.getMinValue());
+        assertEquals(500, format.getMaxValue());
+        assertEquals(3, format.getMaximumLength());
+        assertEquals(InputType.TYPE_CLASS_NUMBER, format.getInputType());
+    }
+
+    @Test
+    public void testSurveyItem_form() {
+        String json = getJsonResource("survey_item_compound");
+        SurveyItem surveyItem = helper.gson.fromJson(json, SurveyItem.class);
+        SurveyFactory factory = new SurveyFactory();
+        List<Step> stepList = factory.createSurveySteps(helper.mockContext, Collections.singletonList(surveyItem));
+
+        assertNotNull(stepList);
+        assertEquals(1, stepList.size());
+
+        String expectedStepId = "walking_q1";
+        assertTrue(stepList.get(0) instanceof NavigationFormStep);
+        NavigationFormStep step = (NavigationFormStep)stepList.get(0);
+        assertEquals(expectedStepId, step.getIdentifier());
+        assertEquals(1, step.getFormSteps().size());
+        assertTrue(step.getFormSteps().get(0).getAnswerFormat() instanceof IntegerAnswerFormat);
+
+        assertEquals("No walking", step.getSkipTitle());
+        assertEquals("sitting_instruction", step.getSkipToStepIdentifier());
+
+        TaskResult taskResult = new TaskResult("task_id");
+        assertEquals("sitting_instruction", step.nextStepIdentifier(taskResult, null));
+        StepResult<String> stepResult = new StepResult<>(new Step(expectedStepId));
+        taskResult.getResults().put(expectedStepId, stepResult);
+        assertEquals("sitting_instruction", step.nextStepIdentifier(taskResult, null));
+        stepResult.setResult("AnyResult");
+        taskResult.getResults().put(expectedStepId, stepResult);
+        assertNull(step.nextStepIdentifier(taskResult, null));
+    }
+
+    @Test
+    public void testSurveyItemEmail() {
+        String json = getJsonResource("survey_item_email");
+        SurveyItem surveyItem = helper.gson.fromJson(json, SurveyItem.class);
+        SurveyFactory factory = new SurveyFactory();
+        List<Step> stepList = factory.createSurveySteps(helper.mockContext, Collections.singletonList(surveyItem));
+
+        assertNotNull(stepList);
+        assertEquals(1, stepList.size());
+
+        String expectedStepId = "email";
+        assertTrue(stepList.get(0) instanceof QuestionStep);
+        QuestionStep step = (QuestionStep)stepList.get(0);
+        assertEquals(expectedStepId, step.getIdentifier());
+        assertTrue(step.getAnswerFormat() instanceof EmailAnswerFormat);
+        assertEquals("Personal Email", step.getTitle());
     }
 }

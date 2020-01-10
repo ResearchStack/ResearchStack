@@ -20,10 +20,11 @@ public class SurveyItem<T extends Serializable> implements Serializable {
     public String identifier;
 
     public static final String TYPE_GSON = "type";
-    @SerializedName(TYPE_GSON)
+    public static final String TYPE_GSON_2 = "dataType";
+    @SerializedName(value=TYPE_GSON, alternate={TYPE_GSON_2})
     public SurveyItemType type;
 
-    @SerializedName("title")
+    @SerializedName(value="title", alternate={"prompt"})
     public String title;
 
     @SerializedName("text")
@@ -32,7 +33,7 @@ public class SurveyItem<T extends Serializable> implements Serializable {
     @SerializedName("footnote")
     public String footnote;
 
-    @SerializedName("items")
+    @SerializedName(value="items", alternate={"choices", "inputFields"})
     public List<T> items;
 
     /**
@@ -47,7 +48,7 @@ public class SurveyItem<T extends Serializable> implements Serializable {
     private String customSurveyItemType;
 
     /* Default constructor needed for serilization/deserialization of object */
-    SurveyItem() {
+    protected SurveyItem() {
         super();
     }
 

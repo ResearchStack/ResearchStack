@@ -21,6 +21,7 @@ import org.researchstack.backbone.step.ConsentSharingStep;
 import org.researchstack.backbone.step.ConsentSignatureStep;
 import org.researchstack.backbone.step.ConsentSubtaskStep;
 import org.researchstack.backbone.step.ConsentVisualStep;
+import org.researchstack.backbone.step.ProfileStep;
 import org.researchstack.backbone.step.RegistrationStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.SubtaskStep;
@@ -35,6 +36,7 @@ import java.util.List;
 
 public class ConsentDocumentFactory extends SurveyFactory {
 
+    public static final String CONSENT_SUBTASK_ID = "consent";
     public static final String CONSENT_SIGNATURE_IDENTIFIER = "consentSignature";
     public static final String CONSENT_REVIEW_PROFILE_IDENTIFIER = "consentReviewProfile";
     public static final String CONSENT_SHARING_IDENTIFIER = "consentSharingOptions";
@@ -165,7 +167,9 @@ public class ConsentDocumentFactory extends SurveyFactory {
             String oldIdentifier = new String(item.identifier);
             item.identifier = CONSENT_REVIEW_PROFILE_IDENTIFIER;
             // This will create a profile step with name, and birthday, or w/e is in JSON
-            stepList.add(super.createProfileStep(context, item));
+            ProfileStep profileStep = super.createProfileStep(context, item);
+            profileStep.setOptional(false);
+            stepList.add(profileStep);
             item.identifier = oldIdentifier;
         }
 
@@ -243,21 +247,36 @@ public class ConsentDocumentFactory extends SurveyFactory {
     public SubtaskStep createConsentVisualSteps(SurveyItem item, List<ConsentSection> sections) {
         List<Step> stepList = new ArrayList<>();
         int customIdx = 1;
-        for (ConsentSection section : consentDocument.getSections()) {
+        int sectionIdx = 0;
+        for (ConsentSection section : sections) {
             // OnlyInDocument is used to create the ConsentDocumentStep later on
             if (section.getType() != ConsentSection.Type.OnlyInDocument) {
                 ConsentVisualStep step;
                 if (section.getType() == ConsentSection.Type.Custom) {
-                    step = new ConsentVisualStep(section.getTypeIdentifier() + customIdx);
+                    step = createVisualStep(section.getTypeIdentifier() + customIdx,
+                            sectionIdx, sections.size());
                     customIdx++;
                 } else {
-                    step = new ConsentVisualStep(section.getTypeIdentifier());
+                    step = createVisualStep(section.getTypeIdentifier()
+                            , sectionIdx, sections.size());
                 }
                 step.setSection(section);
                 stepList.add(step);
+                sectionIdx++;
             }
         }
         return new SubtaskStep(item.getTypeIdentifier(), stepList);
+    }
+
+    /**
+     * This can be overridden by sub-classes to easily provide a custom ConsentVisualStep
+     * @param identifier the step identifier
+     * @param sectionIndex the index of this particular section within the sectionCount
+     * @param sectionCount the total number of consent visual sections
+     * @return a ConsentVisualStep to be included in the visual consent SubtaskStep
+     */
+    protected ConsentVisualStep createVisualStep(String identifier, int sectionIndex, int sectionCount) {
+        return new ConsentVisualStep(identifier, sectionIndex, sectionCount);
     }
 
     /**

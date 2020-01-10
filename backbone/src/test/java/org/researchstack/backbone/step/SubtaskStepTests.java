@@ -75,14 +75,14 @@ public class SubtaskStepTests {
 
         Step step1 = navTask.getStepAfterStep(null, taskResult);
         assertNotNull(step1);
-        assertEquals(step1.getIdentifier(), "intruction");
+        assertEquals(step1.getIdentifier(), "instruction");
         Map<String, StepResult> resultMap = new LinkedHashMap<>();
         resultMap.put(step1.getIdentifier(), new StepResult(step1));
         taskResult.setResults(resultMap);
 
         Step step2 = navTask.getStepAfterStep(step1, taskResult);
         assertNotNull(step2);
-        assertEquals(step2.getIdentifier(), "Mutating Task.intruction");
+        assertEquals(step2.getIdentifier(), "Mutating Task.instruction");
         taskResult.getResults().put(step2.getIdentifier(), new StepResult(step2));
 
         Step step3 = navTask.getStepAfterStep(step2, taskResult);

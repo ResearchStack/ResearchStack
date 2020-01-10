@@ -33,6 +33,11 @@ public class OnboardingSection {
         super();
     }
 
+    public OnboardingSection(OnboardingSectionType type) {
+        super();
+        this.onboardingType = type;
+    }
+
     static final String ONBOARDING_TYPE_GSON = "onboardingType";
     @SerializedName(ONBOARDING_TYPE_GSON)
     OnboardingSectionType onboardingType;
@@ -51,7 +56,7 @@ public class OnboardingSection {
     // Isnt deserialized into a field, but is used in the deserialization process
     static final String ONBOARDING_RESOURCE_NAME_GSON = "resourceName";
 
-    transient SurveyFactory surveyFactory;
+    protected transient SurveyFactory surveyFactory;
     public SurveyFactory getDefaultOnboardingSurveyFactory(
             Context context,
             SurveyFactory.CustomStepCreator customStepCreator)

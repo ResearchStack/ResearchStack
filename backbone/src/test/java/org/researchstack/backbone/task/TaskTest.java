@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
@@ -26,7 +26,6 @@ public class TaskTest {
 
         Context mockContext = Mockito.mock(Context.class);
         Mockito.when(mockContext.getString(R.string.app_name)).thenReturn("title");
-        Mockito.when(mockContext.getString(0)).thenReturn("title");
 
         Step mockStepWithTitle = Mockito.mock(Step.class);
         Mockito.when(mockStepWithTitle.getStepTitle()).thenReturn(R.string.app_name);

@@ -12,7 +12,7 @@ public class SubstepListStep extends Step {
     List<Step> stepList;
 
     /* Default constructor needed for serilization/deserialization of object */
-    SubstepListStep() {
+    protected SubstepListStep() {
         super();
     }
 

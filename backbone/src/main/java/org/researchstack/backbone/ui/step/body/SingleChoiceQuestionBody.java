@@ -21,11 +21,11 @@ public class SingleChoiceQuestionBody<T> implements StepBody {
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Constructor Fields
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-    private QuestionStep step;
-    private StepResult<T> result;
-    private ChoiceAnswerFormat format;
-    private Choice<T>[] choices;
-    private T currentSelected;
+    protected QuestionStep step;
+    protected StepResult<T> result;
+    protected ChoiceAnswerFormat format;
+    protected Choice<T>[] choices;
+    protected T currentSelected;
 
     public SingleChoiceQuestionBody(Step step, StepResult result) {
         this.step = (QuestionStep) step;

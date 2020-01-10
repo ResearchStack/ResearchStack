@@ -110,4 +110,14 @@ public class Result implements Serializable {
         copy.identifier = newIdentifier;
         return copy;
     }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("Result{");
+        sb.append("identifier='").append(identifier).append('\'');
+        sb.append(", startDate=").append(startDate);
+        sb.append(", endDate=").append(endDate);
+        sb.append('}');
+        return sb.toString();
+    }
 }

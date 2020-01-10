@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -14,8 +13,8 @@ import org.researchstack.backbone.ResourceManager;
 import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.model.survey.factory.SurveyFactoryHelper;
 import org.researchstack.backbone.step.InstructionStep;
+import org.researchstack.backbone.step.NavigationFormStep;
 import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.step.ToggleFormStep;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -177,8 +176,9 @@ public class OnboardingManagerTest {
             ShouldIncludeData includeData = findType(sectionType, shouldIncludeData);
             if (includeData != null) {  // null for CUSTOM
                 for (OnboardingTaskType taskType : OnboardingTaskType.values()) {
+                    OnboardingSection section = new OnboardingSection(sectionType);
                     boolean expectedShouldInclude = includeData.taskTypesIncluded.contains(taskType);
-                    boolean actualShouldInclude = mMockOnboardingManager.shouldInclude(null, sectionType, taskType);
+                    boolean actualShouldInclude = mMockOnboardingManager.shouldInclude(null, section, taskType);
                     assertEquals(expectedShouldInclude, actualShouldInclude);
                 }
             }
@@ -193,7 +193,7 @@ public class OnboardingManagerTest {
         // Check that if the passcode has been set that it is not included
         for (OnboardingTaskType taskType : OnboardingTaskType.values()) {
             boolean shouldInclude = mMockOnboardingManager.shouldInclude(
-                    null, OnboardingSectionType.PASSCODE, taskType);
+                    null, new OnboardingSection(OnboardingSectionType.PASSCODE), taskType);
             assertFalse(shouldInclude);
         }
     }
@@ -256,8 +256,9 @@ public class OnboardingManagerTest {
             ShouldIncludeData includeData = findType(sectionType, shouldIncludeData);
             if (includeData != null) { // null for custom
                 for (OnboardingTaskType taskType : taskTypes) {
+                    OnboardingSection section = new OnboardingSection(sectionType);
                     boolean expectedShouldInclude = includeData.taskTypesIncluded.contains(taskType);
-                    boolean actualShouldInclude = mMockOnboardingManager.shouldInclude(null, sectionType, taskType);
+                    boolean actualShouldInclude = mMockOnboardingManager.shouldInclude(null, section, taskType);
                     assertEquals(expectedShouldInclude, actualShouldInclude);
                 }
             }
@@ -300,7 +301,7 @@ public class OnboardingManagerTest {
     public void testEligibilitySection() {
         List<Step> steps = checkOnboardingSteps(OnboardingSectionType.ELIGIBILITY, OnboardingTaskType.REGISTRATION);
         List<Step> expectedSteps = new ArrayList<>();
-        expectedSteps.add(new ToggleFormStep("inclusionCriteria", null, null));
+        expectedSteps.add(new NavigationFormStep("inclusionCriteria", null, null));
         expectedSteps.add(new InstructionStep("ineligibleInstruction", null, "Unfortunately, you are ineligible to join this study."));
         expectedSteps.add(new InstructionStep("eligibleInstruction", null, "You are eligible to join the study."));
 

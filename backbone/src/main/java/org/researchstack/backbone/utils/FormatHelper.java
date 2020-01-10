@@ -25,6 +25,10 @@ public class FormatHelper {
     public static final SimpleDateFormat SIMPLE_FORMAT_DATE = new SimpleDateFormat(
             DATE_FORMAT_SIMPLE_DATE,
             Locale.getDefault());
+    public static final String TIME_FORMAT_SIMPLE_DATE = "HH:mm:ss.sss";
+    public static final SimpleDateFormat SIMPLE_FORMAT_TIME = new SimpleDateFormat(
+            TIME_FORMAT_SIMPLE_DATE,
+            Locale.getDefault());
     private FormatHelper() {
     }
 

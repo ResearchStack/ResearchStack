@@ -4,10 +4,14 @@ import android.util.Log;
 
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
+import org.researchstack.backbone.step.FormStep;
 import org.researchstack.backbone.step.NavigationExpectedAnswerQuestionStep;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
+import org.researchstack.backbone.step.SubtaskStep;
+import org.researchstack.backbone.task.OrderedTask;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -63,6 +67,31 @@ public class StepHelper {
     }
 
     /**
+     * @param formStep the form step containing quesiton steps
+     * @param result the result of the task so far
+     * @return true if form step was skipped optionally (all results are null), false otherwise
+     */
+    public static boolean wasFormStepSkipped(FormStep formStep, TaskResult result) {
+
+        List<String> stepIdentifiersToCheck = new ArrayList<>();
+        stepIdentifiersToCheck.add(formStep.getIdentifier());
+        if (formStep.getFormSteps() != null) {
+            for (QuestionStep step: formStep.getFormSteps()) {
+                stepIdentifiersToCheck.add(step.getIdentifier());
+            }
+        }
+
+        for (String identifier: stepIdentifiersToCheck) {
+            StepResult stepResult = StepResultHelper.findStepResult(result, identifier);
+            if (stepResult != null && stepResult.getResult() != null) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * @param expectedAnswer expected answer of step
      * @param stepIdentifier the step's identifier
      * @param result task results
@@ -109,6 +138,18 @@ public class StepHelper {
         for (Step step : stepList) {
             if (stepId.equals(step.getIdentifier())) {
                 return step;
+            }
+            // A step can contain a task itself, so check for this as well
+            if (step instanceof SubtaskStep) {
+                SubtaskStep subtaskStep = (SubtaskStep)step;
+                if (subtaskStep.getSubtask() != null &&
+                        subtaskStep.getSubtask() instanceof OrderedTask) {
+                    OrderedTask task = (OrderedTask)subtaskStep.getSubtask();
+                    Step foundSubtaskStep = getStepWithIdentifier(task.getSteps(), stepId);
+                    if (foundSubtaskStep != null) {
+                        return foundSubtaskStep;
+                    }
+                }
             }
         }
         return null;

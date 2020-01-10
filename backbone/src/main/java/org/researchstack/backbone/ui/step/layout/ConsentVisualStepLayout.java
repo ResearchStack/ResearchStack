@@ -17,7 +17,6 @@ import com.jakewharton.rxbinding.view.RxView;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.model.ConsentSection;
 import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.ConsentVisualStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.ViewWebDocumentActivity;
@@ -29,8 +28,8 @@ import org.researchstack.backbone.utils.TextUtils;
 
 public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements StepLayout {
 
-    private StepCallbacks callbacks;
-    private ConsentVisualStep step;
+    protected StepCallbacks callbacks;
+    protected ConsentVisualStep step;
 
     public ConsentVisualStepLayout(Context context) {
         super(context);
@@ -71,7 +70,7 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
         return R.layout.rsb_step_layout_consent_visual;
     }
 
-    private void initializeStep() {
+    protected void initializeStep() {
         ConsentSection data = step.getSection();
 
         // Set Image
@@ -81,14 +80,8 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
         int accentColor = a.getColor(0, 0);
         a.recycle();
 
-        ImageView imageView = (ImageView) findViewById(R.id.image);
-
-        String imageName = !TextUtils.isEmpty(data.getCustomImageName())
-                ? data.getCustomImageName()
-                : data.getType().getImageName();
-
-        int imageResId = ResUtils.getDrawableResourceId(getContext(), imageName);
-
+        ImageView imageView = findViewById(R.id.image);
+        int imageResId = getImageRes();
         if (imageResId != 0) {
             Drawable drawable = getResources().getDrawable(imageResId);
             drawable = DrawableCompat.wrap(drawable);
@@ -110,8 +103,7 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
         summaryView.setText(Html.fromHtml(data.getSummary()));
 
         // Set more info
-        TextView moreInfoView = (TextView) findViewById(R.id.more_info);
-
+        TextView moreInfoView = findViewById(R.id.more_info);
         if (!TextUtils.isEmpty(data.getHtmlContent())) {
             if (!TextUtils.isEmpty(data.getCustomLearnMoreButtonTitle())) {
                 moreInfoView.setText(data.getCustomLearnMoreButtonTitle());
@@ -120,10 +112,7 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
             }
 
             RxView.clicks(moreInfoView).subscribe(v -> {
-                String webTitle = getResources().getString(R.string.rsb_consent_section_more_info);
-                Intent webDoc = ViewWebDocumentActivity.newIntentForContent(getContext(), webTitle,
-                        TextUtils.isEmpty(data.getContent()) ? data.getHtmlContent() : data.getContent());
-                getContext().startActivity(webDoc);
+                moreInfoClicked();
             });
         } else {
             moreInfoView.setVisibility(View.GONE);
@@ -136,9 +125,53 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
             nextButtonTitle = step.getNextButtonString();
         }
         submitBar.setPositiveTitle(nextButtonTitle);
-        submitBar.setPositiveAction(v -> callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
-                step,
-                null));
+        submitBar.setPositiveAction(v -> nextButtonClicked());
         submitBar.getNegativeActionView().setVisibility(View.GONE);
+    }
+
+    protected void nextButtonClicked() {
+        callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, null);
+    }
+
+    protected void moreInfoClicked() {
+        ConsentSection data = step.getSection();
+        String webTitle = getResources().getString(R.string.rsb_consent_section_more_info);
+        Intent webDoc = ViewWebDocumentActivity.newIntentForContent(getContext(), webTitle,
+                TextUtils.isEmpty(data.getContent()) ? data.getHtmlContent() : data.getContent());
+        getContext().startActivity(webDoc);
+    }
+
+    protected int getImageRes() {
+        ConsentSection data = step.getSection();
+        String imageName = !TextUtils.isEmpty(data.getCustomImageName())
+                ? data.getCustomImageName()
+                : data.getType().getImageName();
+
+        return ResUtils.getDrawableResourceId(getContext(), imageName);
+    }
+
+    protected String getTitle() {
+        ConsentSection data = step.getSection();
+        return TextUtils.isEmpty(data.getTitle()) ? getResources().getString(data.getType()
+                .getTitleResId()) : data.getTitle();
+    }
+
+    protected String getSummary() {
+        ConsentSection data = step.getSection();
+        return data.getSummary();
+    }
+
+    /**
+     * @return The index of the section within all the visual consent sections
+     */
+    public int getSectionIndex() {
+        return step.getSectionIndex();
+    }
+
+    /**
+     * @return The total count of the visual consent sections
+     */
+    public int getSectionCount() {
+        return step.getSectionCount();
     }
 }

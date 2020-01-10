@@ -9,6 +9,7 @@ import android.text.InputType;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
@@ -17,6 +18,27 @@ import java.lang.reflect.Constructor;
 public class ViewUtils {
 
     private ViewUtils() {
+    }
+
+    /**
+     * @param parent the view to be search within
+     * @return the first EditText that is the parent, or is within the parent
+     */
+    public static EditText findFirstEditText(View parent) {
+        if (parent instanceof EditText) {
+            return (EditText)parent;
+        }
+        if (!(parent instanceof ViewGroup)) {
+            return null;
+        }
+        ViewGroup parentViewGroup = (ViewGroup)parent;
+        for (int i = 0; i < parentViewGroup.getChildCount(); i++) {
+            EditText editText = findFirstEditText(parentViewGroup.getChildAt(i));
+            if (editText != null) {
+                return editText;
+            }
+        }
+        return null;
     }
 
     public static InputFilter[] addFilter(InputFilter[] filters, InputFilter filter) {

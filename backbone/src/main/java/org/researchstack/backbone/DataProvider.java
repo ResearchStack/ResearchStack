@@ -2,6 +2,7 @@ package org.researchstack.backbone;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import org.researchstack.backbone.model.ConsentSignatureBody;
 import org.researchstack.backbone.model.SchedulesAndTasksModel;
@@ -11,6 +12,7 @@ import org.researchstack.backbone.storage.file.FileAccess;
 import org.researchstack.backbone.task.Task;
 
 import rx.Observable;
+import rx.Single;
 
 /**
  * Class used to as a buffer between the network layer and UI layer. The implementation allows the
@@ -78,13 +80,62 @@ public abstract class DataProvider {
     /**
      * Called to sign the user in to the backend service
      *
+     * @param context  android context
      * @param username the user's username
      * @param password the user's password
-     * @param context android context
      * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
      * returning true if signIn was successful
      */
-    public abstract Observable<DataResponse> signIn(Context context, String username, String password);
+    public abstract Observable<DataResponse> signIn(Context context, String username, String
+            password);
+
+    /**
+     * Request for a link to sign in user
+     *
+     * @param username the user's username
+     * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
+     * returning true if request for sign in link was successful
+     */
+    public Observable<DataResponse> requestSignInLink(String username) {
+        return Observable.just(new DataResponse(false, "Not implemented"));
+    }
+
+    /**
+     * Request for an SMS for the user to login or sign up
+     *
+     * @param regionCode the user's region code
+     * @param phoneNumber the user's phone number
+     * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
+     * returning true if request for phone sign in was successful
+     */
+    public Observable<DataResponse> requestPhoneSignIn(String regionCode, String phoneNumber) {
+        return Observable.just(new DataResponse(false, "Not implemented"));
+    }
+
+
+    /**
+     * Sign in with email and token. This is used in conjunction with requestSignInLink. The
+     * link should be intercepted by the app and the sign in token extracted.
+     *
+     * @param username the user's username
+     * @param token sign in token
+     * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
+     * returning true if request for sign in was successful
+     */
+    public Observable<DataResponse> signInWithEmailAndToken(String username, String token) {
+        return Observable.just(new DataResponse(false, "Not implemented"));
+    }
+
+    /**
+     * Called to sign the user in using the user's external ID.
+     *
+     * @param context    android context
+     * @param externalId the user's external ID
+     * @return Observable of the result of the method, with {@link DataResponse#isSuccess()}
+     * returning true if signIn was successful
+     */
+    public abstract Observable<DataResponse> signInWithExternalId(Context context, String
+            externalId);
 
     /**
      * Sign out the user.  This will possibly involve a call to the server,
@@ -141,10 +192,11 @@ public abstract class DataProvider {
      *
      * @param context android context
      * @return true if user is currently consented
+     * @deprecated use {@link #isConsented()} instead
      */
-    @Deprecated // isConsented() no params instead
+    @Deprecated
     public boolean isConsented(Context context) {
-        return false;
+        return isConsented();
     }
 
     /**
@@ -169,10 +221,11 @@ public abstract class DataProvider {
      * object and filling up the ConsentSignature and then calling the method below this
      * with the signature parameter
      *
-     * @param context android context
+     * @param context       android context
      * @param consentResult the TaskResult map containing hard-coded key/value data
+     * @deprecated use {@link #uploadConsent(Context, ConsentSignatureBody)} instead
      */
-    @Deprecated // use uploadConsent(Context context, ConsentSignatureBody signature) instead
+    @Deprecated
     public abstract void uploadConsent(Context context, TaskResult consentResult);
 
     /**
@@ -271,7 +324,8 @@ public abstract class DataProvider {
      * @param context android context
      * @return a SchedulesAndTasksModel object
      */
-    public abstract SchedulesAndTasksModel loadTasksAndSchedules(Context context);
+    @NonNull
+    public abstract Single<SchedulesAndTasksModel> loadTasksAndSchedules(Context context);
 
     /**
      * Loads a Task object
@@ -280,7 +334,8 @@ public abstract class DataProvider {
      * @param task    the TaskScheduleModel model
      * @return a Task object with defined sub-steps
      */
-    public abstract Task loadTask(Context context, SchedulesAndTasksModel.TaskScheduleModel task);
+    @NonNull
+    public abstract Single<Task> loadTask(Context context, SchedulesAndTasksModel.TaskScheduleModel task);
 
     /**
      * This initial task may include profile items such as height and weight that may need to be

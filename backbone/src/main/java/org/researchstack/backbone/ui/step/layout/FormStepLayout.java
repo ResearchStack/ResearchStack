@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Parcelable;
+import android.support.annotation.IdRes;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
@@ -26,10 +27,10 @@ import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.body.BodyAnswer;
 import org.researchstack.backbone.ui.step.body.StepBody;
-import org.researchstack.backbone.ui.step.body.TextQuestionBody;
 import org.researchstack.backbone.ui.views.FixedSubmitBarLayout;
 import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.StepResultHelper;
+import org.researchstack.backbone.utils.ViewUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -53,13 +54,15 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Communicate w/ host
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    private StepCallbacks callbacks;
+    protected StepCallbacks callbacks;
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Child Views
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    protected LinearLayout container;
+    protected ViewGroup container;
     protected LinearLayout stepBodyContainer;
+    protected TextView formTitleTextview;
+    protected TextView formSummaryTextview;
 
     public FormStepLayout(Context context)
     {
@@ -146,11 +149,15 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
      * Assign the correct flow for next button to the next EditText
      */
     protected void setupEditTextImeOptions() {
+        EditText firstEditText = null;
         EditText nextEditText = null;
         EditText previousEditText;
         for (FormStepData stepData : subQuestionStepData) {
             EditText editText = findEditText(stepData);
             if (editText != null) {
+                if (firstEditText == null) {
+                    firstEditText = editText;
+                }
                 previousEditText = nextEditText;
                 nextEditText = editText;
                 if (previousEditText != null) {
@@ -169,6 +176,27 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
         if (nextEditText != null) {
             nextEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);
         }
+        if (firstEditText != null && formStep.isAutoFocusFirstEditText()) {
+            focusKeyboard(firstEditText);
+        }
+    }
+
+    protected void focusKeyboard(EditText onEditText) {
+        if (onEditText == null) {
+            return;
+        }
+        onEditText.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+        }
+    }
+
+    protected void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(getRootView().getWindowToken(), 0);
+        }
     }
 
     /**
@@ -176,12 +204,8 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
      * @return EditText for this FormStepData if one exists and we can find it, null otherwise
      */
     protected EditText findEditText(FormStepData stepData) {
-        if (stepData.view != null) {
-            // R.id.value is the EditText from TextQuestionBody
-            View viewObj = stepData.view.get().findViewById(R.id.value);
-            if (viewObj instanceof EditText) {
-                return (EditText)viewObj;
-            }
+        if (stepData.view != null && stepData.view.get() != null) {
+            return ViewUtils.findFirstEditText(stepData.view.get());
         }
         return null;
     }
@@ -199,6 +223,9 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
      */
     @Override
     public boolean isBackEventConsumed() {
+        if (formStep.isAutoFocusFirstEditText()) {
+            hideKeyboard();
+        }
         updateAllQuestionSteps(false);
         callbacks.onSaveStep(StepCallbacks.ACTION_PREV, formStep, stepResult);
         return false;
@@ -215,14 +242,39 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
     }
 
     public void refreshSubmitBar() {
+        if (submitBar == null) {
+            return;  // custom layouts may not have a submit bar
+        }
+
         submitBar.setPositiveAction(v -> onNextClicked());
-        submitBar.setNegativeTitle(R.string.rsb_step_skip);
+
         submitBar.setNegativeAction(v -> onSkipClicked());
+        String skipTitle = skipButtonTitle();
+        submitBar.setNegativeTitle(skipTitle);
+        submitBar.getNegativeActionView().setVisibility(skipTitle == null ? View.GONE : View.VISIBLE);
+    }
+
+    /**
+     * @return null if skip should be hidden, a valid title otherwise
+     */
+    protected String skipButtonTitle() {
+        boolean isSkipVisible = true;
+        // Check and see if any of the question steps are not optional
         for (FormStepData stepData : subQuestionStepData) {
-            if(!stepData.step.isOptional())
-            {
-                submitBar.getNegativeActionView().setVisibility(View.GONE);
+            if (!stepData.step.isOptional()) {
+                isSkipVisible = false;
             }
+        }
+        if (isSkipVisible) {
+            isSkipVisible = formStep.isOptional();
+        }
+        if (!isSkipVisible) {
+            return null;
+        }
+        if (formStep.getSkipTitle() == null) {
+            return getString(R.string.rsb_step_skip);
+        } else {
+            return formStep.getSkipTitle();
         }
     }
 
@@ -233,12 +285,20 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
     {
         LogExt.i(getClass(), "initStepLayout()");
 
-        container = (LinearLayout) findViewById(R.id.rsb_form_step_content_container);
-        stepBodyContainer = (LinearLayout) findViewById(R.id.rsb_form_step_body_layout);
-        TextView title = (TextView) findViewById(R.id.rsb_form_step_title);
-        TextView summary = (TextView) findViewById(R.id.rsb_form_step_summary);
+        container = findViewById(R.id.rsb_form_step_content_container);
+        stepBodyContainer = findViewById(R.id.rsb_form_step_body_layout);
+        formTitleTextview = findViewById(getFormTitleId());
+        formSummaryTextview = findViewById(getFormTextId());
 
-        SurveyStepLayout.setupTitleLayout(getContext(), step, title, summary);
+        SurveyStepLayout.setupTitleLayout(getContext(), step, formTitleTextview, formSummaryTextview);
+    }
+
+    protected @IdRes int getFormTitleId() {
+        return R.id.rsb_form_step_title;
+    }
+
+    protected @IdRes int getFormTextId() {
+        return R.id.rsb_form_step_summary;
     }
 
     /**
@@ -300,10 +360,14 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
                 @Override
                 public void run() {
                     updateAllQuestionSteps(false);
-                    callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, formStep, stepResult);
+                    onComplete();
                 }
             }, 100);
         }
+    }
+
+    protected void onComplete() {
+        callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, formStep, stepResult);
     }
 
     /**
@@ -405,7 +469,7 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
         {
             updateAllQuestionSteps(true);
             // empty step result when skipped
-            callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, formStep, stepResult);
+            onComplete();
         }
     }
 
@@ -418,10 +482,16 @@ public class FormStepLayout extends FixedSubmitBarLayout implements StepLayout {
         return getResources().getString(stringResId);
     }
 
-    protected class FormStepData {
-        QuestionStep step;
-        StepBody stepBody;
-        WeakReference<View> view;
+    public class FormStepData {
+        protected QuestionStep step;
+        public QuestionStep getStep() {
+            return step;
+        }
+        protected StepBody stepBody;
+        public StepBody getStepBody() {
+            return stepBody;
+        }
+        public WeakReference<View> view;
 
         FormStepData(QuestionStep step, StepBody stepBody, View view) {
             this.step = step;

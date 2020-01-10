@@ -11,8 +11,17 @@ import org.researchstack.backbone.model.Choice;
  * always be true/false.
  */
 public class BooleanAnswerFormat extends ChoiceAnswerFormat {
+
+    public void setTextValues(String trueString, String falseString) {
+        setAnswerStyle(ChoiceAnswerStyle.SingleChoice);
+        setChoices(new Choice[] {
+                new Choice<>(trueString, true),
+                new Choice<>(falseString, false)
+        });
+    }
+
     /* Default constructor needed for serilization/deserialization of object */
-    BooleanAnswerFormat()
+    public BooleanAnswerFormat()
     {
         super();
     }
@@ -25,9 +34,8 @@ public class BooleanAnswerFormat extends ChoiceAnswerFormat {
      * @param falseString a string representing <code>false</code> ("No", "False", etc)
      */
     public BooleanAnswerFormat(String trueString, String falseString) {
-        super(ChoiceAnswerStyle.SingleChoice,
-                new Choice<>(trueString, true),
-                new Choice<>(falseString, false));
+        this();
+        setTextValues(trueString, falseString);
     }
 
     @Override

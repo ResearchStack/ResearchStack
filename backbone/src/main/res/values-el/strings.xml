@@ -391,7 +391,7 @@
     <string name="rsb_ax_graph_range_format">Εύρος από %1$s έως %2$s</string>
     <string name="rsb_AX_GRAPH_STACK_PREFIX">Η στοίβα αποτελείται από</string>
     <string name="rsb_AX_GRAPH_AND_SEPARATOR">και</string>
-    <string name="rsb_ax_graph_point">Σημείο: %1$s</string>
+    <string name="rsb_ax_graph_point">Σημείο: %1$d</string>
 
 
 </resources>

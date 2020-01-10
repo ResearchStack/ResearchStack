@@ -120,7 +120,6 @@ public class StepResult<T> extends Result {
         return answerFormat;
     }
 
-
     /**
      * Sets the {@link AnswerFormat} for this step result. May be useful when processing the
      * result.
@@ -129,5 +128,17 @@ public class StepResult<T> extends Result {
      */
     public void setAnswerFormat(AnswerFormat answerFormat) {
         this.answerFormat = answerFormat;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("StepResult{");
+        sb.append(", identifier='").append(identifier).append('\'');
+        sb.append(", answerFormat=").append(answerFormat);
+        sb.append(", startDate=").append(getStartDate());
+        sb.append(", endDate=").append(getIdentifier());
+        sb.append("results=").append(results);
+        sb.append('}');
+        return sb.toString();
     }
 }

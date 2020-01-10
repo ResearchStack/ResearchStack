@@ -250,7 +250,9 @@ public class StorageAccess {
      * trigger a reset, but will reset if the user has been outside of the app for too long.
      */
     public void logAccessTime() {
-        encryptionProvider.logAccessTime();
+        if (encryptionProvider != null) {
+            encryptionProvider.logAccessTime();
+        }
     }
 
     /**

@@ -10,16 +10,13 @@ import org.researchstack.backbone.DataResponse;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.model.ProfileInfoOption;
 import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.result.TaskResult;
-import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.backbone.utils.StepLayoutHelper;
 
+import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import rx.Observable;
 
@@ -50,10 +47,17 @@ public class LoginStepLayout extends ProfileStepLayout {
     {
         super.initialize(step, result);
 
-        // Add the Forgot Password UI below the login form
-        submitBar.getNegativeActionView().setVisibility(View.VISIBLE);
-        submitBar.setNegativeTitle(R.string.rsb_forgot_password);
-        submitBar.setNegativeAction(v -> forgotPasswordClicked());
+        FormStepData emailStepData = getFormStepData(ProfileInfoOption.EMAIL.getIdentifier());
+        if (emailStepData != null) {
+            // Add the Forgot Password UI below the login form
+            // Only add this if there is an Email step in the form. This might not be present if,
+            // for example, we are logging in using a method other than Email.
+            if (submitBar != null) {
+                submitBar.getNegativeActionView().setVisibility(View.VISIBLE);
+                submitBar.setNegativeTitle(R.string.rsb_forgot_password);
+                submitBar.setNegativeAction(v -> forgotPasswordClicked());
+            }
+        }
     }
 
     @Override
@@ -63,10 +67,28 @@ public class LoginStepLayout extends ProfileStepLayout {
             showLoadingDialog();
 
             final String email = getEmail();
+            boolean hasEmail = email != null && !email.isEmpty();
             final String password = getPassword();
+            boolean hasPassword = password != null && !password.isEmpty();
+            final String externalId = getExternalId();
+            boolean hasExternalId = externalId != null && !externalId.isEmpty();
 
-            Observable<DataResponse> login = DataProvider.getInstance()
-                    .signIn(getContext(), email, password);
+            Observable<DataResponse> login;
+            if (hasEmail && hasPassword) {
+                // Login with email and password.
+                login = DataProvider.getInstance().signIn(getContext(), email, password);
+            } else if (hasEmail && !getProfileStep().getProfileInfoOptions().contains
+                    (ProfileInfoOption.PASSWORD)) {
+                login = DataProvider.getInstance().requestSignInLink(email);
+            }else if (hasExternalId) {
+                // Login with external ID.
+                login = DataProvider.getInstance().signInWithExternalId(getContext(), externalId);
+            } else {
+                // This should never happen, but if it does, fail gracefully.
+                hideLoadingDialog();
+                showOkAlertDialog("Unexpected error: No credentials provided.");
+                return;
+            }
 
             // Only gives a callback to response on success, the rest is handled by StepLayoutHelper
             StepLayoutHelper.safePerform(login, this, new StepLayoutHelper.WebCallback() {
@@ -80,7 +102,10 @@ public class LoginStepLayout extends ProfileStepLayout {
                 public void onFail(Throwable throwable) {
                     hideLoadingDialog();
                     // TODO: use the status code instead of this string
-                    if (throwable.toString().contains("statusCode=412")) {
+                    if (throwable instanceof UnknownHostException) {
+                        // This is likely a no internet connection error
+                        LoginStepLayout.super.showOkAlertDialog(getString(R.string.rsb_error_no_internet));
+                    } else if (throwable.toString().contains("statusCode=412")) {
                         // Moving to the next step will trigger the re-consent flow
                         // Since the user is not consented, but signed in successfully
                         LoginStepLayout.super.onNextClicked();

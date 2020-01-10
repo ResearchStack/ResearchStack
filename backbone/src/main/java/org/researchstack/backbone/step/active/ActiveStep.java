@@ -2,9 +2,12 @@ package org.researchstack.backbone.step.active;
 
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.active.recorder.RecorderConfig;
+import org.researchstack.backbone.ui.ActiveTaskActivity;
 import org.researchstack.backbone.ui.step.layout.ActiveStepLayout;
 
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by TheMDP on 2/4/17.
@@ -180,6 +183,32 @@ public class ActiveStep extends Step {
      */
     private String imageResName;
 
+    /**
+     * A map of <"time_in_seconds_to_speak", "what_to_speak">
+     */
+    private Map<String, String> spokenInstructionMap;
+
+    /**
+     * A string representation of a raw file resource
+     */
+    private String soundRes;
+
+    /**
+     * The recording UUID is a unique identifier used by the RecorderService
+     */
+    private UUID recordingUuid;
+
+    /**
+     * This can be increased to allow the ending spoken instruction to
+     * not get cut off if it is too long
+     */
+    private int estimateTimeInMsToSpeakEndInstruction = 1000;  // 1 second delay after finishing
+
+    /**
+     * The class of the activity that will run this step
+     */
+    private Class<? extends ActiveTaskActivity> activityClazz = ActiveTaskActivity.class;
+
     /* Default constructor needed for serialization/deserialization of object */
     ActiveStep() {
         super();
@@ -188,12 +217,14 @@ public class ActiveStep extends Step {
     public ActiveStep(String identifier) {
         super(identifier);
         setOptional(false);
+        recordingUuid = UUID.randomUUID();
     }
 
     public ActiveStep(String identifier, String title, String detailText) {
         super(identifier, title);
         setText(detailText);
         setOptional(false);
+        recordingUuid = UUID.randomUUID();
     }
 
     @Override
@@ -316,7 +347,8 @@ public class ActiveStep extends Step {
     public boolean hasVoice() {
         boolean hasSpokenInstruction = spokenInstruction != null && !spokenInstruction.isEmpty();
         boolean hasFinishedSpokenInstruction = finishedSpokenInstruction != null && !finishedSpokenInstruction.isEmpty();
-        return (hasSpokenInstruction || hasFinishedSpokenInstruction);
+        boolean hasValidSpeakingMap = spokenInstructionMap != null && !spokenInstructionMap.isEmpty();
+        return (hasSpokenInstruction || hasFinishedSpokenInstruction || hasValidSpeakingMap);
     }
 
     public List<RecorderConfig> getRecorderConfigurationList() {
@@ -333,5 +365,45 @@ public class ActiveStep extends Step {
 
     public void setImageResName(String imageResName) {
         this.imageResName = imageResName;
+    }
+
+    public Map<String, String> getSpokenInstructionMap() {
+        return spokenInstructionMap;
+    }
+
+    public void setSpokenInstructionMap(Map<String, String> spokenInstructions) {
+        spokenInstructionMap = spokenInstructions;
+    }
+
+    public int getEstimateTimeInMsToSpeakEndInstruction() {
+        return estimateTimeInMsToSpeakEndInstruction;
+    }
+
+    public void setEstimateTimeInMsToSpeakEndInstruction(int estimateTimeInMsToSpeakEndInstruction) {
+        this.estimateTimeInMsToSpeakEndInstruction = estimateTimeInMsToSpeakEndInstruction;
+    }
+
+    public UUID getRecordingUuid() {
+        return recordingUuid;
+    }
+
+    public void setRecordingUuid(UUID recordingUuid) {
+        this.recordingUuid = recordingUuid;
+    }
+
+    public Class<? extends ActiveTaskActivity> getActivityClazz() {
+        return activityClazz;
+    }
+
+    public void setActivityClazz(Class<? extends ActiveTaskActivity> activityClazz) {
+        this.activityClazz = activityClazz;
+    }
+
+    public String getSoundRes() {
+        return soundRes;
+    }
+
+    public void setSoundRes(String soundRes) {
+        this.soundRes = soundRes;
     }
 }

@@ -1,6 +1,7 @@
 package org.researchstack.backbone.utils;
 
 import android.content.Context;
+import android.support.annotation.RequiresApi;
 
 import org.researchstack.backbone.StorageAccess;
 
@@ -117,8 +118,23 @@ public class ResUtils {
         return context.getResources().getIdentifier(name, "color", context.getPackageName());
     }
 
+    public static int getStringResourceId(Context context, String name)
+    {
+        return context.getResources().getIdentifier(name, "string", context.getPackageName());
+    }
+
     public static int getDrawableResourceId(Context context, String name) {
         return getDrawableResourceId(context, name, 0);
+    }
+
+    /**
+     * @param context can be app or activity
+     * @param name of the dimen resource
+     * @return the dimension resource to use in resources.getDimensionPixelOffset
+     */
+    public static int getDimenResourceId(Context context, String name)
+    {
+        return context.getResources().getIdentifier(name, "dimen", context.getPackageName());
     }
 
     public static int getDrawableResourceId(Context context, String name, int defaultResId) {

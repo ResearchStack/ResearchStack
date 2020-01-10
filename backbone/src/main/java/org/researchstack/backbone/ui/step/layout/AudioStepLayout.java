@@ -1,18 +1,20 @@
 package org.researchstack.backbone.ui.step.layout;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.active.AudioStep;
 import org.researchstack.backbone.step.active.recorder.AudioRecorder;
-import org.researchstack.backbone.step.active.recorder.Recorder;
 import org.researchstack.backbone.ui.views.AudioGraphView;
 
 /**
@@ -22,12 +24,10 @@ import org.researchstack.backbone.ui.views.AudioGraphView;
  * It does this by taking in data from the AudioRecorder and forwarding it to an AudioGraphView
  */
 
-public class AudioStepLayout extends ActiveStepLayout implements AudioRecorder.AudioRecorderListener {
-
-    private static final long DURATION_BETWEEN_GRAPH_UPDATES = 180;
-    private long durationBetweenGraphUpdates = DURATION_BETWEEN_GRAPH_UPDATES;
+public class AudioStepLayout extends ActiveStepLayout {
 
     protected AudioStep audioStep;
+    protected BroadcastReceiver audioUpdateReciever;
 
     protected RelativeLayout audioContentLayout;
     protected AudioGraphView audioGraphView;
@@ -49,29 +49,17 @@ public class AudioStepLayout extends ActiveStepLayout implements AudioRecorder.A
     }
 
     @Override
-    protected void start() {
-        super.start();
-
-        if (recorderList != null) {
-            for (Recorder recorder : recorderList) {
-                if (recorder instanceof AudioRecorder) {
-                    ((AudioRecorder)recorder).setAudioRecorderListener(this, durationBetweenGraphUpdates);
-                }
-            }
-        }
-    }
-
-    @Override
-    protected void setupActiveViews() {
+    public void setupActiveViews() {
         super.setupActiveViews();
 
-        audioContentLayout = (RelativeLayout)layoutInflater.inflate(R.layout.rsb_step_layout_audio, activeStepLayout, false);
+        audioContentLayout = (RelativeLayout)layoutInflater
+                .inflate(R.layout.rsb_step_layout_audio, activeStepLayout, false);
 
-        audioGraphView = (AudioGraphView) audioContentLayout.findViewById(R.id.rsb_step_layout_audio_graph);
+        audioGraphView = audioContentLayout.findViewById(R.id.rsb_step_layout_audio_graph);
         int primaryColor = ContextCompat.getColor(getContext(), R.color.rsb_colorPrimary);
         audioGraphView.setGraphColor(primaryColor);
 
-        timerTextview = (TextView) audioContentLayout.findViewById(R.id.rsb_step_layout_audio_countdown);
+        timerTextview = audioContentLayout.findViewById(R.id.rsb_step_layout_audio_countdown);
         timerTextview.setTextColor(primaryColor);
 
         activeStepLayout.addView(audioContentLayout, new LinearLayout.LayoutParams(
@@ -89,21 +77,38 @@ public class AudioStepLayout extends ActiveStepLayout implements AudioRecorder.A
     }
 
     @Override
-    public void onAudioSampleRecorded(int averageSampleVolume, int maxVolume) {
-        if (audioGraphView == null) {
-            // graph not ready yet
-            return;
-        }
+    protected void registerRecorderBroadcastReceivers(Context appContext) {
+        super.registerRecorderBroadcastReceivers(appContext);
+        audioUpdateReciever = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent == null || intent.getAction() == null) {
+                    return;
+                }
+                if (AudioRecorder.BROADCAST_SAMPLE_ACTION.equals(intent.getAction())) {
+                    AudioRecorder.AverageSampleHolder sampleHolder =
+                            AudioRecorder.getAverageSample(intent);
+                    if (sampleHolder != null) {
+                        if (audioGraphView == null) {
+                            // graph not ready yet
+                            return;
+                        }
 
-        audioGraphView.setMaxSampleValue(maxVolume);
-        audioGraphView.addSample(averageSampleVolume);
+                        audioGraphView.setMaxSampleValue(sampleHolder.getMaxVolume());
+                        audioGraphView.addSample(sampleHolder.getAverageSampleVolume());
+                    }
+                }
+            }
+        };
+        IntentFilter intentFilter = new IntentFilter(AudioRecorder.BROADCAST_SAMPLE_ACTION);
+        LocalBroadcastManager.getInstance(appContext)
+                .registerReceiver(audioUpdateReciever, intentFilter);
     }
 
-    public long getDurationBetweenGraphUpdates() {
-        return durationBetweenGraphUpdates;
-    }
-
-    public void setDurationBetweenGraphUpdates(long durationBetweenGraphUpdates) {
-        this.durationBetweenGraphUpdates = durationBetweenGraphUpdates;
+    @Override
+    protected void unregisterRecorderBroadcastReceivers() {
+        super.unregisterRecorderBroadcastReceivers();
+        Context appContext = getContext().getApplicationContext();
+        LocalBroadcastManager.getInstance(appContext).unregisterReceiver(audioUpdateReciever);
     }
 }
