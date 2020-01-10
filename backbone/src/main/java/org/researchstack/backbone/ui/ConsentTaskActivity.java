@@ -36,7 +36,7 @@ import java.util.List;
 
 import static org.researchstack.backbone.ui.step.layout.ConsentSignatureStepLayout.KEY_SIGNATURE;
 
-public class ConsentViewTaskActivity extends TaskActivity implements StepCallbacks {
+public class ConsentTaskActivity extends TaskActivity implements StepCallbacks {
 
     private static final String ID_FORM_FIRST_NAME = "user_info_form_first_name";
     private static final String ID_FORM_LAST_NAME = "user_info_form_last_name";
@@ -51,7 +51,7 @@ public class ConsentViewTaskActivity extends TaskActivity implements StepCallbac
     private String signatureBase64;
 
     public static Intent newIntent(Context context, Task task, String assetsFolder) {
-        Intent intent = new Intent(context, ConsentViewTaskActivity.class);
+        Intent intent = new Intent(context, ConsentTaskActivity.class);
         intent.putExtra(EXTRA_TASK, task);
         intent.putExtra(EXTRA_ASSETS_FOLDER, assetsFolder);
         return intent;
@@ -166,7 +166,7 @@ public class ConsentViewTaskActivity extends TaskActivity implements StepCallbac
 
         new PDFWriteExposer().printPdfFile(this, getCurrentTaskId(), consentHtml, consentAssetsFolder, () -> {
                     dialog.dismiss();
-                    ConsentViewTaskActivity.super.close(isCompleted);
+                    ConsentTaskActivity.super.close(isCompleted);
                 }
         );
     }
