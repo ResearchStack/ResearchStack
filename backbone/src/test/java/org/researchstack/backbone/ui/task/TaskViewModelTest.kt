@@ -299,7 +299,7 @@ class TaskViewModelTest {
         `when`(clonedTaskResultInCaseOfCancel!!.getStepResult(any())).thenReturn(originalStepResult)
         `when`(currentTaskResult!!.getStepResult(any())).thenReturn(modifiedStepResult)
 
-        taskViewModel.clonedTaskResultInCaseOfCancel = clonedTaskResultInCaseOfCancel
+        taskViewModel.clonedTaskResultInCaseOfEdit = clonedTaskResultInCaseOfCancel
         taskViewModel.taskResult = currentTaskResult!!
     }
 

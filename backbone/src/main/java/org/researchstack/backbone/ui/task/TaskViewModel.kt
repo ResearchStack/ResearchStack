@@ -66,7 +66,7 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
     var taskResult: TaskResult
     private var clonedTaskResult: TaskResult? = null
     @VisibleForTesting
-    var clonedTaskResultInCaseOfCancel: TaskResult? = null
+    var clonedTaskResultInCaseOfEdit: TaskResult? = null
     //only used for cancel edit
     private var hasBranching = false
     private val stack = Stack<Step>()
@@ -122,7 +122,7 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
                     taskResult = updateTaskResultsFrom(it)
                 }
                 clonedTaskResult = null
-                clonedTaskResultInCaseOfCancel = null
+                clonedTaskResultInCaseOfEdit = null
                 editing = false
                 stack.clear()
                 moveReviewStep.postValue(StepNavigationEvent(step = nextStep))
@@ -205,8 +205,8 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
         currentStep = step
         editing = true
         isSavedDialogAppeared = false
-        if (clonedTaskResultInCaseOfCancel == null) {
-            clonedTaskResultInCaseOfCancel = taskResult.clone() as TaskResult
+        if (clonedTaskResultInCaseOfEdit == null) {
+            clonedTaskResultInCaseOfEdit = taskResult.clone() as TaskResult
         }
         editStep.postValue(step)
     }
@@ -249,10 +249,10 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
 
     private fun goToReviewStep() {
         clonedTaskResult = null
-        clonedTaskResultInCaseOfCancel?.let {
+        clonedTaskResultInCaseOfEdit?.let {
             taskResult = updateTaskResultsFrom(it)
         }
-        clonedTaskResultInCaseOfCancel = null
+        clonedTaskResultInCaseOfEdit = null
         val nextStep = getReviewStep()
         currentStep = nextStep
         moveReviewStep.postValue(StepNavigationEvent(step = nextStep))
@@ -320,8 +320,8 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
         }
     }
 
-    fun checkForSkipDialog(originalStepResult: StepResult<*>?,
-                           modifiedStepResult: StepResult<*>?) {
+    fun checkForSkipDialog(modifiedStepResult: StepResult<*>?) {
+        val originalStepResult = clonedTaskResultInCaseOfEdit?.getStepResult(currentStep?.identifier)
         when {
             currentStep!!.isOptional && checkIfNewAnswerIsSkipWhilePreviousIsNot(originalStepResult, modifiedStepResult) -> {
                 showSkipEditDialog.postValue(Pair(true, originalStepResult!!))
@@ -338,7 +338,7 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
 
     @VisibleForTesting
     fun checkIfAnswersAreTheSame(): Boolean {
-        val originalStepResult = clonedTaskResultInCaseOfCancel?.getStepResult(currentStep?.identifier)
+        val originalStepResult = clonedTaskResultInCaseOfEdit?.getStepResult(currentStep?.identifier)
         val modifiedStepResult = currentTaskResult.getStepResult(currentStep?.identifier)
         return originalStepResult?.equals(modifiedStepResult)?.not() ?: false
     }
@@ -346,8 +346,8 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
     @VisibleForTesting
     fun checkIfNewAnswerIsSkipWhilePreviousIsNot(originalStepResult: StepResult<*>?,
                                                  modifiedStepResult: StepResult<*>?): Boolean {
+        currentTaskResult.setStepResultForStep(currentStep!!, modifiedStepResult)
         return if (originalStepResult == null || originalStepResult.results.isEmpty()) {
-            currentTaskResult.setStepResultForStep(currentStep!!, modifiedStepResult)
             false
         } else {
             originalStepResult.allValuesAreNull()!!.not() && modifiedStepResult!!.allValuesAreNull()
