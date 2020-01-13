@@ -154,10 +154,11 @@ class TaskViewModelTest {
     @Test
     fun checkIfNewAnswerIsSkipWhilePreviousAnswersIsNot_ShouldReturnTrue() {
         // Assemble
-        createAndFillStepResult("one", null)
+        val originalStepResult = createStepResult("text")
+        val modifiedStepResult = createStepResult(null)
 
         // Act
-        val actualResult = taskViewModel.checkIfNewAnswerIsSkipWhilePreviousIsNot()
+        val actualResult = taskViewModel.checkIfNewAnswerIsSkipWhilePreviousIsNot(originalStepResult, modifiedStepResult)
 
         // Assert
         Assert.assertEquals(actualResult, true)
@@ -166,10 +167,11 @@ class TaskViewModelTest {
     @Test
     fun checkIfNewAnswerIsSkipWhilePreviousAnswersIsNot_ShouldReturnFalse() {
         // Assemble
-        createAndFillStepResult("one", "tow")
+        val originalStepResult = createStepResult(null)
+        val modifiedStepResult = createStepResult(null)
 
         // Act
-        val actualResult = taskViewModel.checkIfNewAnswerIsSkipWhilePreviousIsNot()
+        val actualResult = taskViewModel.checkIfNewAnswerIsSkipWhilePreviousIsNot(originalStepResult, modifiedStepResult)
 
         // Assert
         Assert.assertEquals(actualResult, false)
@@ -261,13 +263,16 @@ class TaskViewModelTest {
     fun whenNewAnswerIsSkipWhilePreviousIsNot_And_StepIsOptional_ShouldShowSkipDialog() {
         // Assemble
         currentStepMocked.isOptional = true
-        doReturn(true).`when`(taskViewModel).checkIfNewAnswerIsSkipWhilePreviousIsNot()
+        doReturn(true).`when`(taskViewModel).checkIfNewAnswerIsSkipWhilePreviousIsNot(any(), any())
+        val modifiedStepResult = createStepResult(null)
+        val originalStepResult = createStepResult("tow")
+        addStepResultIntoMockedMethods(originalStepResult, originalStepResult)
 
         //act
-        taskViewModel.checkForSkipDialog(originalStepResult)
+        taskViewModel.checkForSkipDialog(modifiedStepResult)
 
         //Assert
-        Assert.assertEquals(taskViewModel.showSkipEditDialog.value, Pair(true, originalStepResult!!))
+        Assert.assertEquals(taskViewModel.showSkipEditDialog.value, Pair(true, originalStepResult))
     }
 
     @Test
@@ -275,11 +280,13 @@ class TaskViewModelTest {
         // Assemble
         doNothing().`when`(taskViewModel).nextStep()
         currentStepMocked.isOptional = false
+        val modifiedStepResult = createStepResult(null)
+
         //act
-        taskViewModel.checkForSkipDialog(originalStepResult)
+        taskViewModel.checkForSkipDialog(modifiedStepResult)
 
         //Assert
-        verify(taskViewModel).checkForSkipDialog(any())
+        verify(taskViewModel).checkForSkipDialog(modifiedStepResult)
         verify(taskViewModel).nextStep()
         verify(taskViewModel).currentStep = any() // called in setUp
         verifyNoMoreInteractions(taskViewModel)
@@ -294,7 +301,7 @@ class TaskViewModelTest {
         `when`(clonedTaskResultInCaseOfCancel!!.getStepResult(any())).thenReturn(originalStepResult)
         `when`(currentTaskResult!!.getStepResult(any())).thenReturn(modifiedStepResult)
 
-        taskViewModel.clonedTaskResultInCaseOfCancel = clonedTaskResultInCaseOfCancel
+        taskViewModel.clonedTaskResultInCaseOfEdit = clonedTaskResultInCaseOfCancel
         taskViewModel.taskResult = currentTaskResult!!
     }
 

@@ -2,7 +2,6 @@ package org.researchstack.backbone.ui.task
 
 import android.app.Application
 import android.content.Intent
-import android.util.Log
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -10,6 +9,7 @@ import org.researchstack.backbone.R
 import org.researchstack.backbone.result.StepResult
 import org.researchstack.backbone.result.TaskResult
 import org.researchstack.backbone.step.Step
+import org.researchstack.backbone.task.OrderedTask
 import org.researchstack.backbone.task.Task
 import org.researchstack.backbone.ui.SingleLiveEvent
 import org.researchstack.backbone.ui.task.TaskActivity.Companion.EXTRA_ACTION_FAILED_COLOR
@@ -66,7 +66,7 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
     var taskResult: TaskResult
     private var clonedTaskResult: TaskResult? = null
     @VisibleForTesting
-    var clonedTaskResultInCaseOfCancel: TaskResult? = null
+    var clonedTaskResultInCaseOfEdit: TaskResult? = null
     //only used for cancel edit
     private var hasBranching = false
     private val stack = Stack<Step>()
@@ -107,6 +107,7 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
 
 
             if (hasBranching) {
+                clearBranchingResults()
                 stack.push(currentStep)
                 currentStep = nextStep
 
@@ -121,7 +122,7 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
                     taskResult = updateTaskResultsFrom(it)
                 }
                 clonedTaskResult = null
-                clonedTaskResultInCaseOfCancel = null
+                clonedTaskResultInCaseOfEdit = null
                 editing = false
                 stack.clear()
                 moveReviewStep.postValue(StepNavigationEvent(step = nextStep))
@@ -136,6 +137,15 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
             if (nextStep == null) {
                 close(true)
             } else {
+                // This checks if the nextStep doesn't have a result and clears all results starting from that step
+                // This is useful in a branching task in case we go back to a certain step, and then go forward again,
+                // this will ensure that if another branch is taken, all next step results will be cleared.
+                // Note: The first check is a workaround that checks if the task is not an OrderedTask, and so it's a
+                // BranchManagedTask (which can't be accessed from ResearchStack so we can't check it directly).
+                if (task !is OrderedTask && taskResult.getStepResult(nextStep.identifier) == null) {
+                    clearBranchingResults()
+                }
+
                 currentStep = nextStep
 
                 if (nextStep.isHidden) {
@@ -168,7 +178,6 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
 
         } else {
             val previousStep = task.getStepBeforeStep(currentStep, taskResult)
-            taskResult.removeStepResultForStep(currentStep!!)
             stepBackNavigationState.postValue(true)
             if (previousStep == null) {
                 close()
@@ -196,8 +205,8 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
         currentStep = step
         editing = true
         isSavedDialogAppeared = false
-        if (clonedTaskResultInCaseOfCancel == null) {
-            clonedTaskResultInCaseOfCancel = taskResult.clone() as TaskResult
+        if (clonedTaskResultInCaseOfEdit == null) {
+            clonedTaskResultInCaseOfEdit = taskResult.clone() as TaskResult
         }
         editStep.postValue(step)
     }
@@ -240,10 +249,10 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
 
     private fun goToReviewStep() {
         clonedTaskResult = null
-        clonedTaskResultInCaseOfCancel?.let {
+        clonedTaskResultInCaseOfEdit?.let {
             taskResult = updateTaskResultsFrom(it)
         }
-        clonedTaskResultInCaseOfCancel = null
+        clonedTaskResultInCaseOfEdit = null
         val nextStep = getReviewStep()
         currentStep = nextStep
         moveReviewStep.postValue(StepNavigationEvent(step = nextStep))
@@ -295,9 +304,26 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
         }
     }
 
-    fun checkForSkipDialog(originalStepResult: StepResult<*>?) {
+    /**
+     * Clears step results starting from the step after the current step until it reaches the end. This is ensuring
+     * that if we have branches in our task, all step results that are after the branch triggering step will be removed
+     */
+    fun clearBranchingResults() {
+        var removeStepResult = false
+        for (step in task.steps) {
+            if (removeStepResult) {
+                taskResult.removeStepResultForStep(step)
+            }
+            if (step == currentStep) {
+                removeStepResult = true
+            }
+        }
+    }
+
+    fun checkForSkipDialog(modifiedStepResult: StepResult<*>?) {
+        val originalStepResult = clonedTaskResultInCaseOfEdit?.getStepResult(currentStep?.identifier)
         when {
-            currentStep!!.isOptional && checkIfNewAnswerIsSkipWhilePreviousIsNot() -> {
+            currentStep!!.isOptional && checkIfNewAnswerIsSkipWhilePreviousIsNot(originalStepResult, modifiedStepResult) -> {
                 showSkipEditDialog.postValue(Pair(true, originalStepResult!!))
             }
             else -> {
@@ -312,16 +338,20 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
 
     @VisibleForTesting
     fun checkIfAnswersAreTheSame(): Boolean {
-        val originalStepResult = clonedTaskResultInCaseOfCancel?.getStepResult(currentStep?.identifier)
+        val originalStepResult = clonedTaskResultInCaseOfEdit?.getStepResult(currentStep?.identifier)
         val modifiedStepResult = currentTaskResult.getStepResult(currentStep?.identifier)
         return originalStepResult?.equals(modifiedStepResult)?.not() ?: false
     }
 
     @VisibleForTesting
-    fun checkIfNewAnswerIsSkipWhilePreviousIsNot(): Boolean {
-        val originalStepResult = clonedTaskResultInCaseOfCancel?.getStepResult(currentStep?.identifier)
-        val modifiedStepResult = currentTaskResult.getStepResult(currentStep?.identifier)
-        return originalStepResult?.allValuesAreNull()!!.not() && modifiedStepResult.allValuesAreNull()
+    fun checkIfNewAnswerIsSkipWhilePreviousIsNot(originalStepResult: StepResult<*>?,
+                                                 modifiedStepResult: StepResult<*>?): Boolean {
+        currentTaskResult.setStepResultForStep(currentStep!!, modifiedStepResult)
+        return if (originalStepResult == null || originalStepResult.results.isEmpty()) {
+            false
+        } else {
+            originalStepResult.allValuesAreNull()!!.not() && modifiedStepResult!!.allValuesAreNull()
+        }
     }
 
     @VisibleForTesting
