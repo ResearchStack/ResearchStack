@@ -8,7 +8,7 @@ apply plugin: 'kotlin-android-extensions'
 version = research_stack_version
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
 
     defaultConfig {
         minSdkVersion 19

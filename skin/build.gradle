@@ -8,7 +8,7 @@ apply plugin: 'kotlin-kapt'
 version = research_stack_version
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
 
     lintOptions {
         warning "InvalidPackage"
