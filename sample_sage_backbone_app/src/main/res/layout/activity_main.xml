@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="org.sagebionetworks.researchstack.sample_sage_backbone_app.MainActivity"
+    >
+
+    <include layout="@layout/rsb_layout_toolbar"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="16dp"
+        >
+
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:id="@+id/consent_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="24sp"
+            android:layout_centerInParent="true"
+            android:text="@string/consent_button"
+            android:visibility="visible"
+            />
+
+        <ImageView
+            android:id="@+id/consented_signature"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true" android:layout_alignParentStart="true"
+            android:scaleType="centerInside" tools:src="@mipmap/ic_launcher"/>
+
+        <TextView
+            android:id="@+id/consented_date_lbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/consented_signature"
+            android:gravity="center"
+            android:minHeight="48dp"
+            android:text="@string/date_consented"/>
+
+        <TextView
+            android:id="@+id/consented_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/consented_signature"
+            android:gravity="center"
+            android:minHeight="48dp"
+            tools:text="Date"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/rsb_black_40"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        >
+
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:id="@+id/survey_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="24sp"
+            android:layout_centerInParent="true"
+            android:text="@string/survey_button"
+            />
+
+
+        <TextView
+            android:id="@+id/survey_results"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginTop="20dp"
+            android:lineSpacingExtra="8dp"
+            android:visibility="gone"
+            />
+    </LinearLayout>
+
+</LinearLayout>
