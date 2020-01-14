@@ -18,14 +18,6 @@ import org.researchstack.backbone.ui.task.TaskViewModel
 
 internal open class BaseStepFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentLayoutId), StepCallbacks {
 
-    override fun onSkipStep(step: Step?, originalStepResult: StepResult<*>?, modifiedStepResult: StepResult<*>?) {
-        viewModel.checkForSkipDialog(originalStepResult)
-    }
-
-    override fun onEditCancelStep() {
-        viewModel.showCancelEditAlert()
-    }
-
     protected val viewModel: TaskViewModel by sharedViewModel()
 
     override fun onResume() {
@@ -75,7 +67,7 @@ internal open class BaseStepFragment(@LayoutRes contentLayoutId: Int) : Fragment
     }
 
     private fun setupStepCallbacks(stepView: StepLayout) {
-        stepView.setCallbacks(viewModel.stepCallbacks ?: this)
+        stepView.setCallbacks(this)
         stepView.isEditView(viewModel.editing)
         viewModel.updateCancelEditInLayout.observe(this, Observer {
             stepView.setCancelEditMode(it)
@@ -87,6 +79,7 @@ internal open class BaseStepFragment(@LayoutRes contentLayoutId: Int) : Fragment
     }
 
     override fun onSaveStep(action: Int, step: Step, result: StepResult<*>?) {
+        viewModel.saveStepEvent.postValue(Pair(step, result))
         viewModel.currentTaskResult.setStepResultForStep(step, result)
         when (action) {
             StepCallbacks.ACTION_NEXT -> viewModel.nextStep()
@@ -113,6 +106,14 @@ internal open class BaseStepFragment(@LayoutRes contentLayoutId: Int) : Fragment
             it.setDisplayShowHomeEnabled(setVisible)
             it.setDisplayHomeAsUpEnabled(setVisible)
         }
+    }
+
+    override fun onEditCancelStep() {
+        viewModel.showCancelEditAlert()
+    }
+
+    override fun onSkipStep(step: Step?, originalStepResult: StepResult<*>?, modifiedStepResult: StepResult<*>?) {
+        viewModel.checkForSkipDialog(originalStepResult)
     }
 
     fun saveCurrentStepResult() {

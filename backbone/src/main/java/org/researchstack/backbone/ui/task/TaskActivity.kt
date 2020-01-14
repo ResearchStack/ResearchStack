@@ -40,7 +40,7 @@ import org.researchstack.backbone.utils.ViewUtils
 
 open class TaskActivity : PinCodeActivity(), PermissionMediator {
 
-    protected val viewModel: TaskViewModel by viewModel { parametersOf(intent) }
+    private val viewModel: TaskViewModel by viewModel { parametersOf(intent) }
     private val navController by lazy { Navigation.findNavController(this, R.id.nav_host_fragment) }
     private var currentStepLayout: StepLayout? = null
     private var stepPermissionListener: PermissionListener? = null
