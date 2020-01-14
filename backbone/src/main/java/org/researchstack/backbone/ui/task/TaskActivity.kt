@@ -8,7 +8,6 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import androidx.preference.PreferenceManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
@@ -22,6 +21,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
+import androidx.preference.PreferenceManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.Theme
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -109,7 +109,10 @@ open class TaskActivity : PinCodeActivity(), PermissionMediator {
                     {
                         it.dismiss()
                         viewModel.saveEditDialogDismiss()
-                    }, { viewModel.nextStep() })
+                    }, {
+                viewModel.clearBranchingResults()
+                viewModel.nextStep()
+            })
         }
 
 

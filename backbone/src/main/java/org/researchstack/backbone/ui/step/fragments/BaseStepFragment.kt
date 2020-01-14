@@ -113,7 +113,7 @@ internal open class BaseStepFragment(@LayoutRes contentLayoutId: Int) : Fragment
     }
 
     override fun onSkipStep(step: Step?, originalStepResult: StepResult<*>?, modifiedStepResult: StepResult<*>?) {
-        viewModel.checkForSkipDialog(originalStepResult)
+        viewModel.checkForSkipDialog(modifiedStepResult)
     }
 
     fun saveCurrentStepResult() {
