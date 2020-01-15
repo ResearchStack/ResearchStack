@@ -1,5 +1,7 @@
 package org.researchstack.backbone.ui.step.fragments
 
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import androidx.annotation.LayoutRes
@@ -79,7 +81,7 @@ internal open class BaseStepFragment(@LayoutRes contentLayoutId: Int) : Fragment
     }
 
     override fun onSaveStep(action: Int, step: Step, result: StepResult<*>?) {
-        viewModel.saveStepEvent.value = Pair(step, result)
+        notifySaveStep(step, result)
         viewModel.currentTaskResult.setStepResultForStep(step, result)
         when (action) {
             StepCallbacks.ACTION_NEXT -> viewModel.nextStep()
@@ -93,6 +95,21 @@ internal open class BaseStepFragment(@LayoutRes contentLayoutId: Int) : Fragment
             }
             else -> throw IllegalArgumentException("Action with value " + action + " is invalid. " +
                     "See StepCallbacks for allowable arguments")
+        }
+    }
+
+    /**
+     * Notifies [TaskViewModel.saveStepEvent] with the step and result and makes sure it does so in the main thread.
+     * All step layouts are calling [onSaveStep] from the main thread except for ImageCapture, which calls it from a
+     * worker thread.
+     */
+    private fun notifySaveStep(step: Step, result: StepResult<*>?) {
+        if (Thread.currentThread() != Looper.getMainLooper().thread) {
+            Handler(Looper.getMainLooper()).post {
+                viewModel.saveStepEvent.value = Pair(step, result)
+            }
+        } else {
+            viewModel.saveStepEvent.value = Pair(step, result)
         }
     }
 
