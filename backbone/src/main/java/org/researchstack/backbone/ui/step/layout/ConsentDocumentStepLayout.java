@@ -116,13 +116,13 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
             {
                 final SubmitBar submitBar = findViewById(R.id.submit_bar);
                 submitBar.setPositiveTitleColor(step.getColorSecondary());
-                submitBar.setPositiveAction(view12 -> showDialog((dialog, which) -> {
+                submitBar.setPositiveAction(actionView -> showDialog((dialog, which) -> {
                     stepResult.setResult(true);
                     callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, stepResult);
                     submitBar.clearActions();
                 }));
                 submitBar.setNegativeTitleColor(step.getPrimaryColor());
-                submitBar.setNegativeAction(view1 -> disagreeConsent());
+                submitBar.setNegativeAction(actionView -> disagreeConsent());
             }
         });
 

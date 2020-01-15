@@ -5,11 +5,10 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import org.researchstack.backbone.R
-import org.researchstack.backbone.answerformat.BirthDateAnswerFormat
-import org.researchstack.backbone.answerformat.TextAnswerFormat
 import org.researchstack.backbone.result.StepResult
 import org.researchstack.backbone.step.ConsentDocumentStep
 import org.researchstack.backbone.step.ConsentSignatureStep
@@ -17,7 +16,6 @@ import org.researchstack.backbone.step.FormStep
 import org.researchstack.backbone.step.QuestionStep
 import org.researchstack.backbone.step.Step
 import org.researchstack.backbone.task.Task
-import androidx.lifecycle.Observer
 import org.researchstack.backbone.ui.step.layout.ConsentSignatureStepLayout.KEY_SIGNATURE
 import org.researchstack.backbone.ui.task.TaskActivity
 import org.researchstack.backbone.ui.task.TaskViewModel
@@ -33,6 +31,7 @@ class ConsentTaskActivity : TaskActivity() {
     private var firstName: String? = null
     private var lastName: String? = null
     private var signatureBase64: String? = null
+    private var savingConsentDialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,27 +40,39 @@ class ConsentTaskActivity : TaskActivity() {
         })
     }
 
-    private fun onSaveStep(step: Step, result: StepResult<*>?) {
-        if (step is FormStep && step.getIdentifier().equals(ID_FORM, true)) {
-            for (question in step.getFormSteps()!!) {
-                if (question.identifier.equals(ID_FORM_FIRST_NAME, true)) {
-                    val nameResult = result?.getResultForIdentifier(ID_FORM_FIRST_NAME) as StepResult<*>?
-                    if (nameResult != null && nameResult.result != null) {
-                        firstName = nameResult.result as String
-                    }
-                }
-                if (question.identifier.equals(ID_FORM_LAST_NAME, true)) {
-                    val nameResult = result?.getResultForIdentifier(ID_FORM_LAST_NAME) as StepResult<*>?
-                    if (nameResult != null && nameResult.result != null) {
-                        lastName = nameResult.result as String
-                    }
-                }
+    override fun onStop() {
+        savingConsentDialog?.let {
+            if (it.isShowing) {
+                it.dismiss()
             }
+            savingConsentDialog = null
         }
-        if (step is ConsentSignatureStep) {
+        super.onStop()
+    }
+
+    private fun onSaveStep(step: Step, result: StepResult<*>?) {
+        if (step is FormStep && step.identifier.equals(CONSENT_FORM_ID, true)) {
+            step.getFormSteps()?.forEach { question ->
+                getResultForName(question, CONSENT_FORM_ID_FIRST_NAME, result)?.let { firstName = it }
+                getResultForName(question, CONSENT_FORM_ID_LAST_NAME, result)?.let { lastName = it }
+            }
+        } else if (step is ConsentSignatureStep) {
             signatureBase64 = result?.getResultForIdentifier(KEY_SIGNATURE) as String
         } else if (step is ConsentDocumentStep) {
             consentHtml = step.consentHTML
+        }
+    }
+
+    private fun getResultForName(question: QuestionStep, identifier: String, result: StepResult<*>?): String? {
+        return if (question.identifier.equals(identifier, true)) {
+            val nameResult = result?.getResultForIdentifier(identifier) as StepResult<*>?
+            if (nameResult != null && nameResult.result != null) {
+                nameResult.result as String
+            } else {
+                ""
+            }
+        } else {
+            null
         }
     }
 
@@ -75,11 +86,11 @@ class ConsentTaskActivity : TaskActivity() {
 
     override fun close(completed: Boolean) {
         // you can also set title / message
-        val dialog = AlertDialog.Builder(this).setCancelable(false)
+        savingConsentDialog = AlertDialog.Builder(this).setCancelable(false)
                 .setTitle(LocaleUtils.getLocalizedString(this, R.string.rsb_saving_consent))
                 .setMessage(LocaleUtils.getLocalizedString(this, R.string.rsb_please_wait)).create()
 
-        dialog.show()
+        savingConsentDialog?.show()
 
         val consentAssetsFolder = intent.getStringExtra(EXTRA_ASSETS_FOLDER)
         val role = LocaleUtils.getLocalizedString(this, R.string.rsb_consent_role)
@@ -89,7 +100,7 @@ class ConsentTaskActivity : TaskActivity() {
                 df.format(Date()))
 
         PDFWriteExposer().printPdfFile(this, getCurrentTaskId(), consentHtml!!, consentAssetsFolder) {
-            dialog.dismiss()
+            savingConsentDialog?.dismiss()
             super.close(completed)
         }
     }
@@ -127,14 +138,12 @@ class ConsentTaskActivity : TaskActivity() {
             table.add(column)
         }
 
-        if (table.size > 0) {
+        if (table.isEmpty().not()) {
             val columnName = getString(R.string.rsb_consent_doc_line_date)
             val columnValue = String.format(signatureElementWrapper, signatureDate!!)
             val column = arrayOf(columnValue, hr, columnName)
             table.add(column)
-        }
 
-        if (table.size > 0) {
             val columns = table[0].size
             body.append("<table width='100%'>")
             for (i in 0 until columns) {
@@ -159,10 +168,9 @@ class ConsentTaskActivity : TaskActivity() {
 
     companion object {
 
-        private const val ID_FORM_FIRST_NAME = "user_info_form_first_name"
-        private const val ID_FORM_LAST_NAME = "user_info_form_last_name"
-        private const val ID_FORM_DOB = "user_info_form_dob"
-        private const val ID_FORM = "user_info_form"
+        private const val CONSENT_FORM_ID_FIRST_NAME = "user_info_form_first_name"
+        private const val CONSENT_FORM_ID_LAST_NAME = "user_info_form_last_name"
+        private const val CONSENT_FORM_ID = "user_info_form"
         private const val EXTRA_ASSETS_FOLDER = "extra_assets_folder"
 
         fun newIntent(context: Context, task: Task, assetsFolder: String): Intent {
@@ -170,50 +178,6 @@ class ConsentTaskActivity : TaskActivity() {
             intent.putExtra(EXTRA_TASK, task)
             intent.putExtra(EXTRA_ASSETS_FOLDER, assetsFolder)
             return intent
-        }
-
-        /**
-         * Returns the personal form steps related with the consent view task.
-         *
-         *
-         * This new version is prepared to work with multilanguage.
-         * Please use this method instead of
-         * [getConsentPersonalInfoFormStep][.getConsentPersonalInfoFormStep]
-         */
-        fun getConsentPersonalInfoFormStep(context: Context?, requiresName: Boolean,
-                                           requiresBirthDate: Boolean): FormStep? {
-            if (requiresName || requiresBirthDate) {
-                val formSteps = ArrayList<QuestionStep>()
-                if (requiresName) {
-                    val firstName = if (context != null) LocaleUtils.getLocalizedString(context,
-                            R.string.rsb_name_first) else "First Name"
-                    formSteps.add(QuestionStep(ID_FORM_FIRST_NAME, firstName, TextAnswerFormat()))
-
-                    val lastName = if (context != null) LocaleUtils.getLocalizedString(context,
-                            R.string.rsb_name_last) else "Last Name"
-                    formSteps.add(QuestionStep(ID_FORM_LAST_NAME, lastName, TextAnswerFormat()))
-                }
-
-                if (requiresBirthDate) {
-                    val maxDate = Calendar.getInstance()
-                    maxDate.add(Calendar.YEAR, -18)
-
-                    val dobFormat = BirthDateAnswerFormat(null, 18, 0)
-                    val dobText = if (context != null) LocaleUtils.getLocalizedString(context,
-                            R.string.rsb_consent_dob_full) else "Date of birth"
-                    formSteps.add(QuestionStep(ID_FORM_DOB, dobText, dobFormat))
-                }
-
-                val formTitle = if (context != null) LocaleUtils.getLocalizedString(context,
-                        R.string.rsb_consent) else "Consent"
-                val formStep = FormStep(ID_FORM, formTitle, "")
-                formStep.isOptional = false
-                formStep.setFormSteps(formSteps)
-
-                return formStep
-            }
-
-            return null
         }
     }
 }
