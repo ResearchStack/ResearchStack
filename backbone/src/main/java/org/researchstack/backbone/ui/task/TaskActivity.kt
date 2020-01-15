@@ -38,7 +38,7 @@ import org.researchstack.backbone.ui.step.layout.StepLayout
 import org.researchstack.backbone.ui.step.layout.SurveyStepLayout
 import org.researchstack.backbone.utils.ViewUtils
 
-class TaskActivity : PinCodeActivity(), PermissionMediator {
+open class TaskActivity : PinCodeActivity(), PermissionMediator {
 
     private val viewModel: TaskViewModel by viewModel { parametersOf(intent) }
     private val navController by lazy { Navigation.findNavController(this, R.id.nav_host_fragment) }
@@ -288,7 +288,7 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
         }
     }
 
-    private fun close(completed: Boolean) {
+    protected open fun close(completed: Boolean) {
 
         if (completed) {
             val result = Intent().apply {
@@ -334,7 +334,7 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
     companion object {
         const val EXTRA_TASK_RESULT = "TaskActivity.ExtraTaskResult"
         const val EXTRA_TASK = "TaskActivity.ExtraTask"
-        const val EXTRA_STEP = "ViewTaskActivity.ExtraStep";
+        const val EXTRA_STEP = "TaskActivity.ExtraStep"
         const val EXTRA_COLOR_PRIMARY = "TaskActivity.ExtraColorPrimary"
         const val EXTRA_COLOR_PRIMARY_DARK = "TaskActivity.ExtraColorPrimaryDark"
         const val EXTRA_COLOR_SECONDARY = "TaskActivity.ExtraColorSecondary"
@@ -389,5 +389,5 @@ class TaskActivity : PinCodeActivity(), PermissionMediator {
                 .show()
     }
 
-
+    protected fun getCurrentTaskId(): String? = viewModel.task.identifier
 }

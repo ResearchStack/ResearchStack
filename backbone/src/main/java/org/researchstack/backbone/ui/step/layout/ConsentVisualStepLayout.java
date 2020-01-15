@@ -184,19 +184,14 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
             moreInfoView.setVisibility(View.GONE);
         }
 
-        final SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
+        final SubmitBar submitBar = findViewById(R.id.rsb_submit_bar);
         submitBar.setPositiveTitle(LocaleUtils.getLocalizedString(getContext(), step.getNextButtonString()));
         submitBar.setNegativeTitleColor(colorPrimary);
         submitBar.setPositiveTitleColor(colorSecondary);
-        submitBar.setPositiveAction(new OnClickListener()
-                                    {
-                                        @Override
-                                        public void onClick(View view)
-                                        {
-                                            callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, null);
-                                            submitBar.clearActions();
-                                        }
-                                    });
+        submitBar.setPositiveAction(view -> {
+            callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, null);
+            submitBar.clearActions();
+        });
         submitBar.getNegativeActionView().setVisibility(View.GONE);
     }
 }

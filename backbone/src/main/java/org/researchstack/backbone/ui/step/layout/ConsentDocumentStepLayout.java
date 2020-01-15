@@ -102,7 +102,7 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
         setOrientation(VERTICAL);
         LayoutInflater.from(getContext()).inflate(R.layout.rsb_step_layout_consent_doc, this, true);
 
-        WebView pdfView = (WebView) findViewById(R.id.webview);
+        WebView pdfView = findViewById(R.id.webview);
 
         pdfView.setWebViewClient(new WebViewClient()
         {
@@ -114,34 +114,15 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
             @Override
             public void onPageFinished(WebView view, String url)
             {
-                final SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
+                final SubmitBar submitBar = findViewById(R.id.submit_bar);
                 submitBar.setPositiveTitleColor(step.getColorSecondary());
-                submitBar.setPositiveAction(new OnClickListener()
-                {
-                    @Override
-                    public void onClick(View view)
-                    {
-                        showDialog(new MaterialDialog.SingleButtonCallback()
-                        {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which)
-                            {
-                                stepResult.setResult(true);
-                                callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, stepResult);
-                                submitBar.clearActions();
-                            }
-                        });
-                    }
-                });
+                submitBar.setPositiveAction(actionView -> showDialog((dialog, which) -> {
+                    stepResult.setResult(true);
+                    callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, stepResult);
+                    submitBar.clearActions();
+                }));
                 submitBar.setNegativeTitleColor(step.getPrimaryColor());
-                submitBar.setNegativeAction(new OnClickListener()
-                {
-                    @Override
-                    public void onClick(View view)
-                    {
-                        disagreeConsent();
-                    }
-                });
+                submitBar.setNegativeAction(actionView -> disagreeConsent());
             }
         });
 

@@ -7,7 +7,7 @@ import java.util.Objects;
 /**
  * The Result class defines the attributes of a result from one step or a group of steps. When you
  * use the ResearchStack framework APIs, you typically get a result from the Result property of
- * either {@link org.researchstack.backbone.ui.ViewTaskActivity} or {@link
+ * either {@link org.researchstack.backbone.ui.task.TaskActivity} or {@link
  * org.researchstack.backbone.ui.step.layout.StepLayout}. Certain types of results can contain other
  * results, which together express a hierarchy; examples of these types of results are {@link
  * StepResult} and {@link TaskResult}.
@@ -35,7 +35,7 @@ public class Result implements Serializable {
     /**
      * Returns an initialized result using the specified identifier.
      * <p>
-     * Typically, objects such as {@link org.researchstack.backbone.ui.ViewTaskActivity} and {@link
+     * Typically, objects such as {@link org.researchstack.backbone.ui.task.TaskActivity} and {@link
      * org.researchstack.backbone.ui.step.layout.StepLayout} instantiate result (and Result
      * subclass) objects; you seldom need to instantiate a result object in your code.
      *

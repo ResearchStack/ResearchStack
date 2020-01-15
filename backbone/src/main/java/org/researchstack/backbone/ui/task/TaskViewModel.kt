@@ -59,7 +59,7 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
     val hideMenuItemCancel = MutableLiveData<Boolean>()
     val showSaveEditDialog = MutableLiveData<Boolean>()
     val showSkipEditDialog = MutableLiveData<Pair<Boolean, StepResult<*>>>()
-
+    val saveStepEvent = MutableLiveData<Pair<Step, StepResult<*>?>>()
 
     private var isSavedDialogAppeared = false
     @VisibleForTesting
