@@ -143,7 +143,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
                             };
                             updatedDeviceAttitudeAsQuaternion = getDeviceAttitudeAsQuaternion(sensor_values);
                         }
-                        double updatedAngle = calculateShiftedRelativeAngle(updatedDeviceAttitudeAsQuaternion); // this converts the current device attitude into an angle (degrees)
+                        double updatedAngle = calculateShiftedAngleRelativeToStart(updatedDeviceAttitudeAsQuaternion); // this converts the current device attitude into an angle (degrees)
                         if (!startAttitudeCaptured) { // we want setStartAttitude() to run once only
                             setStartAttitude(updatedDeviceAttitudeAsQuaternion);
                             startAttitudeCaptured = true;
@@ -241,7 +241,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
      * Methods to obtain and calculate the minimum and maximum range-shifted angle (degrees), calculated
      * for all device motion updates during recording, relative to the start position
      **/
-    private double calculateShiftedRelativeAngle(float[] attitudeUpdates) {
+    private double calculateShiftedAngleRelativeToStart(float[] attitudeUpdates) {
         double shifted_angle;
         float[] attitudeUpdatesRelativeToStart = getDeviceOrientationRelativeToStart(attitudeUpdates);
         double unadjusted_angle = getDeviceAngleInDegreesFromQuaternion(attitudeUpdatesRelativeToStart);
