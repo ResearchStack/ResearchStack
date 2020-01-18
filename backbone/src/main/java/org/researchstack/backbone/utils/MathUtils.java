@@ -35,19 +35,19 @@ public class MathUtils {
     /**
      * Methods to calculate Tait-Bryan/Euler angles from device attitude quaternions
      **/
-    public static double allOrientationsForPitch(double w, double x, double y, double z) {
+    public static double allOrientationsForPitch(double x, double y, double z, double w) {
         double angle_in_rads;
         angle_in_rads = (Math.atan2(2.0 * (x * w + y * z), 1.0 - 2.0 * (x * x + z * z)));
         return angle_in_rads;
     }
 
-    public static double allOrientationsForRoll(double w, double x, double y, double z) {
+    public static double allOrientationsForRoll(double x, double y, double z, double w) {
         double angle_in_rads;
         angle_in_rads = (Math.atan2(2.0 * (y * w - x * z), 1.0 - 2.0 * (y * y + z * z)));
         return angle_in_rads;
     }
 
-    public static double allOrientationsForYaw(double w, double x, double y, double z) {
+    public static double allOrientationsForYaw(double x, double y, double z, double w) {
         double angle_in_rads;
         angle_in_rads = (Math.asin(2.0 * (x * y - w * z)));
         return angle_in_rads;
