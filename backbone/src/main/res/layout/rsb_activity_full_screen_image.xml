@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/rsb_black">
+
+    <ImageButton
+        android:id="@+id/fullScreenImageClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@null"
+        android:contentDescription="Close"
+        android:src="@drawable/rsb_ic_close"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
+
+    <ImageView
+        android:id="@+id/fullScreenImage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:contentDescription="Image"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toTopOf="@id/fullScreenImageBottomGuideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fullScreenImageTopGuideline"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/fullScreenImageEditStep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:contentDescription="@string/rsb_edit_step"
+        android:drawableStart="@drawable/rsb_ic_edit"
+        android:drawablePadding="8dp"
+        android:drawableTint="@android:color/white"
+        android:paddingStart="9dp"
+        android:paddingEnd="9dp"
+        android:text="@string/rsb_edit_step"
+        android:textAllCaps="true"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fullScreenImageBottomGuideline"
+        tools:ignore="HardcodedText" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/fullScreenImageTopGuideline"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.20" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/fullScreenImageBottomGuideline"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.80" />
+</androidx.constraintlayout.widget.ConstraintLayout>

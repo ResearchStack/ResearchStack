@@ -150,4 +150,5 @@
     <string name="rsb_edit_step_alert_step_skip_content">[ru-UK] Your original response will be discarded..</string>
     <string name="rsb_edit_step_alert_step_skip_discard">[ru-UK] NO, DON\'T SKIP</string>
     <string name="rsb_edit_step_alert_step_skip_positive">[ru-UK]Yes, skip</string>
+    <string name="rsb_edit_step">[ru-UK] Edit</string>
 </resources>
