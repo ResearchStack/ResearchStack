@@ -4,34 +4,39 @@ import java.lang.Math;
 
 import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Surface;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
 import org.researchstack.backbone.R;
-import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.RangeOfMotionResult;
+import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.Step;
+import org.researchstack.backbone.task.factory.TaskFactory;
 import org.researchstack.backbone.step.active.RangeOfMotionStep;
 import org.researchstack.backbone.step.active.recorder.DeviceMotionRecorder;
-import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.utils.MathUtils;
 
 /**
  * Created by David Evans, Simon Hartley, Laurence Hurst, David Jimenez, 2019.
  *
- * The RangeOfMotionStepLayout is essentially the same as the ActiveStepLayout, except that it captures
+ * The RangeOfMotionStepLayout is essentially the same as the TouchAnywhereStepLayout, except that it captures
  * device position (attitude) and calculates absolute device position (Euler/Tait-Bryan angles) in
- * degrees - start, minimum, maximum, finish and range - once the screen is tapped and the step finishes.
+ * degrees, relative to device and screen orientation - start, minimum, maximum, finish and range - once 
+ * the screen is tapped and the step finishes.
  *
  */
 
@@ -42,7 +47,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     protected BroadcastReceiver deviceMotionReceiver;;
     protected RelativeLayout layout;
 
-    private boolean startAttitudeCaptured = false;
+    private boolean firstAttitudeCaptured = false;
     private float[] updatedDeviceAttitudeAsQuaternion = new float[4];
     private float[] startAttitude = new float[4];
     private float[] finishAttitude = new float[4];
@@ -51,6 +56,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     private double max;
     private double maximumAngle;
     public double sensorFreq = 100.0; // Sensor frequency for device motion recorder
+
 
     public RangeOfMotionStepLayout(Context context) {
         super(context);
@@ -88,10 +94,10 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         super.setupActiveViews();
 
         LayoutInflater.from(getContext())
-                .inflate(R.layout.rsb_step_layout_range_of_motion, this, true);
+                .inflate(R.layout.range_of_motion_step_layout, this, true);
 
         titleTextview.setVisibility(View.VISIBLE);
-        textTextview.setVisibility(View.GONE); // This will need to be set to VISIBLE for RS framework
+        textTextview.setVisibility(View.VISIBLE);
         timerTextview.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
         progressBarHorizontal.setVisibility(View.GONE);
@@ -100,12 +106,11 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         setupOnClickListener();
     }
 
-    private void setupOnClickListener() {
+    public void setupOnClickListener() {
         layout = findViewById(R.id.rsb_step_layout_range_of_motion);
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 onFinish();
             }
         });
@@ -143,26 +148,28 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
                             };
                             updatedDeviceAttitudeAsQuaternion = getDeviceAttitudeAsQuaternion(sensor_values);
                         }
+
                         double updatedAngle = calculateShiftedAngleRelativeToStart(updatedDeviceAttitudeAsQuaternion); // this converts the current device attitude into an angle (degrees)
-                        if (!startAttitudeCaptured) { // we want setStartAttitude() to run once only
+                        if (!firstAttitudeCaptured) { // we want setStartAttitude() to run once only
                             setStartAttitude(updatedDeviceAttitudeAsQuaternion);
-                            startAttitudeCaptured = true;
+                            firstAttitudeCaptured = true; // this prevents setStartAttitude from being re-set after the first pass
                             }
-                        if (updatedAngle < min) { // this captures the minimum angle recorded during the task
+                        if (updatedAngle < min) { // this captures the minimum angle (relative to start) that is recorded during the task
                             min = updatedAngle;
                             setMinimumAngle(min);
                             }
-                        if (updatedAngle > max) { // this captures the maximum angle recorded during the task
+                        if (updatedAngle > max) { // this captures the maximum angle (relative to start) that is recorded during the task
                             max = updatedAngle;
                             setMaximumAngle(max);
                             }
-                        setFinishAttitude(updatedDeviceAttitudeAsQuaternion); // this captures the final (finish) angle of the task
+                        setFinishAttitude(updatedDeviceAttitudeAsQuaternion); // this captures the last (finish) angle to be recorded
                     }
                 }
             }
         };
         IntentFilter intentFilter = new IntentFilter(DeviceMotionRecorder.BROADCAST_ROTATION_VECTOR_UPDATE_ACTION);
         intentFilter.addAction(DeviceMotionRecorder.BROADCAST_ROTATION_VECTOR_UPDATE_KEY);
+        //intentFilter.addAction(DeviceMotionRecorder.BROADCAST_ACCELEROMETER_UPDATE_ACTION);
         LocalBroadcastManager.getInstance(appContext)
                 .registerReceiver(deviceMotionReceiver, intentFilter);
     }
@@ -198,12 +205,12 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     /**
      * Methods to obtain the initial (start) device attitude as a quaternion
      **/
-    private void setStartAttitude(float[] startAttitude) {
-        this.startAttitude = startAttitude;
-    }
-
     public float[] getStartAttitude() {
         return startAttitude;
+    }
+
+    private void setStartAttitude(float[] startAttitude) {
+        this.startAttitude = startAttitude;
     }
 
     /**
@@ -249,75 +256,141 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         return shifted_angle;
     }
 
-    private void setMinimumAngle (double minimumAngle) {
-        this.minimumAngle = minimumAngle;
-    }
-
     public double getMinimumAngle() {
         return minimumAngle;
     }
 
-    private void setMaximumAngle (double maximumAngle) {
-        this.maximumAngle = maximumAngle;
+    private void setMinimumAngle (double minimumAngle) {
+        this.minimumAngle = minimumAngle;
     }
 
     public double getMaximumAngle() {
         return maximumAngle;
     }
 
+    private void setMaximumAngle (double maximumAngle) {
+        this.maximumAngle = maximumAngle;
+    }
+
     /**
-     * Method to shift default range of calculated angles, if required, before being evaluated for maximum
-     * and minimum values. Default setting is to return the original angle value, which creates an available
-     * range of +270 and -90, allowing for the current 90 degree adjustment in the stepResultFinished() method
-     * for tasks that negin in a vertical device orientation. This range is suitable for the knee and shoulder
-     * tasks but may not be suitable for other device motion tasks (e.g. if a range of +/-180 degrees is required).
-     * If so, the method can be overridden and a version of the following conditional statement can be used:
-     *
-     *     boolean targetAngleRange = ((original_angle < -90) && (original_angle >= -180));
-     *     double shifted_angle;
-     *     if (targetAngleRange) {
-     *         shifted_angle = Math.abs(original_angle) - 360;
-     *         } else {
-     *         shifted_angle = original_angle;
-     *         }
-     *         return shifted_angle;
+     * Method to shift default range of calculated angles for specific device or screen orientations,
+     * if required, before being evaluated for maximum and minimum values. Should be overridden in
+     * sub-classes where necessary.
      **/
     public double shiftDeviceAngleRange(double original_angle) {
-        return original_angle;
+        double shifted_angle;
+        int orientation = getScreenOrientation();
+        boolean targetAngleRange = ((original_angle >= 0) && (original_angle <= 180));
+        if (targetAngleRange && (orientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT)) {
+            shifted_angle = 360 - Math.abs(original_angle);
+        } else {
+            shifted_angle = original_angle;
+        }
+        return shifted_angle;
     }
 
     /**
      * Method to calculate angles in degrees from the device attitude quaternion, as a function of
-     * screen orientation
+     * device orientation (portrait or landscape) or screen orientation (portrait, Landscape, reverse
+     * portrait or reverse landscape).
      **/
     public double getDeviceAngleInDegreesFromQuaternion(float[] quaternion) {
         double angle_in_degrees = 0;
-        int orientation = getResources().getConfiguration().orientation;
-        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        int screen_orientation = getScreenOrientation();
+        int device_orientation = getResources().getConfiguration().orientation;
+
+        if ((device_orientation == Configuration.ORIENTATION_LANDSCAPE)
+                || (screen_orientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
+                || (screen_orientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE)) {
             angle_in_degrees = Math.toDegrees(MathUtils.allOrientationsForRoll (
                     quaternion[0],
                     quaternion[1],
                     quaternion[2],
-                    quaternion[3])
-            );
+                    quaternion[3]));
         }
-        else if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+        else if ((device_orientation == Configuration.ORIENTATION_PORTRAIT)
+                || (screen_orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+                || (screen_orientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT)) {
             angle_in_degrees = Math.toDegrees(MathUtils.allOrientationsForPitch (
                     quaternion[0],
                     quaternion[1],
                     quaternion[2],
-                    quaternion[3])
-            );
+                    quaternion[3]));
         }
         return angle_in_degrees;
     }
 
     /**
-     * Method to multiply updates of the attitude quaternion by the inverse of the quaternion
-     * that represents the start position, to obtain the updated device attitude relative to the
-     * start position (this relativity is necessary if the task is being performed in different
-     * start positions, which could result in angles that exceed the already shifted range)
-     *
+     * Method to get all possible screen orientations, not just portrait and landscape, to ensure that
+     * angles (in degrees) are calculated correctly. Android only provides portrait or landscape in
+     * the Configuration class, so we must use the Surface class to report the angle of the onscreen
+     * rendered image relative to the 'natural' device orientation (portrait on most devices), which
+     * should be locked for the duration of the task recording within ActiveTaskActivity.
+     **/
+    public int getScreenOrientation() {
+        Context appContext = getContext().getApplicationContext();
+        WindowManager windowManager = (WindowManager) appContext.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        windowManager.getDefaultDisplay().getMetrics(displayMetrics);
+
+        int rotation = windowManager.getDefaultDisplay().getRotation();
+        int height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels;
+        int screen_orientation;
+
+        // if the device's natural orientation is portrait:
+        if ((rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180) && (height > width)
+                || (rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270) && (width > height)) {
+            switch(rotation) {
+                case Surface.ROTATION_0:
+                    screen_orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+                    break;
+                case Surface.ROTATION_90:
+                    screen_orientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+                    break;
+                case Surface.ROTATION_180:
+                    screen_orientation = ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT;
+                    break;
+                case Surface.ROTATION_270:
+                    screen_orientation = ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE;
+                    break;
+                default:
+                    Log.e(ContentValues.TAG, "Unknown screen orientation. Defaulting to " +
+                            "portrait.");
+                    screen_orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+                    break;
+            }
+        }
+        // if the device's natural orientation is landscape or if the device is square:
+        else {
+            switch(rotation) {
+                case Surface.ROTATION_0:
+                    screen_orientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+                    break;
+                case Surface.ROTATION_90:
+                    screen_orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+                    break;
+                case Surface.ROTATION_180:
+                    screen_orientation = ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE;
+                    break;
+                case Surface.ROTATION_270:
+                    screen_orientation = ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT;
+                    break;
+                default:
+                    Log.e(ContentValues.TAG, "Unknown screen orientation. Defaulting to " +
+                            "landscape.");
+                    screen_orientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+                    break;
+            }
+        }
+        return screen_orientation;
+    }
+
+    /**
+     * Method to obtain the updated device attitude relative to the start position by multiplying updates
+     * of the attitude quaternion by the inverse of the quaternion that represents the start position.
+     * This relativity is necessary if the task is being performed in different start positions, which
+     * could result in angles that exceed the already shifted range.
      **/
     public float[] getDeviceOrientationRelativeToStart(float[] originalDeviceAttitude) {
         float[] relativeDeviceAttitude;
@@ -327,8 +400,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     }
 
     /**
-     * Method to obtain the device's attitude as a quaternion from the rotation vector sensor, when
-     * it is available
+     * Method to obtain the device's attitude as a unit quaternion from the rotation vector sensor,
+     * when it is available
      **/
     public float[] getDeviceAttitudeAsQuaternion(float[] rotation_vector) {
         float[] attitudeQuaternion = new float[4];
@@ -338,8 +411,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     @Override
     protected void stepResultFinished() {
-        super.stepResultFinished();
 
+        int orientation = getScreenOrientation();
         double start;
         double finish;
         double minimum;
@@ -348,34 +421,60 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
         rangeOfMotionResult = new RangeOfMotionResult(rangeOfMotionStep.getIdentifier());
 
-        /* Like iOS's ResearchKit, when using quaternions via the rotation vector sensor in Android,
-        the zero orientation {0,0,0,0} position is parallel with the ground (i.e. screen facing up).
-        Hence, tasks in which portrait is the start position (i.e. perpendicular to the ground) require
-        a 90 degree adjustment. In addition, the sign of angles calculated from the quaternion need to
-        be reversed for the knee and shoulder tasks, in which the device will be rotated in the direction
-        opposite to that of the device axes (i.e. right hand rule). */
+        /* Like iOS, when using quaternions via the rotation vector sensor in Android, the zero attitude
+        {0,0,0,0} position is parallel with the ground (i.e. screen facing up). Hence, tasks in which
+        portrait or landscape is the start position (i.e. perpendicular to the ground) require a 90 degree
+        adjustment. These are set to report an absolute an angle between +270 and -90 degrees. These
+        calculations will need to be overridden in tasks where this range is not appropriate.*/
 
-        start = 90 - getShiftedStartAngle(); // reports absolute an angle between +270 and -90 degrees
+        // Capture absolute start angle relative to device/screen orientation
+        if (orientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE) {
+            start = 90 + getShiftedStartAngle();
+        } else if (orientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT) {
+            start = -90 - getShiftedStartAngle();
+        } else {
+            start = 90 - getShiftedStartAngle();
+        }
         rangeOfMotionResult.setStart(start);
 
-        finish = 90 - getShiftedFinishAngle(); // absolute angle; direction related to start is opposite for knee and shoulder tasks
+        // Capture absolute finish angle relative to device/screen orientation
+        if (orientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE) {
+            finish = 90 + getShiftedFinishAngle();
+        } else if (orientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT) {
+            finish = -90 - getShiftedStartAngle();
+        } else {
+            finish = 90 - getShiftedFinishAngle();
+        }
         rangeOfMotionResult.setFinish(finish);
 
         /* Because both knee and shoulder tasks both use pitch in the direction opposite to the device
         axes (i.e. right hand rule), maximum and minimum angles are reported the 'wrong' way around
-        for these particular tasks. These calculations will need to be overriden in tasks where this
-        is not the case */
+        for these particular tasks when the device is in portrait or landscape mode */
 
-        minimum = start - getMaximumAngle(); // captured minimum angle will be opposite for knee and shoulder tasks
+        // Capture minimum angle relative to device/screen orientation
+        if (orientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE) {
+            minimum = start + getMinimumAngle(); // TODO: untested
+        } else if (orientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT) {
+            minimum = start + getMinimumAngle(); // TODO: untested
+        } else {
+            minimum = start - getMaximumAngle();
+        }
         rangeOfMotionResult.setMinimum(minimum);
 
-        maximum = start - getMinimumAngle(); // captured maximum angle will be opposite for knee and shoulder tasks
+        // Capture maximum angle relative to device/screen orientation
+        if (orientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE) {
+            maximum = start + getMaximumAngle(); // TODO: untested
+        } else if (orientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT) {
+            maximum = start + getMaximumAngle(); // TODO: untested
+        } else {
+            maximum = start - getMinimumAngle();
+        }
         rangeOfMotionResult.setMaximum(maximum);
 
-        range = Math.abs(maximum - minimum); // largest range across all recorded angles
+        // Capture range as largest range across all recorded angles
+        range = Math.abs(maximum - minimum);
         rangeOfMotionResult.setRange(range);
 
         stepResult.setResultForIdentifier(rangeOfMotionResult.getIdentifier(), rangeOfMotionResult);
     }
 }
-
