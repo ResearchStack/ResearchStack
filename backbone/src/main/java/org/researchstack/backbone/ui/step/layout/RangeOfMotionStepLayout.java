@@ -94,7 +94,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         super.setupActiveViews();
 
         LayoutInflater.from(getContext())
-                .inflate(R.layout.range_of_motion_step_layout, this, true);
+                .inflate(R.layout.rsb_step_layout_range_of_motion, this, true);
 
         titleTextview.setVisibility(View.VISIBLE);
         textTextview.setVisibility(View.VISIBLE);
@@ -152,7 +152,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
                         double updatedAngle = calculateShiftedAngleRelativeToStart(updatedDeviceAttitudeAsQuaternion); // this converts the current device attitude into an angle (degrees)
                         if (!firstAttitudeCaptured) { // we want setStartAttitude() to run once only
                             setStartAttitude(updatedDeviceAttitudeAsQuaternion);
-                            firstAttitudeCaptured = true; // this prevents setStartAttitude from being re-set after the first pass
+                            firstAttitudeCaptured = true; // this prevents setStartAttitude() from being re-set after the first pass
                             }
                         if (updatedAngle < min) { // this captures the minimum angle (relative to start) that is recorded during the task
                             min = updatedAngle;
@@ -169,7 +169,6 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         };
         IntentFilter intentFilter = new IntentFilter(DeviceMotionRecorder.BROADCAST_ROTATION_VECTOR_UPDATE_ACTION);
         intentFilter.addAction(DeviceMotionRecorder.BROADCAST_ROTATION_VECTOR_UPDATE_KEY);
-        //intentFilter.addAction(DeviceMotionRecorder.BROADCAST_ACCELEROMETER_UPDATE_ACTION);
         LocalBroadcastManager.getInstance(appContext)
                 .registerReceiver(deviceMotionReceiver, intentFilter);
     }
@@ -291,7 +290,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     /**
      * Method to calculate angles in degrees from the device attitude quaternion, as a function of
-     * device orientation (portrait or landscape) or screen orientation (portrait, Landscape, reverse
+     * device orientation (portrait or landscape) or screen orientation (portrait, landscape, reverse
      * portrait or reverse landscape).
      **/
     public double getDeviceAngleInDegreesFromQuaternion(float[] quaternion) {
@@ -471,7 +470,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         }
         rangeOfMotionResult.setMaximum(maximum);
 
-        // Capture range as largest range across all recorded angles
+        // Capture range as largest difference across all recorded angles
         range = Math.abs(maximum - minimum);
         rangeOfMotionResult.setRange(range);
 
