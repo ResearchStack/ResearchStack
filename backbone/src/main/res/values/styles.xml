@@ -168,6 +168,12 @@
         <item name="android:paddingEnd">8dp</item>
     </style>
 
+    <style name="rsb_review_step_form_step_section_title_style">
+        <item name="android:textColor">@color/rsb_black</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="rsb_review_step_sub_step_title_style">
         <item name="android:textColor">@color/rsb_black</item>
         <item name="android:textSize">18sp</item>
