@@ -452,9 +452,9 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
         // Capture minimum angle relative to device/screen orientation
         if (orientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE) {
-            minimum = start + getMinimumAngle(); // TODO: untested
+            minimum = start + getMinimumAngle();
         } else if (orientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT) {
-            minimum = start + getMinimumAngle(); // TODO: untested
+            minimum = start - getMinimumAngle(); // TODO: untested as screen won't rotate in emulator
         } else {
             minimum = start - getMaximumAngle();
         }
@@ -462,9 +462,9 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
         // Capture maximum angle relative to device/screen orientation
         if (orientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE) {
-            maximum = start + getMaximumAngle(); // TODO: untested
+            maximum = start + getMaximumAngle();
         } else if (orientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT) {
-            maximum = start + getMaximumAngle(); // TODO: untested
+            maximum = start - getMaximumAngle(); // TODO: untested as screen won't rotate in emulator
         } else {
             maximum = start - getMinimumAngle();
         }
