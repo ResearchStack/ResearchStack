@@ -3,6 +3,6 @@
     android:shape="rectangle">
 
     <stroke
-        android:width="1dp"
+        android:width="@dimen/rsb_reviewStep_form_border_width"
         android:color="@color/rsb_concrete" />
 </shape>
