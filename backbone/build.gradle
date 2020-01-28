@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'maven'
-android {
 
+android {
     compileSdkVersion 29
     buildToolsVersion '29.0.2'
     afterEvaluate {
@@ -20,7 +20,7 @@ android {
         minSdkVersion 23
         targetSdkVersion 28
         versionCode 1
-        versionName "1.5.0"
+        versionName "1.5.1"
 
         dimension "default"
     }
@@ -35,19 +35,24 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     flavorDimensions "default"
 
     productFlavors {
+        def useSecureFlagProd = rootProject.hasProperty("useSecureFlagProd") ? rootProject.useSecureFlagProd : true
+        def useSecureFlagDev = rootProject.hasProperty("useSecureFlagDev") ? rootProject.useSecureFlagDev : false
+        def useSecureFlagQa = rootProject.hasProperty("useSecureFlagQa") ? rootProject.useSecureFlagQa : false
+
         prod {
-            buildConfigField 'boolean', 'USE_SECURE_FLAG', 'true'
+            buildConfigField 'boolean', 'USE_SECURE_FLAG', "$useSecureFlagProd"
         }
 
         dev {
-            buildConfigField 'boolean', 'USE_SECURE_FLAG', 'true'
+            buildConfigField 'boolean', 'USE_SECURE_FLAG', "$useSecureFlagDev"
         }
 
         automatedFlask {
-            buildConfigField 'boolean', 'USE_SECURE_FLAG', 'false'
+            buildConfigField 'boolean', 'USE_SECURE_FLAG', "$useSecureFlagQa"
         }
     }
 
@@ -69,6 +74,7 @@ android {
 
     resourcePrefix 'rsb_'
 }
+
 dependencies {
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -200,6 +206,7 @@ afterEvaluate { project ->
 }
 
 buildscript {
+
     repositories {
         google()
         jcenter()
