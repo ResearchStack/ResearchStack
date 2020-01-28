@@ -37,16 +37,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     flavorDimensions "default"
 
     productFlavors {
+        def useSecureFlagProd = rootProject.hasProperty("useSecureFlagProd") ? rootProject.useSecureFlagProd : true
+        def useSecureFlagDev = rootProject.hasProperty("useSecureFlagDev") ? rootProject.useSecureFlagDev : false
+
         prod {
-            buildConfigField 'boolean', 'USE_SECURE_FLAG', 'true'
+            buildConfigField 'boolean', 'USE_SECURE_FLAG', "$useSecureFlagProd"
         }
 
         dev {
-            buildConfigField 'boolean', 'USE_SECURE_FLAG', 'false'
+            buildConfigField 'boolean', 'USE_SECURE_FLAG', "$useSecureFlagDev"
         }
+
     }
 
     compileOptions {
@@ -67,6 +72,7 @@ android {
 
     resourcePrefix 'rsb_'
 }
+
 dependencies {
     def kotlinVersion = '1.3.61'
     def koinVersion = '2.0.1'
