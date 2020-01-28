@@ -2,6 +2,9 @@
 
 ### Change log
 
+#### v1.5.1
+- Adding languages: ko_KR
+
 #### v1.5.0
 - Adding languages: ru_RU, ja_JP 
 - Bug fixes.
