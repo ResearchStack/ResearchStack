@@ -1,7 +1,6 @@
 package org.researchstack.foundation.components.presentation
 
 import androidx.lifecycle.ViewModel
-import org.researchstack.foundation.core.interfaces.IResult
 import org.researchstack.foundation.core.interfaces.IStep
 import org.researchstack.foundation.core.models.result.StepResult
 import org.threeten.bp.Instant
@@ -14,7 +13,7 @@ import java.util.concurrent.atomic.AtomicBoolean
  * that have yet to be saved as a StepResult).
  */
 open class StepPresentationViewModel<StepType : IStep>
-(val taskPresentationViewModel: TaskPresentationViewModel<in StepType>) : ViewModel() {
+(val taskPresentationViewModel: TaskPresentationViewModel<StepType>) : ViewModel() {
     private val addedResult: AtomicBoolean = AtomicBoolean()
     private val startTime: Instant = Instant.now()
 
@@ -24,8 +23,9 @@ open class StepPresentationViewModel<StepType : IStep>
                 if (!addedResult.get()) {
                     // If for whatever reason the step didn't create a result matching it's identifier we create a
                     // ResultBase to mark that the step completed.
-                    // todo joliu add step result
-//                    addStepResult(ResultBase(stepView.getIdentifier(), startTimestamp, Instant.now()))
+                    val currentStep =
+                            taskPresentationViewModel.getTaskNavigatorStateLiveData().value!!.currentStep!!
+                    addStepResult(StepResult<Any>(identifier = currentStep.identifier, startTimestamp = startTime, endTimestamp = Instant.now()))
                 }
                 taskPresentationViewModel.goForward()
             }

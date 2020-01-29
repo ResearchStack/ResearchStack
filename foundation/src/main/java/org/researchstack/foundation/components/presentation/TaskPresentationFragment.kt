@@ -3,16 +3,20 @@ package org.researchstack.foundation.components.presentation
 import android.os.Bundle
 import android.os.ParcelUuid
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import kotlinx.android.synthetic.main.rsf_layout_toolbar.*
 import org.researchstack.foundation.R
 import org.researchstack.foundation.components.presentation.interfaces.IStepFragmentProvider
+import org.researchstack.foundation.components.presentation.interfaces.OnBackPressed
 import org.researchstack.foundation.core.interfaces.IResult
 import org.researchstack.foundation.core.interfaces.ITask
 import org.researchstack.foundation.core.interfaces.UIStep
@@ -23,7 +27,7 @@ import java.util.*
  * Base Fragment that presents a Task for the user to complete.
  */
 abstract class TaskPresentationFragment<StepType : UIStep, ResultType : IResult, TaskType : ITask>
-    : androidx.fragment.app.Fragment() {
+    : androidx.fragment.app.Fragment(), OnBackPressed {
 
     companion object {
         @JvmField
@@ -96,7 +100,16 @@ abstract class TaskPresentationFragment<StepType : UIStep, ResultType : IResult,
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.rsf_fragment_task_presentation, container, false)
+        val view = inflater.inflate(R.layout.rsf_fragment_task_presentation, container, false)
+
+        val toolbar = view.findViewById(R.id.toolbar) as Toolbar?
+
+        val appCompatActivity: AppCompatActivity = this.activity as AppCompatActivity
+        appCompatActivity.setSupportActionBar(toolbar)
+        appCompatActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+//        activity?.actionBar?.setDisplayHomeAsUpEnabled(true)
+        return view
     }
 
     @VisibleForTesting
@@ -121,6 +134,7 @@ abstract class TaskPresentationFragment<StepType : UIStep, ResultType : IResult,
             return
         }
 
+
         val stepFragment = this.getFragmentForStep(taskNavigatorState.currentStep)
 
         val transaction = childFragmentManager.beginTransaction()
@@ -143,19 +157,35 @@ abstract class TaskPresentationFragment<StepType : UIStep, ResultType : IResult,
                 ?: throw RuntimeException("Cannot create fragment for step ${step.identifier}")
         // Change the title on the activity
         setActionBarTitle(step.stepTitle)
-
         return fragment
     }
 
+    override fun onBackPressed(): Boolean {
+        notifyStepOfBackPress()
+        return true
+    }
+
+    fun notifyStepOfBackPress() {
+        val stepFragment = childFragmentManager.findFragmentById(R.id.rsf_content_step)
+        (stepFragment as? OnBackPressed)?.onBackPressed()?.takeIf{!it}?.let {
+            showPreviousStep()
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                notifyStepOfBackPress()
+                true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
+    }
 
     private fun setActionBarTitle(title: String?) {
-
-        val appCompatActivity: AppCompatActivity = this.activity as AppCompatActivity
-
-        val actionBar = appCompatActivity.supportActionBar
-        if (actionBar != null) {
-            actionBar.run { setTitle(title) }
-        }
+        toolbar?.run { setTitle(title) }
     }
 
     fun showConfirmExitDialog() {
@@ -180,5 +210,6 @@ abstract class TaskPresentationFragment<StepType : UIStep, ResultType : IResult,
         onTaskExitListener?.onTaskExit(finishStatus,
                 taskPresentationViewModel.getTaskNavigatorStateLiveData().value!!.taskResult)
     }
+
 }
 

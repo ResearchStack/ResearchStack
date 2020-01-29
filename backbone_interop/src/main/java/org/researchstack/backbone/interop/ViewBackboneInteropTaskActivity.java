@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ import org.researchstack.foundation.components.presentation.compatibility.Backwa
 import org.researchstack.foundation.components.presentation.compatibility.BackwardsCompatibleTaskPresentationFragment;
 import org.researchstack.foundation.components.presentation.interfaces.IStepFragmentProvider;
 import org.researchstack.foundation.components.presentation.interfaces.ITaskNavigator;
+import org.researchstack.foundation.components.presentation.interfaces.OnBackPressed;
 import org.researchstack.foundation.core.interfaces.IStep;
 import org.researchstack.foundation.core.models.step.Step;
 
@@ -184,9 +186,31 @@ public class ViewBackboneInteropTaskActivity extends PinCodeActivity implements 
             @Override
             public IStep create(org.researchstack.backbone.step.Step step) {
                 backboneSteps.put(step.getIdentifier(), step);
-                return new org.researchstack.foundation.core.models.step.Step(step.getIdentifier(), step.getTitle());
+                org.researchstack.foundation.core.models.step.Step foundationStep =
+                        new org.researchstack.foundation.core.models.step.Step(step.getIdentifier(), step.getTitle());
+                // TaskPresentationFragment uses StepTitle to set action bar.
+                // Since setting StepTitle is done in Foundation and not delegated to backbone, we need to copy to Foundation step
+                foundationStep.setStepTitle(getApplicationContext().getResources().getString(step.getStepTitle()));
+                return foundationStep;
             }
         };
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!(taskFragment instanceof OnBackPressed) || !((OnBackPressed) taskFragment).onBackPressed()) {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (android.R.id.home == item.getItemId()) {
+            if (taskFragment instanceof OnBackPressed) {
+                return ((OnBackPressed) taskFragment).onBackPressed();
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @VisibleForTesting

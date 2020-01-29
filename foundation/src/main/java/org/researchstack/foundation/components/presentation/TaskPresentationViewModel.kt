@@ -95,7 +95,7 @@ class TaskPresentationViewModel<StepType : IStep>(val taskNavigator: ITaskNaviga
     /**
      * Data class the represents the full navigation state.
      */
-    data class TaskNavigatorState<StepType>(
+    data class TaskNavigatorState<StepType: IStep>(
             @NavDirection val navDirection: Int, val currentStep: StepType?, val previousStep: StepType?,
             val nextStep: StepType?, val taskProgress: Task.TaskProgress?, val taskResult: TaskResult)
 }

@@ -17,13 +17,14 @@ import org.researchstack.foundation.R
 import org.researchstack.foundation.components.presentation.ActionType
 import org.researchstack.foundation.components.presentation.StepPresentationFragment
 import org.researchstack.foundation.components.presentation.StepPresentationViewModelFactory
+import org.researchstack.foundation.components.presentation.interfaces.OnBackPressed
 import org.researchstack.foundation.core.interfaces.IResult
 import org.researchstack.foundation.core.interfaces.UIStep
 
 /**
  * Delegates between :backbone StepLayout, StepCallback classes and :foundation Fragments.
  */
-class BackwardsCompatibleStepFragment : StepPresentationFragment<UIStep, IResult>(), StepCallbacks {
+class BackwardsCompatibleStepFragment : StepPresentationFragment<UIStep, IResult>(), StepCallbacks, OnBackPressed {
 
     companion object {
         /**
@@ -53,18 +54,9 @@ class BackwardsCompatibleStepFragment : StepPresentationFragment<UIStep, IResult
         val view = inflater.inflate(getLayoutId(), container, false)
         val containerView: FrameLayout = view.findViewById(R.id.rsf_content_layout)
 
-
-        val toolbar = view.findViewById(R.id.toolbar) as Toolbar?
-
-
         stepLayout.setCallbacks(this)
         val lp = getLayoutParams(stepLayout)
         containerView.addView(stepLayout.layout, 0, lp)
-
-
-        val appCompatActivity: AppCompatActivity = this.activity as AppCompatActivity
-        appCompatActivity.setSupportActionBar(toolbar)
-        appCompatActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         return view
     }
@@ -112,12 +104,16 @@ class BackwardsCompatibleStepFragment : StepPresentationFragment<UIStep, IResult
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         if (item?.itemId == android.R.id.home) {
             notifyStepOfBackPressed()
-            return true
         }
         return super.onOptionsItemSelected(item)
     }
 
-    fun notifyStepOfBackPressed() {
+    override fun onBackPressed(): Boolean {
+        return notifyStepOfBackPressed()
+    }
+
+    fun notifyStepOfBackPressed() : Boolean {
         stepLayout.isBackEventConsumed
+        return true
     }
 }
