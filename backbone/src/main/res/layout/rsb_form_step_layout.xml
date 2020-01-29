@@ -43,6 +43,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/rsb_form_step_reviewstep_rect"
+        android:paddingStart="@dimen/rsb_reviewStep_form_border_width"
+        android:paddingEnd="@dimen/rsb_reviewStep_form_border_width"
         android:visibility="visible"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"

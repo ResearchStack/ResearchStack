@@ -4,14 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp">
+    android:paddingTop="8dp"
+    android:paddingBottom="0dp">
 
     <TextView
         android:id="@+id/formSectionStepQuestionTitle"
-        style="@style/rsb_review_step_sub_step_title_style"
+        style="@style/rsb_review_step_form_step_section_title_style"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Continuous Scale Step Title" />
+
+        tools:text="Form Section Title" />
+
+    <View
+        android:id="@+id/formSectionStepDividerLine"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/rsb_concrete"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/formSectionStepQuestionTitle" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
