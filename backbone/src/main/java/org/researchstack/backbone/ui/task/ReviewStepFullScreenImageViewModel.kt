@@ -14,15 +14,11 @@ class ReviewStepFullScreenImageViewModel(intent: Intent) : ViewModel() {
 
     val displayImageEvent = MutableLiveData<Bitmap?>()
 
-    init {
-        loadImage()
-    }
-
-    private fun loadImage() {
+    fun loadImage(width: Int, height: Int) {
         imageUrl?.let {
             var bitmap: Bitmap? = null
             try {
-                bitmap = getBitmapFromFile(it)
+                bitmap = getBitmapFromFile(it, width, height)
             } catch (e: FileNotFoundException) {
                 e.printStackTrace()
             }
@@ -31,10 +27,23 @@ class ReviewStepFullScreenImageViewModel(intent: Intent) : ViewModel() {
     }
 
     @Throws(FileNotFoundException::class)
-    private fun getBitmapFromFile(fileName: String): Bitmap? {
+    private fun getBitmapFromFile(fileName: String, width: Int, height: Int): Bitmap? {
         val file = File(fileName)
+
+        return resizeBitmap(file, width, height)
+    }
+
+    @Throws(FileNotFoundException::class)
+    private fun resizeBitmap(file: File, width: Int, height: Int): Bitmap? {
         val options = BitmapFactory.Options()
-        options.inPreferredConfig = Bitmap.Config.ARGB_8888
+        options.inJustDecodeBounds = true
+        BitmapFactory.decodeStream(FileInputStream(file), null, options)
+        var scale = 1
+        while (options.outWidth / scale / 2 >= width && options.outHeight / scale / 2 >= height) {
+            scale *= 2
+        }
+        options.inJustDecodeBounds = false
+        options.inSampleSize = scale
         return BitmapFactory.decodeStream(FileInputStream(file), null, options)
     }
 }

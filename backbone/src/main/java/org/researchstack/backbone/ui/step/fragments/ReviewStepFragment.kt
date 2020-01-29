@@ -18,7 +18,7 @@ internal class ReviewStepFragment : BaseStepFragment(R.layout.rsb_fragment_revie
         const val EXTRA_FULL_SCREEN_STEP = "full_screen_step"
     }
 
-    var stepToEdit: Step? = null
+    private var stepToEdit: Step? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
