@@ -10,15 +10,15 @@ import org.researchstack.foundation.core.interfaces.IStep
  * Providing ViewModelProvider.Factory allows us to inject dependencies and pass parameters
  * to an instance since the Android framework controls the instantiation of ViewModels.
  */
-class StepPresentationViewModelFactory<StepType : IStep>
+open class StepPresentationViewModelFactory<StepType : IStep>
 (val taskPresentationViewModel: TaskPresentationViewModel<StepType>) : ViewModel() {
-    fun create(): ViewModelProvider.Factory {
+    open fun create(step: StepType): ViewModelProvider.Factory {
         return object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 if (modelClass.isAssignableFrom(StepPresentationViewModel::class.java)) {
 
                     @Suppress("UNCHECKED_CAST")
-                    return StepPresentationViewModel(taskPresentationViewModel) as T
+                    return StepPresentationViewModel(taskPresentationViewModel, step) as T
                 }
                 throw IllegalArgumentException("Unknown ViewModel class")
             }

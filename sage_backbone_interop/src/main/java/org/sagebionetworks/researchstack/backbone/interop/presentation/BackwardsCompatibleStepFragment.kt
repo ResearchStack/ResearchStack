@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.ViewModelProvider
 import org.researchstack.foundation.R
 import org.researchstack.foundation.components.presentation.ActionType
 import org.researchstack.foundation.components.presentation.StepPresentationFragment
@@ -30,10 +31,10 @@ class BackwardsCompatibleStepFragment : StepPresentationFragment<UIStep, IResult
          * Returns an instance of this fragment that delegates for a given StepLayout.
          */
         @JvmStatic
-        fun newInstance(stepLayout: StepLayout, stepPresentationViewModelFactory: StepPresentationViewModelFactory<UIStep>, resultFactory: ResultFactory): BackwardsCompatibleStepFragment {
+        fun newInstance(stepLayout: StepLayout, stepPresentationViewModelProviderFactory: ViewModelProvider.Factory, resultFactory: ResultFactory): BackwardsCompatibleStepFragment {
             val fragment = BackwardsCompatibleStepFragment()
             fragment.stepLayout = stepLayout
-            fragment.inject(stepPresentationViewModelFactory)
+            fragment.inject(stepPresentationViewModelProviderFactory)
             fragment.inject(resultFactory)
             return fragment
         }

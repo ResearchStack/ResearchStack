@@ -22,7 +22,6 @@
         <activity
             android:name="org.researchstack.backbone.interop.ViewBackboneInteropTaskActivity"
             android:windowSoftInputMode="adjustResize"
-            tools:replace="android:theme"
             android:theme="@style/Theme.BackboneApp.Survey"
         />
 
