@@ -138,7 +138,8 @@
         <item name="android:layout_width">100dp</item>
         <item name="android:layout_height">100dp</item>
         <item name="android:layout_marginStart">16dp</item>
-        <item name="android:scaleType">centerCrop</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:background">@color/rsb_athens_gray</item>
     </style>
 
     <style name="rsb_image_capture_fullscreen_style">
