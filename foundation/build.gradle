@@ -8,10 +8,10 @@ apply plugin: 'com.jfrog.bintray'
 version = research_stack_version
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName version
 
@@ -31,7 +31,6 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    buildToolsVersion '28.0.3'
 }
 
 Properties properties = new Properties()
@@ -64,17 +63,24 @@ ext {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    // provides Java 8 time (JSR-310) backport for pre-Nougat devices
+    api 'com.jakewharton.threetenabp:threetenabp:1.0.5'
+
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.legacy:legacy-preference-v14:1.0.0'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.core:core:1.0.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     implementation "com.google.code.gson:gson:$gson_version"
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
 
 }
 

@@ -1,0 +1,59 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="Theme.BackboneApp" parent="Theme.Backbone">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/rsb_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/rsb_colorPrimaryDark</item>
+        <item name="colorAccent">@color/rsb_colorAccent</item>
+        <item name="alertDialogTheme">@style/Theme.BackboneApp.Dialog</item>
+        <item name="toolbarTheme">@style/Theme.BackboneApp.Toolbar</item>
+    </style>
+
+    <style name="Theme.BackboneApp.Survey">
+        <item name="toolbarTheme">@style/Theme.BackboneApp.Toolbar.Transparent</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="colorPrimaryDark">@color/rsb_black_40</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="Theme.BackboneApp.Toolbar.Transparent">
+        <item name="colorControlNormal">@color/rsb_warm_gray</item>
+        <item name="colorPrimary">@android:color/white</item>
+        <item name="toolbarStyle">@style/Widget.BackboneApp.Toolbar</item>
+    </style>
+
+    <style name="Theme.BackboneApp.Dialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/rsb_warm_gray</item>
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="Theme.BackboneApp.Toolbar">
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="toolbarStyle">@style/Widget.BackboneApp.Toolbar</item>
+    </style>
+
+    <style name="Base.Widget.BackboneApp.Toolbar" parent="@style/Widget.AppCompat.Toolbar">
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:minHeight">56dp</item>
+        <item name="titleTextAppearance">@style/TextAppearance.Widget.BackboneApp.Toolbar.Title</item>
+    </style>
+
+    <style name="Widget.BackboneApp.Toolbar" parent="@style/Base.Widget.BackboneApp.Toolbar">
+        <item name="android:foreground">?android:windowContentOverlay</item>
+    </style>
+
+
+    <style name="TextAppearance.Widget.BackboneApp.Toolbar.Title"
+        parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="TextAppearance.Widget.BackboneApp.Toolbar.Title.Transparent">
+        <item name="android:textColor">@color/rsb_warm_gray</item>
+    </style>
+
+
+</resources>

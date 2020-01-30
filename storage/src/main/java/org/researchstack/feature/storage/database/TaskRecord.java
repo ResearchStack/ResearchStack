@@ -5,9 +5,12 @@ import org.researchstack.foundation.core.models.result.TaskResult;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import co.touchlab.squeaky.field.DatabaseField;
 import co.touchlab.squeaky.table.DatabaseTable;
+
+import static org.threeten.bp.DateTimeUtils.toInstant;
 
 @DatabaseTable
 public class TaskRecord {
@@ -21,6 +24,9 @@ public class TaskRecord {
     public String taskId;
 
     @DatabaseField(canBeNull = false)
+    public String taskRunUUID;
+
+    @DatabaseField(canBeNull = false)
     public Date started;
 
     @DatabaseField(columnName = COMPLETED)
@@ -30,9 +36,11 @@ public class TaskRecord {
     public Date uploaded;
 
     public static TaskResult toTaskResult(TaskRecord taskRecord, List<StepRecord> stepRecords) {
-        TaskResult taskResult = new TaskResult(taskRecord.taskId);
-        taskResult.setStartDate(taskRecord.started);
-        taskResult.setEndDate(taskRecord.completed);
+        TaskResult taskResult = new TaskResult(taskRecord.taskId,
+                UUID.fromString(taskRecord.taskRunUUID));
+
+        taskResult.setStartTimestamp(toInstant(taskRecord.started));
+        taskResult.setEndTimestamp(toInstant(taskRecord.completed));
 
         for (StepRecord record : stepRecords) {
             StepResult result = StepRecord.toStepResult(record);

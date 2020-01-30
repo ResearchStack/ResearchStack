@@ -1,8 +1,5 @@
 package org.researchstack.foundation.core.models.task;
 
-import android.content.Context;
-
-import org.jetbrains.annotations.NotNull;
 import org.researchstack.foundation.components.presentation.interfaces.ITaskNavigator;
 import org.researchstack.foundation.core.interfaces.ITask;
 import org.researchstack.foundation.core.models.result.TaskResult;
@@ -72,17 +69,11 @@ public abstract class Task implements Serializable, ITask, ITaskNavigator<Step, 
      * The default implementation gets the title from string resources if it exists, otherwise it
      * returns an empty string.
      *
-     * @param context for fetching resources
      * @param step    the current step
      * @return the title to display
      */
-    @Deprecated
-    public String getTitleForStep(Context context, Step step) {
-        return step.getStepTitle() != 0 ? context.getString(step.getStepTitle()) : "";
-    }
-
     public String getTitleForStep(Step step) {
-        String titleString = step.getStepTitleString();
+        String titleString = step.getStepTitle();
         return  titleString != null ? titleString : "";
     }
 
@@ -184,7 +175,7 @@ public abstract class Task implements Serializable, ITask, ITaskNavigator<Step, 
 
     }
 
-    public static enum ViewChangeType {
+    public enum ViewChangeType {
         ActivityCreate,
         ActivityPause,
         ActivityResume,

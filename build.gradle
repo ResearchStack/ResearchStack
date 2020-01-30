@@ -1,6 +1,8 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
-buildscript {
+buildscript { 
+    ext.kotlin_version = '1.3.50'
+
 
     ext {
         research_stack_version = '1.5.0' + (Boolean.valueOf(System.getProperty("snapshot")) ? "-SNAPSHOT" : "")
@@ -18,22 +20,28 @@ buildscript {
 
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.android.tools.build:gradle:3.4.0'
+        classpath 'com.android.tools.build:gradle:3.5.3'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
+
+        classpath "org.jetbrains.dokka:dokka-android-gradle-plugin:0.9.18"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
-}
+
+    
+    }
 
 allprojects {
+    version = research_stack_version
     repositories {
         google()
         jcenter()
         maven {
             url "https://dl.bintray.com/touchlab/Squeaky"
         }
+        maven { url 'https://dl.bintray.com/sage-bionetworks/research-stack/' }
         maven { url "https://jitpack.io" }
         mavenCentral()
     }

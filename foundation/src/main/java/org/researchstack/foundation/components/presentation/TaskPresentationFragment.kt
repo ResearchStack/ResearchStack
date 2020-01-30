@@ -1,237 +1,215 @@
 package org.researchstack.foundation.components.presentation
 
-import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.os.ParcelUuid
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import kotlinx.android.synthetic.main.rsf_layout_toolbar.*
 import org.researchstack.foundation.R
-import org.researchstack.foundation.components.common.ui.callbacks.StepCallbacks
-import org.researchstack.foundation.components.presentation.interfaces.IStepFragment
 import org.researchstack.foundation.components.presentation.interfaces.IStepFragmentProvider
-import org.researchstack.foundation.components.presentation.interfaces.ITaskNavigator
+import org.researchstack.foundation.components.presentation.interfaces.OnBackPressed
 import org.researchstack.foundation.core.interfaces.IResult
-import org.researchstack.foundation.core.interfaces.IStep
 import org.researchstack.foundation.core.interfaces.ITask
-import java.lang.RuntimeException
+import org.researchstack.foundation.core.interfaces.UIStep
+import org.researchstack.foundation.core.models.result.TaskResult
 import java.util.*
 
-abstract class TaskPresentationFragment<StepType: IStep, ResultType: IResult, TaskType: ITask>(): androidx.fragment.app.Fragment(), StepCallbacks {
+/**
+ * Base Fragment that presents a Task for the user to complete.
+ */
+abstract class TaskPresentationFragment<StepType : UIStep, ResultType : IResult, TaskType : ITask>
+    : androidx.fragment.app.Fragment(), OnBackPressed {
 
-    public var taskProvider: ITaskProvider? = null
-    public var stepFragmentProvider: IStepFragmentProvider? = null
+    companion object {
+        @JvmField
+        val ARGUMENT_TASK_IDENTIFIER = "TASK_IDENTIFIER"
 
-    protected var _task: TaskType? = null
-    public val task: TaskType
-        get() = this._task!!
+        @JvmField
+        val ARGUMENT_TASK_RUN_UUID = "TASK_RUN_UUID"
 
-    protected var _taskNavigator: ITaskNavigator<StepType, ResultType>? = null
-    public val taskNavigator: ITaskNavigator<StepType, ResultType>
-        get() = this._taskNavigator!!
+        /**
+         * Creates the Bundle needed to configure TaskPresentationFragment. Pass in a taskRunUUID to
+         * continue a previous (unfinished) task run.
+         */
+        @JvmStatic
+        @JvmOverloads
+        fun createBundle(taskIdentifier: String, taskRunUUID: UUID = UUID.randomUUID()): Bundle {
+            val bundle = Bundle()
+            bundle.putString(ARGUMENT_TASK_IDENTIFIER, taskIdentifier)
+            bundle.putParcelable(ARGUMENT_TASK_RUN_UUID, ParcelUuid.fromString(taskRunUUID.toString()))
+            return bundle
+        }
+    }
 
-    public var callback: TaskPresentationCallback<ResultType, TaskType>? = null
+    interface OnTaskExitListener {
+        enum class Status {
+            CANCELLED, FINISHED
+        }
 
-    var _currentStep: StepType? = null
-    var _currentFragment: IStepFragment? = null
+        fun onTaskExit(status: Status, taskResult: TaskResult)
+    }
 
-    val currentStep: StepType?
-        get() = this._currentStep
+    fun inject(taskViewModelFactory: TaskPresentationViewModelFactory<StepType>,
+               stepFragmentProvider: IStepFragmentProvider<StepType>) {
+        this.taskViewModelFactory = taskViewModelFactory
+        this.stepFragmentProvider = stepFragmentProvider
+    }
 
-    var _result: ResultType? = null
-    val result: ResultType
-        get() = this._result!!
+    // inject
+    private lateinit var taskViewModelFactory: TaskPresentationViewModelFactory<StepType>
+    // inject
+    private lateinit var stepFragmentProvider: IStepFragmentProvider<StepType>
+
+
+    lateinit var taskPresentationViewModel: TaskPresentationViewModel<StepType>
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        lateinit var taskId: String
+        var taskRunParcelableUuid: ParcelUuid? = null
+
+        if (savedInstanceState == null) {
+            arguments?.let {
+                taskId = it.getString(ARGUMENT_TASK_IDENTIFIER)!!
+                taskRunParcelableUuid = it.getParcelable(ARGUMENT_TASK_RUN_UUID)
+            }
+
+        } else {
+            taskId = savedInstanceState.getString(ARGUMENT_TASK_IDENTIFIER)!!
+            taskRunParcelableUuid = savedInstanceState.getParcelable<ParcelUuid>(ARGUMENT_TASK_RUN_UUID)
+        }
+
+        @Suppress("UNCHECKED_CAST")
+        taskPresentationViewModel = ViewModelProviders
+                .of(this, taskViewModelFactory
+                        .create(taskId, taskRunParcelableUuid?.uuid ?: UUID.randomUUID()))
+                .get(TaskPresentationViewModel::class.java) as TaskPresentationViewModel<StepType>
+
+        taskPresentationViewModel.getTaskNavigatorStateLiveData()
+                .observe(this, Observer<TaskPresentationViewModel.TaskNavigatorState<StepType>>
+                { taskNavigatorState -> this.showStep(taskNavigatorState) })
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-        val view = inflater.inflate(R.layout.rsf_fragment_task_presentation, container, false);
+        val view = inflater.inflate(R.layout.rsf_fragment_task_presentation, container, false)
 
         val toolbar = view.findViewById(R.id.toolbar) as Toolbar?
 
         val appCompatActivity: AppCompatActivity = this.activity as AppCompatActivity
         appCompatActivity.setSupportActionBar(toolbar)
-        appCompatActivity.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        appCompatActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        this.initialize(savedInstanceState)
-
+//        activity?.actionBar?.setDisplayHomeAsUpEnabled(true)
         return view
     }
 
-    abstract fun initialize(savedInstanceState: Bundle?)
-
-    override fun onResume() {
-
-        val currentStep = this.currentStep
-
-        if (currentStep == null) {
-            this.taskNavigator.getStepAfterStep(null, this.result)?.let { firstStep ->
-                showStep(firstStep)
-            }
-        }
-        else {
-            showStep(currentStep)
-        }
-
-        super.onResume()
-    }
-
+    @VisibleForTesting
     protected fun showNextStep() {
-        val nextStep = this.taskNavigator.getStepAfterStep(this.currentStep, this.result)
-        if (nextStep == null) {
-            this.saveAndFinish(false)
-        } else {
-            showStep(nextStep)
-        }
+        taskPresentationViewModel.goForward()
     }
 
+    @VisibleForTesting
     protected fun showPreviousStep() {
-        val previousStep = this.taskNavigator.getStepBeforeStep(this.currentStep, this.result)
-        if (previousStep == null) {
-            saveAndFinish(true)
-        } else {
-            showStep(previousStep)
-        }
+        taskPresentationViewModel.goBack()
     }
 
-    private fun showStep(step: StepType) {
-        val currentStepPosition = this.currentStep?.let {
-            this.taskNavigator.getProgressOfCurrentStep(it, this.result).current
+    private fun showStep(taskNavigatorState: TaskPresentationViewModel.TaskNavigatorState<StepType>) {
+        if (taskNavigatorState.currentStep == null) {
+            val exitStatus: OnTaskExitListener.Status =
+                    if (taskNavigatorState.navDirection == NavDirection.SHIFT_RIGHT) {
+                        OnTaskExitListener.Status.CANCELLED
+                    } else {
+                        OnTaskExitListener.Status.FINISHED
+                    }
+            checkExitListener(exitStatus)
+            return
         }
 
-        val newStepPosition = this.taskNavigator.getProgressOfCurrentStep(step, this.result).current
 
-        val stepFragment = this.getFragmentForStep(step)
-        this._currentFragment = stepFragment
+        val stepFragment = this.getFragmentForStep(taskNavigatorState.currentStep)
 
         val transaction = childFragmentManager.beginTransaction()
+        if (taskNavigatorState.navDirection == NavDirection.SHIFT_LEFT) {
+            transaction.setCustomAnimations(R.anim.rsf_slide_in_right, R.anim.rsf_slide_out_left)
+        } else if (taskNavigatorState.navDirection == NavDirection.SHIFT_RIGHT) {
+            transaction.setCustomAnimations(R.anim.rsf_slide_in_left, R.anim.rsf_slide_out_right)
 
-        if (currentStepPosition != null) {
-            if (newStepPosition > currentStepPosition) {
-                transaction.setCustomAnimations(R.anim.rsf_slide_in_right, R.anim.rsf_slide_out_left)
-            }
-            else {
-                transaction.setCustomAnimations(R.anim.rsf_slide_in_left, R.anim.rsf_slide_out_right)
-            }
-
-            transaction
-                    .replace(R.id.rsf_content_step, stepFragment.fragment)
-                    .commit()
         }
-        else {
-            transaction
-                    .add(R.id.rsf_content_step, stepFragment.fragment)
-                    .commit()
-        }
-
+        transaction
+                .replace(R.id.rsf_content_step, stepFragment)
+                .commit()
         childFragmentManager.executePendingTransactions()
-
-        Log.d("DEBUG", ""+childFragmentManager.fragments.size)
-
-        this._currentStep = step
     }
 
-    abstract fun getStepResult(taskResult: ResultType, stepIdentifier: String): IResult?
-    abstract fun setStepResult(taskResult: ResultType, stepIdentifier: String, stepResult: IResult)
-
-    protected fun getFragmentForStep(step: StepType): IStepFragment {
-
-        val hostFragment = this
-
-        // Change the title on the activity
-        val title: String = {
-            val title = this.taskNavigator.getTitleForStep(step)
-            if (title != "") {
-                title
-            }
-            else {
-                this.taskNavigator.getTitleForStep(this.activity!!, step)
-            }
-
-        }()
-
-        setActionBarTitle(title)
-
+    private fun getFragmentForStep(step: StepType): Fragment {
         // Get result from the TaskResult, can be null
 
-        val stepResult: IResult? = this.getStepResult(this.result, step.identifier)
-
-        val fragment = createFragmentFromStep(step)
-        if (fragment == null) {
-            throw RuntimeException("Cannot create fragment for step ${step.identifier}")
-        }
-
-        val stepFragment: IStepFragment = fragment.apply {
-            this.initialize(step, stepResult)
-            this.setCallbacks(hostFragment)
-        }
-
-        return stepFragment
+        val fragment = stepFragmentProvider.stepFragment(step, StepPresentationViewModelFactory(taskPresentationViewModel))
+                ?: throw RuntimeException("Cannot create fragment for step ${step.identifier}")
+        // Change the title on the activity
+        setActionBarTitle(step.stepTitle)
+        return fragment
     }
 
-    private fun createFragmentFromStep(step: IStep): IStepFragment? {
-        return this.stepFragmentProvider?.stepFragment(this.activity!! as Context, step)
+    override fun onBackPressed(): Boolean {
+        notifyStepOfBackPress()
+        return true
     }
 
-    protected abstract fun saveAndFinish(clearResult: Boolean)
-
-    fun setActionBarTitle(title: String) {
-
-        val appCompatActivity: AppCompatActivity = this.activity as AppCompatActivity
-
-        val actionBar = appCompatActivity.supportActionBar
-        if (actionBar != null) {
-            actionBar.setTitle(title)
-        }
-    }
-
-    //JDK - 4/16/19 - as part of future work, we will be removing conformance to StepCallbacks
-    //This means that onSaveStep, onCancelStep, onExecuteStepAction and showConfirmExitDialog will
-    //probably all go away
-    protected fun onExecuteStepAction(action: Int) {
-        if (action == StepCallbacks.ACTION_NEXT) {
-            showNextStep()
-        } else if (action == StepCallbacks.ACTION_PREV) {
+    fun notifyStepOfBackPress() {
+        val stepFragment = childFragmentManager.findFragmentById(R.id.rsf_content_step)
+        (stepFragment as? OnBackPressed)?.onBackPressed()?.takeIf{!it}?.let {
             showPreviousStep()
-        } else if (action == StepCallbacks.ACTION_END) {
-            showConfirmExitDialog()
-        } else if (action == StepCallbacks.ACTION_NONE) {
-            // Used when onSaveInstanceState is called of a view. No action is taken.
-        } else {
-            throw IllegalArgumentException("Action with value " + action + " is invalid. " +
-                    "See StepCallbacks for allowable arguments")
         }
     }
 
-    private fun showConfirmExitDialog() {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                notifyStepOfBackPress()
+                true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
+    }
+
+    private fun setActionBarTitle(title: String?) {
+        toolbar?.run { setTitle(title) }
+    }
+
+    fun showConfirmExitDialog() {
         val alertDialog = AlertDialog.Builder(this.activity!!).setTitle(
                 "Are you sure you want to exit?")
                 .setMessage(R.string.lorem_medium)
-                .setPositiveButton("End Task") { dialog, which -> saveAndFinish(true) }
+                .setPositiveButton("End Task") { dialog, which -> checkExitListener(OnTaskExitListener.Status.CANCELLED) }
                 .setNegativeButton("Cancel", null)
                 .create()
         alertDialog.show()
     }
 
-    public fun onBackPressed() {
-        notifyStepOfBackPress()
-    }
 
-    private fun notifyStepOfBackPress() {
-        this._currentFragment?.onBackPressed()
-    }
-
-
-    override fun onSaveStep(action: Int, step: IStep, result: IResult?) {
-        result?.let { setStepResult(this.result, step.identifier, it) }
-        onExecuteStepAction(action)
-    }
-
-    override fun onCancelStep() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    private fun checkExitListener(finishStatus: OnTaskExitListener.Status) {
+        var onTaskExitListener: OnTaskExitListener? = null
+        if (parentFragment is OnTaskExitListener) {
+            onTaskExitListener = parentFragment as OnTaskExitListener
+        }
+        if (onTaskExitListener == null && activity is OnTaskExitListener) {
+            onTaskExitListener = activity as OnTaskExitListener
+        }
+        onTaskExitListener?.onTaskExit(finishStatus,
+                taskPresentationViewModel.getTaskNavigatorStateLiveData().value!!.taskResult)
     }
 
 }
+

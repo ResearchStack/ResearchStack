@@ -1,2 +1,2 @@
-include ':backbone', ':skin', ':foundation', ':authentication', ':chart', ':consent', ':storage'
+include ':foundation', ':authentication', ':chart', ':storage', ':backbone_interop', ':sage_backbone_interop', ':sample_sage_backbone_app'
 include ':sample_backbone_app'

@@ -1,27 +1,28 @@
 package org.researchstack.foundation.core.models.step;
 
-import org.researchstack.foundation.core.interfaces.IStep;
+import org.researchstack.foundation.core.interfaces.UIStep;
+import org.researchstack.foundation.core.models.result.StepResult;
 import org.researchstack.foundation.core.models.task.Task;
 
 import java.io.Serializable;
 
 /**
- * Step is the base class for the steps that can compose a task for presentation in an {@link
- * org.researchstack.foundation.ui.ViewTaskActivity} object. Each Step object represents one logical
+ * UIStep is the base class for the steps that can compose a task for presentation in an {@link
+ * org.researchstack.foundation.ui.ViewTaskActivity} object. Each UIStep object represents one logical
  * piece of data entry or activity in a larger task.
  * <p>
- * A step can be a question, an active test, or a simple instruction. An Step subclass is usually
+ * A step can be a question, an active test, or a simple instruction. An UIStep subclass is usually
  * paired with an {@link org.researchstack.foundation.ui.step.layout.StepLayout} subclass that
  * displays the step.
  * <p>
- * To use a step, instantiate an Step object and populate its properties. Add the step to a task,
+ * To use a step, instantiate an UIStep object and populate its properties. Add the step to a task,
  * such as an {@link org.researchstack.foundation.task.OrderedTask} object, and then present the task
  * using a ViewTaskActivity.
  * <p>
- * To implement a new type of step, subclass Step and add your additional properties. Separately,
+ * To implement a new type of step, subclass UIStep and add your additional properties. Separately,
  * subclass StepLayout and implement your user interface.
  */
-public class Step implements Serializable, IStep {
+public class Step implements Serializable, UIStep {
     private String identifier;
 
     private Class stepLayoutClass;
@@ -69,7 +70,7 @@ public class Step implements Serializable, IStep {
      * A short string that uniquely identifies the step within the task.
      * <p>
      * The identifier is reproduced in the results of a step. In fact, the only way to link a result
-     * (a {@link org.researchstack.foundation.result.StepResult} object) to the step that generated it
+     * (a {@link StepResult} object) to the step that generated it
      * is to look at the value of <code>identifier</code>. To accurately identify step results, you
      * need to ensure that step identifiers are unique within each task.
      * <p>
@@ -113,6 +114,7 @@ public class Step implements Serializable, IStep {
      *
      * @return the primary text for the question
      */
+    @Override
     public String getTitle() {
         return title;
     }
@@ -123,6 +125,7 @@ public class Step implements Serializable, IStep {
      * @param title the primary text for the question.
      * @see #getTitle()
      */
+    @Override
     public void setTitle(String title) {
         this.title = title;
     }
@@ -136,6 +139,7 @@ public class Step implements Serializable, IStep {
      *
      * @return
      */
+    @Override
     public String getText() {
         return text;
     }
@@ -146,28 +150,9 @@ public class Step implements Serializable, IStep {
      * @param text the detail text for the step
      * @see #getText()
      */
+    @Override
     public void setText(String text) {
         this.text = text;
-    }
-
-    /**
-     * Gets the int id for the title to display in the action bar (optional).
-     *
-     * @return the id for the title to display in the action bar
-     */
-    @Deprecated
-    public int getStepTitle() {
-        return stepTitle;
-    }
-
-    /**
-     * Gets the int id for the title to display in the action bar (optional).
-     *
-     * @param stepTitle the Android resource id for the title
-     */
-    @Deprecated
-    public void setStepTitle(int stepTitle) {
-        this.stepTitle = stepTitle;
     }
 
     /**
@@ -175,7 +160,7 @@ public class Step implements Serializable, IStep {
      *
      * @return the string for the title to display in the action bar
      */
-    public String getStepTitleString() {
+    public String getStepTitle() {
         return stepTitleString;
     }
 

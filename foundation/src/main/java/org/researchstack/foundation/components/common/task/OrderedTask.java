@@ -2,8 +2,6 @@ package org.researchstack.foundation.components.common.task;
 
 import android.content.Context;
 
-import org.researchstack.foundation.R;
-import org.researchstack.foundation.components.utils.TextUtils;
 import org.researchstack.foundation.core.models.result.TaskResult;
 import org.researchstack.foundation.core.models.step.Step;
 import org.researchstack.foundation.core.models.task.Task;
@@ -109,25 +107,6 @@ public class OrderedTask extends Task implements Serializable {
     public TaskProgress getProgressOfCurrentStep(Step step, TaskResult result) {
         int current = step == null ? -1 : steps.indexOf(step);
         return new TaskProgress(current, steps.size());
-    }
-
-    /**
-     * Returns {@link Step#getStepTitle()} if it exists, otherwise returns string showing progress.
-     *
-     * @param context for fetching resources
-     * @param step    the current step
-     * @return the step title, or a progress string if it doesn't have one
-     */
-    @Override
-    public String getTitleForStep(Context context, Step step) {
-        String title = super.getTitleForStep(context, step);
-        if (TextUtils.isEmpty(title)) {
-            int currentIndex = steps.indexOf(step);
-            title = context.getString(R.string.rsf_format_step_title,
-                    currentIndex + 1,
-                    steps.size());
-        }
-        return title;
     }
 
     /**

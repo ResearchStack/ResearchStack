@@ -23,6 +23,7 @@ import org.researchstack.backbone.answerformat.DateAnswerFormat;
 import org.researchstack.backbone.answerformat.IntegerAnswerFormat;
 import org.researchstack.backbone.answerformat.TextAnswerFormat;
 import org.researchstack.backbone.answerformat.UnknownAnswerFormat;
+import org.researchstack.backbone.interop.ViewBackboneInteropTaskActivity;
 import org.researchstack.backbone.model.Choice;
 import org.researchstack.backbone.model.ConsentDocument;
 import org.researchstack.backbone.model.ConsentSection;
@@ -275,8 +276,8 @@ public class MainActivity extends PinCodeActivity
                 formStep,
                 signatureStep);
 
-        // Launch using hte ViewTaskActivity and make sure to listen for the activity result
-        Intent intent = ViewTaskActivity.newIntent(this, consentTask);
+        // Launch using ViewBackboneInteropTaskActivity and make sure to listen for the activity result
+        Intent intent = ViewBackboneInteropTaskActivity.newIntent(this, consentTask);
         startActivityForResult(intent, REQUEST_CONSENT);
     }
 
@@ -358,7 +359,7 @@ public class MainActivity extends PinCodeActivity
                 booleanStep, multiStep);
 
         // Create an activity using the task and set a delegate.
-        Intent intent = ViewTaskActivity.newIntent(this, task);
+        Intent intent = ViewBackboneInteropTaskActivity.newIntent(this, task);
         startActivityForResult(intent, REQUEST_SURVEY);
     }
 
@@ -424,7 +425,7 @@ public class MainActivity extends PinCodeActivity
         for(String id : taskResult.getResults().keySet())
         {
             StepResult stepResult = taskResult.getStepResult(id);
-            results += id + ": " + stepResult.getResult().toString() + "\n";
+            results += id + ": " + stepResult.getResult() + "\n";
         }
 
         surveyAnswer.setText(results);

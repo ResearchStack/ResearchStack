@@ -37,7 +37,7 @@
     <string name="rsf_hours">Hours</string>
     <string name="rsf_minutes">Minutes</string>
 
-    <!-- Step Errors -->
+    <!-- UIStep Errors -->
     <string name="rsf_error_data_failed">Failed to load encrypted data, try again!</string>
     <string name="rsf_error_invalid_signature">Signature Invalid</string>
     <string name="rsf_invalid_answer_default">Invalid answer, try again!</string>

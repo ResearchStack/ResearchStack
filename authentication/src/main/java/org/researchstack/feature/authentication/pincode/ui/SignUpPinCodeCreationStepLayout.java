@@ -42,7 +42,7 @@ public class SignUpPinCodeCreationStepLayout extends PinCodeLayout implements St
     @Override
     public void initialize(Step step, StepResult result) {
         this.step = (PassCodeCreationStep) step;
-        this.result = result == null ? new StepResult<>(step) : result;
+        this.result = result == null ? new StepResult<>(step.getIdentifier()) : result;
 
         if (this.step.getStateOrdinal() != -1) {
             this.state = State.values()[this.step.getStateOrdinal()];

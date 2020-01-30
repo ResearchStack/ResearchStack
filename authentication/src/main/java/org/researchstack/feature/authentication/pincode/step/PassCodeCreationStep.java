@@ -7,9 +7,8 @@ public class PassCodeCreationStep extends Step {
 
     public int stateOrdinal = -1;
 
-    public PassCodeCreationStep(String identifier, int title) {
-        super(identifier);
-        setStepTitle(title);
+    public PassCodeCreationStep(String identifier, String title) {
+        super(identifier, title);
     }
 
     public int getStateOrdinal() {

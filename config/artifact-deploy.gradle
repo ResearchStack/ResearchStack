@@ -1,0 +1,126 @@
+if (project.plugins.hasPlugin('com.android.library')) {
+    apply plugin: 'com.jfrog.bintray'
+    apply plugin: 'com.github.dcendents.android-maven'
+    apply plugin: 'maven-publish'
+    apply plugin: 'org.jetbrains.dokka-android'
+
+    task sourcesJar(type: Jar) {
+        from android.sourceSets.main.java.srcDirs
+        classifier = 'sources'
+    }
+
+    dokka {
+        outputFormat = 'html'
+        outputDirectory = "$buildDir/javadoc"
+    }
+
+    task javadocJar(type: Jar, dependsOn: dokka) {
+        classifier = 'javadoc'
+        from dokka.outputDirectory
+    }
+
+    artifacts {
+        // TODO: package javadoc for maven artifact publishing
+        archives javadocJar
+        archives sourcesJar
+    }
+
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+    ext {
+        userOrgName = 'researchstack'
+        bintrayRepo = 'ResearchStack'
+        bintrayName = project.displayName
+
+        publishedGroupId = 'org.researchstack'
+        libraryName = project.displayName
+
+        artifact = project.name
+
+        libraryDescription = project.description
+
+        siteUrl = 'https://researchstack.org'
+        gitUrl = 'https://github.com/ResearchStack/ResearchStack.git'
+        githubRepo = 'ResearchStack/ResearchStack'
+        libraryVersion = project.version
+
+        developerId = properties.hasProperty('bintray.user') ? project.property('bintray.user') : System.getenv('BINTRAY_USER')
+        bintrayKey = properties.hasProperty('bintray.apikey') ? project.property('bintray.apikey') : System.getenv('BINTRAY_API_KEY')
+        developerName = properties.getProperty('bintray.developerName')
+        developerEmail = properties.getProperty('bintray.developerEmail')
+
+        licenseName = 'The Apache Software License, Version 2.0'
+        licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+        allLicenses = ["Apache-2.0"]
+    }
+
+    bintray {
+        user = developerId
+        key = bintrayKey
+
+        configurations = ['archives']
+
+        publish = true // autopublish
+
+        pkg {
+            userOrg = userOrgName
+            repo = bintrayRepo
+            name = libraryName
+            desc = libraryDescription
+            websiteUrl = siteUrl
+            vcsUrl = gitUrl
+            githubRepo = githubRepo
+
+            licenses = allLicenses
+            publish = true
+        }
+
+        pkg {
+            userOrg = 'sage-bionetworks'
+            repo = 'bridge-maven-release'
+            name = project.name
+            licenses = ['Apache-2.0']
+            gitUrl = 'https://github.com/Sage-Bionetworks/BridgeAndroidSDK.git'
+        }
+    }
+
+    if (!project.ext.properties.containsKey("artifactId")) {
+        ext.artifactId = project.name
+    }
+
+    install {
+        repositories.mavenInstaller {
+            pom.project {
+                packaging 'aar'
+                groupId publishedGroupId
+                artifactId artifact
+
+                // Add your description here
+                name libraryName
+                description libraryDescription
+                url siteUrl
+
+                // Set your license
+                licenses {
+                    license {
+                        name licenseName
+                        url licenseUrl
+                    }
+                }
+                developers {
+                    developer {
+                        id developerId
+                        name developerName
+                        email developerEmail
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+        }
+    }
+}

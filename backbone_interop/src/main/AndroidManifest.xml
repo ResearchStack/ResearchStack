@@ -1,0 +1,10 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.researchstack.backbone.interop">
+
+    <application>
+        <activity
+            android:name=".ViewBackboneInteropTaskActivity"
+            android:windowSoftInputMode="adjustResize"
+            />
+    </application>
+</manifest>

@@ -23,6 +23,8 @@ import co.touchlab.squeaky.db.sqlite.SQLiteDatabaseImpl;
 import co.touchlab.squeaky.db.sqlite.SqueakyOpenHelper;
 import co.touchlab.squeaky.table.TableUtils;
 
+import static org.threeten.bp.DateTimeUtils.toDate;
+
 /**
  * A simple database implementation of {@link AppDatabase} the has no encryption and only has tables
  * for saving TaskResults and StepResults. You can extend this class and override onCreate and
@@ -34,6 +36,8 @@ import co.touchlab.squeaky.table.TableUtils;
  * build.gradle file:</b> (See the Sample App for details, but add `apt
  * 'co.touchlab.squeaky:squeaky-processor:0.4.0'` to your dependencies and add android-apt:
  * https://bitbucket.org/hvisser/android-apt)
+ *
+ * TODO: merge with SqlCipherDatabaseHelper
  */
 public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase {
     public static final String DEFAULT_NAME = "appdb";
@@ -60,7 +64,7 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase {
     }
 
     //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
-    // Task / Step Result
+    // Task / UIStep Result
     //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 
     @Override
@@ -70,8 +74,9 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase {
         try {
             TaskRecord taskRecord = new TaskRecord();
             taskRecord.taskId = taskResult.getIdentifier();
-            taskRecord.started = taskResult.getStartDate();
-            taskRecord.completed = taskResult.getEndDate();
+            taskRecord.taskRunUUID = taskResult.getTaskRunUUID().toString();
+            taskRecord.started = toDate(taskResult.getStartTimestamp());
+            taskRecord.completed = toDate(taskResult.getEndTimestamp());
             getDao(TaskRecord.class).create(taskRecord);
 
             Gson gson = new GsonBuilder().setDateFormat(FormatHelper.DATE_FORMAT_ISO_8601).create();
@@ -83,7 +88,8 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase {
                     stepRecord.taskRecordId = taskRecord.id;
                     stepRecord.taskId = taskResult.getIdentifier();
                     stepRecord.stepId = stepResult.getIdentifier();
-                    stepRecord.completed = stepResult.getEndDate();
+                    stepRecord.started = toDate(stepResult.getStartTimestamp());
+                    stepRecord.completed = toDate(stepResult.getEndTimestamp());
                     if (!stepResult.getResults().isEmpty()) {
                         stepRecord.result = gson.toJson(stepResult.getResults());
                     }

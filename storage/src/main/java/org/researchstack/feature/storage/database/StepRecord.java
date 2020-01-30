@@ -6,13 +6,14 @@ import com.google.gson.GsonBuilder;
 import org.researchstack.foundation.components.utils.FormatHelper;
 import org.researchstack.foundation.components.utils.TextUtils;
 import org.researchstack.foundation.core.models.result.StepResult;
-import org.researchstack.foundation.core.models.step.Step;
 
 import java.util.Date;
 import java.util.Map;
 
 import co.touchlab.squeaky.field.DatabaseField;
 import co.touchlab.squeaky.table.DatabaseTable;
+
+import static org.threeten.bp.DateTimeUtils.toInstant;
 
 @DatabaseTable
 public class StepRecord {
@@ -42,9 +43,9 @@ public class StepRecord {
     public String result;
 
     public static StepResult toStepResult(StepRecord record) {
-        StepResult result = new StepResult(new Step(record.stepId));
-        result.setStartDate(record.started);
-        result.setEndDate(record.completed);
+        StepResult result = new StepResult(record.stepId, "stepResult");
+        result.setStartTimestamp(toInstant(record.started));
+        result.setEndTimestamp(toInstant(record.completed));
         if (!TextUtils.isEmpty(record.result)) {
             result.setResults(GSON.fromJson(record.result, Map.class));
         }

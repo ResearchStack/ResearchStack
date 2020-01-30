@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    package="org.researchstack.backboneapp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest package="org.researchstack.backboneapp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <application
         android:name=".BackboneApplication"
@@ -20,7 +20,7 @@
         </activity>
 
         <activity
-            android:name="org.researchstack.backbone.ui.ViewTaskActivity"
+            android:name="org.researchstack.backbone.interop.ViewBackboneInteropTaskActivity"
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.BackboneApp.Survey"
         />
