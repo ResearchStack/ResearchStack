@@ -124,7 +124,7 @@ public class DeviceMotionRecorder extends SensorRecorder {
     public static final String Y_BIAS_KEY           = "yBias";
     public static final String Z_BIAS_KEY           = "zBias";
 
-    public DeviceMotionRecorder(double frequency, String identifier, Step step, File outputDirectory) {
+    DeviceMotionRecorder(double frequency, String identifier, Step step, File outputDirectory) {
         super(frequency, identifier, step, outputDirectory);
     }
 
@@ -358,7 +358,7 @@ public class DeviceMotionRecorder extends SensorRecorder {
         bundle.putSerializable(BROADCAST_ROTATION_VECTOR_UPDATE_KEY, dataHolder);
         Intent intent = new Intent(BROADCAST_ROTATION_VECTOR_UPDATE_ACTION);
         intent.putExtras(bundle);
-        intent.setAction(org.researchstack.backbone.step.active.recorder.DeviceMotionRecorder.BROADCAST_ROTATION_VECTOR_UPDATE_ACTION);
+        intent.setAction(DeviceMotionRecorder.BROADCAST_ROTATION_VECTOR_UPDATE_ACTION);
         LocalBroadcastManager.getInstance(appContext).
             sendBroadcast(intent);
     }
