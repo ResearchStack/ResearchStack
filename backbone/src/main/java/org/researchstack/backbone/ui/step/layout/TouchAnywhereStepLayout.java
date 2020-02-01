@@ -18,9 +18,9 @@ import org.researchstack.backbone.ui.callbacks.StepCallbacks;
  * Created by David Evans, Simon Hartley, Laurence Hurst, 2019.
  *
  * The TouchAnywhereStepLayout is basically the same as the ActiveStepLayout, except that touching
- * or tapping (nearly) anywhere on the screen currently skips the step. It is designed to be used
- * for active tasks during which the user is not looking at the screen, in combination with spoken
- * instructions that can be set in the TouchAnywhereStep class.
+ * or tapping (nearly) anywhere on the screen will skip the step. The back button is still tappable. 
+ * It is designed to be used for active tasks during which the user is not looking at the screen, in 
+ * combination with spoken instructions that can be set in the TouchAnywhereStep class.
  *
  * */
 
@@ -75,7 +75,7 @@ public class TouchAnywhereStepLayout extends ActiveStepLayout {
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // we can use skip() as we currently just need to move on to the next step
+                // we can use skip() as we just need to move on to the next step
                 skip();
             }
         });
