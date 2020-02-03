@@ -276,13 +276,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
      **/
     public double shiftDeviceAngleRange(double original_angle) {
         double shifted_angle;
-        int orientation = getInitialOrientation();
-        boolean targetAngleRange = ((original_angle >= 0) && (original_angle <= 180));
-        if (targetAngleRange && (orientation == ORIENTATION_REVERSE_PORTRAIT)) {
-            shifted_angle = 360 - Math.abs(original_angle);
-        } else {
-            shifted_angle = original_angle;
-        }
+        shifted_angle = original_angle;
         return shifted_angle;
     }
 
