@@ -45,14 +45,15 @@ class ReviewStepFullScreenImageActivity : PinCodeActivity(), View.OnClickListene
         fullScreenImageClose.setOnClickListener(this)
         fullScreenImageEditStep.setOnClickListener(this)
 
-        fullScreenImageContainer.viewTreeObserver.addOnGlobalLayoutListener(object :
-                ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                fullScreenImage.viewTreeObserver.removeOnGlobalLayoutListener(this)
+        fullScreenImageContainer.addOnLayoutChangeListener(object  : View.OnLayoutChangeListener {
+            override fun onLayoutChange(v: View?, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int,
+                                        oldTop: Int, oldRight: Int, oldBottom: Int) {
                 val width = fullScreenImageContainer.measuredWidth
                 val height = fullScreenImageContainer.measuredHeight
                 viewModel.loadImage(width, height)
+                fullScreenImageContainer.removeOnLayoutChangeListener(this)
             }
+
         })
     }
 
