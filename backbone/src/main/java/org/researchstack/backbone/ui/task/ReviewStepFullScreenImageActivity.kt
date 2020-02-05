@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.view.ViewTreeObserver
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.rsb_activity_full_screen_image.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -57,8 +56,8 @@ class ReviewStepFullScreenImageActivity : PinCodeActivity(), View.OnClickListene
         })
     }
 
-    override fun onClick(v: View?) {
-        v?.id.let {
+    override fun onClick(view: View?) {
+        view?.id.let {
             when (it) {
                 R.id.fullScreenImageClose -> {
                     setResult(Activity.RESULT_CANCELED)
