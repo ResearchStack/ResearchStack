@@ -104,49 +104,7 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.legacy:legacy-preference-v14:1.0.0'
     implementation 'com.google.code.gson:gson:2.8.5'
-    implementation 'io.reactivex:rxjava:1.1.3'
-    implementation 'io.reactivex:rxandroid:1.1.0'
-    implementation ('com.jakewharton.rxbinding:rxbinding:0.2.0') {
-        exclude group: 'com.android.support', module: 'design'
-        exclude group: 'com.android.support', module: 'animated-vector-drawable'
-        exclude group: 'com.android.support', module: 'support-media-compat'
-        exclude group: 'com.android.support', module: 'appcompat-v7'
-        exclude group: 'com.android.support', module: 'support-v4'
-    }
-    implementation ('com.jakewharton.rxbinding:rxbinding-support-v4:0.2.0') {
-        exclude group: 'com.android.support', module: 'design'
-        exclude group: 'com.android.support', module: 'animated-vector-drawable'
-        exclude group: 'com.android.support', module: 'support-media-compat'
-        exclude group: 'com.android.support', module: 'appcompat-v7'
-        exclude group: 'com.android.support', module: 'support-v4'
-    }
-    implementation ('com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.2.0') {
-        exclude group: 'com.android.support', module: 'design'
-        exclude group: 'com.android.support', module: 'animated-vector-drawable'
-        exclude group: 'com.android.support', module: 'support-media-compat'
-        exclude group: 'com.android.support', module: 'appcompat-v7'
-        exclude group: 'com.android.support', module: 'support-v4'
-    }
-    implementation ('com.jakewharton.rxbinding:rxbinding-design:0.2.0') {
-        exclude group: 'com.android.support', module: 'design'
-        exclude group: 'com.android.support', module: 'animated-vector-drawable'
-        exclude group: 'com.android.support', module: 'support-media-compat'
-        exclude group: 'com.android.support', module: 'appcompat-v7'
-        exclude group: 'com.android.support', module: 'support-v4'
-    }
-
-    implementation 'com.scottyab:aes-crypto:0.0.3'
-    implementation 'co.touchlab.squeaky:squeaky-query:0.4.0.0'
-    annotationProcessor 'co.touchlab.squeaky:squeaky-processor:0.4.0.0'
-    implementation 'net.zetetic:android-database-sqlcipher:3.5.4@aar'
-    implementation ("com.afollestad.material-dialogs:core:0.9.0.2") {
-        exclude group: 'com.android.support', module: 'design'
-        exclude group: 'com.android.support', module: 'animated-vector-drawable'
-        exclude group: 'com.android.support', module: 'support-media-compat'
-        exclude group: 'com.android.support', module: 'appcompat-v7'
-        exclude group: 'com.android.support', module: 'support-v4'
-    }
-
+    implementation "com.afollestad.material-dialogs:core:0.9.0.2"
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.robolectric:robolectric:3.0'
@@ -185,11 +143,11 @@ if (project.hasProperty("android")) { // Android libraries
     }
 }
 
-def RS_POM_GROUP="com.medable.researchstack"
-def RS_POM_DESCRIPTION="Medable's ResearchStack fork"
-def RS_POM_LICENCE_NAME="The Apache Software License, Version 2.0"
-def RS_POM_LICENCE_URL="http://www.apache.org/licenses/LICENSE-2.0.txt"
-def RS_POM_LICENCE_DIST="repo"
+def RS_POM_GROUP = "com.medable.researchstack"
+def RS_POM_DESCRIPTION = "Medable's ResearchStack fork"
+def RS_POM_LICENCE_NAME = "The Apache Software License, Version 2.0"
+def RS_POM_LICENCE_URL = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+def RS_POM_LICENCE_DIST = "repo"
 
 afterEvaluate { project ->
     uploadArchives {
