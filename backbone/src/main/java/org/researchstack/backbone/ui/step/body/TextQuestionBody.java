@@ -78,10 +78,6 @@ public class TextQuestionBody implements StepBody {
             }
         });
 
-//        RxTextView.textChanges(editText).subscribe(text -> {
-//            result.setResult(text.toString());
-//        });
-
         // Format EditText from TextAnswerFormat
         TextAnswerFormat format = (TextAnswerFormat) step.getAnswerFormat();
 
