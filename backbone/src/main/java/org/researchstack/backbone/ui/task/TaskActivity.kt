@@ -12,8 +12,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -29,7 +29,6 @@ import org.koin.core.parameter.parametersOf
 import org.researchstack.backbone.R
 import org.researchstack.backbone.step.Step
 import org.researchstack.backbone.task.Task
-import org.researchstack.backbone.ui.PinCodeActivity
 import org.researchstack.backbone.ui.permissions.PermissionListener
 import org.researchstack.backbone.ui.permissions.PermissionMediator
 import org.researchstack.backbone.ui.permissions.PermissionResult
@@ -38,7 +37,7 @@ import org.researchstack.backbone.ui.step.layout.StepLayout
 import org.researchstack.backbone.ui.step.layout.SurveyStepLayout
 import org.researchstack.backbone.utils.ViewUtils
 
-open class TaskActivity : PinCodeActivity(), PermissionMediator {
+open class TaskActivity : AppCompatActivity(), PermissionMediator {
 
     private val viewModel: TaskViewModel by viewModel { parametersOf(intent) }
     private val navController by lazy { Navigation.findNavController(this, R.id.nav_host_fragment) }
@@ -123,7 +122,7 @@ open class TaskActivity : PinCodeActivity(), PermissionMediator {
                         R.string.rsb_edit_step_alert_step_skip_content,
                         R.string.rsb_edit_step_alert_step_skip_discard,
                         R.string.rsb_edit_step_alert_step_skip_positive,
-                        {dialog ->
+                        { dialog ->
                             dialog.dismiss()
                             viewModel.revertToOriginalStepResult(it.second)
                         }, { viewModel.nextStep() })
@@ -137,6 +136,11 @@ open class TaskActivity : PinCodeActivity(), PermissionMediator {
         hideKeyboard()
 
         super.onPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.showCurrentStep()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -167,19 +171,6 @@ open class TaskActivity : PinCodeActivity(), PermissionMediator {
     override fun onSupportNavigateUp(): Boolean {
         viewModel.previousStep()
         return false
-    }
-
-    override fun onDataReady() {
-        super.onDataReady()
-
-        viewModel.showCurrentStep()
-    }
-
-    override fun onDataFailed() {
-        super.onDataFailed()
-
-        Toast.makeText(this, R.string.rsb_error_data_failed, Toast.LENGTH_LONG).show()
-        finish()
     }
 
     override fun requestPermissions(permissionListener: PermissionListener, vararg permissions:
