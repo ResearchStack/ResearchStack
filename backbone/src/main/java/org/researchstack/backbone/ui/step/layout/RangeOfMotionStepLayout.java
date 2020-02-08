@@ -30,10 +30,10 @@ import org.researchstack.backbone.utils.MathUtils;
 /**
  * Created by David Evans, Simon Hartley, Laurence Hurst, David Jimenez, 2019.
  *
- * The RangeOfMotionStepLayout is essentially the same as the TouchAnywhereStepLayout, except that it 
- * captures device position (attitude) and calculates absolute device position (Euler/Tait-Bryan angles) 
- * in degrees, relative to device and screen orientation - start, minimum, maximum, finish and range - 
- * once the screen is tapped and the step finishes.
+ * The behaviour of the RangeOfMotionStepLayout is essentially the same as the TouchAnywhereStepLayout, 
+ * except that it captures device position (attitude) and calculates absolute device position (Euler/Tait-Bryan angles) 
+ * in degrees, relative to device orientation - start, minimum, maximum, finish and range - once the 
+ * screen is tapped and the step finishes.
  *
  */
 
@@ -99,7 +99,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         super.setupActiveViews();
 
         LayoutInflater.from(getContext())
-                .inflate(R.layout.range_of_motion_step_layout, this, true);
+                .inflate(R.layout.rsb_step_layout_range_of_motion, this, true);
 
         titleTextview.setVisibility(View.VISIBLE);
         textTextview.setVisibility(View.VISIBLE);
@@ -347,6 +347,12 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         if ((initial_orientation == ORIENTATION_PORTRAIT || initial_orientation == ORIENTATION_REVERSE_PORTRAIT)
                 && (original_angle > 90 && original_angle <= 180)) {
             shifted_angle = Math.abs(original_angle) - 360;
+        } else if (initial_orientation == ORIENTATION_LANDSCAPE
+                && (original_angle < -90 && original_angle >= -180)) {
+            shifted_angle = Math.abs(original_angle) - 360;
+        } else if (initial_orientation == ORIENTATION_REVERSE_LANDSCAPE
+                    && (original_angle < -90 && original_angle >= -180)) {
+                shifted_angle = 360 - Math.abs(original_angle);
         } else {
             shifted_angle = original_angle;
         }
@@ -457,7 +463,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         if (initial_orientation == ORIENTATION_REVERSE_LANDSCAPE) {
             maximum = start + getMaximumAngle();
         } else {
-            maximum = start - getMinimumAngle(); // // landscape, portrait and reverse portrait
+            maximum = start - getMinimumAngle(); // landscape, portrait and reverse portrait
         }
         rangeOfMotionResult.setMaximum(maximum);
 
