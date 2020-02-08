@@ -99,7 +99,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         super.setupActiveViews();
 
         LayoutInflater.from(getContext())
-                .inflate(R.layout.rsb_step_layout_range_of_motion, this, true);
+                .inflate(R.layout.range_of_motion_step_layout, this, true);
 
         titleTextview.setVisibility(View.VISIBLE);
         textTextview.setVisibility(View.VISIBLE);
@@ -200,113 +200,6 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     }
 
     /**
-     * Methods to obtain the initial (start) device attitude as a quaternion
-     **/
-    public float[] getStartAttitude() {
-        return startAttitude;
-    }
-
-    private void setStartAttitude(float[] startAttitude) {
-        this.startAttitude = startAttitude;
-    }
-
-    /**
-     * Method to obtain range-shifted angle (degrees) of first (start) device attitude, relative to the zero position
-     **/
-    public double getShiftedStartAngle() {
-        double shifted_start_angle;
-        double raw_start_angle = getDeviceAngleInDegreesFromQuaternion(getStartAttitude());
-        shifted_start_angle = shiftDeviceAngleRange(raw_start_angle);
-        return shifted_start_angle;
-    }
-
-    /**
-     * Methods to obtain the final (finish) device attitude as a quaternion
-     **/
-    public float[] getFinishAttitude() {
-        return finishAttitude;
-    }
-
-    private void setFinishAttitude(float[] finishAttitude) {
-        this.finishAttitude = finishAttitude;
-    }
-
-    /**
-     * Method to obtain range-shifted angle (degrees) of final (finish) device attitude, relative to the zero position
-     **/
-    public double getShiftedFinishAngle() {
-        double shifted_finish_angle;
-        double raw_finish_angle = getDeviceAngleInDegreesFromQuaternion(getFinishAttitude());
-        shifted_finish_angle = shiftDeviceAngleRange(raw_finish_angle);
-        return shifted_finish_angle;
-    }
-
-    /**
-     * Methods to obtain and calculate the minimum and maximum range-shifted angle (degrees), calculated
-     * for all device motion updates during recording, relative to the start position
-     **/
-    private double calculateShiftedAngleRelativeToStart(float[] attitudeUpdates) {
-        double shifted_angle;
-        float[] attitudeUpdatesRelativeToStart = getDeviceAttitudeRelativeToStart(attitudeUpdates);
-        double unadjusted_angle = getDeviceAngleInDegreesFromQuaternion(attitudeUpdatesRelativeToStart);
-        shifted_angle = shiftDeviceAngleRange(unadjusted_angle);
-        return shifted_angle;
-    }
-
-    public double getMinimumAngle() {
-        return minimumAngle;
-    }
-
-    private void setMinimumAngle (double minimumAngle) {
-        this.minimumAngle = minimumAngle;
-    }
-
-    public double getMaximumAngle() {
-        return maximumAngle;
-    }
-
-    private void setMaximumAngle (double maximumAngle) {
-        this.maximumAngle = maximumAngle;
-    }
-
-    /**
-     * Method to shift default range of calculated angles for specific device orientations, if 
-     * required, before being evaluated for maximum and minimum values. Should be overridden in
-     * sub-classes where necessary.
-     **/
-    public double shiftDeviceAngleRange(double original_angle) {
-        double shifted_angle;
-        shifted_angle = original_angle;
-        return shifted_angle;
-    }
-
-    /**
-     * Method to calculate angles in degrees from the device attitude quaternion, as a function of
-     * device orientation (portrait or landscape) or screen orientation (portrait, landscape, reverse
-     * portrait or reverse landscape).
-     **/
-    public double getDeviceAngleInDegreesFromQuaternion(float[] quaternion) {
-        double angle_in_degrees = 0;
-        int orientation = getInitialOrientation();
-
-        if (orientation == ORIENTATION_LANDSCAPE || orientation == ORIENTATION_REVERSE_LANDSCAPE) {
-            angle_in_degrees = Math.toDegrees(MathUtils.allOrientationsForRoll (
-                    quaternion[0],
-                    quaternion[1],
-                    quaternion[2],
-                    quaternion[3]));
-        }
-        else if (orientation == ORIENTATION_PORTRAIT || orientation == ORIENTATION_REVERSE_PORTRAIT) {
-            angle_in_degrees = Math.toDegrees(MathUtils.allOrientationsForPitch (
-                    quaternion[0],
-                    quaternion[1],
-                    quaternion[2],
-                    quaternion[3]));
-        }
-        return angle_in_degrees;
-    }
-
-    /**
      * Method to get all possible physical orientations of the device (portrait and landscape, reverse
      * portrait and reverse landscape) to ensure that angles (in degrees) are calculated correctly
      * irrespective of the start orientation of the device. Capturing device orientation using Android's
@@ -314,8 +207,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
      * onscreen rendered image relative to the 'natural' device orientation (portrait on most devices),
      * especially for active tasks when the user may not be looking at the screen, as in the Range of
      * Motion task, and may not realise that auto-rotate is not enabled. We therefore want to use the
-     * physical orientation of the device, which can be captured using the onOrientationChanged() method
-     * from the OrientationEventListener class.
+     * physical orientation of the device itself, which can be captured using the onOrientationChanged()
+     * method from the OrientationEventListener class.
      **/
     public void enableOrientationEventListener(Context appContext) {
         OrientationEventListener orientationEventListener = new OrientationEventListener(
@@ -330,7 +223,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
                     orientation = ORIENTATION_REVERSE_PORTRAIT;
                 } else if (degrees > 225 && degrees <= 315) { //270 degrees
                     orientation = ORIENTATION_LANDSCAPE;
-                } else if (degrees < 0) { // flip screen
+                } else if (degrees < 0) { // flipped screen
                     orientation = ORIENTATION_UNSPECIFIED;
                     Log.i(ContentValues.TAG, "The device orientation is unspecified: value = "
                             + orientation );
@@ -355,6 +248,135 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     private void setInitialOrientation(int initialOrientation) {
         this.initialOrientation = initialOrientation;
+    }
+
+    /**
+     * Methods to obtain the initial (start) device attitude as a unit quaternion
+     **/
+    public float[] getStartAttitude() {
+        return startAttitude;
+    }
+
+    private void setStartAttitude(float[] startAttitude) {
+        this.startAttitude = startAttitude;
+    }
+
+    /**
+     * Method to obtain range-shifted angle (degrees) of first (start) device attitude, relative to the zero position
+     **/
+    public double getShiftedStartAngle() {
+        double shifted_start_angle;
+        double raw_start_angle = getDeviceAngleInDegreesFromQuaternion(getStartAttitude());
+        shifted_start_angle = shiftStartAndFinishAngleRanges(raw_start_angle);
+        return shifted_start_angle;
+    }
+
+    /**
+     * Methods to obtain the final (finish) device attitude as a unit quaternion
+     **/
+    public float[] getFinishAttitude() {
+        return finishAttitude;
+    }
+
+    private void setFinishAttitude(float[] finishAttitude) {
+        this.finishAttitude = finishAttitude;
+    }
+
+    /**
+     * Method to obtain range-shifted angle (degrees) of final (finish) device attitude, relative to the zero position
+     **/
+    public double getShiftedFinishAngle() {
+        double shifted_finish_angle;
+        double raw_finish_angle = getDeviceAngleInDegreesFromQuaternion(getFinishAttitude());
+        shifted_finish_angle = shiftStartAndFinishAngleRanges(raw_finish_angle);
+        return shifted_finish_angle;
+    }
+
+    /**
+     * Method to shift default range of calculated angles for specific devices or screen orientations,
+     * when required, for start and finish angles. Should be overridden in sub-classes where necessary.
+     **/
+    public double shiftStartAndFinishAngleRanges(double original_angle) {
+        double shifted_angle;
+        int initial_orientation = getInitialOrientation();
+        if (initial_orientation == ORIENTATION_REVERSE_PORTRAIT
+                && (original_angle >= 0 && original_angle < 180)) {
+            shifted_angle = Math.abs(original_angle) - 360;
+        } else {
+            shifted_angle = original_angle;
+        }
+        return shifted_angle;
+    }
+    
+    /**
+     * Methods to obtain and calculate the minimum and maximum range-shifted angle (degrees), calculated
+     * for all device motion updates during recording, relative to the start position
+     **/
+    private double calculateShiftedAngleRelativeToStart(float[] attitudeUpdates) {
+        double shifted_angle;
+        float[] attitudeUpdatesRelativeToStart = getDeviceAttitudeRelativeToStart(attitudeUpdates);
+        double unadjusted_angle = getDeviceAngleInDegreesFromQuaternion(attitudeUpdatesRelativeToStart);
+        shifted_angle = shiftMinAndMaxAngleRange(unadjusted_angle);
+        return shifted_angle;
+    }
+
+    public double getMinimumAngle() {
+        return minimumAngle;
+    }
+
+    private void setMinimumAngle (double minimumAngle) {
+        this.minimumAngle = minimumAngle;
+    }
+
+    public double getMaximumAngle() {
+        return maximumAngle;
+    }
+
+    private void setMaximumAngle (double maximumAngle) {
+        this.maximumAngle = maximumAngle;
+    }
+
+    /**
+     * Method to extend the available range for maximum angle from 180 degrees to 270 degrees, relative
+     * to the start position. Range for minimum angle will be reduced to 90 degrees. Should be overridden
+     * in sub-classes where necessary.
+     **/
+    public double shiftMinAndMaxAngleRange(double original_angle) {
+        double shifted_angle;
+        int initial_orientation = getInitialOrientation();
+        if ((initial_orientation == ORIENTATION_PORTRAIT || initial_orientation == ORIENTATION_REVERSE_PORTRAIT)
+                && (original_angle > 90 && original_angle <= 180)) {
+            shifted_angle = Math.abs(original_angle) - 360;
+        } else {
+            shifted_angle = original_angle;
+        }
+        return shifted_angle;
+    }
+
+    /**
+     * Method to calculate angles in degrees from the device attitude quaternion, as a function of
+     * device orientation (portrait or landscape) or screen orientation (portrait, landscape, reverse
+     * portrait or reverse landscape).
+     **/
+    public double getDeviceAngleInDegreesFromQuaternion(float[] quaternion) {
+        double angle_in_degrees = 0;
+        int initial_orientation = getInitialOrientation();
+
+        if (initial_orientation == ORIENTATION_LANDSCAPE || initial_orientation == ORIENTATION_REVERSE_LANDSCAPE) {
+            angle_in_degrees = Math.toDegrees(MathUtils.allOrientationsForRoll (
+                    quaternion[0],
+                    quaternion[1],
+                    quaternion[2],
+                    quaternion[3]));
+        }
+        else if (initial_orientation == ORIENTATION_PORTRAIT || initial_orientation == ORIENTATION_REVERSE_PORTRAIT) {
+            angle_in_degrees = Math.toDegrees(MathUtils.allOrientationsForPitch (
+                    quaternion[0],
+                    quaternion[1],
+                    quaternion[2],
+                    quaternion[3]));
+        }
+        return angle_in_degrees;
     }
 
     /**
@@ -383,7 +405,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     @Override
     protected void stepResultFinished() {
 
-        int orientation = getInitialOrientation();
+        int initial_orientation = getInitialOrientation();
         double start;
         double finish;
         double minimum;
@@ -399,9 +421,9 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         calculations will need to be overridden in tasks where this range is not appropriate.*/
 
         // Capture absolute start angle relative to device/screen orientation
-        if (orientation == ORIENTATION_REVERSE_LANDSCAPE) {
+        if (initial_orientation == ORIENTATION_REVERSE_LANDSCAPE) {
             start = 90 + getShiftedStartAngle();
-        } else if (orientation == ORIENTATION_REVERSE_PORTRAIT) {
+        } else if (initial_orientation == ORIENTATION_REVERSE_PORTRAIT) {
             start = -90 - getShiftedStartAngle();
         } else {
             start = 90 - getShiftedStartAngle();
@@ -409,9 +431,10 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         rangeOfMotionResult.setStart(start);
 
         // Capture absolute finish angle relative to device/screen orientation
-        if (orientation == ORIENTATION_REVERSE_LANDSCAPE) {
+        if (initial_orientation == ORIENTATION_REVERSE_LANDSCAPE) {
             finish = 90 + getShiftedFinishAngle();
-        } else if (orientation == ORIENTATION_REVERSE_PORTRAIT) {
+        }
+        else if (initial_orientation == ORIENTATION_REVERSE_PORTRAIT) {
             finish = -90 - getShiftedFinishAngle();
         } else {
             finish = 90 - getShiftedFinishAngle();
@@ -423,22 +446,18 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         for these particular tasks when the device is in portrait or landscape mode */
 
         // Capture minimum angle relative to device/screen orientation
-        if (orientation == ORIENTATION_REVERSE_LANDSCAPE) {
+        if (initial_orientation == ORIENTATION_REVERSE_LANDSCAPE) {
             minimum = start + getMinimumAngle();
-        } else if (orientation == ORIENTATION_REVERSE_PORTRAIT) {
-            minimum = start - getMaximumAngle(); // currently reporting incorrect result
         } else {
-            minimum = start - getMaximumAngle();
+            minimum = start - getMaximumAngle(); // landscape, portrait and reverse portrait
         }
         rangeOfMotionResult.setMinimum(minimum);
 
         // Capture maximum angle relative to device/screen orientation
-        if (orientation == ORIENTATION_REVERSE_LANDSCAPE) {
+        if (initial_orientation == ORIENTATION_REVERSE_LANDSCAPE) {
             maximum = start + getMaximumAngle();
-        } else if (orientation == ORIENTATION_REVERSE_PORTRAIT) {
-            maximum = start - getMinimumAngle(); // currently reporting incorrect result
         } else {
-            maximum = start - getMinimumAngle();
+            maximum = start - getMinimumAngle(); // // landscape, portrait and reverse portrait
         }
         rangeOfMotionResult.setMaximum(maximum);
 
