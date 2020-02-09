@@ -419,6 +419,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         double range;
 
         rangeOfMotionResult = new RangeOfMotionResult(rangeOfMotionStep.getIdentifier());
+        
+        rangeOfMotionResult.setOrientation(initial_orientation);
 
         /* Like iOS, when using quaternions via the rotation vector sensor in Android, the zero attitude
         {0,0,0,0} position is parallel with the ground (i.e. screen facing up). Hence, tasks in which
