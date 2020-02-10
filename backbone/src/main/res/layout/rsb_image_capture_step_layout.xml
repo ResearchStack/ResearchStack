@@ -23,26 +23,34 @@
         style="@style/rsb_review_step_sub_step_question_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/imageCaptureStepQuestionAnswer"
+        app:layout_constraintBottom_toTopOf="@id/imageCaptureStepImageOrAnswerHorizontalBarrier"
         app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonStartBarrier"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageCaptureStepQuestionTitle"
         tools:text="Are you thirsty now?" />
 
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/imageCaptureStepImageOrAnswerHorizontalBarrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        app:constraint_referenced_ids="imageCaptureImageStepQuestionSkippedAnswer,imageCaptureImageStepQuestionAnswer" />
+
     <TextView
-        android:id="@+id/imageCaptureStepQuestionAnswer"
+        android:id="@+id/imageCaptureImageStepQuestionSkippedAnswer"
         style="@style/rsb_review_step_sub_step_answer_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constrainedHeight="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/reviewStepEditButtonBottomBarrier"
-        tools:text="Yes" />
+        tools:text="Answer" />
 
     <ImageView
         android:id="@+id/imageCaptureImageStepQuestionAnswer"
         style="@style/rsb_image_capture_step_style"
+        android:contentDescription="@null"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageCaptureStepQuestionItself"
         app:srcCompat="@drawable/rsb_ic_circle_8dp" />
@@ -50,9 +58,9 @@
     <ImageButton
         android:id="@+id/imageCaptureImageStepQuestionAnswerFullscreen"
         style="@style/rsb_image_capture_fullscreen_style"
-        app:layout_constraintEnd_toEndOf="@+id/imageCaptureImageStepQuestionAnswer"
-        android:contentDescription="Full Screen"
         android:background="@null"
+        android:contentDescription="Full Screen"
+        app:layout_constraintEnd_toEndOf="@+id/imageCaptureImageStepQuestionAnswer"
         app:layout_constraintTop_toTopOf="@+id/imageCaptureImageStepQuestionAnswer"
         app:srcCompat="@drawable/rsb_ic_review_step_image_fullscreen" />
 
