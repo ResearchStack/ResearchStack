@@ -5,17 +5,17 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.rsb_activity_full_screen_image.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import org.researchstack.backbone.R
 import org.researchstack.backbone.step.Step
-import org.researchstack.backbone.ui.PinCodeActivity
 import org.researchstack.backbone.ui.step.fragments.ReviewStepFragment
 
 
-class ReviewStepFullScreenImageActivity : PinCodeActivity(), View.OnClickListener {
+class ReviewStepFullScreenImageActivity : AppCompatActivity(), View.OnClickListener {
     private val viewModel: ReviewStepFullScreenImageViewModel by viewModel { parametersOf(intent) }
 
     companion object {
@@ -44,7 +44,7 @@ class ReviewStepFullScreenImageActivity : PinCodeActivity(), View.OnClickListene
         fullScreenImageClose.setOnClickListener(this)
         fullScreenImageEditStep.setOnClickListener(this)
 
-        fullScreenImageContainer.addOnLayoutChangeListener(object  : View.OnLayoutChangeListener {
+        fullScreenImageContainer.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
             override fun onLayoutChange(v: View?, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int,
                                         oldTop: Int, oldRight: Int, oldBottom: Int) {
                 val width = fullScreenImageContainer.measuredWidth
