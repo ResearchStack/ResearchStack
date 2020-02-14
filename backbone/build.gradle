@@ -6,7 +6,8 @@ apply plugin: 'maven'
 android {
 
     compileSdkVersion 29
-    buildToolsVersion '29.0.2'
+    buildToolsVersion '29.0.3'
+
     afterEvaluate {
         def originalFilePath = "$buildDir/outputs/aar/backbone-release.aar"
         def newFilePath = originalFilePath.replace(".aar", "_v${defaultConfig.versionName}.aar")
@@ -76,14 +77,19 @@ android {
 dependencies {
     def kotlinVersion = '1.3.61'
     def koinVersion = '2.0.1'
-    def nav_version = '2.1.0'
-    def coreTestingVersion = '2.0.1'
-    def mockitoKotlinVersion = "2.1.0"
-    def mockitoVersion = '2.23.4'
+    def navVersion = '2.2.1'
+    def coreTestingVersion = '2.1.0'
+    def mockitoKotlinVersion = "2.2.0"
+    def mockitoVersion = '3.2.4'
+
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
     testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
+
+    // Material components
+    implementation "com.google.android.material:material:1.1.0"
 
     // Koin for Android
     implementation "org.koin:koin-android:$koinVersion"
@@ -95,26 +101,31 @@ dependencies {
     implementation "org.koin:koin-androidx-viewmodel:$koinVersion"
 
     // Navigation Component
-    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
 
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    // Android x
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.legacy:legacy-preference-v14:1.0.0'
-    implementation 'com.google.code.gson:gson:2.8.5'
+
+    // Android Lifecycle Extensions
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+
+    // Misc libs
+    implementation 'com.google.code.gson:gson:2.8.6'
     implementation "com.afollestad.material-dialogs:core:0.9.0.2"
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'org.robolectric:robolectric:3.0'
+
+    // JUnit 4 framework
+    testImplementation 'junit:junit:4.13'
 
     // Mockito framework
     testImplementation "org.mockito:mockito-core:$mockitoVersion"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVersion"
-    testImplementation "androidx.arch.core:core-testing:$coreTestingVersion"
 
-    implementation "com.google.android.material:material:1.1.0-rc01"
+    // Android core testing
+    testImplementation "androidx.arch.core:core-testing:$coreTestingVersion"
 }
 
 if (project.hasProperty("android")) { // Android libraries

@@ -103,7 +103,7 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
             }
             var nextStep = task.getStepAfterStep(currentStep, currentTaskResult)
             // Current step with branches?
-            hasBranching = clonedTaskResult?.getStepResult(nextStep.identifier) == null
+            hasBranching = clonedTaskResult?.getStepResult(nextStep.identifier) == null && isGFitStep(nextStep).not()
 
 
             if (hasBranching) {
@@ -241,6 +241,7 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
     @VisibleForTesting
     fun isReviewStep(step: Step) = step::class.java.simpleName.contains("RSReviewStep", true)
     private fun isCompletionStep(step: Step) = step::class.java.simpleName.contains("RSCompletionStep", true)
+    private fun isGFitStep(step: Step) = step::class.java.simpleName.contains("RSGoogleFitPermissionsStep", true)
 
     companion object {
         const val TAG = "TaskViewModel"
@@ -357,7 +358,9 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
     @VisibleForTesting
     fun checkIfCurrentStepIsBranchDecisionStep(): Boolean {
         val nextStep = task.getStepAfterStep(currentStep, currentTaskResult)
-        return currentTaskResult.getStepResult(nextStep.identifier) == null && !isReviewStep(nextStep)
+        return currentTaskResult.getStepResult(nextStep.identifier) == null
+                && isReviewStep(nextStep).not()
+                && isGFitStep(nextStep).not()
     }
 
     fun revertToOriginalStepResult(originalStepResult: StepResult<*>) {
