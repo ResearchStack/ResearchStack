@@ -58,11 +58,11 @@ public class TaskFactory {
         public static final String ActiveTaskRightHandIdentifier        = "right";
         public static final String ActiveTaskSkipHandStepIdentifier     = "skipHand";
 
-        // Active Task Steps Limb Identifiers
-        public static final String ActiveTaskMostAffectedLimbIdentifier = "mostAffected";
-        public static final String ActiveTaskLeftLimbIdentifier         = "left";
-        public static final String ActiveTaskRightLimbIdentifier        = "right";
-        public static final String ActiveTaskSkipLimbStepIdentifier     = "skipLimb";
+        // Active Task Steps Side Identifiers
+        public static final String ActiveTaskMostAffectedSideIdentifier = "mostAffected";
+        public static final String ActiveTaskLeftSideIdentifier         = "left";
+        public static final String ActiveTaskRightSideIdentifier        = "right";
+        public static final String ActiveTaskSkipSideStepIdentifier     = "skipLimb";
     }
 
     public static CompletionStep makeCompletionStep(Context context) {
