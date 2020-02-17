@@ -62,7 +62,8 @@ public class TaskFactory {
         public static final String ActiveTaskMostAffectedSideIdentifier = "mostAffected";
         public static final String ActiveTaskLeftSideIdentifier         = "left";
         public static final String ActiveTaskRightSideIdentifier        = "right";
-        public static final String ActiveTaskSkipSideStepIdentifier     = "skipLimb";
+        public static final String ActiveTaskBothSidesStepIdentifier    = "bothSides";
+        public static final String ActiveTaskSkipSideStepIdentifier     = "skipSide";
     }
 
     public static CompletionStep makeCompletionStep(Context context) {
