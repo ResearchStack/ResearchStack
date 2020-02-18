@@ -8,6 +8,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.AttributeSet;
@@ -27,6 +28,8 @@ import org.researchstack.backbone.step.active.RangeOfMotionStep;
 import org.researchstack.backbone.step.active.recorder.DeviceMotionRecorder;
 import org.researchstack.backbone.utils.MathUtils;
 
+import static java.lang.Double.NaN;
+
 /**
  * Created by David Evans, Simon Hartley, Laurence Hurst, David Jimenez, 2019.
  *
@@ -43,6 +46,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     protected RangeOfMotionResult rangeOfMotionResult;
     protected BroadcastReceiver deviceMotionReceiver;;
     protected RelativeLayout layout;
+    protected SensorManager sensorManager;
 
     private boolean firstDeviceOrientationCaptured = false;
     private boolean firstAttitudeCaptured = false;
@@ -411,7 +415,10 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     @Override
     protected void stepResultFinished() {
 
-        int initial_orientation = getInitialOrientation();
+        Context appContext = getContext().getApplicationContext();
+        sensorManager = (SensorManager) appContext.getSystemService(Context.SENSOR_SERVICE);
+        
+        int initial_orientation;
         double start;
         double finish;
         double minimum;
@@ -420,6 +427,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
         rangeOfMotionResult = new RangeOfMotionResult(rangeOfMotionStep.getIdentifier());
         
+        // Initial device orientation
+        initial_orientation = getInitialOrientation();
         rangeOfMotionResult.setOrientation(initial_orientation);
 
         /* Like iOS, when using quaternions via the rotation vector sensor in Android, the zero attitude
@@ -428,24 +437,32 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         adjustment. These are set to report an absolute an angle between +270 and -90 degrees. These
         calculations will need to be overridden in tasks where this range is not appropriate.*/
 
-        // Capture absolute start angle relative to device/screen orientation
-        if (initial_orientation == ORIENTATION_REVERSE_LANDSCAPE) {
-            start = 90 + getShiftedStartAngle();
-        } else if (initial_orientation == ORIENTATION_REVERSE_PORTRAIT) {
-            start = -90 - getShiftedStartAngle();
+        // Capture absolute start angle relative to device orientation
+        if (sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR) == null) {
+            start = NaN;
         } else {
-            start = 90 - getShiftedStartAngle();
+            if (initial_orientation == ORIENTATION_REVERSE_LANDSCAPE) {
+                start = 90 + getShiftedStartAngle();
+            } else if (initial_orientation == ORIENTATION_REVERSE_PORTRAIT) {
+                start = -90 - getShiftedStartAngle();
+            } else {
+                start = 90 - getShiftedStartAngle();
+            }
         }
         rangeOfMotionResult.setStart(start);
 
-        // Capture absolute finish angle relative to device/screen orientation
-        if (initial_orientation == ORIENTATION_REVERSE_LANDSCAPE) {
-            finish = 90 + getShiftedFinishAngle();
-        }
-        else if (initial_orientation == ORIENTATION_REVERSE_PORTRAIT) {
-            finish = -90 - getShiftedFinishAngle();
+        // Capture absolute finish angle relative to device orientation
+        if (sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR) == null) {
+            finish = NaN;
         } else {
-            finish = 90 - getShiftedFinishAngle();
+            if (initial_orientation == ORIENTATION_REVERSE_LANDSCAPE) {
+                finish = 90 + getShiftedFinishAngle();
+            }
+            else if (initial_orientation == ORIENTATION_REVERSE_PORTRAIT) {
+                finish = -90 - getShiftedFinishAngle();
+            } else {
+                finish = 90 - getShiftedFinishAngle();
+            }
         }
         rangeOfMotionResult.setFinish(finish);
 
@@ -453,19 +470,27 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         axes (i.e. right hand rule), maximum and minimum angles are reported the 'wrong' way around
         for these particular tasks when the device is in portrait or landscape mode */
 
-        // Capture minimum angle relative to device/screen orientation
-        if (initial_orientation == ORIENTATION_REVERSE_LANDSCAPE) {
-            minimum = start + getMinimumAngle();
+        // Capture minimum angle relative to device orientation
+        if (sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR) == null) {
+            minimum = NaN;
         } else {
-            minimum = start - getMaximumAngle(); // landscape, portrait and reverse portrait
+            if (initial_orientation == ORIENTATION_REVERSE_LANDSCAPE) {
+                minimum = start + getMinimumAngle();
+            } else {
+                minimum = start - getMaximumAngle(); // landscape, portrait and reverse portrait
+            }
         }
         rangeOfMotionResult.setMinimum(minimum);
 
-        // Capture maximum angle relative to device/screen orientation
-        if (initial_orientation == ORIENTATION_REVERSE_LANDSCAPE) {
-            maximum = start + getMaximumAngle();
+        // Capture maximum angle relative to device orientation
+        if (sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR) == null) {
+            maximum = NaN;
         } else {
-            maximum = start - getMinimumAngle(); // landscape, portrait and reverse portrait
+            if (initial_orientation == ORIENTATION_REVERSE_LANDSCAPE) {
+                maximum = start + getMaximumAngle();
+            } else {
+                maximum = start - getMinimumAngle(); // landscape, portrait and reverse portrait
+            }
         }
         rangeOfMotionResult.setMaximum(maximum);
 
