@@ -445,6 +445,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
                 start = 90 + getShiftedStartAngle();
             } else if (initial_orientation == ORIENTATION_REVERSE_PORTRAIT) {
                 start = -90 - getShiftedStartAngle();
+            } else if (initial_orientation == ORIENTATION_UNSPECIFIED) {
+                start = NaN;
             } else {
                 start = 90 - getShiftedStartAngle();
             }
@@ -457,9 +459,10 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         } else {
             if (initial_orientation == ORIENTATION_REVERSE_LANDSCAPE) {
                 finish = 90 + getShiftedFinishAngle();
-            }
-            else if (initial_orientation == ORIENTATION_REVERSE_PORTRAIT) {
+            } else if (initial_orientation == ORIENTATION_REVERSE_PORTRAIT) {
                 finish = -90 - getShiftedFinishAngle();
+            } else if (initial_orientation == ORIENTATION_UNSPECIFIED) {
+                finish = NaN;
             } else {
                 finish = 90 - getShiftedFinishAngle();
             }
@@ -476,6 +479,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         } else {
             if (initial_orientation == ORIENTATION_REVERSE_LANDSCAPE) {
                 minimum = start + getMinimumAngle();
+            } else if (initial_orientation == ORIENTATION_UNSPECIFIED) {
+                minimum = NaN;
             } else {
                 minimum = start - getMaximumAngle(); // landscape, portrait and reverse portrait
             }
@@ -488,6 +493,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         } else {
             if (initial_orientation == ORIENTATION_REVERSE_LANDSCAPE) {
                 maximum = start + getMaximumAngle();
+            } else if (initial_orientation == ORIENTATION_UNSPECIFIED) {
+                maximum = NaN;
             } else {
                 maximum = start - getMinimumAngle(); // landscape, portrait and reverse portrait
             }
