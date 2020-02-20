@@ -19,6 +19,7 @@ import org.researchstack.backbone.step.ConsentDocumentStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.views.SubmitBar;
+import org.researchstack.backbone.utils.LocaleUtils;
 
 /**
  * Implement saved state for the following objects:
@@ -123,6 +124,8 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
                 }));
                 submitBar.setNegativeTitleColor(step.getPrimaryColor());
                 submitBar.setNegativeAction(actionView -> disagreeConsent());
+                submitBar.setNegativeTitle(LocaleUtils.getLocalizedString(getContext(),R.string.rsb_disagree));
+                submitBar.setPositiveTitle(LocaleUtils.getLocalizedString(getContext(),R.string.rsb_agree));
             }
         });
 
@@ -137,14 +140,14 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
 
     private void showDialog(MaterialDialog.SingleButtonCallback positiveAction) {
         new MaterialDialog.Builder(getContext())
-                .title(R.string.rsb_consent_review_alert_title)
+                .title(LocaleUtils.getLocalizedString(getContext(),R.string.rsb_consent_review_alert_title))
                 .content(confirmationDialogBody)
                 .theme(Theme.LIGHT)
                 .cancelable(false)
                 .positiveColor(step.getColorSecondary())
                 .negativeColor(step.getPrimaryColor())
-                .negativeText(R.string.rsb_consent_review_cancel)
-                .positiveText(R.string.rsb_agree)
+                .negativeText(LocaleUtils.getLocalizedString(getContext(),R.string.rsb_consent_review_cancel))
+                .positiveText(LocaleUtils.getLocalizedString(getContext(),R.string.rsb_agree))
                 .onPositive(positiveAction)
                 .show();
     }

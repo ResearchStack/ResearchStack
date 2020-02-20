@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 
 import org.researchstack.backbone.R;
+import org.researchstack.backbone.utils.LocaleUtils;
 
 public class SubmitBar extends LinearLayout {
     private TextView positiveView;
@@ -43,10 +44,11 @@ public class SubmitBar extends LinearLayout {
         setBackground(a.getDrawable(R.styleable.SubmitBar_android_background));
 
         positiveView = (TextView) findViewById(R.id.bar_submit_postitive);
-        positiveView.setText(a.getString(R.styleable.SubmitBar_positiveActionTitle));
+        positiveView.setText(LocaleUtils.getLocalizedString(getContext(),R.string.rsb_next));
 
         negativeView = (TextView) findViewById(R.id.bar_submit_negative);
-        negativeView.setText(a.getString(R.styleable.SubmitBar_negativeActionTitle));
+        positiveView.setText(LocaleUtils.getLocalizedString(getContext(),R.string.rsb_step_skip));
+
 
         editSaveView = (TextView) findViewById(R.id.bar_submit_edit_save);
         editCancelView = (TextView) findViewById(R.id.bar_submit_edit_cancel);

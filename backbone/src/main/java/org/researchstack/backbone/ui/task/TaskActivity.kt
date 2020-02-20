@@ -35,6 +35,7 @@ import org.researchstack.backbone.ui.permissions.PermissionResult
 import org.researchstack.backbone.ui.step.fragments.BaseStepFragment
 import org.researchstack.backbone.ui.step.layout.StepLayout
 import org.researchstack.backbone.ui.step.layout.SurveyStepLayout
+import org.researchstack.backbone.utils.LocaleUtils
 import org.researchstack.backbone.utils.ViewUtils
 
 open class TaskActivity : AppCompatActivity(), PermissionMediator {
@@ -146,6 +147,7 @@ open class TaskActivity : AppCompatActivity(), PermissionMediator {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.rsb_activity_view_task_menu, menu)
         actionBarCancelMenuItem = menu.findItem(R.id.rsb_action_cancel)
+        actionBarCancelMenuItem?.title = LocaleUtils.getLocalizedString(this, R.string.rsb_cancel)
         return true
     }
 
@@ -368,13 +370,13 @@ open class TaskActivity : AppCompatActivity(), PermissionMediator {
                                 onPositive: () -> (Unit)) {
         MaterialDialog.Builder(this)
                 .cancelable(false)
-                .title(title)
-                .content(content)
+                .title(LocaleUtils.getLocalizedString(this, title))
+                .content(LocaleUtils.getLocalizedString(this, content))
                 .theme(Theme.LIGHT)
                 .positiveColor(viewModel.colorPrimary)
                 .negativeColor(viewModel.colorPrimary)
-                .negativeText(negativeText)
-                .positiveText(positiveText)
+                .negativeText(LocaleUtils.getLocalizedString(this, negativeText))
+                .positiveText(LocaleUtils.getLocalizedString(this, positiveText))
                 .onPositive { _, _ -> onPositive() }
                 .onNegative { dialog, _ -> onNegative(dialog) }
                 .show()

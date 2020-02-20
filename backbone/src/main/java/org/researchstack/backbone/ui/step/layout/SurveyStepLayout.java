@@ -27,6 +27,7 @@ import org.researchstack.backbone.ui.step.body.FormBody;
 import org.researchstack.backbone.ui.step.body.StepBody;
 import org.researchstack.backbone.ui.views.FixedSubmitBarLayout;
 import org.researchstack.backbone.ui.views.SubmitBar;
+import org.researchstack.backbone.utils.LocaleUtils;
 import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.TextUtils;
 
@@ -151,10 +152,6 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         initStepBody();
     }
 
-    public void setPositiveText(String text) {
-        submitBar.setPositiveTitle(text);
-    }
-
     @Override
     public void isEditView(boolean isEditView) {
         isEditViewVisible = isEditView;
@@ -208,7 +205,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
             }
 
             if (questionStep.isOptional()) {
-                submitBar.setNegativeTitle(R.string.rsb_step_skip);
+                submitBar.setNegativeTitle(LocaleUtils.getLocalizedString(getContext(), R.string.rsb_step_skip));
                 submitBar.setNegativeAction(v -> onSkipClicked());
             } else {
                 submitBar.getNegativeActionView().setVisibility(View.GONE);

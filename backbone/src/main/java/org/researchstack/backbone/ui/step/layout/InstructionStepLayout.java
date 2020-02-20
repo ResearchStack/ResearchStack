@@ -112,7 +112,7 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
 
             // Set Next / Skip
             final SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
-            submitBar.setPositiveTitle(getContext().getString(R.string.rsb_next));
+            submitBar.setPositiveTitle(LocaleUtils.getLocalizedString(getContext(), R.string.rsb_next));
             submitBar.setPositiveAction(view -> {
                 callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
                         step,
