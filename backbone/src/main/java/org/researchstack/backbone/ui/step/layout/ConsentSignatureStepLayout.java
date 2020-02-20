@@ -105,6 +105,7 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
 
         final AppCompatTextView clear = (AppCompatTextView) findViewById(R.id.layout_consent_review_signature_clear);
         clear.setTextColor(step.getPrimaryColor());
+        clear.setText(LocaleUtils.getLocalizedString(getContext(), R.string.rsb_consent_signature_clear));
 
         signatureView = (SignatureView) findViewById(R.id.layout_consent_review_signature);
         signatureView.setCallbacks(new SignatureCallbacks() {
@@ -138,7 +139,8 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
         final SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
         submitBar.getNegativeActionView().setVisibility(View.GONE);
         submitBar.setPositiveTitleColor(step.getColorSecondary());
-        submitBar.setPositiveTitle(R.string.rsb_done);
+        submitBar.setPositiveTitle(LocaleUtils.getLocalizedString(getContext(),
+                R.string.rsb_done));
         submitBar.setPositiveAction(new OnClickListener()
         {
             @Override
@@ -149,7 +151,8 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
                     callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, result);
                     submitBar.clearActions();
                 } else {
-                    Toast.makeText(getContext(), R.string.rsb_error_invalid_signature, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), LocaleUtils.getLocalizedString(getContext(),
+                            R.string.rsb_error_invalid_signature), Toast.LENGTH_SHORT).show();
                 }
             }
         });

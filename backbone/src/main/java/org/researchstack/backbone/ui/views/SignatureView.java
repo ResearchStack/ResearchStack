@@ -21,6 +21,7 @@ import android.view.View;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.ui.callbacks.SignatureCallbacks;
+import org.researchstack.backbone.utils.LocaleUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +90,7 @@ public class SignatureView extends View {
         int signatureStroke = a.getDimensionPixelSize(R.styleable.SignatureView_signatureStrokeSize,
                 defSignatureStroke);
 
-        hintText = a.getString(R.styleable.SignatureView_hintText);
+        hintText = LocaleUtils.getLocalizedString(getContext(), R.string.rsb_consent_signature_placeholder);
 
         hintTextColor = a.getColor(R.styleable.SignatureView_hintTextColor, Color.LTGRAY);
 
