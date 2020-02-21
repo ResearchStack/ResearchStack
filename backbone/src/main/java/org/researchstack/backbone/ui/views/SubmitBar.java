@@ -47,8 +47,7 @@ public class SubmitBar extends LinearLayout {
         positiveView.setText(LocaleUtils.getLocalizedString(getContext(),R.string.rsb_next));
 
         negativeView = (TextView) findViewById(R.id.bar_submit_negative);
-        positiveView.setText(LocaleUtils.getLocalizedString(getContext(),R.string.rsb_step_skip));
-
+        negativeView.setText(LocaleUtils.getLocalizedString(getContext(),R.string.rsb_step_skip));
 
         editSaveView = (TextView) findViewById(R.id.bar_submit_edit_save);
         editCancelView = (TextView) findViewById(R.id.bar_submit_edit_cancel);
