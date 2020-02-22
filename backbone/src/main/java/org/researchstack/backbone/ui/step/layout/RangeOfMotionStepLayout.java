@@ -418,6 +418,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         Context appContext = getContext().getApplicationContext();
         sensorManager = (SensorManager) appContext.getSystemService(Context.SENSOR_SERVICE);
         
+        boolean has_rotation_vector;
+        boolean has_accelerometer;
         int initial_orientation;
         double start;
         double finish;
@@ -426,6 +428,14 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         double range;
 
         rangeOfMotionResult = new RangeOfMotionResult(rangeOfMotionStep.getIdentifier());
+        
+        // Rotation vector sensor is available on the device
+        has_rotation_vector = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR) != null;
+        rangeOfMotionResult.setHasRotationVector(has_rotation_vector);
+
+        // Accelerometer sensor is available on the device
+        has_accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null;
+        rangeOfMotionResult.setHasAccelerometer(has_accelerometer);
         
         // Initial device orientation
         initial_orientation = getInitialOrientation();
