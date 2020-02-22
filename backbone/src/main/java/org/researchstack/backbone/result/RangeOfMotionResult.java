@@ -6,6 +6,16 @@ package org.researchstack.backbone.result;
 
 public class RangeOfMotionResult extends Result {
 
+     /**
+     * Boolean variable to return true if the rotation vector sensor is available on the device.
+     */
+    private boolean hasRotationVector;
+
+    /**
+     * Boolean variable to return true if the accelerometer sensor is available on the device.
+     */
+    private boolean hasAccelerometer;
+    
     /**
      The orientation of the device at the start position:
      ORIENTATION_UNSPECIFIED = -1
@@ -51,6 +61,22 @@ public class RangeOfMotionResult extends Result {
         super(identifier);
     }
 
+       public boolean getHasRotationVector() {
+        return hasRotationVector;
+    }
+
+    public void setHasRotationVector(boolean hasRotationVector) {
+        this.hasRotationVector = hasRotationVector;
+    }
+
+    public boolean getHasAccelerometer() {
+        return hasAccelerometer;
+    }
+
+    public void setHasAccelerometer(boolean hasAccelerometer) {
+        this.hasAccelerometer = hasAccelerometer;
+    }
+    
     public int getOrientation() {
         return orientation;
     }
