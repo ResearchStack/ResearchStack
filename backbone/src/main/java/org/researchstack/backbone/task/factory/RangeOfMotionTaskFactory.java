@@ -22,7 +22,8 @@ import static org.researchstack.backbone.task.factory.TaskFactory.Constants.*;
 /**
  * Created by David Evans, Laurence Hurst, Simon Hartley, 2019.
  *
- * This class was created to encapsulate the creation of a Knee Range of Motion (ROM) Task.
+ * This class was created to encapsulate the creation of Range of Motion (ROM) Task,
+ * specifically the knee ROM task.
  */
 
 public class RangeOfMotionTaskFactory {
@@ -33,14 +34,14 @@ public class RangeOfMotionTaskFactory {
      * Returns a predefined task that measures the range of motion for a left knee, a right knee, or
      * both knees.
      * <p>
-     * The data collected by this task is device motion data.
+     * The data collected by this task is device motion information.
      *
      * @param context                can be app or activity, used for resources
      * @param identifier             The task identifier to use for this task, appropriate to the study.
      * @param intendedUseDescription A localized string describing the intended use of the data
      *                               collected. If the value of this parameter is `nil`, the default
      *                               localized text is displayed.
-     * @param sideOptions            The limb in which ROM is being measured.
+     * @param sideOptions            Options for determining which side(s) to test.
      * @param optionList             Options that affect the features of the predefined task.
      * @return                       An active range of motion task that can be presented with an
      *                               `ActiveTaskActivity` object.
