@@ -40,7 +40,7 @@ public class ShoulderRangeOfMotionTaskFactory {
      * @param intendedUseDescription A localized string describing the intended use of the data
      *                               collected. If the value of this parameter is `nil`, the default
      *                               localized text is displayed.
-     * @param sideOptions            The limb in which ROM is being measured.
+     * @param sideOptions            Options for determining which side(s) to test.
      * @param optionList             Options that affect the features of the predefined task.
      * @return                       An active range of motion task that can be presented with an
      *                               `ActiveTaskActivity` object.
