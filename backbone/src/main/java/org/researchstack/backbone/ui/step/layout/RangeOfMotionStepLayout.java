@@ -418,9 +418,11 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         Context appContext = getContext().getApplicationContext();
         sensorManager = (SensorManager) appContext.getSystemService(Context.SENSOR_SERVICE);
         
+        // task
         boolean has_rotation_vector;
         boolean has_accelerometer;
         int initial_orientation;
+        //angles
         double start;
         double finish;
         double minimum;
@@ -448,7 +450,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         calculations will need to be overridden in tasks where this range is not appropriate.*/
 
         // Capture absolute start angle relative to device orientation
-        if (sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR) == null) {
+        if (!has_rotation_vector) {
             start = NaN;
         } else {
             if (initial_orientation == ORIENTATION_REVERSE_LANDSCAPE) {
@@ -464,7 +466,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         rangeOfMotionResult.setStart(start);
 
         // Capture absolute finish angle relative to device orientation
-        if (sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR) == null) {
+        if (!has_rotation_vector) {
             finish = NaN;
         } else {
             if (initial_orientation == ORIENTATION_REVERSE_LANDSCAPE) {
@@ -484,7 +486,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         for these particular tasks when the device is in portrait or landscape mode */
 
         // Capture minimum angle relative to device orientation
-        if (sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR) == null) {
+        if (!has_rotation_vector) {
             minimum = NaN;
         } else {
             if (initial_orientation == ORIENTATION_REVERSE_LANDSCAPE) {
@@ -498,7 +500,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         rangeOfMotionResult.setMinimum(minimum);
 
         // Capture maximum angle relative to device orientation
-        if (sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR) == null) {
+        if (!has_rotation_vector) {
             maximum = NaN;
         } else {
             if (initial_orientation == ORIENTATION_REVERSE_LANDSCAPE) {
