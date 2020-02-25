@@ -2,6 +2,9 @@
 
 ### Change log
 
+#### v1.6.0
+- Introducing support for Review Step
+
 #### v1.5.1
 - Adding languages: ko_KR
 
