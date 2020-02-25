@@ -133,5 +133,22 @@
     <string name="rsb_consent_doc_line_signature">%1$s\'s İmzası</string>
     <string name="rsb_consent_doc_line_date">Tarih</string>
     <string name="rsb_consent_role">Katılımcı</string>
+    <string name="rsb_consent_doc_line_date_format">gg-aa-yyyy</string>
+
+    <!-- Edit -->
+    <string name="rsb_edit_step_alert_cancel_positive">[tr-TR] YES, STOP MAKING CHANGES</string>
+    <string name="rsb_edit_step_alert_cancel_discard">[tr-TR] NO, KEEP EDITING</string>
+    <string name="rsb_edit_step_alert_cancel_title">[tr-TR] Do you want to stop making changes?</string>
+    <string name="rsb_edit_step_alert_cancel_content">[tr-TR] All changes will be discarded and your original response will be used.</string>
+    <string name="rsb_edit_step_alert_step_save_title">[tr-TR] Do you want to save your changes?</string>
+    <string name="rsb_edit_step_alert_step_save_content">[tr-TR] Other responses may be cleared and you may be asked to submit new information.</string>
+    <string name="rsb_edit_step_alert_step_save_discard">[tr-TR] No, Discard</string>
+    <string name="rsb_edit_step_alert_step_save_positive">[tr-TR] Yes, Save</string>
+    <string name="rsb_consent_review_save">[tr-TR] Save</string>
+    <string name="rsb_edit_step_alert_step_skip_title">[tr-TR] Do you want to skip this step?</string>
+    <string name="rsb_edit_step_alert_step_skip_content">[tr-TR] Your original response will be discarded..</string>
+    <string name="rsb_edit_step_alert_step_skip_discard">[tr-TR] NO, DON\'T SKIP</string>
+    <string name="rsb_edit_step_alert_step_skip_positive">[tr-TR] Yes, skip</string>
+    <string name="rsb_edit_step">[tr-TR] Edit</string>
 
 </resources>

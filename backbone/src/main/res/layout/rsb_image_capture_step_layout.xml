@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/rsb_review_step_cell_style"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/imageCaptureStepQuestionTitle"
+        style="@style/rsb_review_step_sub_step_title_style"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/rsb_reviewStep_item_title_bottom_margin"
+        app:layout_constraintBottom_toTopOf="@id/imageCaptureStepQuestionItself"
+        app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonStartBarrier"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Here goes the Title" />
+
+    <TextView
+        android:id="@+id/imageCaptureStepQuestionItself"
+        style="@style/rsb_review_step_sub_step_question_style"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/imageCaptureStepImageOrAnswerHorizontalBarrier"
+        app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonStartBarrier"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageCaptureStepQuestionTitle"
+        tools:text="Are you thirsty now?" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/imageCaptureStepImageOrAnswerHorizontalBarrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        app:constraint_referenced_ids="imageCaptureImageStepQuestionSkippedAnswer,imageCaptureImageStepQuestionAnswer" />
+
+    <TextView
+        android:id="@+id/imageCaptureImageStepQuestionSkippedAnswer"
+        style="@style/rsb_review_step_sub_step_answer_style"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/reviewStepEditButtonBottomBarrier"
+        tools:text="Answer" />
+
+    <ImageView
+        android:id="@+id/imageCaptureImageStepQuestionAnswer"
+        style="@style/rsb_image_capture_step_style"
+        android:contentDescription="@null"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageCaptureStepQuestionItself"
+        app:srcCompat="@drawable/rsb_ic_circle_8dp" />
+
+    <ImageButton
+        android:id="@+id/imageCaptureImageStepQuestionAnswerFullscreen"
+        style="@style/rsb_image_capture_fullscreen_style"
+        android:background="@null"
+        android:contentDescription="Full Screen"
+        app:layout_constraintEnd_toEndOf="@+id/imageCaptureImageStepQuestionAnswer"
+        app:layout_constraintTop_toTopOf="@+id/imageCaptureImageStepQuestionAnswer"
+        app:srcCompat="@drawable/rsb_ic_review_step_image_fullscreen" />
+
+    <include layout="@layout/rsb_review_step_edit_button_layout" />
+</androidx.constraintlayout.widget.ConstraintLayout>

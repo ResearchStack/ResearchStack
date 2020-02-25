@@ -2,19 +2,21 @@ package org.researchstack.backbone.task;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.ui.ViewTaskActivity;
 import org.researchstack.backbone.utils.LocaleUtils;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * A task to be carried out by a participant in a research study.
  * <p>
  * To present the ResearchStack framework UI in your app, instantiate an object that extends the
  * Task class (such as {@link OrderedTask}) and provide it to a {@link
- * org.researchstack.backbone.ui.ViewTaskActivity}.
+ * org.researchstack.backbone.ui.task.TaskActivity}.
  * <p>
  * Implement this protocol to enable dynamic selection of the steps for a given task. By default,
  * OrderedTask implements this protocol for simple sequential tasks.
@@ -28,6 +30,18 @@ import java.io.Serializable;
  */
 public abstract class Task implements Serializable {
     private String identifier;
+    /**
+     *
+     * @return the associated step for the task, in order
+     */
+    public abstract List<Step> getSteps();
+
+    /**
+     * Clear all completed steps after editing ends and load new one
+     *
+     * @param list
+     */
+    public abstract void resetCompletedTask(@NonNull List<String> list);
 
     /**
      * Class constructor specifying a unique identifier.
@@ -79,10 +93,9 @@ public abstract class Task implements Serializable {
      * <p>
      * This method lets you use a result to determine the next step.
      * <p>
-     * The {@link org.researchstack.backbone.ui.ViewTaskActivity}  calls this method to determine
-     * the step to display after the specified step. The ViewTaskActivity can also call this
-     * method every time the result updates, to determine if the new result changes which steps are
-     * available.
+     * The {@link org.researchstack.backbone.ui.task.TaskViewModel}  calls this method to determine
+     * the step to display after the specified step. The ViewModel can also call this method every time the result
+     * updates, to determine if the new result changes which steps are available.
      * <p>
      * If you need to implement this method, take care to avoid creating a confusing sequence of
      * steps. As much as possible, use {@link OrderedTask} instead.
@@ -96,8 +109,8 @@ public abstract class Task implements Serializable {
     /**
      * Returns the step that precedes the specified step, if there is one.
      * <p>
-     * The {@link org.researchstack.backbone.ui.ViewTaskActivity} calls this method to determine the
-     * step to display before the specified step. The ViewTaskActivity
+     * The {@link org.researchstack.backbone.ui.task.TaskViewModel} calls this method to determine the
+     * step to display before the specified step. The ViewModel
      * can also call this method every time the result changes, to determine if the new result
      * changes which steps are available.
      * <p>
@@ -122,7 +135,7 @@ public abstract class Task implements Serializable {
     /**
      * Returns the progress of the current step.
      * <p>
-     * During a task, the {@link org.researchstack.backbone.ui.ViewTaskActivity}  can display the
+     * During a task, the {@link org.researchstack.backbone.ui.task.TaskActivity}  can display the
      * progress (that is, the current step number out of the total number of steps) in the
      * navigation bar. Implement this method to control what is displayed; if you don't implement
      * this method, the progress label does not appear.
@@ -145,25 +158,12 @@ public abstract class Task implements Serializable {
      * implementation makes sure that all its step identifiers are unique, throwing an exception
      * otherwise.
      * <p>
-     * This method is usually called by {@link org.researchstack.backbone.ui.ViewTaskActivity} when
+     * This method is usually called by {@link org.researchstack.backbone.ui.task.TaskViewModel} when
      * its task is set.
      *
      * @throws InvalidTaskException
      */
     public abstract void validateParameters();
-
-    /**
-     * Function that can be overridden in order to access the low level changes in the view.
-     * The function is called at Activity lifecycle events (creation, pause, resume, stop and whenever
-     * the content of the activity is changed, according to the step.
-     *
-     * @param type        lifecycle event
-     * @param activity    current activity
-     * @param currentStep the current step being shown
-     */
-    public void onViewChange(ViewChangeType type, ViewTaskActivity activity, Step currentStep) {
-
-    }
 
     public static enum ViewChangeType {
         ActivityCreate,
@@ -177,7 +177,7 @@ public abstract class Task implements Serializable {
      * A structure that represents how far a task has progressed.
      * <p>
      * Objects that extend Task return the task progress structure to indicate to the {@link
-     * org.researchstack.backbone.ui.ViewTaskActivity} how far the task has progressed.
+     * org.researchstack.backbone.ui.task.TaskActivity} how far the task has progressed.
      * <p>
      * Note that the values in an {@link TaskProgress} structure are used only for display; you
      * don't use the values to access the steps in a task.

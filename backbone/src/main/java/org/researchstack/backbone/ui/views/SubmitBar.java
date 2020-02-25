@@ -7,14 +7,21 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Space;
 import android.widget.TextView;
 
 
 import org.researchstack.backbone.R;
+import org.researchstack.backbone.utils.LocaleUtils;
 
 public class SubmitBar extends LinearLayout {
     private TextView positiveView;
     private TextView negativeView;
+
+    //edit step bottom bar
+    private TextView editSaveView;
+    private TextView editCancelView;
+    private Space editSpaceView;
 
     public SubmitBar(Context context) {
         this(context, null);
@@ -37,10 +44,15 @@ public class SubmitBar extends LinearLayout {
         setBackground(a.getDrawable(R.styleable.SubmitBar_android_background));
 
         positiveView = (TextView) findViewById(R.id.bar_submit_postitive);
-        positiveView.setText(a.getString(R.styleable.SubmitBar_positiveActionTitle));
+        positiveView.setText(LocaleUtils.getLocalizedString(getContext(),R.string.rsb_next));
 
         negativeView = (TextView) findViewById(R.id.bar_submit_negative);
-        negativeView.setText(a.getString(R.styleable.SubmitBar_negativeActionTitle));
+        negativeView.setText(LocaleUtils.getLocalizedString(getContext(),R.string.rsb_step_skip));
+
+        editSaveView = (TextView) findViewById(R.id.bar_submit_edit_save);
+        editCancelView = (TextView) findViewById(R.id.bar_submit_edit_cancel);
+
+        editSpaceView = (Space) findViewById(R.id.edit_space_view);
 
         a.recycle();
     }
@@ -58,14 +70,7 @@ public class SubmitBar extends LinearLayout {
     }
 
     public void setPositiveAction(final OnClickListener action) {
-        positiveView.setOnClickListener(new OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                action.onClick(view);
-            }
-        });
+        positiveView.setOnClickListener(view -> action.onClick(view));
     }
 
     public void clearActions()
@@ -73,6 +78,7 @@ public class SubmitBar extends LinearLayout {
         positiveView.setOnClickListener(null);
         negativeView.setOnClickListener(null);
     }
+
 
     public View getPositiveActionView() {
         return positiveView;
@@ -90,7 +96,7 @@ public class SubmitBar extends LinearLayout {
 
     public void setPositiveActionDisabled() {
         positiveView.setClickable(false);
-        positiveView.setTextColor(getResources().getColor(R.color.rsb_submit_disabled));
+        positiveView.setTextColor(getContext().getColor(R.color.rsb_submit_disabled));
 
     }
 
@@ -108,14 +114,7 @@ public class SubmitBar extends LinearLayout {
     }
 
     public void setNegativeAction(final OnClickListener action) {
-        negativeView.setOnClickListener(new OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                action.onClick(view);
-            }
-        });
+        negativeView.setOnClickListener(view -> action.onClick(view));
     }
 
     public View getNegativeActionView() {
@@ -124,5 +123,59 @@ public class SubmitBar extends LinearLayout {
 
     public void setNegativeTitleColor(int color) {
         negativeView.setTextColor(color);
+    }
+
+    public void setEditCancelAction(final OnClickListener action) {
+        editCancelView.setOnClickListener(view -> action.onClick(view));
+    }
+
+    public void setEditSaveAction(final OnClickListener action) {
+        editSaveView.setOnClickListener(view -> action.onClick(view));
+    }
+
+    public void setEditSaveColor(int color) {
+        editSaveView.setTextColor(color);
+    }
+
+    public void setEditCancelColor(int color) {
+        editCancelView.setTextColor(color);
+    }
+
+    public View getEditCancelViewActionView() {
+        return editCancelView;
+    }
+
+    public View getEditSaveViewActionView() {
+        return editSaveView;
+    }
+
+    public View getEditSpaceView() {
+        return editSpaceView;
+    }
+
+    public void updateView(boolean isEditView) {
+        if (isEditView) {
+            getPositiveActionView().setVisibility(GONE);
+            getEditCancelViewActionView().setVisibility(VISIBLE);
+            getEditSaveViewActionView().setVisibility(VISIBLE);
+            getEditSpaceView().setVisibility(VISIBLE);
+        } else {
+            getPositiveActionView().setVisibility(VISIBLE);
+            getEditCancelViewActionView().setVisibility(GONE);
+            getEditSaveViewActionView().setVisibility(GONE);
+            getEditSpaceView().setVisibility(GONE);
+        }
+    }
+
+    public void setEditSaveActionEnabled(int color) {
+        editSaveView.setClickable(true);
+        editSaveView.setTextColor(color);
+
+    }
+
+    public void setEditSaveActionDisabled() {
+        editSaveView.setClickable(false);
+        editSaveView.setTextColor(getContext().getColor(R.color.rsb_submit_disabled));
+
     }
 }

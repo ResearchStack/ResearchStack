@@ -1,6 +1,8 @@
 package org.researchstack.backbone.ui.step.body;
 
+import android.text.Editable;
 import android.text.InputFilter;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,13 +10,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.jakewharton.rxbinding.widget.RxTextView;
-
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.answerformat.TextAnswerFormat;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
+import org.researchstack.backbone.utils.LocaleUtils;
 import org.researchstack.backbone.utils.TextUtils;
 import org.researchstack.backbone.utils.ViewUtils;
 
@@ -39,14 +40,14 @@ public class TextQuestionBody implements StepBody {
     public View getBodyView(int viewType, LayoutInflater inflater, ViewGroup parent) {
         View body = inflater.inflate(R.layout.rsb_item_edit_text_compact, parent, false);
 
-        editText = (EditText) body.findViewById(R.id.value);
+        editText = body.findViewById(R.id.value);
         if (step.getPlaceholder() != null) {
             editText.setHint(step.getPlaceholder());
         } else {
-            editText.setHint(R.string.rsb_hint_step_body_text);
+            editText.setHint(LocaleUtils.getLocalizedString(inflater.getContext(),R.string.rsb_hint_step_body_text));
         }
 
-        TextView title = (TextView) body.findViewById(R.id.label);
+        TextView title = body.findViewById(R.id.label);
 
         if (viewType == VIEW_TYPE_COMPACT) {
             title.setText(step.getTitle());
@@ -61,8 +62,21 @@ public class TextQuestionBody implements StepBody {
         }
 
         // Set result on text change
-        RxTextView.textChanges(editText).subscribe(text -> {
-            result.setResult(text.toString());
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(final CharSequence s, final int start, final int count, final int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(final CharSequence s, final int start, final int before, final int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(final Editable s) {
+                result.setResult(s.toString());
+            }
         });
 
         // Format EditText from TextAnswerFormat
@@ -83,7 +97,6 @@ public class TextQuestionBody implements StepBody {
         return body;
     }
 
-
     @Override
     public StepResult getStepResult(boolean skipped) {
         if (skipped) {
@@ -102,5 +115,4 @@ public class TextQuestionBody implements StepBody {
 
         return BodyAnswer.VALID;
     }
-
 }

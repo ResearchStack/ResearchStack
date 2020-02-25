@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/rsb_review_step_cell_style"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/formStepTitle"
+        style="@style/rsb_review_step_sub_step_title_style"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintBottom_toTopOf="@id/formStepSkipped"
+        app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonStartBarrier"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Title" />
+
+    <TextView
+        android:id="@+id/formStepSkipped"
+        style="@style/rsb_review_step_sub_step_answer_style"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/formStepTitle"
+        tools:text="SKIPPED" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/formStepRecyclerViewBarrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="formStepTitle,formStepSkipped,reviewStepEditButton" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/formStepRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rsb_form_step_reviewstep_rect"
+        android:paddingStart="@dimen/rsb_reviewStep_form_border_width"
+        android:paddingEnd="@dimen/rsb_reviewStep_form_border_width"
+        android:visibility="visible"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/formStepRecyclerViewBarrier" />
+
+    <include layout="@layout/rsb_review_step_edit_button_layout" />
+</androidx.constraintlayout.widget.ConstraintLayout>

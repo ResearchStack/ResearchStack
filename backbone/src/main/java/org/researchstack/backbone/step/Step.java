@@ -1,12 +1,13 @@
 package org.researchstack.backbone.step;
 
-import org.researchstack.backbone.task.Task;
-
 import java.io.Serializable;
+import java.util.Objects;
+
+import androidx.annotation.NonNull;
 
 /**
  * Step is the base class for the steps that can compose a task for presentation in an {@link
- * org.researchstack.backbone.ui.ViewTaskActivity} object. Each Step object represents one logical
+ * org.researchstack.backbone.ui.task.TaskActivity} object. Each Step object represents one logical
  * piece of data entry or activity in a larger task.
  * <p>
  * A step can be a question, an active test, or a simple instruction. An Step subclass is usually
@@ -15,12 +16,12 @@ import java.io.Serializable;
  * <p>
  * To use a step, instantiate an Step object and populate its properties. Add the step to a task,
  * such as an {@link org.researchstack.backbone.task.OrderedTask} object, and then present the task
- * using a ViewTaskActivity.
+ * using a {@link org.researchstack.backbone.ui.task.TaskActivity}.
  * <p>
  * To implement a new type of step, subclass Step and add your additional properties. Separately,
  * subclass StepLayout and implement your user interface.
  */
-public class Step implements Serializable {
+public class Step implements Serializable, Cloneable {
     private String identifier;
     private Class stepLayoutClass;
     private int stepTitle;
@@ -36,16 +37,7 @@ public class Step implements Serializable {
     private int secondaryTextColor;
     private int actionFailedColor;
     private String hiddenDefaultValue = null;
-
-    // The following fields are in RK but not implemented in ResearchStack
-    // These options can be developed as needed or removed if we find they are not necessary
-    private boolean restorable;
-    private Task task;
-    private boolean shouldTintImages;
-    private boolean showsProgress;
-    private boolean allowsBackNavigation;
-    private boolean useSurveyMode;
-    protected boolean isCompletionStep = false;
+    private boolean isCompletionStep = false;
 
     /**
      * Returns a new step initialized with the specified identifier.
@@ -98,21 +90,21 @@ public class Step implements Serializable {
     }
 
     /**
-     * Sets whether the step is skippable
+     * Sets whether the step can be skipped
      *
-     * @param optional
+     * @param optional true if the step can be skipped by the user, false otherwise.
      * @see #isOptional()
      */
     public void setOptional(boolean optional) {
         this.optional = optional;
     }
 
-
     /**
      * A boolean value indicating whether the user will see this step or not.
      * <p>
      * The default value of this property is <code>false</code>. When the value is
-     * <code>true</code>, the step is not display and the hiddenDefaultValue is used as value for this step.
+     * <code>true</code>, the step is not display and the hiddenDefaultValue is used as value for
+     * this step.
      * <p>
      * This property may not be meaningful for all steps;
      *
@@ -133,10 +125,11 @@ public class Step implements Serializable {
     }
 
     /**
-     * A boolean value indicating whether the step is a isCompletionStep step.
-     * If the task is a non branching task, the task needs to stop after this step is completed.
-     * If the task is branching, and the isCompletionStep step is the trigger for the branch, then the task shall continue to the next step.
-     * If the task is branching, and the isCompletionStep step is not the trigger for the branch, then task needs to stop.
+     * A boolean value indicating whether the step is a isCompletionStep step. If the task is a non
+     * branching task, the task needs to stop after this step is completed. If the task is
+     * branching, and the isCompletionStep step is the trigger for the branch, then the task shall
+     * continue to the next step. If the task is branching, and the isCompletionStep step is not the
+     * trigger for the branch, then task needs to stop.
      * <p>
      *
      * @return a boolean indicating whether the step is a isCompletionStep step
@@ -148,7 +141,7 @@ public class Step implements Serializable {
     /**
      * Sets whether the step is a isCompletionStep step
      *
-     * @param isCompletionStep
+     * @param isCompletionStep true when the step is a completion step, false otherwise.
      * @see #isCompletionStep()
      */
     public void isCompletionStep(boolean isCompletionStep) {
@@ -183,8 +176,6 @@ public class Step implements Serializable {
      * The additional text is displayed in a smaller font below <code>title</code>. If you need to
      * display a long question, it can work well to keep the title short and put the additional
      * content in the <code>text</code> property.
-     *
-     * @return
      */
     public String getText() {
         return text;
@@ -236,20 +227,23 @@ public class Step implements Serializable {
     }
 
     /**
-     * Returns the class that the {@link org.researchstack.backbone.ui.ViewTaskActivity} should
-     * instantiate to display this step.
+     * Returns the class that each step Fragment should instantiate to display this step.
      * <p>
      * This method is used within the framework so that steps can define their step view controller
      * pairing.
      * <p>
      * Outside the framework, developers should instantiate the required view controller in their
-     * ViewTaskActivity delegate to override the ViewTaskActivity's default.
+     * {@link org.researchstack.backbone.ui.task.TaskActivity} delegate to override the activity's default.
      *
      * @return the class of the {@link org.researchstack.backbone.ui.step.layout.StepLayout} for
      * this step
      */
     public Class getStepLayoutClass() {
         return stepLayoutClass;
+    }
+
+    public int getDestinationId() {
+        return 0;
     }
 
     /**
@@ -265,14 +259,15 @@ public class Step implements Serializable {
     /**
      * Sets the theme for the step.
      *
-     * @param colorPrimary the primary color for the step
-     * @param colorPrimaryDark the primary dark color for the step
-     * @param colorSecondary the accent color for the step
+     * @param colorPrimary       the primary color for the step
+     * @param colorPrimaryDark   the primary dark color for the step
+     * @param colorSecondary     the accent color for the step
      * @param principalTextColor the principal text color for the step
      * @param secondaryTextColor the secondary text color for the step
-     * @param actionFailedColor the action failed color for the step
+     * @param actionFailedColor  the action failed color for the step
      */
-    public void setStepTheme(int colorPrimary, int colorPrimaryDark, int colorSecondary, int principalTextColor, int secondaryTextColor, int actionFailedColor) {
+    public void setStepTheme(int colorPrimary, int colorPrimaryDark, int colorSecondary,
+                             int principalTextColor, int secondaryTextColor, int actionFailedColor) {
         this.colorPrimary = colorPrimary;
         this.colorPrimaryDark = colorPrimaryDark;
         this.colorSecondary = colorSecondary;
@@ -323,14 +318,56 @@ public class Step implements Serializable {
         return actionFailedColor;
     }
 
-
     public void setHiddenDefaultValue(String defaultValue) {
         this.hiddenDefaultValue = defaultValue;
     }
+
     /**
      * Gets the default value use when the step is hide
      */
     public String getHiddenDefaultValue() {
         return hiddenDefaultValue;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Step step = (Step) o;
+        return Objects.equals(identifier, step.identifier);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(identifier);
+    }
+
+    /**
+     * Deep copies a Step, except for the {@link #stepLayoutClass}, which is going to point to the
+     * same reference. Steps cannot mutate to a different class type, and the {@link Class} object
+     * is used read-only (via getter), so this is acceptable. There is a setter, only used in
+     * Consent step types, which do not make use of this clone interface.
+     * <p>
+     * If this Step class is re-written, this exception should be removed and the references be
+     * totally immutable when possible.
+     *
+     * @return a new instance of a {@link Step} object, populated with the values of the previous
+     * one.
+     *
+     * @throws CloneNotSupportedException if some type doesn't implement Cloneable.
+     */
+    @NonNull
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        Step cloned = (Step) super.clone();
+
+        cloned.identifier = identifier;
+        cloned.stepLayoutClass = stepLayoutClass; //copied by reference (public getter only)
+
+        return cloned;
     }
 }

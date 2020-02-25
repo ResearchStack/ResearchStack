@@ -57,6 +57,27 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
     }
 
     @Override
+    public void setCancelEditMode(boolean isCancelEdit) {
+        //no-op only when user on edit mode inside regular steps
+    }
+
+    @Override
+    public void setRemoveFromBackStack(boolean removeFromBackStack) {
+        // no-op: Only needed when the user is on edit mode inside regular steps
+    }
+
+    @Override
+    public void isEditView(boolean isEditView) {
+        // no-op: Only needed when the user is on edit mode inside regular steps
+    }
+
+    @Override
+    public StepResult getStepResult() {
+        // This step doesn't have a result, so we're returning null instead
+        return null;
+    }
+
+    @Override
     public int getContentResourceId() {
         return R.layout.rsb_step_layout_instruction;
     }
@@ -91,7 +112,7 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
 
             // Set Next / Skip
             final SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
-            submitBar.setPositiveTitle(getContext().getString(R.string.rsb_next));
+            submitBar.setPositiveTitle(LocaleUtils.getLocalizedString(getContext(), R.string.rsb_next));
             submitBar.setPositiveAction(view -> {
                 callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
                         step,

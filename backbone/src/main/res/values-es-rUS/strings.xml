@@ -134,5 +134,22 @@
     <string name="rsb_consent_doc_line_signature">Firma de %1$s</string>
     <string name="rsb_consent_doc_line_date">Fecha</string>
     <string name="rsb_consent_role">Participante</string>
+    <string name="rsb_consent_doc_line_date_format">MM-dd-aaaa</string>
+
+    <!-- Edit -->
+    <string name="rsb_edit_step_alert_cancel_positive">[es-US] YES, STOP MAKING CHANGES</string>
+    <string name="rsb_edit_step_alert_cancel_discard">[es-US] NO, KEEP EDITING</string>
+    <string name="rsb_edit_step_alert_cancel_title">[es-US] Do you want to stop making changes?</string>
+    <string name="rsb_edit_step_alert_cancel_content">[es-US] All changes will be discarded and your original response will be used.</string>
+    <string name="rsb_edit_step_alert_step_save_title">[es-US] Do you want to save your changes?</string>
+    <string name="rsb_edit_step_alert_step_save_content">[es-US] Other responses may be cleared and you may be asked to submit new information.</string>
+    <string name="rsb_edit_step_alert_step_save_discard">[es-US] No, Discard</string>
+    <string name="rsb_edit_step_alert_step_save_positive">[es-US] Yes, Save</string>
+    <string name="rsb_consent_review_save">[es-US] Save</string>
+    <string name="rsb_edit_step_alert_step_skip_title">[es-US] Do you want to skip this step?</string>
+    <string name="rsb_edit_step_alert_step_skip_content">[es-US] Your original response will be discarded.</string>
+    <string name="rsb_edit_step_alert_step_skip_discard">[es-US] NO, DON\'T SKIP</string>
+    <string name="rsb_edit_step_alert_step_skip_positive">[es-US] Yes, skip</string>
+    <string name="rsb_edit_step">[es-US] Edit</string>
 
 </resources>

@@ -27,6 +27,7 @@ import org.researchstack.backbone.ui.step.body.FormBody;
 import org.researchstack.backbone.ui.step.body.StepBody;
 import org.researchstack.backbone.ui.views.FixedSubmitBarLayout;
 import org.researchstack.backbone.ui.views.SubmitBar;
+import org.researchstack.backbone.utils.LocaleUtils;
 import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.TextUtils;
 
@@ -57,6 +58,16 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     private int principalTextColor;
     private int secondaryTextColor;
     private SubmitBar submitBar;
+
+    private boolean isSkipped = false;
+    private boolean isCancelEdit = false;
+    private boolean isEditViewVisible = false;
+    private boolean removeFromBackStack = false;
+
+
+    public void setRemoveFromBackStack(boolean shouldRemove) {
+        removeFromBackStack = shouldRemove;
+    }
 
     private MediatorLiveData<Boolean> mediator = new MediatorLiveData<>();
     private boolean allStepsAreOptional;
@@ -127,6 +138,11 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     }
 
     @Override
+    public void setCancelEditMode(boolean isCancelEdit) {
+        this.isCancelEdit = isCancelEdit;
+    }
+
+    @Override
     public int getContentResourceId() {
         return R.layout.rsb_step_layout;
     }
@@ -134,6 +150,17 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     public void initializeStep() {
         initStepLayout();
         initStepBody();
+    }
+
+    @Override
+    public void isEditView(boolean isEditView) {
+        isEditViewVisible = isEditView;
+        submitBar.updateView(isEditView);
+    }
+
+    @Override
+    public StepResult getStepResult() {
+        return stepBody.getStepResult(isSkipped);
     }
 
     public void initStepLayout() {
@@ -147,15 +174,11 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         submitBar = findViewById(R.id.rsb_submit_bar);
         submitBar.setNegativeTitleColor(coloryPrimary);
         submitBar.setPositiveTitleColor(colorSecondary);
-        submitBar.setPositiveAction(new OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                if(onNextClicked())
-                {
-                    submitBar.clearActions();
-                }
+        submitBar.setEditCancelColor(coloryPrimary);
+        submitBar.setEditSaveColor(colorSecondary);
+        submitBar.setPositiveAction(view -> {
+            if (onNextClicked(StepCallbacks.ACTION_NEXT)) {
+                submitBar.clearActions();
             }
         });
 
@@ -182,13 +205,24 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
             }
 
             if (questionStep.isOptional()) {
-
-                submitBar.setNegativeTitle(R.string.rsb_step_skip);
+                submitBar.setNegativeTitle(LocaleUtils.getLocalizedString(getContext(), R.string.rsb_step_skip));
                 submitBar.setNegativeAction(v -> onSkipClicked());
             } else {
                 submitBar.getNegativeActionView().setVisibility(View.GONE);
             }
         }
+
+        submitBar.setEditCancelAction(view -> {
+            isSkipped = false;
+            stepBody.getStepResult(isSkipped);
+            callbacks.onEditCancelStep();
+        });
+
+        submitBar.setEditSaveAction(view -> {
+            if (onNextClicked(StepCallbacks.ACTION_SAVE)) {
+                submitBar.clearActions();
+            }
+        });
     }
 
     public void initStepBody() {
@@ -228,11 +262,12 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
 
     @Override
     public Parcelable onSaveInstanceState() {
-        callbacks.onSaveStep(StepCallbacks.ACTION_NONE, getStep(), stepBody.getStepResult(false));
+        if (!isCancelEdit && !removeFromBackStack)
+            callbacks.onSaveStep(StepCallbacks.ACTION_NONE, getStep(), stepBody.getStepResult(isSkipped));
         return super.onSaveInstanceState();
     }
 
-    protected boolean onNextClicked() {
+    private boolean onNextClicked(int action) {
         BodyAnswer bodyAnswer = stepBody.getBodyAnswerState();
 
         if (bodyAnswer == null || !bodyAnswer.isValid()) {
@@ -243,9 +278,10 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
                     Toast.LENGTH_SHORT).show();
             return false;
         } else {
-            callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
+            isSkipped = false;
+            callbacks.onSaveStep(action,
                     getStep(),
-                    stepBody.getStepResult(false));
+                    stepBody.getStepResult(isSkipped));
             return true;
         }
     }
@@ -253,9 +289,20 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     public void onSkipClicked() {
         if (callbacks != null) {
             // empty step result when skipped
-            callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
-                    getStep(),
-                    stepBody.getStepResult(true));
+            isSkipped = true;
+            if (isEditViewVisible) {
+                try {
+                    callbacks.onSkipStep(getStep(),
+                            (StepResult<?>) stepBody.getStepResult(false).clone(),
+                            stepBody.getStepResult(isSkipped));
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
+            }else {
+                callbacks.onSaveStep( StepCallbacks.ACTION_NEXT,
+                        getStep(),
+                        stepBody.getStepResult(isSkipped));
+            }
         }
     }
 
@@ -272,7 +319,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     }
 
     private void isStepEmpty(boolean isEmpty) {
-        if (!isEmpty || allStepsAreOptional)  {
+        if (!isEmpty || allStepsAreOptional) {
             submitBar.setPositiveActionEnabled(getStep().getColorSecondary());
         } else {
             submitBar.setPositiveActionDisabled();

@@ -1,4 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Debug -->
+
     <!-- Consent Section -->
     <string name="rsb_consent">Zgoda</string>
     <string name="rsb_consent_section_welcome">Witamy</string>
@@ -155,5 +158,22 @@
     <string name="rsb_consent_doc_line_signature">Podpis %1$s\' </string>
     <string name="rsb_consent_doc_line_date">Data</string>
     <string name="rsb_consent_role">Uczestnik</string>
+    <string name="rsb_consent_doc_line_date_format">MM-dd-rrrr</string>
+
+    <!-- Edit -->
+    <string name="rsb_edit_step_alert_cancel_positive">[pl-PL] YES, STOP MAKING CHANGES</string>
+    <string name="rsb_edit_step_alert_cancel_discard">[pl-PL] NO, KEEP EDITING</string>
+    <string name="rsb_edit_step_alert_cancel_title">[pl-PL] Do you want to stop making changes?</string>
+    <string name="rsb_edit_step_alert_cancel_content">[pl-PL] All changes will be discarded and your original response will be used.</string>
+    <string name="rsb_edit_step_alert_step_save_title">[pl-PL] Do you want to save your changes?</string>
+    <string name="rsb_edit_step_alert_step_save_content">[pl-PL] Other responses may be cleared and you may be asked to submit new information.</string>
+    <string name="rsb_edit_step_alert_step_save_discard">[pl-PL] No, Discard</string>
+    <string name="rsb_edit_step_alert_step_save_positive">[pl-PL] Yes, Save</string>
+    <string name="rsb_consent_review_save">[pl-PL] Save</string>
+    <string name="rsb_edit_step_alert_step_skip_title">[pl-PL] Do you want to skip this step?</string>
+    <string name="rsb_edit_step_alert_step_skip_content">[pl-PL] Your original response will be discarded.</string>
+    <string name="rsb_edit_step_alert_step_skip_discard">[pl-PL] NO, DON\'T SKIP</string>
+    <string name="rsb_edit_step_alert_step_skip_positive">[pl-PL] Yes, skip</string>
+    <string name="rsb_edit_step">[pl-PL] Edit</string>
 
 </resources>

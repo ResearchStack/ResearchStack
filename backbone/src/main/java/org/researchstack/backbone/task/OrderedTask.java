@@ -29,9 +29,7 @@ import java.util.Set;
  * {@link #getStepBeforeStep}, and call super for all other methods.
  */
 public class OrderedTask extends Task implements Serializable {
-
     protected List<Step> steps;
-
     /**
      * Returns an initialized ordered task using the specified identifier and array of steps.
      *
@@ -169,5 +167,12 @@ public class OrderedTask extends Task implements Serializable {
      */
     public List<Step> getSteps() {
         return new ArrayList<>(steps);
+    }
+
+    @Override
+    public void resetCompletedTask(List<String> list) {
+        // no-op: During a ReviewStep, the user can change its responses. In Ordered tasks,
+        // step Ids don't change and they are always in the same position,
+        // so there is no need to reset it.
     }
 }

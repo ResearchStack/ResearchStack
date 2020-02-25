@@ -2,8 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
  package="org.researchstack.backbone">
     <application>
-        <activity android:name="org.researchstack.backbone.ui.ViewTaskActivity"/>
+        <activity android:name="org.researchstack.backbone.ui.task.TaskActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name="org.researchstack.backbone.ui.ViewWebDocumentActivity"/>
-        <activity android:name="org.researchstack.backbone.ui.ConsentViewTaskActivity"/>
+        <activity android:name="org.researchstack.backbone.ui.ConsentTaskActivity"/>
+        <activity android:name="org.researchstack.backbone.ui.task.ReviewStepFullScreenImageActivity"/>
     </application>
 </manifest>

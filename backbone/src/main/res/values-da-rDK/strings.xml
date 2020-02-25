@@ -1,4 +1,6 @@
 <resources>
+    <!-- Debug -->
+
     <!-- Consent Section -->
     <string name="rsb_consent">Samtykke</string>
     <string name="rsb_consent_section_welcome">Velkommen</string>
@@ -134,5 +136,21 @@
     <string name="rsb_consent_doc_line_signature">%1$s\'s Underskrift</string>
     <string name="rsb_consent_doc_line_date">Dato</string>
     <string name="rsb_consent_role">Deltager</string>
+    <string name="rsb_consent_doc_line_date_format">MM-dd-åååå</string>
 
+    <!-- Edit -->
+    <string name="rsb_edit_step_alert_cancel_positive">[da-DK] YES, STOP MAKING CHANGES</string>
+    <string name="rsb_edit_step_alert_cancel_discard">[da-DK] NO, KEEP EDITING</string>
+    <string name="rsb_edit_step_alert_cancel_title">[da-DK] Do you want to stop making changes?</string>
+    <string name="rsb_edit_step_alert_cancel_content">[da-DK] All changes will be discarded and your original response will be used.</string>
+    <string name="rsb_edit_step_alert_step_save_title">[da-DK] Do you want to save your changes?</string>
+    <string name="rsb_edit_step_alert_step_save_content">[da-DK] Other responses may be cleared and you may be asked to submit new information.</string>
+    <string name="rsb_edit_step_alert_step_save_discard">[da-DK] No, Discard</string>
+    <string name="rsb_edit_step_alert_step_save_positive">[da-DK] Yes, Save</string>
+    <string name="rsb_consent_review_save">[da-DK] Save</string>
+    <string name="rsb_edit_step_alert_step_skip_title">[da-DK] Do you want to skip this step?</string>
+    <string name="rsb_edit_step_alert_step_skip_content">[da-DK] Your original response will be discarded.</string>
+    <string name="rsb_edit_step_alert_step_skip_discard">[da-DK] NO, DON\'T SKIP</string>
+    <string name="rsb_edit_step_alert_step_skip_positive">[da-DK] Yes, skip</string>
+    <string name="rsb_edit_step">[da-DK] Edit</string>
 </resources>

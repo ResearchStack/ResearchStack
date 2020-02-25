@@ -19,6 +19,7 @@ import org.researchstack.backbone.step.ConsentDocumentStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.views.SubmitBar;
+import org.researchstack.backbone.utils.LocaleUtils;
 
 /**
  * Implement saved state for the following objects:
@@ -78,11 +79,31 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
         this.callbacks = callbacks;
     }
 
+    @Override
+    public void setCancelEditMode(boolean isCancelEdit) {
+        // no-op: Only needed when the user is on edit mode inside regular steps
+    }
+
+    @Override
+    public void setRemoveFromBackStack(boolean removeFromBackStack) {
+        // no-op: Only needed when the user is on edit mode inside regular steps
+    }
+
+    @Override
+    public void isEditView(boolean isEditView) {
+        // no-op: Only needed when the user is on edit mode inside regular steps
+    }
+
+    @Override
+    public StepResult getStepResult() {
+        return stepResult;
+    }
+
     private void initializeStep() {
         setOrientation(VERTICAL);
         LayoutInflater.from(getContext()).inflate(R.layout.rsb_step_layout_consent_doc, this, true);
 
-        WebView pdfView = (WebView) findViewById(R.id.webview);
+        WebView pdfView = findViewById(R.id.webview);
 
         pdfView.setWebViewClient(new WebViewClient()
         {
@@ -94,34 +115,17 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
             @Override
             public void onPageFinished(WebView view, String url)
             {
-                final SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
+                final SubmitBar submitBar = findViewById(R.id.submit_bar);
                 submitBar.setPositiveTitleColor(step.getColorSecondary());
-                submitBar.setPositiveAction(new OnClickListener()
-                {
-                    @Override
-                    public void onClick(View view)
-                    {
-                        showDialog(new MaterialDialog.SingleButtonCallback()
-                        {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which)
-                            {
-                                stepResult.setResult(true);
-                                callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, stepResult);
-                                submitBar.clearActions();
-                            }
-                        });
-                    }
-                });
+                submitBar.setPositiveAction(actionView -> showDialog((dialog, which) -> {
+                    stepResult.setResult(true);
+                    callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, stepResult);
+                    submitBar.clearActions();
+                }));
                 submitBar.setNegativeTitleColor(step.getPrimaryColor());
-                submitBar.setNegativeAction(new OnClickListener()
-                {
-                    @Override
-                    public void onClick(View view)
-                    {
-                        disagreeConsent();
-                    }
-                });
+                submitBar.setNegativeAction(actionView -> disagreeConsent());
+                submitBar.setNegativeTitle(LocaleUtils.getLocalizedString(getContext(),R.string.rsb_disagree));
+                submitBar.setPositiveTitle(LocaleUtils.getLocalizedString(getContext(),R.string.rsb_agree));
             }
         });
 
@@ -136,14 +140,14 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
 
     private void showDialog(MaterialDialog.SingleButtonCallback positiveAction) {
         new MaterialDialog.Builder(getContext())
-                .title(R.string.rsb_consent_review_alert_title)
+                .title(LocaleUtils.getLocalizedString(getContext(),R.string.rsb_consent_review_alert_title))
                 .content(confirmationDialogBody)
                 .theme(Theme.LIGHT)
                 .cancelable(false)
                 .positiveColor(step.getColorSecondary())
                 .negativeColor(step.getPrimaryColor())
-                .negativeText(R.string.rsb_consent_review_cancel)
-                .positiveText(R.string.rsb_agree)
+                .negativeText(LocaleUtils.getLocalizedString(getContext(),R.string.rsb_consent_review_cancel))
+                .positiveText(LocaleUtils.getLocalizedString(getContext(),R.string.rsb_agree))
                 .onPositive(positiveAction)
                 .show();
     }
