@@ -60,7 +60,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     private double max;
     private double maximumAngle;
 
-    public static final int ORIENTATION_UNOBTAINABLE = -2;
+    public static final int ORIENTATION_UNDETECTABLE = -2;
     public static final int ORIENTATION_UNSPECIFIED = -1;
     public static final int ORIENTATION_LANDSCAPE = 0;
     public static final int ORIENTATION_PORTRAIT = 1;
@@ -242,8 +242,8 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         if (orientationEventListener.canDetectOrientation()) {
             orientationEventListener.enable();
         } else {
-            orientation = ORIENTATION_UNOBTAINABLE;
-            Log.i(ContentValues.TAG, "The device orientation is unspecified: value = "
+            orientation = ORIENTATION_UNDETECTABLE;
+            Log.i(ContentValues.TAG, "The device orientation is undetectable: value = "
                             + orientation );
         }
     }
