@@ -48,7 +48,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     protected RelativeLayout layout;
     protected SensorManager sensorManager;
 
-    private boolean firstDeviceOrientationCaptured = false;
+    private boolean firstOrientationCaptured = false;
     private boolean firstAttitudeCaptured = false;
     private int orientation;
     private int initialOrientation;
@@ -60,6 +60,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     private double max;
     private double maximumAngle;
 
+    public static final int ORIENTATION_UNOBTAINABLE = -2;
     public static final int ORIENTATION_UNSPECIFIED = -1;
     public static final int ORIENTATION_LANDSCAPE = 0;
     public static final int ORIENTATION_PORTRAIT = 1;
@@ -161,17 +162,17 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
                         double updatedAngle = calculateShiftedAngleRelativeToStart(updatedDeviceAttitudeAsQuaternion); // this converts the current device attitude into an angle (degrees)
                         if (!firstAttitudeCaptured) {
                             setStartAttitude(updatedDeviceAttitudeAsQuaternion);
-                            firstAttitudeCaptured = true; // this prevents setStartAttitude() from being re-set after the first pass
+                            firstAttitudeCaptured = true; // prevents setStartAttitude() from being re-set after the first pass
                             }
-                        if (updatedAngle < min) { // this captures the minimum angle (relative to start) that is recorded during the task
+                        if (updatedAngle < min) { // captures the minimum angle (relative to start) that is recorded during the task
                             min = updatedAngle;
                             setMinimumAngle(min);
                             }
-                        if (updatedAngle > max) { // this captures the maximum angle (relative to start) that is recorded during the task
+                        if (updatedAngle > max) { // captures the maximum angle (relative to start) that is recorded during the task
                             max = updatedAngle;
                             setMaximumAngle(max);
                             }
-                        setFinishAttitude(updatedDeviceAttitudeAsQuaternion); // this will continually be reset until the last value
+                        setFinishAttitude(updatedDeviceAttitudeAsQuaternion); // continually reset until the last value
                     }
                 }
             }
@@ -213,7 +214,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
      * Motion task, and may not realise that auto-rotate is not enabled. We therefore want to use the
      * physical orientation of the device itself, which can be captured using the onOrientationChanged()
      * method from the OrientationEventListener class.
-     **/
+     */
     public void enableOrientationEventListener(Context appContext) {
         OrientationEventListener orientationEventListener = new OrientationEventListener(
                 appContext, SensorManager.SENSOR_DELAY_NORMAL) {
@@ -234,12 +235,16 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
                 }
                 if (!firstDeviceOrientationCaptured && orientation != ORIENTATION_UNSPECIFIED) {
                     setInitialOrientation(orientation);
-                    firstDeviceOrientationCaptured = true; // this prevents setFirstOrientation from being re-set
+                    firstDeviceOrientationCaptured = true; // prevents setFirstOrientation from being re-set
                 }
             }
         };
         if (orientationEventListener.canDetectOrientation()) {
             orientationEventListener.enable();
+        } else {
+            orientation = ORIENTATION_UNOBTAINABLE;
+            Log.i(ContentValues.TAG, "The device orientation is unspecified: value = "
+                            + orientation );
         }
     }
 
@@ -256,7 +261,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     /**
      * Methods to obtain the initial (start) device attitude as a unit quaternion
-     **/
+     */
     public float[] getStartAttitude() {
         return startAttitude;
     }
@@ -267,7 +272,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     /**
      * Method to obtain range-shifted angle (degrees) of first (start) device attitude, relative to the zero position
-     **/
+     */
     public double getShiftedStartAngle() {
         double shifted_start_angle;
         double raw_start_angle = getDeviceAngleInDegreesFromQuaternion(getStartAttitude());
@@ -277,7 +282,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     /**
      * Methods to obtain the final (finish) device attitude as a unit quaternion
-     **/
+     */
     public float[] getFinishAttitude() {
         return finishAttitude;
     }
@@ -288,7 +293,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     /**
      * Method to obtain range-shifted angle (degrees) of final (finish) device attitude, relative to the zero position
-     **/
+     */
     public double getShiftedFinishAngle() {
         double shifted_finish_angle;
         double raw_finish_angle = getDeviceAngleInDegreesFromQuaternion(getFinishAttitude());
@@ -299,7 +304,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     /**
      * Method to shift default range of calculated angles for specific devices or screen orientations,
      * when required, for start and finish angles. Should be overridden in sub-classes where necessary.
-     **/
+     */
     public double shiftStartAndFinishAngleRanges(double original_angle) {
         double shifted_angle;
         int initial_orientation = getInitialOrientation();
@@ -315,7 +320,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     /**
      * Methods to obtain and calculate the minimum and maximum range-shifted angle (degrees), calculated
      * for all device motion updates during recording, relative to the start position
-     **/
+     */
     private double calculateShiftedAngleRelativeToStart(float[] attitudeUpdates) {
         double shifted_angle;
         float[] attitudeUpdatesRelativeToStart = getDeviceAttitudeRelativeToStart(attitudeUpdates);
@@ -344,7 +349,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
      * Method to extend the available range for maximum angle from 180 degrees to 270 degrees, relative
      * to the start position. Range for minimum angle will be reduced to 90 degrees. Should be overridden
      * in sub-classes where necessary.
-     **/
+     */
     public double shiftMinAndMaxAngleRange(double original_angle) {
         double shifted_angle;
         int initial_orientation = getInitialOrientation();
@@ -367,7 +372,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
      * Method to calculate angles in degrees from the device attitude quaternion, as a function of
      * device orientation (portrait or landscape) or screen orientation (portrait, landscape, reverse
      * portrait or reverse landscape).
-     **/
+     */
     public double getDeviceAngleInDegreesFromQuaternion(float[] quaternion) {
         double angle_in_degrees = 0;
         int initial_orientation = getInitialOrientation();
@@ -394,7 +399,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
      * of the attitude quaternion by the inverse of the quaternion that represents the start position.
      * This relativity is necessary if the task is being performed in different start positions, which
      * could result in angles that exceed the already shifted range.
-     **/
+     */
     public float[] getDeviceAttitudeRelativeToStart(float[] originalDeviceAttitude) {
         float[] relativeDeviceAttitude;
         float[] inverseOfStart = MathUtils.calculateInverseOfQuaternion(getStartAttitude());
@@ -405,7 +410,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
     /**
      * Method to obtain the device's attitude as a unit quaternion from the rotation vector sensor,
      * when it is available
-     **/
+     */
     public float[] getDeviceAttitudeAsQuaternion(float[] rotation_vector) {
         float[] attitudeQuaternion = new float[4];
         SensorManager.getQuaternionFromVector(attitudeQuaternion, rotation_vector);
