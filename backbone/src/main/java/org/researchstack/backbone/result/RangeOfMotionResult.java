@@ -18,6 +18,7 @@ public class RangeOfMotionResult extends Result {
     
     /**
      The orientation of the device at the start position:
+     ORIENTATION_UNDETECTABLE = -2;
      ORIENTATION_UNSPECIFIED = -1
      ORIENTATION_LANDSCAPE = 0
      ORIENTATION_PORTRAIT = 1
