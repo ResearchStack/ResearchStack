@@ -26,6 +26,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.Theme
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
+import org.researchstack.backbone.BuildConfig
 import org.researchstack.backbone.R
 import org.researchstack.backbone.step.Step
 import org.researchstack.backbone.task.Task
@@ -48,7 +49,12 @@ open class TaskActivity : AppCompatActivity(), PermissionMediator {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE)
+        if (BuildConfig.USE_SECURE_FLAG) {
+            window.setFlags(
+                    WindowManager.LayoutParams.FLAG_SECURE,
+                    WindowManager.LayoutParams.FLAG_SECURE
+            )
+        }
         setResult(Activity.RESULT_CANCELED)
         setContentView(R.layout.rsb_activity_task)
 
