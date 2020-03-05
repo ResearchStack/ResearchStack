@@ -5,11 +5,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.rsb_activity_full_screen_image.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
+import org.researchstack.backbone.BuildConfig
 import org.researchstack.backbone.R
 import org.researchstack.backbone.step.Step
 import org.researchstack.backbone.ui.step.fragments.ReviewStepFragment
@@ -32,6 +34,12 @@ class ReviewStepFullScreenImageActivity : AppCompatActivity(), View.OnClickListe
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (BuildConfig.USE_SECURE_FLAG) {
+            window.setFlags(
+                    WindowManager.LayoutParams.FLAG_SECURE,
+                    WindowManager.LayoutParams.FLAG_SECURE
+            )
+        }
         setContentView(R.layout.rsb_activity_full_screen_image)
 
         initCallbacks()
