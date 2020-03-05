@@ -48,6 +48,7 @@ open class TaskActivity : AppCompatActivity(), PermissionMediator {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE)
         setResult(Activity.RESULT_CANCELED)
         setContentView(R.layout.rsb_activity_task)
 
