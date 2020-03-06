@@ -31,6 +31,17 @@ public class ResUtils {
         public static final String ANIMATED_TAPPING_RIGHT       = "rsb_animated_tapping_right";
         public static final String ANIMATED_TAPPING_LEFT        = "rsb_animated_tapping_left";
     }
+    
+    public static class RangeOfMotion {
+        public static final String KNEE_START_RIGHT         = "rsb_knee_start_right";
+        public static final String KNEE_MAXIMUM_RIGHT       = "rsb_knee_maximum_right";
+        public static final String KNEE_START_LEFT          = "rsb_knee_start_left";
+        public static final String KNEE_MAXIMUM_LEFT        = "rsb_knee_maximum_left";
+        public static final String SHOULDER_START_RIGHT     = "rsb_shoulder_start";
+        public static final String SHOULDER_MAXIMUM_RIGHT   = "rsb_shoulder_maximum_right";
+        public static final String SHOULDER_START_LEFT      = "rsb_shoulder_start_left";
+        public static final String SHOULDER_MAXIMUM_LEFT    = "rsb_shoulder_maximum_left";
+    }
 
     public static class TimedWalking {
         public static final String TURNAROUND     = "rsb_timed_walking_turnaround";
