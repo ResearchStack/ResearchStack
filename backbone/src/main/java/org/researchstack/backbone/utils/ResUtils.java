@@ -23,6 +23,7 @@ public class ResUtils {
     public static class Audio {
         public static final String PHONE_WAVES              = "rsb_phonewaves";
         public static final String PHONE_SOUND_WAVES        = "rsb_phonesoundwaves";
+        public static final String PHONE_SOUND_ON           = "rsb_phone_sound_on";
     }
 
     public static class Tapping {
