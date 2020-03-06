@@ -175,7 +175,8 @@ public class RangeOfMotionTaskFactory {
 
                 {
                     String titleFormat = context.getString(R.string.rsb_knee_range_of_motion_title);
-                    String textFormat = context.getString(R.string.rsb_knee_range_of_motion_touch_anywhere_step_instruction);
+                    String textFormat = context.getString(R.string.rsb_knee_range_of_motion_touch_anywhere_step_instruction
+                                                          + R.string.rsb_TOUCH_ANYWHERE_LABEL);
                     if (rightSide) {
                         String title = String.format(titleFormat, TaskOptions.Side.RIGHT);
                         String text = String.format(textFormat, TaskOptions.Side.RIGHT);
@@ -201,13 +202,14 @@ public class RangeOfMotionTaskFactory {
                     if (!optionList.contains(TaskExcludeOption.DEVICE_MOTION)) {
                         recorderConfigList.add(new DeviceMotionRecorderConfig(DeviceMotionRecorderIdentifier, sensorFreq));
                     }
-                    if (!optionList.contains(TaskExcludeOption.ACCELEROMETER)) {
-                        recorderConfigList.add(new AccelerometerRecorderConfig(AccelerometerRecorderIdentifier, sensorFreq));
-                    }
+                    //if (!optionList.contains(TaskExcludeOption.ACCELEROMETER)) {
+                    //    recorderConfigList.add(new AccelerometerRecorderConfig(AccelerometerRecorderIdentifier, sensorFreq));
+                    //}
 
                     {
                         String titleFormat = context.getString(R.string.rsb_knee_range_of_motion_title);
-                        String textFormat = context.getString(R.string.rsb_knee_range_of_motion_spoken_instruction);
+                        String textFormat = context.getString(R.string.rsb_knee_range_of_motion_spoken_instruction
+                                                              + R.string.rsb_TOUCH_ANYWHERE_LABEL);
                         if (rightSide) {
                             String title = String.format(titleFormat, TaskOptions.Side.RIGHT);
                             String text = String.format(textFormat, TaskOptions.Side.RIGHT);
