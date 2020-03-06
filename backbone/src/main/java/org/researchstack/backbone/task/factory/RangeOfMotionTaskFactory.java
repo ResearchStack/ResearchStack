@@ -187,8 +187,9 @@ public class RangeOfMotionTaskFactory {
                     } else {
                         String title = String.format(titleFormat, TaskOptions.Side.LEFT);
                         String text = String.format(textFormat, TaskOptions.Side.LEFT);
+                        String spoken = text + touchLabel;
                         TouchAnywhereStep step = new TouchAnywhereStep(sideIdentifier, title, text);
-                        step.setSpokenInstruction(text);
+                        step.setSpokenInstruction(spoken);
                         stepList.add(step);
                     }
                 }
