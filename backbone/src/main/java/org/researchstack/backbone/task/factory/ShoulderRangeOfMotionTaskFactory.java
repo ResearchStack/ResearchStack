@@ -120,10 +120,6 @@ public class ShoulderRangeOfMotionTaskFactory {
                 {
                     List<RecorderConfig> recorderConfigList = new ArrayList<>();
 
-                    if (!optionList.contains(TaskExcludeOption.ACCELEROMETER)) {
-                        recorderConfigList.add(new AccelerometerRecorderConfig(AccelerometerRecorderIdentifier, sensorFreq));
-                    }
-
                     if (!optionList.contains(TaskExcludeOption.DEVICE_MOTION)) {
                         recorderConfigList.add(new DeviceMotionRecorderConfig(DeviceMotionRecorderIdentifier, sensorFreq));
                     }
