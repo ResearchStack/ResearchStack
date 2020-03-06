@@ -107,7 +107,8 @@ public class RangeOfMotionTaskFactory {
                 {
                     String titleFormat = context.getString(R.string.rsb_knee_range_of_motion_title);
                     String title = String.format(titleFormat, TaskOptions.Side.RIGHT);
-                    String textFormat = context.getString(R.string.rsb_knee_range_of_motion_touch_anywhere_step_instruction);
+                    String textFormat = context.getString(R.string.rsb_knee_range_of_motion_touch_anywhere_step_instruction
+                                                          + R.string.rsb_TOUCH_ANYWHERE_LABEL);
                     String text = String.format(textFormat, TaskOptions.Side.RIGHT);
                     TouchAnywhereStep step = new TouchAnywhereStep(TouchAnywhereStepIdentifier, title, text);
                     step.setSpokenInstruction(text);
@@ -120,9 +121,9 @@ public class RangeOfMotionTaskFactory {
                 {
                     List<RecorderConfig> recorderConfigList = new ArrayList<>();
 
-                    if (!optionList.contains(TaskExcludeOption.ACCELEROMETER)) {
-                        recorderConfigList.add(new AccelerometerRecorderConfig(AccelerometerRecorderIdentifier, sensorFreq));
-                    }
+                    //if (!optionList.contains(TaskExcludeOption.ACCELEROMETER)) {
+                    //    recorderConfigList.add(new AccelerometerRecorderConfig(AccelerometerRecorderIdentifier, sensorFreq));
+                    //}
 
                     if (!optionList.contains(TaskExcludeOption.DEVICE_MOTION)) {
                         recorderConfigList.add(new DeviceMotionRecorderConfig(DeviceMotionRecorderIdentifier, sensorFreq));
@@ -131,7 +132,8 @@ public class RangeOfMotionTaskFactory {
                     {
                         String titleFormat = context.getString(R.string.rsb_knee_range_of_motion_title);
                         String title = String.format(titleFormat, TaskOptions.Side.RIGHT);
-                        String textFormat = context.getString(R.string.rsb_knee_range_of_motion_spoken_instruction);
+                        String textFormat = context.getString(R.string.rsb_knee_range_of_motion_spoken_instruction
+                                                              + R.string.rsb_TOUCH_ANYWHERE_LABEL);
                         String text = String.format(textFormat, TaskOptions.Side.RIGHT);
                         RangeOfMotionStep step = new RangeOfMotionStep(RangeOfMotionStepIdentifier, title, text);
                         step.setSpokenInstruction(text);
