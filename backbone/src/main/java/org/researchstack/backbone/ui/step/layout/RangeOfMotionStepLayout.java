@@ -356,12 +356,6 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         if ((initial_orientation == ORIENTATION_PORTRAIT || initial_orientation == ORIENTATION_REVERSE_PORTRAIT)
                 && (original_angle > 90 && original_angle <= 180)) {
             shifted_angle = Math.abs(original_angle) - 360;
-        } else if (initial_orientation == ORIENTATION_LANDSCAPE
-                && (original_angle < -90 && original_angle >= -180)) {
-            shifted_angle = Math.abs(original_angle) - 360;
-        } else if (initial_orientation == ORIENTATION_REVERSE_LANDSCAPE
-                    && (original_angle < -90 && original_angle >= -180)) {
-                shifted_angle = 360 - Math.abs(original_angle);
         } else {
             shifted_angle = original_angle;
         }
