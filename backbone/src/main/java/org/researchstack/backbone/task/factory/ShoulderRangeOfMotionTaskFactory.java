@@ -174,19 +174,21 @@ public class ShoulderRangeOfMotionTaskFactory {
 
                 {
                     String titleFormat = context.getString(R.string.rsb_shoulder_range_of_motion_title);
-                    String textFormat = context.getString(R.string.rsb_shoulder_range_of_motion_touch_anywhere_step_instruction
-                                                          + R.string.rsb_TOUCH_ANYWHERE_LABEL);
+                    String textFormat = context.getString(R.string.rsb_shoulder_range_of_motion_touch_anywhere_step_instruction);
+                    String touchLabel = context.getString(R.string.rsb_TOUCH_ANYWHERE_LABEL);
                     if (rightSide) {
                         String title = String.format(titleFormat, TaskOptions.Side.RIGHT);
                         String text = String.format(textFormat, TaskOptions.Side.RIGHT);
+                        String spoken = text + touchLabel;
                         TouchAnywhereStep step = new TouchAnywhereStep(sideIdentifier, title, text);
-                        step.setSpokenInstruction(text);
+                        step.setSpokenInstruction(spoken);
                         stepList.add(step);
                     } else {
                         String title = String.format(titleFormat, TaskOptions.Side.LEFT);
                         String text = String.format(textFormat, TaskOptions.Side.LEFT);
+                        String spoken = text + touchLabel;
                         TouchAnywhereStep step = new TouchAnywhereStep(sideIdentifier, title, text);
-                        step.setSpokenInstruction(text);
+                        step.setSpokenInstruction(spoken);
                         stepList.add(step);
                     }
                 }
@@ -207,8 +209,7 @@ public class ShoulderRangeOfMotionTaskFactory {
 
                     {
                         String titleFormat = context.getString(R.string.rsb_shoulder_range_of_motion_title);
-                        String textFormat = context.getString(R.string.rsb_shoulder_range_of_motion_spoken_instruction
-                                                              + R.string.rsb_TOUCH_ANYWHERE_LABEL);
+                        String textFormat = context.getString(R.string.rsb_shoulder_range_of_motion_spoken_instruction);
                         if (rightSide) {
                             String title = String.format(titleFormat, TaskOptions.Side.RIGHT);
                             String text = String.format(textFormat, TaskOptions.Side.RIGHT);
