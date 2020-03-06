@@ -3,9 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/rsb_active_step_layout_range_of_motion">
-    
-    <TextView
+    android:id="@+id/rsb_step_layout_range_of_motion"
+    >
+
+  <TextView
     android:id="@+id/rsb_step_layout_range_of_motion_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,9 +16,9 @@
         android:layout_marginStart="@dimen/rsb_margin_left"
         android:layout_marginEnd="@dimen/rsb_margin_right"
         android:layout_marginTop="20dp"
-        android:text="@string/rsb_knee_range_of_motion_spoken_instruction"
+        android:text="@string/rsb_TOUCH_ANYWHERE_LABEL"
         android:textColor="?attr/colorAccent"
         android:textSize="20dp"
         />
-    
+
 </RelativeLayout>
