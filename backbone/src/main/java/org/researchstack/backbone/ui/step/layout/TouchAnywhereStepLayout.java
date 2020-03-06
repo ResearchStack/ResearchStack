@@ -1,4 +1,4 @@
-package com.spineapp;
+package org.researchstack.backbone.ui.step.layout;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -7,41 +7,42 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+
+import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
-import org.researchstack.backbone.ui.step.layout.ActiveStepLayout;
 
+
+/**
+ * Created by David Evans, Simon Hartley, Laurence Hurst, 2019.
+ *
+ * The TouchAnywhereStepLayout is basically the same as the ActiveStepLayout, except that touching
+ * or tapping (nearly) anywhere on the screen will skip the step. The back button is still tappable. 
+ * It is designed to be used for active tasks during which the user is not looking at the screen, in 
+ * combination with spoken instructions that can be set in the TouchAnywhereStep class.
+ *
+ * */
 
 public class TouchAnywhereStepLayout extends ActiveStepLayout {
-
-    private TouchAnywhereStep touchAnywhereStep;
-    private StepResult<String> touchAnywhereResult;
-    private String touchAnywhereFilename;
 
     private RelativeLayout layout;
 
     public TouchAnywhereStepLayout(Context context) {
-      super(context);
+        super(context);
     }
 
     public TouchAnywhereStepLayout(Context context, AttributeSet attrs) {
-      super(context, attrs);
+        super(context, attrs);
     }
 
     public TouchAnywhereStepLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-      super(context, attrs, defStyleAttr);
+        super(context, attrs, defStyleAttr);
     }
 
     @TargetApi(21)
     public TouchAnywhereStepLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-      super(context, attrs, defStyleAttr, defStyleRes);
-    }
-
-    @Override
-    public View getLayout()
-    {
-        return this;
+        super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     @Override
@@ -53,10 +54,10 @@ public class TouchAnywhereStepLayout extends ActiveStepLayout {
 
     @Override
     public void initialize(Step step, StepResult result) {
-      super.initialize(step, result);
+        super.initialize(step, result);
 
-      LayoutInflater.from(getContext())
-                .inflate(R.layout.touch_anywhere_step_layout, this, true);
+        LayoutInflater.from(getContext())
+                .inflate(R.layout.rsb_step_layout_touch_anywhere, this, true);
 
         setupOnClickListener();
 
@@ -69,14 +70,24 @@ public class TouchAnywhereStepLayout extends ActiveStepLayout {
         submitBar.setVisibility(View.GONE);
     }
 
-
     private void setupOnClickListener() {
-        layout = findViewById(R.id.rsb_active_step_layout_touch_anywhere);
+        layout = findViewById(R.id.rsb_step_layout_touch_anywhere);
         layout.setOnClickListener(new View.OnClickListener() {
-           @Override
+            @Override
             public void onClick(View v) {
-               skip();
+                // we can use skip() as we just need to move on to the next step
+                skip();
             }
         });
+
+    }
+
+    @Override
+    protected void validateStep(Step step) {
+        if (!(step instanceof TouchAnywhereStep)) {
+            throw new IllegalStateException("TouchAnywhereStepLayout must have a touchanywhereTaskStep");
+        }
+        touchAnywhereStep = (TouchAnywhereStep) step;
+        super.validateStep(step);
     }
 }
