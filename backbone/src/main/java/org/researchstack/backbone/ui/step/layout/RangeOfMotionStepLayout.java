@@ -233,9 +233,9 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
                     Log.i(ContentValues.TAG, "The device orientation is unspecified: value = "
                             + orientation );
                 }
-                if (!firstDeviceOrientationCaptured && orientation != ORIENTATION_UNSPECIFIED) {
+                if (!firstOrientationCaptured && orientation != ORIENTATION_UNSPECIFIED) {
                     setInitialOrientation(orientation);
-                    firstDeviceOrientationCaptured = true; // prevents setFirstOrientation from being re-set
+                    firstOrientationCaptured = true; // prevents setFirstOrientation from being re-set
                 }
             }
         };
