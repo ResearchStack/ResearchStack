@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.Step;
+import org.researchstack.backbone.step.active.TouchAnywhereStep;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 
 
