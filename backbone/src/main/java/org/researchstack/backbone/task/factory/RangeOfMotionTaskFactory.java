@@ -22,8 +22,7 @@ import static org.researchstack.backbone.task.factory.TaskFactory.Constants.*;
 /**
  * Created by David Evans, Laurence Hurst, Simon Hartley, 2019.
  *
- * This class was created to encapsulate the creation of Range of Motion (ROM) Task,
- * specifically the knee ROM task.
+ * This class was created to encapsulate the creation of a Knee Range of Motion (ROM) Task.
  */
 
 public class RangeOfMotionTaskFactory {
