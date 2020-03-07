@@ -1,4 +1,4 @@
-ackage org.researchstack.backbone.task.factory;
+package org.researchstack.backbone.task.factory;
 
 import android.content.Context;
 
