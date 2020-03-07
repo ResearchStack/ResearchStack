@@ -27,6 +27,7 @@ import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 
 public class TouchAnywhereStepLayout extends ActiveStepLayout {
 
+    private TouchAnywhereStep touchAnywhereStep;
     private RelativeLayout layout;
 
     public TouchAnywhereStepLayout(Context context) {
