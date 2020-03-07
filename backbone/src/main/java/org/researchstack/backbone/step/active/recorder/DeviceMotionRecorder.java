@@ -23,6 +23,8 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.*;
 
+import androidx.annotation.VisibleForTesting;
+
 
 /**
  * Created by TheMDP on 2/5/17.
@@ -66,7 +68,8 @@ public class DeviceMotionRecorder extends SensorRecorder {
 
     static {
         // build mapping for sensor type and its data type value
-        ImmutableMap.Builder<Integer, String>  sensorTypeMapBuilder = ImmutableMap.builder();
+        HashMap<Integer, String>  sensorTypeMapBuilder = new HashMap<>();
+        //ImmutableMap.Builder<Integer, String>  sensorTypeMapBuilder = ImmutableMap.builder();
         // rotation/gyroscope
         sensorTypeMapBuilder.put(Sensor.TYPE_GYROSCOPE, "rotationRate");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
@@ -104,7 +107,8 @@ public class DeviceMotionRecorder extends SensorRecorder {
         SENSOR_TYPE_TO_DATA_TYPE = sensorTypeMapBuilder.build();
 
         // build mapping for rotation type
-        ImmutableSet.Builder<Integer> rotationTypeBuilder = ImmutableSet.builder();
+        HashSet<Integer> rotationTypeBuilder = new HashSet<>();
+        //ImmutableSet.Builder<Integer> rotationTypeBuilder = ImmutableSet.builder();
         rotationTypeBuilder.add(Sensor.TYPE_ROTATION_VECTOR);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             rotationTypeBuilder.add(Sensor.TYPE_GAME_ROTATION_VECTOR);
@@ -112,7 +116,8 @@ public class DeviceMotionRecorder extends SensorRecorder {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             rotationTypeBuilder.add(Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR);
         }
-        ROTATION_VECTOR_TYPES = rotationTypeBuilder.build();
+        ROTATION_VECTOR_TYPES = rotationTypeBuilder;
+        //ROTATION_VECTOR_TYPES = rotationTypeBuilder.build();
     }
 
     public static final String X_KEY    = "x";
@@ -128,12 +133,12 @@ public class DeviceMotionRecorder extends SensorRecorder {
     public static final String Y_BIAS_KEY           = "yBias";
     public static final String Z_BIAS_KEY           = "zBias";
 
-    public DeviceMotionRecorder(double frequency, String identifier, Step step, File outputDirectory) {
+    DeviceMotionRecorder(double frequency, String identifier, Step step, File outputDirectory) {
         super(frequency, identifier, step, outputDirectory);
     }
 
     @Override
-    public void start(Context context) { // this doesn't seem to be called!!
+    public void start(Context context) {
         super.start(context);
     }
 
@@ -190,7 +195,8 @@ public class DeviceMotionRecorder extends SensorRecorder {
         int sensorType = sensorEvent.sensor.getType();
         String sensorTypeKey = SENSOR_TYPE_TO_DATA_TYPE.get(sensorType);
 
-        if (Strings.isNullOrEmpty(sensorTypeKey)) {
+        if (sensorTypeKey!=null || sensorTypeKey.length() > 0) {
+        //if (Strings.isNullOrEmpty(sensorTypeKey)) {
             logger.warn("Unable find type key for sensor type: "
                     + sensorType);
             return;
@@ -286,7 +292,7 @@ public class DeviceMotionRecorder extends SensorRecorder {
      *     https://source.android.com/devices/sensors/sensor-types#geomagnetic_rotation_vector
      */
     @VisibleForTesting
-    public void recordRotationVector(SensorEvent sensorEvent, JsonObject jsonObject) {
+    void recordRotationVector(SensorEvent sensorEvent, JsonObject jsonObject) {
         // indicate android sensor subtype
         int sensorType = sensorEvent.sensor.getType();
         if (Sensor.TYPE_ROTATION_VECTOR == sensorType) {
