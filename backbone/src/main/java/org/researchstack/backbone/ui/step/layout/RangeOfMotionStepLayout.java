@@ -235,7 +235,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
                 }
                 if (!firstOrientationCaptured && orientation != ORIENTATION_UNSPECIFIED) {
                     setInitialOrientation(orientation);
-                    firstOrientationCaptured = true; // prevents setFirstOrientation from being re-set
+                    firstOrientationCaptured = true; // prevents setInitialOrientation from being re-set
                 }
             }
         };
