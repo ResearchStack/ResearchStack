@@ -362,8 +362,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     /**
      * Method to calculate angles in degrees from the device attitude quaternion, as a function of
-     * device orientation (portrait or landscape) or screen orientation (portrait, landscape, reverse
-     * portrait or reverse landscape).
+     * device orientation (portrait, landscape, reverse portrait or reverse landscape).
      */
     public double getDeviceAngleInDegreesFromQuaternion(float[] quaternion) {
         double angle_in_degrees = 0;
@@ -454,7 +453,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
                 start = 90 + getShiftedStartAngle();
             } else if (initial_orientation == ORIENTATION_REVERSE_PORTRAIT) {
                 start = -90 - getShiftedStartAngle();
-            } else if (initial_orientation == ORIENTATION_UNSPECIFIED) {
+            } else if (initial_orientation == ORIENTATION_UNSPECIFIED || initial_orientation == ORIENTATION_UNDETECTABLE) {
                 start = NaN;
             } else {
                 start = 90 - getShiftedStartAngle();
@@ -470,7 +469,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
                 finish = 90 + getShiftedFinishAngle();
             } else if (initial_orientation == ORIENTATION_REVERSE_PORTRAIT) {
                 finish = -90 - getShiftedFinishAngle();
-            } else if (initial_orientation == ORIENTATION_UNSPECIFIED) {
+            } else if (initial_orientation == ORIENTATION_UNSPECIFIED || initial_orientation == ORIENTATION_UNDETECTABLE) {
                 finish = NaN;
             } else {
                 finish = 90 - getShiftedFinishAngle();
@@ -488,7 +487,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         } else {
             if (initial_orientation == ORIENTATION_REVERSE_LANDSCAPE) {
                 minimum = start + getMinimumAngle();
-            } else if (initial_orientation == ORIENTATION_UNSPECIFIED) {
+            } else if (initial_orientation == ORIENTATION_UNSPECIFIED || initial_orientation == ORIENTATION_UNDETECTABLE) {
                 minimum = NaN;
             } else {
                 minimum = start - getMaximumAngle(); // landscape, portrait and reverse portrait
@@ -502,7 +501,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
         } else {
             if (initial_orientation == ORIENTATION_REVERSE_LANDSCAPE) {
                 maximum = start + getMaximumAngle();
-            } else if (initial_orientation == ORIENTATION_UNSPECIFIED) {
+            } else if (initial_orientation == ORIENTATION_UNSPECIFIED || initial_orientation == ORIENTATION_UNDETECTABLE) {
                 maximum = NaN;
             } else {
                 maximum = start - getMinimumAngle(); // landscape, portrait and reverse portrait
