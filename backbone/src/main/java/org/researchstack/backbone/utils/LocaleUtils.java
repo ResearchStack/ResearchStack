@@ -14,7 +14,12 @@ public class LocaleUtils {
     public static final String LOCALE_PREFERENCES = "LocalePreferences";
     public static final String PREFERRED_LOCALE_FIELD = "PreferredLocale";
 
-    public static ContextWrapper wrapLocaleContext(Context context, Locale locale) {
+    public static ContextWrapper wrapLocaleContext(Context context) {
+        String preferredLocale = getPreferredLocale(context);
+        if (preferredLocale == null){
+            return new ContextWrapper(context);
+        }
+        Locale locale = getLocaleFromString(preferredLocale);
         Configuration config = context.getResources().getConfiguration();
         Locale.setDefault(locale);
         config.setLocale(locale);

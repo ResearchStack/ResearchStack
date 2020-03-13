@@ -47,6 +47,10 @@ open class TaskActivity : AppCompatActivity(), PermissionMediator {
     private var stepPermissionListener: PermissionListener? = null
     private var actionBarCancelMenuItem: MenuItem? = null
 
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(LocaleUtils.wrapLocaleContext(newBase))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (BuildConfig.USE_SECURE_FLAG) {
