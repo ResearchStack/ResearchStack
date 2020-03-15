@@ -248,7 +248,7 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     /**
      * Methods to obtain the device's physical orientation at the beginning of the task
-     **/
+     */
     public int getInitialOrientation() {
         return initialOrientation;
     }
