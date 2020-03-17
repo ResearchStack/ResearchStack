@@ -60,10 +60,10 @@ public class RangeOfMotionStepLayout extends ActiveStepLayout {
 
     public static final int ORIENTATION_UNDETECTABLE = -2;
     public static final int ORIENTATION_UNSPECIFIED = -1;
-    public static final int ORIENTATION_LANDSCAPE = 0;
+    public static final int ORIENTATION_LANDSCAPE = 0; // equivalent to LANDSCAPE_LEFT in iOS
     public static final int ORIENTATION_PORTRAIT = 1;
-    public static final int ORIENTATION_REVERSE_LANDSCAPE = 2;
-    public static final int ORIENTATION_REVERSE_PORTRAIT = 3;
+    public static final int ORIENTATION_REVERSE_LANDSCAPE = 2;  // equivalent to LANDSCAPE_RIGHT in iOS
+    public static final int ORIENTATION_REVERSE_PORTRAIT = 3;  // equivalent to PORTRAIT_UPSIDE_DOWN in iOS
 
 
     public RangeOfMotionStepLayout(Context context) {
