@@ -12,7 +12,6 @@
     <string name="rsb_consent_section_study_survey">Studienumfrage </string>
     <string name="rsb_consent_section_study_tasks">Studienaufgaben </string>
     <string name="rsb_consent_section_withdrawing">Abbruch</string>
-    <string name="rsb_consent_learn_more">Mehr erfahren</string>
 
     <!-- Consent section learn more -->
     <string name="rsb_consent_section_more_info">Mehr erfahren</string>
@@ -26,61 +25,34 @@
     <string name="rsb_consent_section_more_info_withdrawing">Mehr erfahren über Zurücktreten</string>
 
     <!-- Consent sharing step -->
-    <string name="rsb_consent_share_title">Verbreitungsoptionen</string>
-    <string name="rsb_consent_share_widely">Meine Daten mit %1$s und qualifizierten Forschern weltweit teilen</string>
-    <string name="rsb_consent_share_no">Meine Daten nicht teilen</string>
-    <string name="rsb_consent_share_only">Meine Daten nur mit %1$s teilen</string>
-    <string name="rsb_consent_share_description"><![CDATA[%1$s erhält Ihre Studiendaten von Ihrer Teilnahme an dieser Studie. \n\nDie weitere Verbreitung Ihrer kodierten Studiendaten (ohne Informationen wie Ihr Name) kann dieser und zukünftigen Forschungen zugutekommen.<br/><br/><a href="%2$s">Erfahren Sie mehr über die Datenweitergabe</a>]]></string>
 
     <!-- Consent doc step -->
-    <string name="rsb_consent_review_title">Lesen</string>
     <string name="rsb_consent_review_alert_title">Lesen</string>
-    <string name="rsb_consent_review_reason">Mit Ihrer Zustimmung bestätigen Sie, dass Sie die Informationen gelesen haben und an der Forschungsstudie teilnehmen wollen.</string>
-    <string name="rsb_consent_review_instruction">Überprüfen Sie das Formular unten und tippen Sie auf Stimme zu, wenn Sie bereit sind fortzufahren.</string>
     <string name="rsb_consent_review_cancel">Abbrechen</string>
 
     <string name="rsb_saving_consent">Einwilligung wird gespeichert</string>
     <string name="rsb_please_wait">Bitte warten Sie&#8230;</string>
 
     <!-- Consent form step -->
-    <string name="rsb_consent_form_title">Einwilligung</string>
-    <string name="rsb_consent_name_full">Vollständiger Name</string>
     <string name="rsb_consent_dob_full">Geburtsdatum</string>
-    <string name="rsb_consent_name_placeholder">Erforderlich</string>
 
     <!-- Consent sig step -->
     <string name="rsb_consent_signature_title">Unterschrift</string>
-    <string name="rsb_consent_signature_content">Mit Ihrer Zustimmung bestätigen Sie, dass Sie die Einwilligungserklärung gelesen haben und an dieser Forschungsstudie teilnehmen wollen.</string>
     <string name="rsb_consent_signature_instruction">Bitte unterzeichnen Sie mit Ihrem Finger unten auf der Zeile.</string>
     <string name="rsb_consent_signature_placeholder">Hier unterzeichnen</string>
     <string name="rsb_consent_signature_clear">Löschen</string>
 
     <!-- Quiz -->
-    <string name="rsb_quiz">Quiz</string>
-    <string name="rsb_quiz_evaluation">Quiz-Bewertung</string>
-    <string name="rsb_quiz_evaluation_try_again">Versuchen Sie es erneut</string>
-    <string name="rsb_quiz_evaluation_review_consent">Einwilligung überprüfen</string>
-    <string name="rsb_quiz_evaluation_retake">Quiz erneut machen</string>
-    <string name="rsb_quiz_evaluation_great_job">Gut gemacht!</string>
 
     <!-- Other -->
-    <string name="rsb_submit">Absenden</string>
-    <string name="rsb_exit">Verlassen</string>
-    <string name="rsb_get_started">Erste Schritte</string>
     <string name="rsb_done">Fertig</string>
     <string name="rsb_step_skip">Überspringen</string>
     <string name="rsb_next">weiter</string>
-    <string name="rsb_what_to_expect">Was zu erwarten ist</string>
-    <string name="rsb_name">Name</string>
     <string name="rsb_name_first">Vorname</string>
     <string name="rsb_name_last">Nachname</string>
-    <string name="rsb_email">E-MAIL-ADRESSE</string>
     <string name="rsb_disagree">Ablehnen</string>
     <string name="rsb_agree">Zustimmen</string>
-    <string name="rsb_ok">Ok</string>
     <string name="rsb_cancel">Abbrechen</string>
-    <string name="rsb_yes">Ja</string>
-    <string name="rsb_no">Nein</string>
     <string name="rsb_format_step_title">Schritt %1$s von %2$s</string>
     <string name="rsb_hours">Stunden</string>
     <string name="rsb_minutes">Minuten</string>
@@ -89,7 +61,6 @@
     <string name="rsb_task_cancel_positive">Ergebnisse verwerfen</string>
 
     <!-- Step Errors -->
-    <string name="rsb_error_data_failed">Verschlüsselte Daten konnten nicht geladen werden, versuchen Sie es erneut!</string>
     <string name="rsb_error_invalid_signature">Unterschrift ungültig</string>
     <string name="rsb_invalid_answer_default">Ungültige Antwort, versuchen Sie es erneut!</string>
     <string name="rsb_invalid_answer_date_over">Ungültige Antwort, Datum muss vor %1$s sein</string>
@@ -102,12 +73,6 @@
     <string name="rsb_birth_date_too_young">Sie müssen mindestens %1$s Jahre alt sein</string>
 
     <!-- Pin Code -->
-    <string name="rsb_pincode_enter_title">Geben Sie Ihren Passcode ein</string>
-    <string name="rsb_pincode_enter_summary">Geben Sie Ihren %1$d-%2$s-Code ein, um Ihre Identität zu bestätigen.</string>
-    <string name="rsb_pincode_enter_digit">Ziffer</string>
-    <string name="rsb_pincode_enter_letter">Buchstabe</string>
-    <string name="rsb_pincode_enter_character">Sonderzeichen</string>
-    <string name="rsb_pincode_enter_error">Dieser Code stimmt nicht mit dem überein, den Sie eingegeben haben, versuchen Sie es erneut!</string>
 
     <!-- Body Hints -->
     <string name="rsb_hint_step_body_int">Geben Sie eine Zahl %1$d-%2$d ein</string>
@@ -124,7 +89,6 @@
 
     <!-- AssetVideoView -->
     <!-- Title for error alert when a video cannot be played.  it can be used by any app. -->
-    <string name="rsb_error_assetvideoview_title">Videoproblem</string>
     <!-- Text for error alert when a video container is not valid for progressive download/playback. -->
     <string name="rsb_error_assetvideoview_invalid_progressive_playback">Dieses Video hat für das Streamen auf dieses Gerät keine Gültigkeit.</string>
     <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
@@ -137,7 +101,6 @@
     <string name="rsb_consent_doc_line_signature">Unterschrift von%1$s\' </string>
     <string name="rsb_consent_doc_line_date">Datum</string>
     <string name="rsb_consent_role">Teilnehmer</string>
-    <string name="rsb_consent_doc_line_date_format">dd.MM.yyyy</string>
 
     <!-- Edit -->
     <string name="rsb_edit_step_alert_cancel_positive">[de-DE] YES, STOP MAKING CHANGES</string>
