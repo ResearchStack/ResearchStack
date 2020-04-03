@@ -20,7 +20,7 @@ import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.views.SignatureView;
 import org.researchstack.backbone.ui.views.SubmitBar;
 import org.researchstack.backbone.utils.FormatHelper;
-import org.researchstack.backbone.utils.LocaleUtils;
+import org.researchstack.backbone.utils.LocalizationUtils;
 import org.researchstack.backbone.utils.TextUtils;
 
 import java.io.ByteArrayOutputStream;
@@ -105,7 +105,7 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
 
         final AppCompatTextView clear = (AppCompatTextView) findViewById(R.id.layout_consent_review_signature_clear);
         clear.setTextColor(step.getPrimaryColor());
-        clear.setText(LocaleUtils.getLocalizedString(getContext(), R.string.rsb_consent_signature_clear));
+        clear.setText(LocalizationUtils.getLocalizedString(getContext(), R.string.rsb_consent_signature_clear));
 
         signatureView = (SignatureView) findViewById(R.id.layout_consent_review_signature);
         signatureView.setCallbacks(new SignatureCallbacks() {
@@ -139,7 +139,7 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
         final SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
         submitBar.getNegativeActionView().setVisibility(View.GONE);
         submitBar.setPositiveTitleColor(step.getColorSecondary());
-        submitBar.setPositiveTitle(LocaleUtils.getLocalizedString(getContext(),
+        submitBar.setPositiveTitle(LocalizationUtils.getLocalizedString(getContext(),
                 R.string.rsb_done));
         submitBar.setPositiveAction(new OnClickListener()
         {
@@ -151,7 +151,7 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
                     callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, result);
                     submitBar.clearActions();
                 } else {
-                    Toast.makeText(getContext(), LocaleUtils.getLocalizedString(getContext(),
+                    Toast.makeText(getContext(), LocalizationUtils.getLocalizedString(getContext(),
                             R.string.rsb_error_invalid_signature), Toast.LENGTH_SHORT).show();
                 }
             }
@@ -162,7 +162,7 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
 
         String format = ((ConsentSignatureStep) step).getSignatureDateFormat();
         DateFormat signatureDateFormat = !TextUtils.isEmpty(format)
-                ? DateFormat.getDateInstance(DateFormat.MEDIUM, LocaleUtils.getLocaleFromString(LocaleUtils.getPreferredLocale(getContext())))
+                ? DateFormat.getDateInstance(DateFormat.MEDIUM, LocalizationUtils.getLocaleFromString(LocalizationUtils.getPreferredLocale(getContext())))
                 : FormatHelper.getSignatureFormat();
         String formattedSignDate = signatureDateFormat.format(new Date());
 

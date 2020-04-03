@@ -4,7 +4,7 @@ import android.content.Context;
 import androidx.annotation.StringRes;
 
 import org.researchstack.backbone.R;
-import org.researchstack.backbone.utils.LocaleUtils;
+import org.researchstack.backbone.utils.LocalizationUtils;
 
 public class BodyAnswer {
     public static final BodyAnswer VALID = new BodyAnswer(true, 0);
@@ -50,9 +50,9 @@ public class BodyAnswer {
         if (reasonStr != null && !reasonStr.isEmpty()) {
             return reasonStr;
         } else if (getParams().length == 0) {
-            return LocaleUtils.getLocalizedString(context, getReason());
+            return LocalizationUtils.getLocalizedString(context, getReason());
         } else {
-            return LocaleUtils.getLocalizedString(context, getReason(), (Object[]) getParams());
+            return LocalizationUtils.getLocalizedString(context, getReason(), (Object[]) getParams());
         }
     }
 }

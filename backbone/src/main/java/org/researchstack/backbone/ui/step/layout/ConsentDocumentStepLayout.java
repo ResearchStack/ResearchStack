@@ -1,7 +1,6 @@
 package org.researchstack.backbone.ui.step.layout;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 
@@ -19,7 +17,7 @@ import org.researchstack.backbone.step.ConsentDocumentStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.views.SubmitBar;
-import org.researchstack.backbone.utils.LocaleUtils;
+import org.researchstack.backbone.utils.LocalizationUtils;
 
 /**
  * Implement saved state for the following objects:
@@ -124,8 +122,8 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
                 }));
                 submitBar.setNegativeTitleColor(step.getPrimaryColor());
                 submitBar.setNegativeAction(actionView -> disagreeConsent());
-                submitBar.setNegativeTitle(LocaleUtils.getLocalizedString(getContext(),R.string.rsb_disagree));
-                submitBar.setPositiveTitle(LocaleUtils.getLocalizedString(getContext(),R.string.rsb_agree));
+                submitBar.setNegativeTitle(LocalizationUtils.getLocalizedString(getContext(),R.string.rsb_disagree));
+                submitBar.setPositiveTitle(LocalizationUtils.getLocalizedString(getContext(),R.string.rsb_agree));
             }
         });
 
@@ -140,14 +138,14 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
 
     private void showDialog(MaterialDialog.SingleButtonCallback positiveAction) {
         new MaterialDialog.Builder(getContext())
-                .title(LocaleUtils.getLocalizedString(getContext(),R.string.rsb_consent_review_alert_title))
+                .title(LocalizationUtils.getLocalizedString(getContext(),R.string.rsb_consent_review_alert_title))
                 .content(confirmationDialogBody)
                 .theme(Theme.LIGHT)
                 .cancelable(false)
                 .positiveColor(step.getColorSecondary())
                 .negativeColor(step.getPrimaryColor())
-                .negativeText(LocaleUtils.getLocalizedString(getContext(),R.string.rsb_consent_review_cancel))
-                .positiveText(LocaleUtils.getLocalizedString(getContext(),R.string.rsb_agree))
+                .negativeText(LocalizationUtils.getLocalizedString(getContext(),R.string.rsb_consent_review_cancel))
+                .positiveText(LocalizationUtils.getLocalizedString(getContext(),R.string.rsb_agree))
                 .onPositive(positiveAction)
                 .show();
     }

@@ -18,7 +18,7 @@ import org.researchstack.backbone.ui.ViewWebDocumentActivity;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.views.FixedSubmitBarLayout;
 import org.researchstack.backbone.ui.views.SubmitBar;
-import org.researchstack.backbone.utils.LocaleUtils;
+import org.researchstack.backbone.utils.LocalizationUtils;
 import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.backbone.utils.TextUtils;
 
@@ -138,7 +138,7 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
         // Set Title
         TextView titleView = (TextView) findViewById(R.id.title);
         if (TextUtils.isEmpty(data.getTitle())) {
-            titleView.setText(LocaleUtils.getLocalizedString(getContext(), data.getType().getTitleResId()));
+            titleView.setText(LocalizationUtils.getLocalizedString(getContext(), data.getType().getTitleResId()));
         } else {
             titleView.setText(data.getTitle());
         }
@@ -159,11 +159,11 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
             }
             else
             {
-                moreInfoView.setText(LocaleUtils.getLocalizedString(moreInfoView.getContext(), data.getType().getMoreInfoResId()));
+                moreInfoView.setText(LocalizationUtils.getLocalizedString(moreInfoView.getContext(), data.getType().getMoreInfoResId()));
             }
 
             moreInfoView.setOnClickListener(view -> {
-                String webTitle = LocaleUtils.getLocalizedString(moreInfoView.getContext(), R.string.rsb_consent_section_more_info);
+                String webTitle = LocalizationUtils.getLocalizedString(moreInfoView.getContext(), R.string.rsb_consent_section_more_info);
                 URL contentUrl = data.getContentUrl();
                 Intent webDoc;
                 if(contentUrl != null)
@@ -185,7 +185,7 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
         }
 
         final SubmitBar submitBar = findViewById(R.id.rsb_submit_bar);
-        submitBar.setPositiveTitle(LocaleUtils.getLocalizedString(getContext(), step.getNextButtonString()));
+        submitBar.setPositiveTitle(LocalizationUtils.getLocalizedString(getContext(), step.getNextButtonString()));
         submitBar.setNegativeTitleColor(colorPrimary);
         submitBar.setPositiveTitleColor(colorSecondary);
         submitBar.setPositiveAction(view -> {
