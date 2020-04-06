@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.utils.LocaleUtils;
+import org.researchstack.backbone.utils.LocalizationUtils;
 
 import java.io.Serializable;
 import java.util.List;
@@ -85,7 +85,7 @@ public abstract class Task implements Serializable {
      * @return the title to display
      */
     public String getTitleForStep(Context context, Step step) {
-        return step.getStepTitle() != 0 ? LocaleUtils.getLocalizedString(context, step.getStepTitle()) : "";
+        return step.getStepTitle() != 0 ? LocalizationUtils.getLocalizedString(context, step.getStepTitle()) : "";
     }
 
     /**

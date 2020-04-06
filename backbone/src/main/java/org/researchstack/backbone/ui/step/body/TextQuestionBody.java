@@ -15,7 +15,7 @@ import org.researchstack.backbone.answerformat.TextAnswerFormat;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.utils.LocaleUtils;
+import org.researchstack.backbone.utils.LocalizationUtils;
 import org.researchstack.backbone.utils.TextUtils;
 import org.researchstack.backbone.utils.ViewUtils;
 
@@ -44,7 +44,7 @@ public class TextQuestionBody implements StepBody {
         if (step.getPlaceholder() != null) {
             editText.setHint(step.getPlaceholder());
         } else {
-            editText.setHint(LocaleUtils.getLocalizedString(inflater.getContext(),R.string.rsb_hint_step_body_text));
+            editText.setHint(LocalizationUtils.getLocalizedString(inflater.getContext(),R.string.rsb_hint_step_body_text));
         }
 
         TextView title = body.findViewById(R.id.label);

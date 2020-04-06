@@ -3,7 +3,6 @@ package org.researchstack.backbone.step;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.model.ConsentSection;
 import org.researchstack.backbone.ui.step.layout.ConsentVisualStepLayout;
-import org.researchstack.backbone.utils.LocaleUtils;
 
 /**
  * The {@link ConsentVisualStep} class represents a step in the visual consent sequence.

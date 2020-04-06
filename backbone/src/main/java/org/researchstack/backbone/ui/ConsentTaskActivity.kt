@@ -19,7 +19,7 @@ import org.researchstack.backbone.task.Task
 import org.researchstack.backbone.ui.step.layout.ConsentSignatureStepLayout.KEY_SIGNATURE
 import org.researchstack.backbone.ui.task.TaskActivity
 import org.researchstack.backbone.ui.task.TaskViewModel
-import org.researchstack.backbone.utils.LocaleUtils
+import org.researchstack.backbone.utils.LocalizationUtils
 import org.researchstack.backbone.utils.RSHTMLPDFWriter
 import java.text.DateFormat
 import java.util.*
@@ -87,15 +87,18 @@ class ConsentTaskActivity : TaskActivity() {
     override fun close(completed: Boolean) {
         // you can also set title / message
         savingConsentDialog = AlertDialog.Builder(this).setCancelable(false)
-                .setTitle(LocaleUtils.getLocalizedString(this, R.string.rsb_saving_consent))
-                .setMessage(LocaleUtils.getLocalizedString(this, R.string.rsb_please_wait)).create()
+                .setTitle(
+                        LocalizationUtils.getLocalizedString(this, R.string.rsb_saving_consent))
+                .setMessage(
+                        LocalizationUtils.getLocalizedString(this, R.string.rsb_please_wait)).create()
 
         savingConsentDialog?.show()
 
         val consentAssetsFolder = intent.getStringExtra(EXTRA_ASSETS_FOLDER)
-        val role = LocaleUtils.getLocalizedString(this, R.string.rsb_consent_role)
+        val role = LocalizationUtils.getLocalizedString(this, R.string.rsb_consent_role)
         val df = DateFormat.getDateInstance(DateFormat.MEDIUM,
-                LocaleUtils.getLocaleFromString(LocaleUtils.getPreferredLocale(this)))
+                LocalizationUtils.getLocaleFromString(
+                        LocalizationUtils.getPreferredLocale(this)))
         consentHtml += getSignatureHtmlContent(getFormalName(firstName, lastName), role, signatureBase64,
                 df.format(Date()))
 

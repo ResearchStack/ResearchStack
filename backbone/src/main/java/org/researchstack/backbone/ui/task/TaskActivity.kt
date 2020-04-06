@@ -36,7 +36,7 @@ import org.researchstack.backbone.ui.permissions.PermissionResult
 import org.researchstack.backbone.ui.step.fragments.BaseStepFragment
 import org.researchstack.backbone.ui.step.layout.StepLayout
 import org.researchstack.backbone.ui.step.layout.SurveyStepLayout
-import org.researchstack.backbone.utils.LocaleUtils
+import org.researchstack.backbone.utils.LocalizationUtils
 import org.researchstack.backbone.utils.ViewUtils
 
 open class TaskActivity : AppCompatActivity(), PermissionMediator {
@@ -48,7 +48,7 @@ open class TaskActivity : AppCompatActivity(), PermissionMediator {
     private var actionBarCancelMenuItem: MenuItem? = null
 
     override fun attachBaseContext(newBase: Context?) {
-        super.attachBaseContext(LocaleUtils.wrapLocaleContext(newBase))
+        super.attachBaseContext(LocalizationUtils.wrapLocaleContext(newBase))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -158,7 +158,7 @@ open class TaskActivity : AppCompatActivity(), PermissionMediator {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.rsb_activity_view_task_menu, menu)
         actionBarCancelMenuItem = menu.findItem(R.id.rsb_action_cancel)
-        actionBarCancelMenuItem?.title = LocaleUtils.getLocalizedString(this, R.string.rsb_cancel)
+        actionBarCancelMenuItem?.title = LocalizationUtils.getLocalizedString(this, R.string.rsb_cancel)
         return true
     }
 
@@ -381,13 +381,13 @@ open class TaskActivity : AppCompatActivity(), PermissionMediator {
                                 onPositive: () -> (Unit)) {
         MaterialDialog.Builder(this)
                 .cancelable(false)
-                .title(LocaleUtils.getLocalizedString(this, title))
-                .content(LocaleUtils.getLocalizedString(this, content))
+                .title(LocalizationUtils.getLocalizedString(this, title))
+                .content(LocalizationUtils.getLocalizedString(this, content))
                 .theme(Theme.LIGHT)
                 .positiveColor(viewModel.colorPrimary)
                 .negativeColor(viewModel.colorPrimary)
-                .negativeText(LocaleUtils.getLocalizedString(this, negativeText))
-                .positiveText(LocaleUtils.getLocalizedString(this, positiveText))
+                .negativeText(LocalizationUtils.getLocalizedString(this, negativeText))
+                .positiveText(LocalizationUtils.getLocalizedString(this, positiveText))
                 .onPositive { _, _ -> onPositive() }
                 .onNegative { dialog, _ -> onNegative(dialog) }
                 .show()

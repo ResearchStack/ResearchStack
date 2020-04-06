@@ -9,10 +9,11 @@ import java.util.Locale;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class LocaleUtils {
+public class LocalizationUtils {
 
     public static final String LOCALE_PREFERENCES = "LocalePreferences";
     public static final String PREFERRED_LOCALE_FIELD = "PreferredLocale";
+    public static final String TIMEZONE_FIELD = "TimeZone";
 
     public static ContextWrapper wrapLocaleContext(Context context) {
         String preferredLocale = getPreferredLocale(context);
@@ -67,5 +68,17 @@ public class LocaleUtils {
     public static String getPreferredLocale(Context context) {
         SharedPreferences sharedPrefs = context.getSharedPreferences(LOCALE_PREFERENCES, MODE_PRIVATE);
         return sharedPrefs.getString(PREFERRED_LOCALE_FIELD, null);
+    }
+
+    public static void setTimeZone(Context context, String timeZone) {
+        SharedPreferences sharedPrefs = context.getSharedPreferences(LOCALE_PREFERENCES, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        editor.putString(TIMEZONE_FIELD, timeZone);
+        editor.apply();
+    }
+
+    public static String getTimeZone(Context context) {
+        SharedPreferences sharedPrefs = context.getSharedPreferences(LOCALE_PREFERENCES, MODE_PRIVATE);
+        return sharedPrefs.getString(TIMEZONE_FIELD, null);
     }
 }
