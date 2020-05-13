@@ -11,7 +11,6 @@
     <string name="rsb_consent_section_study_survey">연구 조사</string>
     <string name="rsb_consent_section_study_tasks">연구 과제</string>
     <string name="rsb_consent_section_withdrawing">철회</string>
-    <string name="rsb_consent_learn_more">자세히 살펴보기</string>
 
     <!-- Consent section learn more -->
     <string name="rsb_consent_section_more_info">자세히 살펴보기</string>
@@ -30,66 +29,35 @@
     <string name="rsb_consent_section_more_info_withdrawing">철회에 대해 자세히 살펴보기</string>
 
     <!-- Consent sharing step -->
-    <string name="rsb_consent_share_title">공유 옵션</string>
-    <string name="rsb_consent_share_widely">내 데이터를 %1$s과 전 세계 전문 연구자들과 공유합니다
-    </string>
-    <string name="rsb_consent_share_no">데이터를 공유하지 않습니다</string>
-    <string name="rsb_consent_share_only">내 데이터를 %1$s에게만 공유합니다</string>
-    <string name="rsb_consent_share_description"><![CDATA[여러분의 연구 참여를 통해 ]]><![CDATA[%1$s]]><![CDATA[이 연구 데이터를 받게 됩니다.]]><![CDATA[ ]]><![CDATA[\n]]><![CDATA[\n]]><![CDATA[암호화된 연구 데이터(이름 등을 제외한 정보)를 더 폭넓게 공유하면 본 연구 및 향후 연구에 혜택을 줄 수 있습니다.<br/><br/><a href="]]><![CDATA[%2$s]]><![CDATA["> 데이터 공유에 대해 자세히 살펴보기</a>]]><![CDATA[]]></string>
 
     <!-- Consent doc step -->
-    <string name="rsb_consent_review_title">리뷰</string>
     <string name="rsb_consent_review_alert_title">리뷰</string>
-    <string name="rsb_consent_review_reason">본 사항에 동의하는 것으로 연관 정보를 읽었으며 본 연구에 참여하기를 바란다는 사실을 확인합니다.
-    </string>
-    <string name="rsb_consent_review_instruction">아래의 양식을 살펴보고 계속할 준비가 되었으면 동의를 탭하십시오.
-    </string>
     <string name="rsb_consent_review_cancel">취소</string>
 
     <string name="rsb_saving_consent">동의서 저장하기</string>
     <string name="rsb_please_wait">잠시 기다려주십시오…</string>
 
     <!-- Consent form step -->
-    <string name="rsb_consent_form_title">동의서</string>
-    <string name="rsb_consent_name_full">성명</string>
     <string name="rsb_consent_dob_full">생년월일</string>
-    <string name="rsb_consent_name_placeholder">필요사항</string>
 
     <!-- Consent sig step -->
     <string name="rsb_consent_signature_title">서명</string>
-    <string name="rsb_consent_signature_content">본 사항에 동의하는 것으로 동의서를 읽었으며 본 연구에 참여하기를 바란다는 사실을 확인합니다.
-    </string>
     <string name="rsb_consent_signature_instruction">아래 선 위에 손가락으로 서명해주시기 바랍니다.
     </string>
     <string name="rsb_consent_signature_placeholder">여기에 서명</string>
     <string name="rsb_consent_signature_clear">지우기</string>
 
     <!-- Quiz -->
-    <string name="rsb_quiz">퀴즈</string>
-    <string name="rsb_quiz_evaluation">퀴즈 평가</string>
-    <string name="rsb_quiz_evaluation_try_again">다시 시도</string>
-    <string name="rsb_quiz_evaluation_review_consent">동의서 살펴보기</string>
-    <string name="rsb_quiz_evaluation_retake">퀴즈 다시 진행하기</string>
-    <string name="rsb_quiz_evaluation_great_job">잘 하셨습니다!</string>
 
     <!-- Other -->
-    <string name="rsb_submit">제출</string>
-    <string name="rsb_exit">나가기</string>
-    <string name="rsb_get_started">시작하기</string>
     <string name="rsb_done">완료</string>
     <string name="rsb_step_skip">건너뛰기</string>
     <string name="rsb_next">다음</string>
-    <string name="rsb_what_to_expect">예상 사항</string>
-    <string name="rsb_name">성명</string>
     <string name="rsb_name_first">이름</string>
     <string name="rsb_name_last">성</string>
-    <string name="rsb_email">이메일</string>
     <string name="rsb_disagree">동의하지 않음</string>
     <string name="rsb_agree">동의</string>
-    <string name="rsb_ok">네</string>
     <string name="rsb_cancel">취소</string>
-    <string name="rsb_yes">네</string>
-    <string name="rsb_no">아니오</string>
     <string name="rsb_format_step_title">%2$s 중 %1$s단계</string>
     <string name="rsb_hours">시간</string>
     <string name="rsb_minutes">분</string>
@@ -98,7 +66,6 @@
     <string name="rsb_task_cancel_positive">결과 폐기하기</string>
 
     <!-- Step Errors -->
-    <string name="rsb_error_data_failed">암호화된 데이터 불러오기를 실패했습니다. 다시 시도해주십시오!</string>
     <string name="rsb_error_invalid_signature">서명이 유효하지 않습니다</string>
     <string name="rsb_invalid_answer_default">유효하지 않은 답입니다. 다시 시도해주십시오!</string>
     <string name="rsb_invalid_answer_date_over">유효하지 않은 답입니다. 날짜가 %1$s 이전이어야 합니다</string>
@@ -111,12 +78,6 @@
     <string name="rsb_birth_date_too_young">나이가 %1$s살 이상이어야 합니다</string>
 
     <!-- Pin Code -->
-    <string name="rsb_pincode_enter_title">암호 코드를 입력하십시오</string>
-    <string name="rsb_pincode_enter_summary">%1$d-%2$s 코드를 입력하여 신원을 인증하십시오.</string>
-    <string name="rsb_pincode_enter_digit">숫자</string>
-    <string name="rsb_pincode_enter_letter">글자</string>
-    <string name="rsb_pincode_enter_character">문자</string>
-    <string name="rsb_pincode_enter_error">입력하신 코드와 일치하지 않는 코드입니다. 다시 시도해주십시오!</string>
 
     <!-- Body Hints -->
     <string name="rsb_hint_step_body_int">숫자 %1$d-%2$d 입력하기</string>
@@ -133,7 +94,6 @@
 
     <!-- AssetVideoView -->
     <!-- Title for error alert when a video cannot be played.  it can be used by any app. -->
-    <string name="rsb_error_assetvideoview_title">영상 문제</string>
     <!-- Text for error alert when a video container is not valid for progressive download/playback. -->
     <string name="rsb_error_assetvideoview_invalid_progressive_playback">이 기기에 스트리밍하기에 유효하지 않은 영상입니다.</string>
     <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
@@ -146,4 +106,18 @@
     <string name="rsb_consent_doc_line_signature">%1$s의 서명</string>
     <string name="rsb_consent_doc_line_date">날짜</string>
     <string name="rsb_consent_role">참가자</string>
+    <string name="rsb_edit_step_alert_cancel_positive">[ko-KR] YES, STOP MAKING CHANGES</string>
+    <string name="rsb_edit_step_alert_cancel_discard">[ko-KR] NO, KEEP EDITING</string>
+    <string name="rsb_edit_step_alert_cancel_title">[ko-KR] Do you want to stop making changes?</string>
+    <string name="rsb_edit_step_alert_cancel_content">[ko-KR] All changes will be discarded and your original response will be used.</string>
+    <string name="rsb_edit_step_alert_step_save_title">[ko-KR] Do you want to save your changes?</string>
+    <string name="rsb_edit_step_alert_step_save_content">[ko-KR] Other responses may be cleared and you may be asked to submit new information.</string>
+    <string name="rsb_edit_step_alert_step_save_discard">[ko-KR] No, Discard</string>
+    <string name="rsb_edit_step_alert_step_save_positive">[ko-KR] Yes, Save</string>
+    <string name="rsb_edit_step_alert_step_skip_title">[ko-KR] Do you want to skip this step?</string>
+    <string name="rsb_edit_step_alert_step_skip_content">[ko-KR] Your original response will be discarded.</string>
+    <string name="rsb_edit_step_alert_step_skip_discard">[ko-KR] NO, DON\'T SKIP</string>
+    <string name="rsb_edit_step_alert_step_skip_positive">[ko-KR] Yes, skip</string>
+    <string name="rsb_edit_step">[ko-KR] Edit</string>
+    <string name="rsb_consent_review_save">[ko-KR] Save</string>
 </resources>

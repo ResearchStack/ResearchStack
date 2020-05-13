@@ -1,5 +1,6 @@
 package org.researchstack.backbone.ui.step.fragments
 
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -22,9 +23,8 @@ internal open class BaseStepFragment(@LayoutRes contentLayoutId: Int) : Fragment
 
     protected val viewModel: TaskViewModel by sharedViewModel()
 
-    override fun onResume() {
-        super.onResume()
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val currentStep = viewModel.currentStep
         val stepResult = viewModel.currentTaskResult.getStepResult(currentStep?.identifier)
 
@@ -65,7 +65,6 @@ internal open class BaseStepFragment(@LayoutRes contentLayoutId: Int) : Fragment
                 Log.d("BaseStepFragment", "WARNING: Unknown stepView type, cannot initialize layout")
             }
         }
-
     }
 
     private fun setupStepCallbacks(stepView: StepLayout) {
