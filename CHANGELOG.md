@@ -2,6 +2,12 @@
 
 ### Change log
 
+#### v1.7.0
+- Add TimeZone to LocaleUtils and renamed the class to LocalizationUtils
+- Remove unused strings from project.
+- Added SECURE_FLAG to ReviewStepFullScreenImageActivity
+- Bug fixes.
+
 #### v1.6.0
 - Introducing support for Review Step
 
