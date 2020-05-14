@@ -102,18 +102,18 @@
     <string name="rsb_consent_role">Deltager</string>
 
     <!-- Edit -->
-    <string name="rsb_edit_step_alert_cancel_positive">[da-DK] YES, STOP MAKING CHANGES</string>
-    <string name="rsb_edit_step_alert_cancel_discard">[da-DK] NO, KEEP EDITING</string>
-    <string name="rsb_edit_step_alert_cancel_title">[da-DK] Do you want to stop making changes?</string>
-    <string name="rsb_edit_step_alert_cancel_content">[da-DK] All changes will be discarded and your original response will be used.</string>
-    <string name="rsb_edit_step_alert_step_save_title">[da-DK] Do you want to save your changes?</string>
-    <string name="rsb_edit_step_alert_step_save_content">[da-DK] Other responses may be cleared and you may be asked to submit new information.</string>
-    <string name="rsb_edit_step_alert_step_save_discard">[da-DK] No, Discard</string>
-    <string name="rsb_edit_step_alert_step_save_positive">[da-DK] Yes, Save</string>
-    <string name="rsb_consent_review_save">[da-DK] Save</string>
-    <string name="rsb_edit_step_alert_step_skip_title">[da-DK] Do you want to skip this step?</string>
-    <string name="rsb_edit_step_alert_step_skip_content">[da-DK] Your original response will be discarded.</string>
-    <string name="rsb_edit_step_alert_step_skip_discard">[da-DK] NO, DON\'T SKIP</string>
-    <string name="rsb_edit_step_alert_step_skip_positive">[da-DK] Yes, skip</string>
-    <string name="rsb_edit_step">[da-DK] Edit</string>
+    <string name="rsb_edit_step_alert_cancel_positive">JA, STOP ÆNDRINGER</string>
+    <string name="rsb_edit_step_alert_cancel_discard">NEJ, FORTSÆT ÆNDRINGER</string>
+    <string name="rsb_edit_step_alert_cancel_title">Vil du fortsætte med at foretage ændringer?</string>
+    <string name="rsb_edit_step_alert_cancel_content">Alle ændringer vil blive slettet, og dit oprindelige svar vil blive brugt.</string>
+    <string name="rsb_edit_step_alert_step_save_title">Vil du gemme dine ændringer?</string>
+    <string name="rsb_edit_step_alert_step_save_content">Andre svar kan blive slettet, og du kan blive bedt om at indtaste nye oplysninger.</string>
+    <string name="rsb_edit_step_alert_step_save_discard">Nej, slet</string>
+    <string name="rsb_edit_step_alert_step_save_positive">Ja, gem</string>
+    <string name="rsb_consent_review_save">Gem</string>
+    <string name="rsb_edit_step_alert_step_skip_title">Vil du springe dette trin over?</string>
+    <string name="rsb_edit_step_alert_step_skip_content">Dit oprindelige svar vil blive slettet.</string>
+    <string name="rsb_edit_step_alert_step_skip_discard">NEJ, SPRING IKKE OVER</string>
+    <string name="rsb_edit_step_alert_step_skip_positive">Ja, spring over</string>
+    <string name="rsb_edit_step">Redigér</string>
 </resources>

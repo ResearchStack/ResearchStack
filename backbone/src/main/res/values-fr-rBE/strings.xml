@@ -102,19 +102,19 @@
     <string name="rsb_consent_role">Participant</string>
 
     <!-- Edit -->
-    <string name="rsb_edit_step_alert_cancel_positive">[fr-BE] YES, STOP MAKING CHANGES</string>
-    <string name="rsb_edit_step_alert_cancel_discard">[fr-BE] NO, KEEP EDITING</string>
-    <string name="rsb_edit_step_alert_cancel_title">[fr-BE] Do you want to stop making changes?</string>
-    <string name="rsb_edit_step_alert_cancel_content">[fr-BE] All changes will be discarded and your original response will be used.</string>
-    <string name="rsb_edit_step_alert_step_save_title">[fr-BE] Do you want to save your changes?</string>
-    <string name="rsb_edit_step_alert_step_save_content">[fr-BE] Other responses may be cleared and you may be asked to submit new information.</string>
-    <string name="rsb_edit_step_alert_step_save_discard">[fr-BE] No, Discard</string>
-    <string name="rsb_edit_step_alert_step_save_positive">[fr-BE] Yes, Save</string>
-    <string name="rsb_consent_review_save">[fr-BE] Save</string>
-    <string name="rsb_edit_step_alert_step_skip_title">[fr-BE] Do you want to skip this step?</string>
-    <string name="rsb_edit_step_alert_step_skip_content">[fr-BE] Your original response will be discarded.</string>
-    <string name="rsb_edit_step_alert_step_skip_discard">[fr-BE] NO, DON\'T SKIP</string>
-    <string name="rsb_edit_step_alert_step_skip_positive">[fr-BE] Yes, skip</string>
-    <string name="rsb_edit_step">[fr-BE] Edit</string>
+    <string name="rsb_edit_step_alert_cancel_positive">OUI, ARRÊTEZ DE FAIRE DES MODIFICATIONS</string>
+    <string name="rsb_edit_step_alert_cancel_discard">NON, CONTINUER À FAIRE DES MODIFICATIONS </string>
+    <string name="rsb_edit_step_alert_cancel_title">Vous voulez arrêter de faire des modifications ?</string>
+    <string name="rsb_edit_step_alert_cancel_content">Toutes les modifications seront rejetées et votre réponse originale sera utilisée.</string>
+    <string name="rsb_edit_step_alert_step_save_title">Voulez-vous sauvegarder vos modifications ?</string>
+    <string name="rsb_edit_step_alert_step_save_content">Les autres réponses peuvent être effacées et il peut vous être demandé de fournir de nouvelles informations.</string>
+    <string name="rsb_edit_step_alert_step_save_discard">Non, supprimer</string>
+    <string name="rsb_edit_step_alert_step_save_positive">Oui, sauvegarder</string>
+    <string name="rsb_consent_review_save">Enregistrer</string>
+    <string name="rsb_edit_step_alert_step_skip_title">Vous voulez sauter cette étape ?</string>
+    <string name="rsb_edit_step_alert_step_skip_content">Votre réponse initiale sera rejetée.</string>
+    <string name="rsb_edit_step_alert_step_skip_discard">NON, NE PAS SAUTER</string>
+    <string name="rsb_edit_step_alert_step_skip_positive">Oui, sauter</string>
+    <string name="rsb_edit_step">Modifier</string>
 
 </resources>

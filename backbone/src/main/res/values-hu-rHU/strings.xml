@@ -109,21 +109,20 @@
     <string name="rsb_consent_doc_line_signature">%1$s\'s Aláírás</string>
     <string name="rsb_consent_doc_line_date">Dátum</string>
     <string name="rsb_consent_role">Résztvevő</string>
-
     <!-- Edit -->
-    <string name="rsb_edit_step_alert_cancel_positive">[hu-HU] YES, STOP MAKING CHANGES</string>
-    <string name="rsb_edit_step_alert_cancel_discard">[hu-HU] NO, KEEP EDITING</string>
-    <string name="rsb_edit_step_alert_cancel_title">[hu-HU] Do you want to stop making changes?</string>
-    <string name="rsb_edit_step_alert_cancel_content">[hu-HU] All changes will be discarded and your original response will be used.</string>
-    <string name="rsb_edit_step_alert_step_save_title">[hu-HU] Do you want to save your changes?</string>
-    <string name="rsb_edit_step_alert_step_save_content">[hu-HU] Other responses may be cleared and you may be asked to submit new information.</string>
-    <string name="rsb_edit_step_alert_step_save_discard">[hu-HU] No, Discard</string>
-    <string name="rsb_edit_step_alert_step_save_positive">[hu-HU] Yes, Save</string>
-    <string name="rsb_consent_review_save">[hu-HU] Save</string>
-    <string name="rsb_edit_step_alert_step_skip_title">[hu-HU] Do you want to skip this step?</string>
-    <string name="rsb_edit_step_alert_step_skip_content">[hu-HU] Your original response will be discarded.</string>
-    <string name="rsb_edit_step_alert_step_skip_discard">[hu-HU] NO, DON\'T SKIP</string>
-    <string name="rsb_edit_step_alert_step_skip_positive">[hu-HU] Yes, skip</string>
-    <string name="rsb_edit_step">[hu-HU] Edit</string>
+    <string name="rsb_edit_step_alert_cancel_positive">IGEN, A MÓDOSÍTÁSOK LEÁLLÍTÁSA</string>
+    <string name="rsb_edit_step_alert_cancel_discard">NEM, FOLYTASSA A SZERKESZTÉST</string>
+    <string name="rsb_edit_step_alert_cancel_title">Szeretné abbahagyni a módosítást?</string>
+    <string name="rsb_edit_step_alert_cancel_content">Minden módosítást elvetünk, és az eredeti válaszát használjuk fel.</string>
+    <string name="rsb_edit_step_alert_step_save_title">Menti a módosításokat?</string>
+    <string name="rsb_edit_step_alert_step_save_content">Előfordulhat, hogy az egyéb válaszokat töröljük, és arra kérjük, hogy küldjön be új információkat.</string>
+    <string name="rsb_edit_step_alert_step_save_discard">Nem, elvetés</string>
+    <string name="rsb_edit_step_alert_step_save_positive">Igen, mentés</string>
+    <string name="rsb_consent_review_save">Mentés</string>
+    <string name="rsb_edit_step_alert_step_skip_title">Kihagyja ezt a lépést?</string>
+    <string name="rsb_edit_step_alert_step_skip_content">Az eredeti válaszát elvetjük.</string>
+    <string name="rsb_edit_step_alert_step_skip_discard">NEM, NE HAGYJA KI</string>
+    <string name="rsb_edit_step_alert_step_skip_positive">Igen, kihagyom</string>
+    <string name="rsb_edit_step">Szerkesztés</string>
 
 </resources>
