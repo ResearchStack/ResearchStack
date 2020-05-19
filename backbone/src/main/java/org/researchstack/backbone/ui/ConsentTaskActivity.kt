@@ -22,6 +22,7 @@ import org.researchstack.backbone.ui.task.TaskViewModel
 import org.researchstack.backbone.utils.LocalizationUtils
 import org.researchstack.backbone.utils.RSHTMLPDFWriter
 import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -96,9 +97,7 @@ class ConsentTaskActivity : TaskActivity() {
 
         val consentAssetsFolder = intent.getStringExtra(EXTRA_ASSETS_FOLDER)
         val role = LocalizationUtils.getLocalizedString(this, R.string.rsb_consent_role)
-        val df = DateFormat.getDateInstance(DateFormat.MEDIUM,
-                LocalizationUtils.getLocaleFromString(
-                        LocalizationUtils.getPreferredLocale(this)))
+        val df = SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z")
         consentHtml += getSignatureHtmlContent(getFormalName(firstName, lastName), role, signatureBase64,
                 df.format(Date()))
 
