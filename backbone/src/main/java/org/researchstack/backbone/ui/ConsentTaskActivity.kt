@@ -97,7 +97,7 @@ class ConsentTaskActivity : TaskActivity() {
 
         val consentAssetsFolder = intent.getStringExtra(EXTRA_ASSETS_FOLDER)
         val role = LocalizationUtils.getLocalizedString(this, R.string.rsb_consent_role)
-        val df = SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z")
+        val df = SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z", Locale.getDefault())
         consentHtml += getSignatureHtmlContent(getFormalName(firstName, lastName), role, signatureBase64,
                 df.format(Date()))
 
