@@ -56,7 +56,7 @@
     <string name="rsb_disagree">同意しない</string>
     <string name="rsb_agree">同意する</string>
     <string name="rsb_cancel">キャンセル</string>
-    <string name="rsb_format_step_title">ステップ%2$s/%1$s</string>
+    <string name="rsb_format_step_title">ステップ%1$s/%2$s</string>
     <string name="rsb_hours">時</string>
     <string name="rsb_minutes">分</string>
     <string name="rsb_task_cancel_title">アクティビティから退出</string>
