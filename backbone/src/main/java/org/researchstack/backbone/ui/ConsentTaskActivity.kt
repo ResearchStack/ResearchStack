@@ -10,11 +10,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import org.researchstack.backbone.R
 import org.researchstack.backbone.result.StepResult
-import org.researchstack.backbone.step.ConsentDocumentStep
-import org.researchstack.backbone.step.ConsentSignatureStep
-import org.researchstack.backbone.step.FormStep
-import org.researchstack.backbone.step.QuestionStep
-import org.researchstack.backbone.step.Step
+import org.researchstack.backbone.step.*
 import org.researchstack.backbone.task.Task
 import org.researchstack.backbone.ui.step.layout.ConsentSignatureStepLayout.KEY_SIGNATURE
 import org.researchstack.backbone.ui.task.TaskActivity
@@ -22,7 +18,6 @@ import org.researchstack.backbone.ui.task.TaskViewModel
 import org.researchstack.backbone.utils.LocalizationUtils
 import org.researchstack.backbone.utils.RSHTMLPDFWriter
 import java.text.DateFormat
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
