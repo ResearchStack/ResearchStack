@@ -101,7 +101,7 @@ class ConsentTaskActivity : TaskActivity() {
                 LocalizationUtils.getLocaleFromString(LocalizationUtils.getPreferredLocale(this)))
         df.timeZone = TimeZone.getTimeZone("UTC")
         consentHtml += getSignatureHtmlContent(getFormalName(firstName, lastName), role, signatureBase64,
-                df.format(Date()))
+                df.format(viewModel.taskResult.endDate))
 
         PDFWriteExposer().printPdfFile(this, getCurrentTaskId(), consentHtml!!, consentAssetsFolder) {
             savingConsentDialog?.dismiss()
