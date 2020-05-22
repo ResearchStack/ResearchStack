@@ -10,11 +10,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import org.researchstack.backbone.R
 import org.researchstack.backbone.result.StepResult
-import org.researchstack.backbone.step.ConsentDocumentStep
-import org.researchstack.backbone.step.ConsentSignatureStep
-import org.researchstack.backbone.step.FormStep
-import org.researchstack.backbone.step.QuestionStep
-import org.researchstack.backbone.step.Step
+import org.researchstack.backbone.step.*
 import org.researchstack.backbone.task.Task
 import org.researchstack.backbone.ui.step.layout.ConsentSignatureStepLayout.KEY_SIGNATURE
 import org.researchstack.backbone.ui.task.TaskActivity
@@ -96,11 +92,11 @@ class ConsentTaskActivity : TaskActivity() {
 
         val consentAssetsFolder = intent.getStringExtra(EXTRA_ASSETS_FOLDER)
         val role = LocalizationUtils.getLocalizedString(this, R.string.rsb_consent_role)
-        val df = DateFormat.getDateInstance(DateFormat.MEDIUM,
-                LocalizationUtils.getLocaleFromString(
-                        LocalizationUtils.getPreferredLocale(this)))
+        val df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.LONG,
+                LocalizationUtils.getLocaleFromString(LocalizationUtils.getPreferredLocale(this)))
+        df.timeZone = TimeZone.getTimeZone("UTC")
         consentHtml += getSignatureHtmlContent(getFormalName(firstName, lastName), role, signatureBase64,
-                df.format(Date()))
+                df.format(viewModel.taskResult.endDate))
 
         PDFWriteExposer().printPdfFile(this, getCurrentTaskId(), consentHtml!!, consentAssetsFolder) {
             savingConsentDialog?.dismiss()
