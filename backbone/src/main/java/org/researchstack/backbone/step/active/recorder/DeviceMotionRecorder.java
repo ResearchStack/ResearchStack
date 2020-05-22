@@ -56,6 +56,9 @@ public class DeviceMotionRecorder extends SensorRecorder {
 
     public static final String BROADCAST_ROTATION_VECTOR_UPDATE_ACTION = "BroadcastRotationVectorUpdate";
     public static final String BROADCAST_ROTATION_VECTOR_UPDATE_KEY = "RotationVectorUpdate";
+    
+    private Context appContext;
+    private JsonObject jsonObject;
 
     static {
         // build mapping for sensor type and its data type value
