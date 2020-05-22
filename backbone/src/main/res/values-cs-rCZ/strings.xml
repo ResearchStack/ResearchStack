@@ -102,19 +102,19 @@
     <string name="rsb_consent_role">Účastník</string>
 
     <!-- Edit -->
-    <string name="rsb_edit_step_alert_cancel_positive">[cs-CZ] YES, STOP MAKING CHANGES</string>
-    <string name="rsb_edit_step_alert_cancel_discard">[cs-CZ] NO, KEEP EDITING</string>
-    <string name="rsb_edit_step_alert_cancel_title">[cs-CZ] Do you want to stop making changes?</string>
-    <string name="rsb_edit_step_alert_cancel_content">[cs-CZ] All changes will be discarded and your original response will be used.</string>
-    <string name="rsb_edit_step_alert_step_save_title">[cs-CZ] Do you want to save your changes?</string>
-    <string name="rsb_edit_step_alert_step_save_content">[cs-CZ] Other responses may be cleared and you may be asked to submit new information.</string>
-    <string name="rsb_edit_step_alert_step_save_discard">[cs-CZ] No, Discard</string>
-    <string name="rsb_edit_step_alert_step_save_positive">[cs-CZ] Yes, Save</string>
-    <string name="rsb_consent_review_save">[cs-CZ] Save</string>
-    <string name="rsb_edit_step_alert_step_skip_title">[cs-CZ] Do you want to skip this step?</string>
-    <string name="rsb_edit_step_alert_step_skip_content">[cs-CZ] Your original response will be discarded.</string>
-    <string name="rsb_edit_step_alert_step_skip_discard">[cs-CZ] NO, DON\'T SKIP</string>
-    <string name="rsb_edit_step_alert_step_skip_positive">[cs-CZ] Yes, skip</string>
-    <string name="rsb_edit_step">[cs-CZ] Edit</string>
+    <string name="rsb_edit_step_alert_cancel_positive">ANO, ZRUŠIT PROVÁDĚNÍ ZMĚN</string>
+    <string name="rsb_edit_step_alert_cancel_discard">NE, POKRAČOVAT V ÚPRAVĚ</string>
+    <string name="rsb_edit_step_alert_cancel_title">Přejete si zrušit provádění změn?</string>
+    <string name="rsb_edit_step_alert_cancel_content">Všechny změny budou zrušeny a bude použita vaše původní odpověď.</string>
+    <string name="rsb_edit_step_alert_step_save_title">Přejete si uložit své změny?</string>
+    <string name="rsb_edit_step_alert_step_save_content">Ostatní odpovědi mohou být vymazány a můžete být požádáni o zadání nových údajů.</string>
+    <string name="rsb_edit_step_alert_step_save_discard">Ne, zrušit</string>
+    <string name="rsb_edit_step_alert_step_save_positive">Ano, uložit</string>
+    <string name="rsb_consent_review_save">Uložit</string>
+    <string name="rsb_edit_step_alert_step_skip_title">Přejete si tento krok přeskočit?</string>
+    <string name="rsb_edit_step_alert_step_skip_content">Vaše původní odpověď bude zrušena.</string>
+    <string name="rsb_edit_step_alert_step_skip_discard">NE, NEPŘESKAKOVAT</string>
+    <string name="rsb_edit_step_alert_step_skip_positive">Ano, přeskočit</string>
+    <string name="rsb_edit_step">Upravit</string>
 
 </resources>

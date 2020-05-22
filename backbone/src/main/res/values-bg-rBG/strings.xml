@@ -110,19 +110,19 @@
     <string name="rsb_consent_role">Участник</string>
 
     <!-- Edit -->
-    <string name="rsb_edit_step_alert_cancel_positive">[bg-BG] YES, STOP MAKING CHANGES</string>
-    <string name="rsb_edit_step_alert_cancel_discard">[bg-BG] NO, KEEP EDITING</string>
-    <string name="rsb_edit_step_alert_cancel_title">[bg-BG] Do you want to stop making changes?</string>
-    <string name="rsb_edit_step_alert_cancel_content">[bg-BG] All changes will be discarded and your original response will be used.</string>
-    <string name="rsb_edit_step_alert_step_save_title">[bg-BG] Do you want to save your changes?</string>
-    <string name="rsb_edit_step_alert_step_save_content">[bg-BG] Other responses may be cleared and you may be asked to submit new information.</string>
-    <string name="rsb_edit_step_alert_step_save_discard">[bg-BG] No, Discard</string>
-    <string name="rsb_edit_step_alert_step_save_positive">[bg-BG] Yes, Save</string>
-    <string name="rsb_consent_review_save">[bg-BG] Save</string>
-    <string name="rsb_edit_step_alert_step_skip_title">[bg-BG]Do you want to skip this step?</string>
-    <string name="rsb_edit_step_alert_step_skip_content">[bg-BG] Your original response will be discarded..</string>
-    <string name="rsb_edit_step_alert_step_skip_discard">[bg-BG] NO, DON\'T SKIP</string>
-    <string name="rsb_edit_step_alert_step_skip_positive">[bg-BG] Yes, skip</string>
-    <string name="rsb_edit_step">[bg-BG] Edit</string>
+    <string name="rsb_edit_step_alert_cancel_positive">ДА, СПРЕТЕ ДА ПРАВИТЕ ПРОМЕНИ</string>
+    <string name="rsb_edit_step_alert_cancel_discard">НЕ, ПРОДЪЛЖЕТЕ ДА РЕДАКТИРАТЕ</string>
+    <string name="rsb_edit_step_alert_cancel_title">Искате ли да спрете да правите промени?</string>
+    <string name="rsb_edit_step_alert_cancel_content">Всички промени ще бъдат отхвърлени и ще бъде използван първоначалният Ви отговор.</string>
+    <string name="rsb_edit_step_alert_step_save_title">Искате ли да запазите промените си?</string>
+    <string name="rsb_edit_step_alert_step_save_content">Другите отговори могат да бъдат изчистени и може да бъдете помолени да предоставите нова информация.</string>
+    <string name="rsb_edit_step_alert_step_save_discard">Не, отхвърли</string>
+    <string name="rsb_edit_step_alert_step_save_positive">Да, запази</string>
+    <string name="rsb_consent_review_save">Запази</string>
+    <string name="rsb_edit_step_alert_step_skip_title">Искате ли да пропуснете тази стъпка?</string>
+    <string name="rsb_edit_step_alert_step_skip_content">Първоначалният Ви отговор ще бъде отхвърлен.</string>
+    <string name="rsb_edit_step_alert_step_skip_discard">НЕ, НЕ ПРОПУСКАЙ</string>
+    <string name="rsb_edit_step_alert_step_skip_positive">Да, пропусни</string>
+    <string name="rsb_edit_step">Редактирай</string>
 
 </resources>

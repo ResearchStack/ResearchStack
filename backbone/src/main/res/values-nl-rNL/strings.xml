@@ -102,19 +102,19 @@
     <string name="rsb_consent_role">Deelnemer</string>
 
     <!-- Edit -->
-    <string name="rsb_edit_step_alert_cancel_positive">[nl-NL] YES, STOP MAKING CHANGES</string>
-    <string name="rsb_edit_step_alert_cancel_discard">[nl-NL] NO, KEEP EDITING</string>
-    <string name="rsb_edit_step_alert_cancel_title">[nl-NL] Do you want to stop making changes?</string>
-    <string name="rsb_edit_step_alert_cancel_content">[nl-NL] All changes will be discarded and your original response will be used.</string>
-    <string name="rsb_edit_step_alert_step_save_title">[nl-NL] Do you want to save your changes?</string>
-    <string name="rsb_edit_step_alert_step_save_content">[nl-NL] Other responses may be cleared and you may be asked to submit new information.</string>
-    <string name="rsb_edit_step_alert_step_save_discard">[nl-NL] No, Discard</string>
-    <string name="rsb_edit_step_alert_step_save_positive">[nl-NL] Yes, Save</string>
-    <string name="rsb_consent_review_save">[nl-NL] Save</string>
-    <string name="rsb_edit_step_alert_step_skip_title">[nl-NL] Do you want to skip this step?</string>
-    <string name="rsb_edit_step_alert_step_skip_content">[nl-NL] Your original response will be discarded.</string>
-    <string name="rsb_edit_step_alert_step_skip_discard">[nl-NL] NO, DON\'T SKIP</string>
-    <string name="rsb_edit_step_alert_step_skip_positive">[nl-NL] Yes, skip</string>
-    <string name="rsb_edit_step">[nl-NL] Edit</string>
+    <string name="rsb_edit_step_alert_cancel_positive">JA, NIET MEER BEWERKEN</string>
+    <string name="rsb_edit_step_alert_cancel_discard">NEE, DOORGAAN MET BEWERKEN</string>
+    <string name="rsb_edit_step_alert_cancel_title">Wilt u stoppen met bewerken?</string>
+    <string name="rsb_edit_step_alert_cancel_content">Alle wijzigingen gaan verloren en uw oorspronkelijke antwoord wordt gebruikt.</string>
+    <string name="rsb_edit_step_alert_step_save_title">Wilt u de wijzigingen opslaan?</string>
+    <string name="rsb_edit_step_alert_step_save_content">Andere antwoorden kunnen worden gewist en er kan u worden gevraagd nieuwe informatie in te dienen.</string>
+    <string name="rsb_edit_step_alert_step_save_discard">Nee, niet opslaan</string>
+    <string name="rsb_edit_step_alert_step_save_positive">Ja, opslaan.</string>
+    <string name="rsb_consent_review_save">Opslaan</string>
+    <string name="rsb_edit_step_alert_step_skip_title">Wilt u deze stap overslaan?</string>
+    <string name="rsb_edit_step_alert_step_skip_content">Uw oorspronkelijke antwoord gaat verloren.</string>
+    <string name="rsb_edit_step_alert_step_skip_discard">NEE, NIET OVERSLAAN</string>
+    <string name="rsb_edit_step_alert_step_skip_positive">Ja, overslaan</string>
+    <string name="rsb_edit_step">Bewerken</string>
 
 </resources>

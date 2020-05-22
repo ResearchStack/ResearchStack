@@ -102,19 +102,19 @@
     <string name="rsb_consent_role">参加者</string>
 
     <!-- Edit -->
-    <string name="rsb_edit_step_alert_cancel_positive">[zh-CN] YES, STOP MAKING CHANGES</string>
-    <string name="rsb_edit_step_alert_cancel_discard">[zh-CN] NO, KEEP EDITING</string>
-    <string name="rsb_edit_step_alert_cancel_title">[zh-CN] Do you want to stop making changes?</string>
-    <string name="rsb_edit_step_alert_cancel_content">[zh-CN] All changes will be discarded and your original response will be used.</string>
-    <string name="rsb_edit_step_alert_step_save_title">[zh-CN] Do you want to save your changes?</string>
-    <string name="rsb_edit_step_alert_step_save_content">[zh-CN] Other responses may be cleared and you may be asked to submit new information.</string>
-    <string name="rsb_edit_step_alert_step_save_discard">[zh-CN] No, Discard</string>
-    <string name="rsb_edit_step_alert_step_save_positive">[zh-CN] Yes, Save</string>
-    <string name="rsb_consent_review_save">[zh-CN] Save</string>
-    <string name="rsb_edit_step_alert_step_skip_title">[zh-CN] Do you want to skip this step?</string>
-    <string name="rsb_edit_step_alert_step_skip_content">[zh-CN] Your original response will be discarded..</string>
-    <string name="rsb_edit_step_alert_step_skip_discard">[zh-CN] NO, DON\'T SKIP</string>
-    <string name="rsb_edit_step_alert_step_skip_positive">[zh-CN] Yes, skip</string>
-    <string name="rsb_edit_step">[zh-CN] Edit</string>
+    <string name="rsb_edit_step_alert_cancel_positive">是，停止更改</string>
+    <string name="rsb_edit_step_alert_cancel_discard">不，继续编辑</string>
+    <string name="rsb_edit_step_alert_cancel_title">您要停止更改吗？</string>
+    <string name="rsb_edit_step_alert_cancel_content">将放弃所有更改并适用您最初的回答。</string>
+    <string name="rsb_edit_step_alert_step_save_title">您要保存更改吗？</string>
+    <string name="rsb_edit_step_alert_step_save_content">将清除其他回答，您需要提交新的信息。</string>
+    <string name="rsb_edit_step_alert_step_save_discard">不，放弃</string>
+    <string name="rsb_edit_step_alert_step_save_positive">是，保存</string>
+    <string name="rsb_consent_review_save">保存</string>
+    <string name="rsb_edit_step_alert_step_skip_title">您要跳过这步吗？</string>
+    <string name="rsb_edit_step_alert_step_skip_content">将删除您最初的回答。</string>
+    <string name="rsb_edit_step_alert_step_skip_discard">不，不要跳过</string>
+    <string name="rsb_edit_step_alert_step_skip_positive">是，跳过</string>
+    <string name="rsb_edit_step">编辑</string>
 
 </resources>

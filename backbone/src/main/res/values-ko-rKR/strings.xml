@@ -106,18 +106,21 @@
     <string name="rsb_consent_doc_line_signature">%1$s의 서명</string>
     <string name="rsb_consent_doc_line_date">날짜</string>
     <string name="rsb_consent_role">참가자</string>
-    <string name="rsb_edit_step_alert_cancel_positive">[ko-KR] YES, STOP MAKING CHANGES</string>
-    <string name="rsb_edit_step_alert_cancel_discard">[ko-KR] NO, KEEP EDITING</string>
-    <string name="rsb_edit_step_alert_cancel_title">[ko-KR] Do you want to stop making changes?</string>
-    <string name="rsb_edit_step_alert_cancel_content">[ko-KR] All changes will be discarded and your original response will be used.</string>
-    <string name="rsb_edit_step_alert_step_save_title">[ko-KR] Do you want to save your changes?</string>
-    <string name="rsb_edit_step_alert_step_save_content">[ko-KR] Other responses may be cleared and you may be asked to submit new information.</string>
-    <string name="rsb_edit_step_alert_step_save_discard">[ko-KR] No, Discard</string>
-    <string name="rsb_edit_step_alert_step_save_positive">[ko-KR] Yes, Save</string>
-    <string name="rsb_edit_step_alert_step_skip_title">[ko-KR] Do you want to skip this step?</string>
-    <string name="rsb_edit_step_alert_step_skip_content">[ko-KR] Your original response will be discarded.</string>
-    <string name="rsb_edit_step_alert_step_skip_discard">[ko-KR] NO, DON\'T SKIP</string>
-    <string name="rsb_edit_step_alert_step_skip_positive">[ko-KR] Yes, skip</string>
-    <string name="rsb_edit_step">[ko-KR] Edit</string>
-    <string name="rsb_consent_review_save">[ko-KR] Save</string>
+
+    <!-- Edit -->
+    <string name="rsb_consent_review_save">저장</string>
+    <string name="rsb_edit_step_alert_cancel_positive">네, 더 이상 변경하지 않습니다</string>
+    <string name="rsb_edit_step_alert_cancel_discard">아니오, 계속 편집합니다</string>
+    <string name="rsb_edit_step_alert_cancel_title">더 이상 변경하지 않겠습니까?</string>
+    <string name="rsb_edit_step_alert_cancel_content">모든 변경 사항을 폐기하고 본래의 답변이 사용됩니다.</string>
+    <string name="rsb_edit_step_alert_step_save_title">변경 사항을 저장하시겠습니까?</string>
+    <string name="rsb_edit_step_alert_step_save_content">다른 응답이 삭제되고 새로운 정보를 제출해달라고 요청될 수 있습니다.</string>
+    <string name="rsb_edit_step_alert_step_save_discard">아니오, 폐기합니다</string>
+    <string name="rsb_edit_step_alert_step_save_positive">네, 저장합니다</string>
+    <string name="rsb_edit_step_alert_step_skip_title">이 단계를 건너뛰겠습니까?</string>
+    <string name="rsb_edit_step_alert_step_skip_content">본래의 답변이 폐기됩니다.</string>
+    <string name="rsb_edit_step_alert_step_skip_discard">아니오, 건너뛰지 않습니다</string>
+    <string name="rsb_edit_step_alert_step_skip_positive">네, 건너뜁니다</string>
+    <string name="rsb_edit_step">수정</string>
+
 </resources>
