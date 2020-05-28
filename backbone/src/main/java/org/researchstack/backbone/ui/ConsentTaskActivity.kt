@@ -95,8 +95,9 @@ class ConsentTaskActivity : TaskActivity() {
         val df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.LONG,
                 LocalizationUtils.getLocaleFromString(LocalizationUtils.getPreferredLocale(this)))
         df.timeZone = TimeZone.getTimeZone("UTC")
+        val endDate = viewModel.taskResult.endDate ?: Date()
         consentHtml += getSignatureHtmlContent(getFormalName(firstName, lastName), role, signatureBase64,
-                df.format(viewModel.taskResult.endDate))
+                df.format(endDate))
 
         PDFWriteExposer().printPdfFile(this, getCurrentTaskId(), consentHtml!!, consentAssetsFolder) {
             savingConsentDialog?.dismiss()
