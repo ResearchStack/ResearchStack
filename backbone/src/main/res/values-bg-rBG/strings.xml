@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Consent Section -->
     <string name="rsb_consent">Съгласие</string>
     <string name="rsb_consent_section_welcome">Добре дошли</string>
@@ -124,5 +124,41 @@
     <string name="rsb_edit_step_alert_step_skip_discard">НЕ, НЕ ПРОПУСКАЙ</string>
     <string name="rsb_edit_step_alert_step_skip_positive">Да, пропусни</string>
     <string name="rsb_edit_step">Редактирай</string>
+
+    <!-- Material Date Picker Strings -->
+    <string name="mtrl_picker_range_header_title">Изберете Диапазон от дати</string>
+    <string name="mtrl_picker_date_header_title">Изберете дата</string>
+    <string name="mtrl_picker_range_header_unselected">Начална дата - Крайна дата</string>
+    <string name="mtrl_picker_range_header_only_start_selected">%1$s – Крайна дата</string>
+    <string name="mtrl_picker_range_header_only_end_selected">Начална дата – %1$s</string>
+    <string name="mtrl_picker_range_header_selected">%1$s – %2$s</string>
+    <string name="mtrl_picker_date_header_unselected">Избрана дата</string>
+    <string name="mtrl_picker_date_header_selected">%1$s</string>
+    <string name="mtrl_picker_confirm">@android:string/ok</string>
+    <string name="mtrl_picker_text_input_date_hint">Дата</string>
+    <string name="mtrl_picker_text_input_date_range_start_hint">Начална дата</string>
+    <string name="mtrl_picker_text_input_date_range_end_hint">Крайна дата</string>
+    <string name="mtrl_picker_save">Запази</string>
+    <string name="mtrl_picker_invalid_range">Невалиден диапазон.</string>
+    <string name="mtrl_picker_out_of_range">Извън обхват: %1$s</string>
+    <string name="mtrl_picker_invalid_format">Невалиден формат.</string>
+    <string name="mtrl_picker_invalid_format_use">употреба: %1$s</string>
+    <string name="mtrl_picker_invalid_format_example">пример: %1$s</string>
+    <string name="mtrl_picker_toggle_to_calendar_input_mode">Превключване в режим на въвеждане на календар</string>
+    <string name="mtrl_picker_toggle_to_text_input_mode">Превключете в режим на въвеждане на текст</string>
+    <string name="mtrl_picker_a11y_prev_month">Промяна към предходния месец</string>
+    <string name="mtrl_picker_a11y_next_month">Промяна към следващия месец</string>
+    <string name="mtrl_picker_toggle_to_year_selection">Докоснете, за да преминете към избор на година</string>
+    <string name="mtrl_picker_toggle_to_day_selection">Докоснете, за да превключите към избор на ден</string>
+    <string name="mtrl_picker_day_of_week_column_header">Колона от дни: %1$s</string>
+    <string name="mtrl_picker_announce_current_selection">Текущ избор: %1$s</string>
+    <string name="mtrl_picker_navigate_to_year_description">Навигирайте до година %1$s</string>
+    ​
+    <!-- Material Time Picker Strings -->
+    <string name="time_picker_hour_label" tools:override="true">час</string>
+    <string name="time_picker_minute_label" tools:override="true">минута</string>
+    <string name="time_picker_header_text" tools:override="true">Задайте време</string>
+    <string name="time_picker_input_error" tools:override="true">Въведете валидно време</string>
+    <string name="time_picker_prompt_label" tools:override="true">Въведете време</string>
 
 </resources>
