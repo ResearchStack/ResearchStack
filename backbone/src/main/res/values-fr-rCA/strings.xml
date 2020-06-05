@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Debug -->
 
     <!-- Consent Section -->
@@ -116,5 +116,41 @@
     <string name="rsb_edit_step_alert_step_skip_discard">NON, NE PAS PASSER</string>
     <string name="rsb_edit_step_alert_step_skip_positive">Oui, passer</string>
     <string name="rsb_edit_step">Modifier</string>
+
+    <!-- Material Date Picker Strings -->
+    <string name = "mtrl_picker_range_header_title">Sélectionnez une plage de dates</string>
+    <string name = "mtrl_picker_date_header_title">Sélectionnez une date</string>
+    <string name = "mtrl_picker_range_header_unselected">Date de début - Date de fin</string>
+    <string name = "mtrl_picker_range_header_only_start_selected">%1$s - Date de fin </string>
+    <string name = "mtrl_picker_range_header_only_end_selected"> Date de début - %1$s</string>
+    <string name = "mtrl_picker_range_header_selected">%1$s – %2$s</string>
+    <string name = "mtrl_picker_date_header_unselected">Date sélectionnée</string>
+    <string name = "mtrl_picker_date_header_selected">%1$s</string>
+    <string name = "mtrl_picker_confirm">@android:string/ok</string>
+    <string name = "mtrl_picker_text_input_date_hint"> Date </string>
+    <string name = "mtrl_picker_text_input_date_range_start_hint">Date de début</string>
+    <string name = "mtrl_picker_text_input_date_range_end_hint"> Date de fin</string>
+    <string name = "mtrl_picker_save">Enregistrer</string>
+    <string name = "mtrl_picker_invalid_range">Plage non valide.</string>
+    <string name = "mtrl_picker_out_of_range">Hors de portée: %1$s</string>
+    <string name = "mtrl_picker_invalid_format">Format invalide.</string>
+    <string name = "mtrl_picker_invalid_format_use">Utilisation: %1$s</string>
+    <string name = "mtrl_picker_invalid_format_example">Exemple: %1$s</string>
+    <string name = "mtrl_picker_toggle_to_calendar_input_mode">Passer en mode de saisie du calendrier</string>
+    <string name = "mtrl_picker_toggle_to_text_input_mode">Passer en mode de saisie de texte</string>
+    <string name = "mtrl_picker_a11y_prev_month">Passer au mois précédent</string>
+    <string name = "mtrl_picker_a11y_next_month">Passer au mois prochain</string>
+    <string name = "mtrl_picker_toggle_to_year_selection">Appuyez pour passer à la sélection d’une année</string>
+    <string name = "mtrl_picker_toggle_to_day_selection">Appuyez pour passer à la sélection d’un jour</string>
+    <string name = "mtrl_picker_day_of_week_column_header"> Colonne de jours: %1$s</string>
+    <string name = "mtrl_picker_announce_current_selection"> Sélection actuelle: %1$s</string>
+    <string name = "mtrl_picker_navigate_to_year_description">Naviguer vers l’année %1$s</string>
+
+    <!-- TimePickerDialog -->
+    <string name = "time_picker_hour_label" tools: override = "true">heure</string>
+    <string name = "time_picker_minute_label" tools: override = "true">minute</string>
+    <string name = "time_picker_header_text" tools: override = "true">Régler le temps/string>
+    <string name = "time_picker_input_error" tools: override = "true">Entrez une heure valide</string>
+    <string name = "time_picker_prompt_label" tools: override = "true">Tapez dans le temps</string>
 
 </resources>
