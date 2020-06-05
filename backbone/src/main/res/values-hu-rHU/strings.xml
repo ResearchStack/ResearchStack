@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Consent Section -->
     <string name="rsb_consent">Hozzájárulás</string>
@@ -125,4 +125,37 @@
     <string name="rsb_edit_step_alert_step_skip_positive">Igen, kihagyom</string>
     <string name="rsb_edit_step">Szerkesztés</string>
 
+    <!-- Material Date Picker Strings -->
+    <string name="mtrl_picker_range_header_title" tools:override="true">Válasszon egy dátumtartományt</string>
+    <string name="mtrl_picker_date_header_title" tools:override="true">Válasszon egy dátumot</string>
+    <string name="mtrl_picker_range_header_unselected" tools:override="true">Kezdő dátum - záró dátum</string>
+    <string name="mtrl_picker_range_header_only_start_selected" tools:override="true">%1$s - záró dátum</string>
+    <string name="mtrl_picker_range_header_only_end_selected" tools:override="true">Kezdési dátum - %1$s</string>
+    <string name="mtrl_picker_range_header_selected" tools:override="true">%1$s - %2$s</string>
+    <string name="mtrl_picker_date_header_unselected" tools:override="true">Kiválasztott dátum</string>
+    <string name="mtrl_picker_text_input_date_hint" tools:override="true">Dátum</string>
+    <string name="mtrl_picker_text_input_date_range_start_hint" tools:override="true">Kezdő dátum</string>
+    <string name="mtrl_picker_text_input_date_range_end_hint" tools:override="true">Záró dátum</string>
+    <string name="mtrl_picker_save" tools:override="true">Megment</string>
+    <string name="mtrl_picker_invalid_range" tools:override="true">Érvénytelen tartomány.</string>
+    <string name="mtrl_picker_out_of_range" tools:override="true">Tartományon kívül: %1$s</string>
+    <string name="mtrl_picker_invalid_format" tools:override="true">Érvénytelen formátum.</string>
+    <string name="mtrl_picker_invalid_format_use" tools:override="true">Használat: %1$s</string>
+    <string name="mtrl_picker_invalid_format_example" tools:override="true">Példa: %1$s</string>
+    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:override="true">Váltás naptárbeviteli módra</string>
+    <string name="mtrl_picker_toggle_to_text_input_mode" tools:override="true">Váltás szöveges beviteli módra</string>
+    <string name="mtrl_picker_a11y_prev_month">Váltás az előző hónapra</string>
+    <string name="mtrl_picker_a11y_next_month">Váltás a következő hónapra</string>
+    <string name="mtrl_picker_toggle_to_year_selection">Koppintson az év kiválasztására</string>
+    <string name="mtrl_picker_toggle_to_day_selection">Koppintson a nap kiválasztására</string>
+    <string name="mtrl_picker_day_of_week_column_header">Napok oszlopa: %1$s</string>
+    <string name="mtrl_picker_announce_current_selection">Jelenlegi választás: %1$s</string>
+    <string name="mtrl_picker_navigate_to_year_description">Keresse meg a (z) %1$s évet</string>
+    <string name="time_picker_hour_label">óra</string>
+    <string name="time_picker_minute_label">perc</string>
+    <string name="time_picker_header_text">Beállítani az időt</string>
+    <string name="time_picker_input_error">Adjon meg egy érvényes időt</string>
+    <string name="time_picker_prompt_label">Írja be az időt</string>
+
+    <!-- Material Time Picker Strings -->
 </resources>

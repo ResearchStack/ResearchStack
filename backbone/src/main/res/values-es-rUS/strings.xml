@@ -114,5 +114,35 @@
     <string name="rsb_edit_step_alert_step_skip_discard">[es-US] NO, DON\'T SKIP</string>
     <string name="rsb_edit_step_alert_step_skip_positive">[es-US] Yes, skip</string>
     <string name="rsb_edit_step">[es-US] Edit</string>
+    <string name="mtrl_picker_range_header_title">Seleccione un rango de fechas</string>
+    <string name="mtrl_picker_date_header_title">Selecciona una fecha</string>
+    <string name="mtrl_picker_range_header_unselected">Fecha de inicio - Fecha de fin</string>
+    <string name="mtrl_picker_range_header_only_start_selected">%1$s - Fecha de fin</string>
+    <string name="mtrl_picker_range_header_only_end_selected">Fecha de inicio - %1$s</string>
+    <string name="mtrl_picker_range_header_selected">%1$s - %2$s</string>
+    <string name="mtrl_picker_date_header_unselected">Fecha seleccionada</string>
+    <string name="mtrl_picker_text_input_date_hint">Fecha</string>
+    <string name="mtrl_picker_text_input_date_range_start_hint">Fecha de inicio</string>
+    <string name="mtrl_picker_text_input_date_range_end_hint">Fecha de fin</string>
+    <string name="mtrl_picker_save">Salvar</string>
+    <string name="mtrl_picker_invalid_range">Rango inválido.</string>
+    <string name="mtrl_picker_out_of_range">Fuera de rango: %1$s</string>
+    <string name="mtrl_picker_invalid_format">Formato inválido.</string>
+    <string name="mtrl_picker_invalid_format_use">Uso: %1$s</string>
+    <string name="mtrl_picker_invalid_format_example">Ejemplo: %1$s</string>
+    <string name="mtrl_picker_toggle_to_calendar_input_mode">Cambiar al modo de entrada de calendario</string>
+    <string name="mtrl_picker_toggle_to_text_input_mode">Cambiar al modo de ingreso de texto</string>
+    <string name="mtrl_picker_a11y_prev_month">Cambiar al mes anterior</string>
+    <string name="mtrl_picker_a11y_next_month">Cambiar al próximo mes</string>
+    <string name="mtrl_picker_toggle_to_year_selection">Toque para cambiar a seleccionar un año</string>
+    <string name="mtrl_picker_toggle_to_day_selection">Toque para cambiar a seleccionar un día</string>
+    <string name="mtrl_picker_day_of_week_column_header">Columna de días: %1$s</string>
+    <string name="mtrl_picker_announce_current_selection">Selección actual: %1$s</string>
+    <string name="mtrl_picker_navigate_to_year_description">Ir al año %1$s</string>
+    <string name="time_picker_hour_label">hora</string>
+    <string name="time_picker_minute_label">minuto</string>
+    <string name="time_picker_header_text">Fijar tiempo</string>
+    <string name="time_picker_input_error">Ingrese una hora válida</string>
+    <string name="time_picker_prompt_label">Escribe a tiempo</string>
 
 </resources>
