@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Debug -->
 
     <!-- Consent Section -->
@@ -116,35 +116,35 @@
     <string name="rsb_edit_step_alert_step_skip_discard">不，不要跳过</string>
     <string name="rsb_edit_step_alert_step_skip_positive">是，跳过</string>
     <string name="rsb_edit_step">编辑</string>
-    <string name="mtrl_picker_range_header_title">选择日期范围</string>
-    <string name="mtrl_picker_date_header_title">选择日期</string>
-    <string name="mtrl_picker_range_header_unselected">开始日期 – 结束日期</string>
-    <string name="mtrl_picker_range_header_only_start_selected">％1$s – 结束日期</string>
-    <string name="mtrl_picker_range_header_only_end_selected">开始日期 – ％1$s</string>
-    <string name="mtrl_picker_range_header_selected">%1$s – %2$s</string>
-    <string name="mtrl_picker_date_header_unselected">选定日期</string>
-    <string name="mtrl_picker_text_input_date_hint">日期</string>
-    <string name="mtrl_picker_text_input_date_range_start_hint">开始日期</string>
-    <string name="mtrl_picker_text_input_date_range_end_hint">结束日期</string>
-    <string name="mtrl_picker_save">救</string>
-    <string name="mtrl_picker_invalid_range">范围无效。</string>
-    <string name="mtrl_picker_out_of_range">超出范围：％1$s</string>
-    <string name="mtrl_picker_invalid_format">无效的格式。</string>
-    <string name="mtrl_picker_invalid_format_use">使用：％1$s</string>
-    <string name="mtrl_picker_invalid_format_example">示例：％1$s</string>
-    <string name="mtrl_picker_toggle_to_calendar_input_mode">切换到日历输入模式</string>
-    <string name="mtrl_picker_toggle_to_text_input_mode">切换至文字输入模式</string>
-    <string name="mtrl_picker_a11y_prev_month">更改为上个月</string>
-    <string name="mtrl_picker_a11y_next_month">改到下个月</string>
-    <string name="mtrl_picker_toggle_to_year_selection">点按即可切换到选择年份</string>
-    <string name="mtrl_picker_toggle_to_day_selection">点按即可切换到选择日期</string>
-    <string name="mtrl_picker_day_of_week_column_header">天列：％1$s</string>
-    <string name="mtrl_picker_announce_current_selection">当前选择：％1$s</string>
-    <string name="mtrl_picker_navigate_to_year_description">导航至 ％1$s 年</string>
-    <string name="time_picker_hour_label">小时</string>
-    <string name="time_picker_minute_label">分钟</string>
-    <string name="time_picker_header_text">设置时间</string>
-    <string name="time_picker_input_error">输入有效时间</string>
-    <string name="time_picker_prompt_label">输入时间</string>
+    <string name="mtrl_picker_range_header_title" tools:ignore="ResourceName" tools:override="true">选择日期范围</string>
+    <string name="mtrl_picker_date_header_title" tools:ignore="ResourceName" tools:override="true">选择日期</string>
+    <string name="mtrl_picker_range_header_unselected" tools:ignore="ResourceName" tools:override="true">开始日期 – 结束日期</string>
+    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">％1$s – 结束日期</string>
+    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">开始日期 – ％1$s</string>
+    <string name="mtrl_picker_range_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s – %2$s</string>
+    <string name="mtrl_picker_date_header_unselected" tools:ignore="ResourceName" tools:override="true">选定日期</string>
+    <string name="mtrl_picker_text_input_date_hint" tools:ignore="ResourceName" tools:override="true">日期</string>
+    <string name="mtrl_picker_text_input_date_range_start_hint" tools:ignore="ResourceName" tools:override="true">开始日期</string>
+    <string name="mtrl_picker_text_input_date_range_end_hint" tools:ignore="ResourceName" tools:override="true">结束日期</string>
+    <string name="mtrl_picker_save" tools:ignore="ResourceName" tools:override="true">救</string>
+    <string name="mtrl_picker_invalid_range" tools:ignore="ResourceName" tools:override="true">范围无效。</string>
+    <string name="mtrl_picker_out_of_range" tools:ignore="ResourceName" tools:override="true">超出范围：％1$s</string>
+    <string name="mtrl_picker_invalid_format" tools:ignore="ResourceName" tools:override="true">无效的格式。</string>
+    <string name="mtrl_picker_invalid_format_use" tools:ignore="ResourceName" tools:override="true">使用：％1$s</string>
+    <string name="mtrl_picker_invalid_format_example" tools:ignore="ResourceName" tools:override="true">示例：％1$s</string>
+    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:ignore="ResourceName" tools:override="true">切换到日历输入模式</string>
+    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">切换至文字输入模式</string>
+    <string name="mtrl_picker_a11y_prev_month" tools:ignore="ResourceName" tools:override="true">更改为上个月</string>
+    <string name="mtrl_picker_a11y_next_month" tools:ignore="ResourceName" tools:override="true">改到下个月</string>
+    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">点按即可切换到选择年份</string>
+    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">点按即可切换到选择日期</string>
+    <string name="mtrl_picker_day_of_week_column_header" tools:ignore="ResourceName" tools:override="true">天列：％1$s</string>
+    <string name="mtrl_picker_announce_current_selection" tools:ignore="ResourceName" tools:override="true">当前选择：％1$s</string>
+    <string name="mtrl_picker_navigate_to_year_description" tools:ignore="ResourceName" tools:override="true">导航至 ％1$s 年</string>
+    <string name="time_picker_hour_label" tools:ignore="ResourceName" tools:override="true">小时</string>
+    <string name="time_picker_minute_label" tools:ignore="ResourceName" tools:override="true">分钟</string>
+    <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">设置时间</string>
+    <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">输入有效时间</string>
+    <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">输入时间</string>
 
 </resources>

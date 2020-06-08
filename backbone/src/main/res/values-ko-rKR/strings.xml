@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Consent Section -->
     <string name="rsb_consent">동의서</string>
     <string name="rsb_consent_section_welcome">환영합니다</string>
@@ -122,35 +122,35 @@
     <string name="rsb_edit_step_alert_step_skip_discard">아니오, 건너뛰지 않습니다</string>
     <string name="rsb_edit_step_alert_step_skip_positive">네, 건너뜁니다</string>
     <string name="rsb_edit_step">수정</string>
-    <string name="mtrl_picker_range_header_title">날짜 범위를 선택하십시오</string>
-    <string name="mtrl_picker_date_header_title">날짜를 선택하십시오</string>
-    <string name="mtrl_picker_range_header_unselected">시작일 – 종료일</string>
-    <string name="mtrl_picker_range_header_only_start_selected">%1$s – 종료일</string>
-    <string name="mtrl_picker_range_header_only_end_selected">시작일 – %1$s</string>
-    <string name="mtrl_picker_range_header_selected">%1$s - %2$s</string>
-    <string name="mtrl_picker_date_header_unselected">선택된 날짜</string>
-    <string name="mtrl_picker_text_input_date_hint">데이트</string>
-    <string name="mtrl_picker_text_input_date_range_start_hint">시작일</string>
-    <string name="mtrl_picker_text_input_date_range_end_hint">종료일</string>
-    <string name="mtrl_picker_save">저장</string>
-    <string name="mtrl_picker_invalid_range">유효하지 않은 범위입니다.</string>
-    <string name="mtrl_picker_out_of_range">범위를 벗어남 : %1$s</string>
-    <string name="mtrl_picker_invalid_format">잘못된 형식입니다.</string>
-    <string name="mtrl_picker_invalid_format_use">사용: %1$s</string>
-    <string name="mtrl_picker_invalid_format_example">예 : %1$s</string>
-    <string name="mtrl_picker_toggle_to_calendar_input_mode">캘린더 입력 모드로 전환</string>
-    <string name="mtrl_picker_toggle_to_text_input_mode">텍스트 입력 모드로 전환</string>
-    <string name="mtrl_picker_a11y_prev_month">이전 달로 변경</string>
-    <string name="mtrl_picker_a11y_next_month">다음 달로 변경</string>
-    <string name="mtrl_picker_toggle_to_year_selection">연도 선택으로 전환하려면 누릅니다</string>
-    <string name="mtrl_picker_toggle_to_day_selection">탭하여 요일 선택으로 전환</string>
-    <string name="mtrl_picker_day_of_week_column_header">일수 : %1$s</string>
-    <string name="mtrl_picker_announce_current_selection">현재 선택 : %1$s</string>
-    <string name="mtrl_picker_navigate_to_year_description">%1$s 연도로 이동</string>
-    <string name="time_picker_hour_label">시</string>
-    <string name="time_picker_minute_label">분</string>
-    <string name="time_picker_header_text">시간 설정</string>
-    <string name="time_picker_input_error">유효한 시간을 입력하십시오</string>
-    <string name="time_picker_prompt_label">시간 입력</string>
+    <string name="mtrl_picker_range_header_title" tools:ignore="ResourceName" tools:override="true">날짜 범위를 선택하십시오</string>
+    <string name="mtrl_picker_date_header_title" tools:ignore="ResourceName" tools:override="true">날짜를 선택하십시오</string>
+    <string name="mtrl_picker_range_header_unselected" tools:ignore="ResourceName" tools:override="true">시작일 – 종료일</string>
+    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">%1$s – 종료일</string>
+    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">시작일 – %1$s</string>
+    <string name="mtrl_picker_range_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s - %2$s</string>
+    <string name="mtrl_picker_date_header_unselected" tools:ignore="ResourceName" tools:override="true">선택된 날짜</string>
+    <string name="mtrl_picker_text_input_date_hint" tools:ignore="ResourceName" tools:override="true">데이트</string>
+    <string name="mtrl_picker_text_input_date_range_start_hint" tools:ignore="ResourceName" tools:override="true">시작일</string>
+    <string name="mtrl_picker_text_input_date_range_end_hint" tools:ignore="ResourceName" tools:override="true">종료일</string>
+    <string name="mtrl_picker_save" tools:ignore="ResourceName" tools:override="true">저장</string>
+    <string name="mtrl_picker_invalid_range" tools:ignore="ResourceName" tools:override="true">유효하지 않은 범위입니다.</string>
+    <string name="mtrl_picker_out_of_range" tools:ignore="ResourceName" tools:override="true">범위를 벗어남 : %1$s</string>
+    <string name="mtrl_picker_invalid_format" tools:ignore="ResourceName" tools:override="true">잘못된 형식입니다.</string>
+    <string name="mtrl_picker_invalid_format_use" tools:ignore="ResourceName" tools:override="true">사용: %1$s</string>
+    <string name="mtrl_picker_invalid_format_example" tools:ignore="ResourceName" tools:override="true">예 : %1$s</string>
+    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:ignore="ResourceName" tools:override="true">캘린더 입력 모드로 전환</string>
+    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">텍스트 입력 모드로 전환</string>
+    <string name="mtrl_picker_a11y_prev_month" tools:ignore="ResourceName" tools:override="true">이전 달로 변경</string>
+    <string name="mtrl_picker_a11y_next_month" tools:ignore="ResourceName" tools:override="true">다음 달로 변경</string>
+    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">연도 선택으로 전환하려면 누릅니다</string>
+    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">탭하여 요일 선택으로 전환</string>
+    <string name="mtrl_picker_day_of_week_column_header" tools:ignore="ResourceName" tools:override="true">일수 : %1$s</string>
+    <string name="mtrl_picker_announce_current_selection" tools:ignore="ResourceName" tools:override="true">현재 선택 : %1$s</string>
+    <string name="mtrl_picker_navigate_to_year_description" tools:ignore="ResourceName" tools:override="true">%1$s 연도로 이동</string>
+    <string name="time_picker_hour_label" tools:ignore="ResourceName" tools:override="true">시</string>
+    <string name="time_picker_minute_label" tools:ignore="ResourceName" tools:override="true">분</string>
+    <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">시간 설정</string>
+    <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">유효한 시간을 입력하십시오</string>
+    <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">시간 입력</string>
 
 </resources>

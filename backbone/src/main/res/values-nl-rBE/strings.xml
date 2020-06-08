@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Debug -->
 
     <!-- Consent Section -->
@@ -116,35 +116,35 @@
     <string name="rsb_edit_step_alert_step_skip_discard">NEE, NIET OVERSLAAN</string>
     <string name="rsb_edit_step_alert_step_skip_positive">Ja, overslaan</string>
     <string name="rsb_edit_step">Bewerk</string>
-    <string name="mtrl_picker_range_header_title">Selecteer een datumbereik</string>
-    <string name="mtrl_picker_date_header_title">Selecteer een datum</string>
-    <string name="mtrl_picker_range_header_unselected">Begindatum - Einddatum</string>
-    <string name="mtrl_picker_range_header_only_start_selected">%1$s - Einddatum</string>
-    <string name="mtrl_picker_range_header_only_end_selected">Begindatum - %1$s</string>
-    <string name="mtrl_picker_range_header_selected">%1$s – %2$s</string>
-    <string name="mtrl_picker_date_header_unselected">Geselecteerde datum</string>
-    <string name="mtrl_picker_text_input_date_hint">Datum</string>
-    <string name="mtrl_picker_text_input_date_range_start_hint">Startdatum</string>
-    <string name="mtrl_picker_text_input_date_range_end_hint">Einddatum</string>
-    <string name="mtrl_picker_save">Opslaan</string>
-    <string name="mtrl_picker_invalid_range">Ongeldig bereik.</string>
-    <string name="mtrl_picker_out_of_range">Buiten bereik: %1$s</string>
-    <string name="mtrl_picker_invalid_format">Ongeldig formaat.</string>
-    <string name="mtrl_picker_invalid_format_use">Gebruik: %1$s</string>
-    <string name="mtrl_picker_invalid_format_example">Voorbeeld: %1$s</string>
-    <string name="mtrl_picker_toggle_to_calendar_input_mode">Schakel over naar de kalenderinvoermodus</string>
-    <string name="mtrl_picker_toggle_to_text_input_mode">Schakel over naar de tekstinvoermodus</string>
-    <string name="mtrl_picker_a11y_prev_month">Verander naar vorige maand</string>
-    <string name="mtrl_picker_a11y_next_month">Verander naar volgende maand</string>
-    <string name="mtrl_picker_toggle_to_year_selection">Tik om over te schakelen naar het selecteren van een jaar</string>
-    <string name="mtrl_picker_toggle_to_day_selection">Tik om over te schakelen naar het selecteren van een dag</string>
-    <string name="mtrl_picker_day_of_week_column_header">Kolom van dagen: %1$s</string>
-    <string name="mtrl_picker_announce_current_selection">Huidige selectie: %1$s</string>
-    <string name="mtrl_picker_navigate_to_year_description">Navigeer naar jaar %1$s</string>
-    <string name="time_picker_hour_label">uur</string>
-    <string name="time_picker_minute_label">minuut</string>
-    <string name="time_picker_header_text">Tijd instellen</string>
-    <string name="time_picker_input_error">Voer een geldige tijd in</string>
-    <string name="time_picker_prompt_label">Voer tijd in</string>
+    <string name="mtrl_picker_range_header_title" tools:ignore="ResourceName" tools:override="true">Selecteer een datumbereik</string>
+    <string name="mtrl_picker_date_header_title" tools:ignore="ResourceName" tools:override="true">Selecteer een datum</string>
+    <string name="mtrl_picker_range_header_unselected" tools:ignore="ResourceName" tools:override="true">Begindatum - Einddatum</string>
+    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">%1$s - Einddatum</string>
+    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">Begindatum - %1$s</string>
+    <string name="mtrl_picker_range_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s – %2$s</string>
+    <string name="mtrl_picker_date_header_unselected" tools:ignore="ResourceName" tools:override="true">Geselecteerde datum</string>
+    <string name="mtrl_picker_text_input_date_hint" tools:ignore="ResourceName" tools:override="true">Datum</string>
+    <string name="mtrl_picker_text_input_date_range_start_hint" tools:ignore="ResourceName" tools:override="true">Startdatum</string>
+    <string name="mtrl_picker_text_input_date_range_end_hint" tools:ignore="ResourceName" tools:override="true">Einddatum</string>
+    <string name="mtrl_picker_save" tools:ignore="ResourceName" tools:override="true">Opslaan</string>
+    <string name="mtrl_picker_invalid_range" tools:ignore="ResourceName" tools:override="true">Ongeldig bereik.</string>
+    <string name="mtrl_picker_out_of_range" tools:ignore="ResourceName" tools:override="true">Buiten bereik: %1$s</string>
+    <string name="mtrl_picker_invalid_format" tools:ignore="ResourceName" tools:override="true">Ongeldig formaat.</string>
+    <string name="mtrl_picker_invalid_format_use" tools:ignore="ResourceName" tools:override="true">Gebruik: %1$s</string>
+    <string name="mtrl_picker_invalid_format_example" tools:ignore="ResourceName" tools:override="true">Voorbeeld: %1$s</string>
+    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:ignore="ResourceName" tools:override="true">Schakel over naar de kalenderinvoermodus</string>
+    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">Schakel over naar de tekstinvoermodus</string>
+    <string name="mtrl_picker_a11y_prev_month" tools:ignore="ResourceName" tools:override="true">Verander naar vorige maand</string>
+    <string name="mtrl_picker_a11y_next_month" tools:ignore="ResourceName" tools:override="true">Verander naar volgende maand</string>
+    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">Tik om over te schakelen naar het selecteren van een jaar</string>
+    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">Tik om over te schakelen naar het selecteren van een dag</string>
+    <string name="mtrl_picker_day_of_week_column_header" tools:ignore="ResourceName" tools:override="true">Kolom van dagen: %1$s</string>
+    <string name="mtrl_picker_announce_current_selection" tools:ignore="ResourceName" tools:override="true">Huidige selectie: %1$s</string>
+    <string name="mtrl_picker_navigate_to_year_description" tools:ignore="ResourceName" tools:override="true">Navigeer naar jaar %1$s</string>
+    <string name="time_picker_hour_label" tools:ignore="ResourceName" tools:override="true">uur</string>
+    <string name="time_picker_minute_label" tools:ignore="ResourceName" tools:override="true">minuut</string>
+    <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">Tijd instellen</string>
+    <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">Voer een geldige tijd in</string>
+    <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Voer tijd in</string>
 
 </resources>
