@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Consent Section -->
     <string name="rsb_consent">Согласие</string>
     <string name="rsb_consent_section_welcome">Добро пожаловать</string>
@@ -114,34 +114,34 @@
     <string name="rsb_edit_step_alert_step_skip_discard">НЕТ, НЕ ПРОПУСКАТЬ</string>
     <string name="rsb_edit_step_alert_step_skip_positive">Да, пропустить</string>
     <string name="rsb_edit_step">Редактировать</string>
-    <string name="mtrl_picker_range_header_title">Выберите диапазон дат</string>
-    <string name="mtrl_picker_date_header_title">Выберите дату</string>
-    <string name="mtrl_picker_range_header_unselected">Дата начала - Дата окончания</string>
-    <string name="mtrl_picker_range_header_only_start_selected">%1$s - Дата окончания</string>
-    <string name="mtrl_picker_range_header_only_end_selected">Дата начала - %1$s</string>
-    <string name="mtrl_picker_range_header_selected">%1$s - %2$s</string>
-    <string name="mtrl_picker_date_header_unselected">Выбранная дата</string>
-    <string name="mtrl_picker_text_input_date_hint">Свидание</string>
-    <string name="mtrl_picker_text_input_date_range_start_hint">Дата начала</string>
-    <string name="mtrl_picker_text_input_date_range_end_hint">Дата окончания</string>
-    <string name="mtrl_picker_save">Сохранить</string>
-    <string name="mtrl_picker_invalid_range">Неверный диапазон</string>
-    <string name="mtrl_picker_out_of_range">Вне диапазона: %1$s</string>
-    <string name="mtrl_picker_invalid_format">Недопустимый формат.</string>
-    <string name="mtrl_picker_invalid_format_use">Использование: %1$s</string>
-    <string name="mtrl_picker_invalid_format_example">Пример: %1$s</string>
-    <string name="mtrl_picker_toggle_to_calendar_input_mode">Переключиться в режим ввода календаря</string>
-    <string name="mtrl_picker_toggle_to_text_input_mode">Переключиться в режим ввода текста</string>
-    <string name="mtrl_picker_a11y_prev_month">Изменить на предыдущий месяц</string>
-    <string name="mtrl_picker_a11y_next_month">Изменить на следующий месяц</string>
-    <string name="mtrl_picker_toggle_to_year_selection">Нажмите, чтобы перейти к выбору года</string>
-    <string name="mtrl_picker_toggle_to_day_selection">Нажмите, чтобы перейти к выбору дня</string>
-    <string name="mtrl_picker_day_of_week_column_header">Столбец дней: %1$s</string>
-    <string name="mtrl_picker_announce_current_selection">Текущий выбор: %1$s</string>
-    <string name="mtrl_picker_navigate_to_year_description">Перейдите к году %1$s</string>
-    <string name="time_picker_hour_label">час</string>
-    <string name="time_picker_minute_label">минут</string>
-    <string name="time_picker_header_text">Установить время</string>
-    <string name="time_picker_input_error">Введите правильное время</string>
-    <string name="time_picker_prompt_label">Введите время</string>
+    <string name="mtrl_picker_range_header_title" tools:ignore="ResourceName" tools:override="true">Выберите диапазон дат</string>
+    <string name="mtrl_picker_date_header_title" tools:ignore="ResourceName" tools:override="true">Выберите дату</string>
+    <string name="mtrl_picker_range_header_unselected" tools:ignore="ResourceName" tools:override="true">Дата начала - Дата окончания</string>
+    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">%1$s - Дата окончания</string>
+    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">Дата начала - %1$s</string>
+    <string name="mtrl_picker_range_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s - %2$s</string>
+    <string name="mtrl_picker_date_header_unselected" tools:ignore="ResourceName" tools:override="true">Выбранная дата</string>
+    <string name="mtrl_picker_text_input_date_hint" tools:ignore="ResourceName" tools:override="true">Свидание</string>
+    <string name="mtrl_picker_text_input_date_range_start_hint" tools:ignore="ResourceName" tools:override="true">Дата начала</string>
+    <string name="mtrl_picker_text_input_date_range_end_hint" tools:ignore="ResourceName" tools:override="true">Дата окончания</string>
+    <string name="mtrl_picker_save" tools:ignore="ResourceName" tools:override="true">Сохранить</string>
+    <string name="mtrl_picker_invalid_range" tools:ignore="ResourceName" tools:override="true">Неверный диапазон</string>
+    <string name="mtrl_picker_out_of_range" tools:ignore="ResourceName" tools:override="true">Вне диапазона: %1$s</string>
+    <string name="mtrl_picker_invalid_format" tools:ignore="ResourceName" tools:override="true">Недопустимый формат.</string>
+    <string name="mtrl_picker_invalid_format_use" tools:ignore="ResourceName" tools:override="true">Использование: %1$s</string>
+    <string name="mtrl_picker_invalid_format_example" tools:ignore="ResourceName" tools:override="true">Пример: %1$s</string>
+    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:ignore="ResourceName" tools:override="true">Переключиться в режим ввода календаря</string>
+    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">Переключиться в режим ввода текста</string>
+    <string name="mtrl_picker_a11y_prev_month" tools:ignore="ResourceName" tools:override="true">Изменить на предыдущий месяц</string>
+    <string name="mtrl_picker_a11y_next_month" tools:ignore="ResourceName" tools:override="true">Изменить на следующий месяц</string>
+    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">Нажмите, чтобы перейти к выбору года</string>
+    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">Нажмите, чтобы перейти к выбору дня</string>
+    <string name="mtrl_picker_day_of_week_column_header" tools:ignore="ResourceName" tools:override="true">Столбец дней: %1$s</string>
+    <string name="mtrl_picker_announce_current_selection" tools:ignore="ResourceName" tools:override="true">Текущий выбор: %1$s</string>
+    <string name="mtrl_picker_navigate_to_year_description" tools:ignore="ResourceName" tools:override="true">Перейдите к году %1$s</string>
+    <string name="time_picker_hour_label" tools:ignore="ResourceName" tools:override="true">час</string>
+    <string name="time_picker_minute_label" tools:ignore="ResourceName" tools:override="true">минут</string>
+    <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">Установить время</string>
+    <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">Введите правильное время</string>
+    <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Введите время</string>
 </resources>

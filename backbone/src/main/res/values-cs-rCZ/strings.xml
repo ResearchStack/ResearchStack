@@ -118,38 +118,38 @@
     <string name="rsb_edit_step">Upravit</string>
 
     <!-- Material Date Picker Strings -->
-    <string name="mtrl_picker_range_header_title">Vyberte časové období</string>
-    <string name="mtrl_picker_date_header_title">Vyberte datum</string>
-    <string name="mtrl_picker_range_header_unselected">Datum zahájení - Datum ukončení</string>
-    <string name="mtrl_picker_range_header_only_start_selected">%1$s – Datum ukončení</string>
-    <string name="mtrl_picker_range_header_only_end_selected">Datum začátku – %1$s</string>
-    <string name="mtrl_picker_range_header_selected">%1$s – %2$s</string>
-    <string name="mtrl_picker_date_header_unselected">Vybrané datum</string>
-    <string name="mtrl_picker_date_header_selected">%1$s</string>
-    <string name="mtrl_picker_confirm">@android:string/ok</string>
-    <string name="mtrl_picker_text_input_date_hint">datum</string>
-    <string name="mtrl_picker_text_input_date_range_start_hint">Datum začátku</string>
-    <string name="mtrl_picker_text_input_date_range_end_hint">Datum ukončení</string>
-    <string name="mtrl_picker_save">ušetřit</string>
-    <string name="mtrl_picker_invalid_range">Neplatný rozsah.</string>
-    <string name="mtrl_picker_out_of_range">Mimo dosah: %1$s</string>
-    <string name="mtrl_picker_invalid_format">Nesprávný formát.</string>
-    <string name="mtrl_picker_invalid_format_use">Použití: %1$s</string>
-    <string name="mtrl_picker_invalid_format_example">Příklad: %1$s</string>
-    <string name="mtrl_picker_toggle_to_calendar_input_mode">Přepnutí do režimu zadávání kalendáře</string>
-    <string name="mtrl_picker_toggle_to_text_input_mode">Přepnutí do režimu zadávání textu</string>
-    <string name="mtrl_picker_a11y_prev_month">Změnit na předchozí měsíc</string>
-    <string name="mtrl_picker_a11y_next_month">Změnit na další měsíc</string>
-    <string name="mtrl_picker_toggle_to_year_selection">Klepnutím přepnete na výběr roku</string>
-    <string name="mtrl_picker_toggle_to_day_selection">Klepnutím přepnete na výběr dne</string>
-    <string name="mtrl_picker_day_of_week_column_header">Sloupec dní: %1$s</string>
-    <string name="mtrl_picker_announce_current_selection">Aktuální výběr: %1$s</string>
-    <string name="mtrl_picker_navigate_to_year_description">Přejděte na rok %1$s</string>
+    <string name="mtrl_picker_range_header_title" tools:override="true" tools:ignore="ResourceName">Vyberte časové období</string>
+    <string name="mtrl_picker_date_header_title" tools:override="true" tools:ignore="ResourceName">Vyberte datum</string>
+    <string name="mtrl_picker_range_header_unselected" tools:override="true" tools:ignore="ResourceName">Datum zahájení - Datum ukončení</string>
+    <string name="mtrl_picker_range_header_only_start_selected" tools:override="true" tools:ignore="ResourceName">%1$s – Datum ukončení</string>
+    <string name="mtrl_picker_range_header_only_end_selected" tools:override="true" tools:ignore="ResourceName">Datum začátku – %1$s</string>
+    <string name="mtrl_picker_range_header_selected" tools:override="true" tools:ignore="ResourceName">%1$s – %2$s</string>
+    <string name="mtrl_picker_date_header_unselected" tools:override="true" tools:ignore="ResourceName">Vybrané datum</string>
+    <string name="mtrl_picker_date_header_selected" tools:override="true" tools:ignore="ResourceName">%1$s</string>
+    <string name="mtrl_picker_confirm" tools:override="true" tools:ignore="ResourceName">@android:string/ok</string>
+    <string name="mtrl_picker_text_input_date_hint" tools:override="true" tools:ignore="ResourceName">datum</string>
+    <string name="mtrl_picker_text_input_date_range_start_hint" tools:override="true" tools:ignore="ResourceName">Datum začátku</string>
+    <string name="mtrl_picker_text_input_date_range_end_hint" tools:override="true" tools:ignore="ResourceName">Datum ukončení</string>
+    <string name="mtrl_picker_save" tools:override="true" tools:ignore="ResourceName">ušetřit</string>
+    <string name="mtrl_picker_invalid_range" tools:override="true" tools:ignore="ResourceName">Neplatný rozsah.</string>
+    <string name="mtrl_picker_out_of_range" tools:override="true" tools:ignore="ResourceName">Mimo dosah: %1$s</string>
+    <string name="mtrl_picker_invalid_format" tools:override="true" tools:ignore="ResourceName">Nesprávný formát.</string>
+    <string name="mtrl_picker_invalid_format_use" tools:override="true" tools:ignore="ResourceName">Použití: %1$s</string>
+    <string name="mtrl_picker_invalid_format_example" tools:override="true" tools:ignore="ResourceName">Příklad: %1$s</string>
+    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:override="true" tools:ignore="ResourceName">Přepnutí do režimu zadávání kalendáře</string>
+    <string name="mtrl_picker_toggle_to_text_input_mode" tools:override="true" tools:ignore="ResourceName">Přepnutí do režimu zadávání textu</string>
+    <string name="mtrl_picker_a11y_prev_month" tools:override="true" tools:ignore="ResourceName">Změnit na předchozí měsíc</string>
+    <string name="mtrl_picker_a11y_next_month" tools:override="true" tools:ignore="ResourceName">Změnit na další měsíc</string>
+    <string name="mtrl_picker_toggle_to_year_selection" tools:override="true" tools:ignore="ResourceName">Klepnutím přepnete na výběr roku</string>
+    <string name="mtrl_picker_toggle_to_day_selection" tools:override="true" tools:ignore="ResourceName">Klepnutím přepnete na výběr dne</string>
+    <string name="mtrl_picker_day_of_week_column_header" tools:override="true" tools:ignore="ResourceName">Sloupec dní: %1$s</string>
+    <string name="mtrl_picker_announce_current_selection" tools:override="true" tools:ignore="ResourceName">Aktuální výběr: %1$s</string>
+    <string name="mtrl_picker_navigate_to_year_description" tools:override="true" tools:ignore="ResourceName">Přejděte na rok %1$s</string>
     ​
     <!-- Material Time Picker Strings -->
-    <string name="time_picker_hour_label" tools:override="true">hodina</string>
-    <string name="time_picker_minute_label" tools:override="true">minuta</string>
-    <string name="time_picker_header_text" tools:override="true">Nastavit čas</string>
-    <string name="time_picker_input_error" tools:override="true">Zadejte platný čas</string>
-    <string name="time_picker_prompt_label" tools:override="true">Zadejte čas</string>
+    <string name="time_picker_hour_label" tools:override="true" tools:ignore="ResourceName">hodina</string>
+    <string name="time_picker_minute_label" tools:override="true" tools:ignore="ResourceName">minuta</string>
+    <string name="time_picker_header_text" tools:override="true"  tools:ignore="ResourceName">Nastavit čas</string>
+    <string name="time_picker_input_error" tools:override="true" tools:ignore="ResourceName">Zadejte platný čas</string>
+    <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Zadejte čas</string>
 </resources>

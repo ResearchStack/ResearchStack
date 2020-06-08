@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Debug -->
 
     <!-- Consent Section -->
@@ -126,35 +126,35 @@
     <string name="rsb_edit_step_alert_step_skip_discard">NIE, NIE POMIJAJ</string>
     <string name="rsb_edit_step_alert_step_skip_positive">Tak, pomiń</string>
     <string name="rsb_edit_step">Edytuj</string>
-    <string name="mtrl_picker_range_header_title">Wybierz zakres dat</string>
-    <string name="mtrl_picker_date_header_title">Wybierz datę</string>
-    <string name="mtrl_picker_range_header_unselected">Data rozpoczęcia - Data zakończenia</string>
-    <string name="mtrl_picker_range_header_only_start_selected">%1$s - Data zakończenia</string>
-    <string name="mtrl_picker_range_header_only_end_selected">Data rozpoczęcia - %1$s</string>
-    <string name="mtrl_picker_range_header_selected">%1$s - %2$s</string>
-    <string name="mtrl_picker_date_header_unselected">Wybrana data</string>
-    <string name="mtrl_picker_text_input_date_hint">Data</string>
-    <string name="mtrl_picker_text_input_date_range_start_hint">Data rozpoczęcia</string>
-    <string name="mtrl_picker_text_input_date_range_end_hint">Data zakończenia</string>
-    <string name="mtrl_picker_save">Zapisać</string>
-    <string name="mtrl_picker_invalid_range">Nieprawidłowy zakres.</string>
-    <string name="mtrl_picker_out_of_range">Poza zakresem: %1$s</string>
-    <string name="mtrl_picker_invalid_format">Niepoprawny format.</string>
-    <string name="mtrl_picker_invalid_format_use">Użyj: %1$s</string>
-    <string name="mtrl_picker_invalid_format_example">Przykład: %1$s</string>
-    <string name="mtrl_picker_toggle_to_calendar_input_mode">Przełącz do trybu wprowadzania kalendarza</string>
-    <string name="mtrl_picker_toggle_to_text_input_mode">Przejdź do trybu wprowadzania tekstu</string>
-    <string name="mtrl_picker_a11y_prev_month">Zmień na poprzedni miesiąc</string>
-    <string name="mtrl_picker_a11y_next_month">Zmień na następny miesiąc</string>
-    <string name="mtrl_picker_toggle_to_year_selection">Stuknij, aby przejść do wyboru roku</string>
-    <string name="mtrl_picker_toggle_to_day_selection">Stuknij, aby przejść do wyboru dnia</string>
-    <string name="mtrl_picker_day_of_week_column_header">Kolumna dni: %1$s</string>
-    <string name="mtrl_picker_announce_current_selection">Aktualny wybór: %1$s</string>
-    <string name="mtrl_picker_navigate_to_year_description">Przejdź do roku %1$s</string>
-    <string name="time_picker_hour_label">godzina</string>
-    <string name="time_picker_minute_label">minuta</string>
-    <string name="time_picker_header_text">Ustaw czas</string>
-    <string name="time_picker_input_error">Wprowadź prawidłowy czas</string>
-    <string name="time_picker_prompt_label">Wpisz czas</string>
+    <string name="mtrl_picker_range_header_title" tools:ignore="ResourceName" tools:override="true">Wybierz zakres dat</string>
+    <string name="mtrl_picker_date_header_title" tools:ignore="ResourceName" tools:override="true">Wybierz datę</string>
+    <string name="mtrl_picker_range_header_unselected" tools:ignore="ResourceName" tools:override="true">Data rozpoczęcia - Data zakończenia</string>
+    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">%1$s - Data zakończenia</string>
+    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">Data rozpoczęcia - %1$s</string>
+    <string name="mtrl_picker_range_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s - %2$s</string>
+    <string name="mtrl_picker_date_header_unselected" tools:ignore="ResourceName" tools:override="true">Wybrana data</string>
+    <string name="mtrl_picker_text_input_date_hint" tools:ignore="ResourceName" tools:override="true">Data</string>
+    <string name="mtrl_picker_text_input_date_range_start_hint" tools:ignore="ResourceName" tools:override="true">Data rozpoczęcia</string>
+    <string name="mtrl_picker_text_input_date_range_end_hint" tools:ignore="ResourceName" tools:override="true">Data zakończenia</string>
+    <string name="mtrl_picker_save" tools:ignore="ResourceName" tools:override="true">Zapisać</string>
+    <string name="mtrl_picker_invalid_range" tools:ignore="ResourceName" tools:override="true">Nieprawidłowy zakres.</string>
+    <string name="mtrl_picker_out_of_range" tools:ignore="ResourceName" tools:override="true">Poza zakresem: %1$s</string>
+    <string name="mtrl_picker_invalid_format" tools:ignore="ResourceName" tools:override="true">Niepoprawny format.</string>
+    <string name="mtrl_picker_invalid_format_use" tools:ignore="ResourceName" tools:override="true">Użyj: %1$s</string>
+    <string name="mtrl_picker_invalid_format_example" tools:ignore="ResourceName" tools:override="true">Przykład: %1$s</string>
+    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:ignore="ResourceName" tools:override="true">Przełącz do trybu wprowadzania kalendarza</string>
+    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">Przejdź do trybu wprowadzania tekstu</string>
+    <string name="mtrl_picker_a11y_prev_month" tools:ignore="ResourceName" tools:override="true">Zmień na poprzedni miesiąc</string>
+    <string name="mtrl_picker_a11y_next_month" tools:ignore="ResourceName" tools:override="true">Zmień na następny miesiąc</string>
+    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">Stuknij, aby przejść do wyboru roku</string>
+    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">Stuknij, aby przejść do wyboru dnia</string>
+    <string name="mtrl_picker_day_of_week_column_header" tools:ignore="ResourceName" tools:override="true">Kolumna dni: %1$s</string>
+    <string name="mtrl_picker_announce_current_selection" tools:ignore="ResourceName" tools:override="true">Aktualny wybór: %1$s</string>
+    <string name="mtrl_picker_navigate_to_year_description" tools:ignore="ResourceName" tools:override="true">Przejdź do roku %1$s</string>
+    <string name="time_picker_hour_label" tools:ignore="ResourceName" tools:override="true">godzina</string>
+    <string name="time_picker_minute_label" tools:ignore="ResourceName" tools:override="true">minuta</string>
+    <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">Ustaw czas</string>
+    <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">Wprowadź prawidłowy czas</string>
+    <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Wpisz czas</string>
 
 </resources>
