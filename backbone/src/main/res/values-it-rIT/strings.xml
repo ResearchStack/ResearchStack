@@ -117,4 +117,38 @@
     <string name="rsb_edit_step_alert_step_skip_positive">Sì, salta</string>
     <string name="rsb_edit_step">Modifica</string>
 
+    <!-- Material Date Picker Strings -->
+    <string name = "mtrl_picker_range_header_title">Seleziona un intervallo di date</string>
+    <string name = "mtrl_picker_date_header_title">Seleziona una data</string>
+    <string name = "mtrl_picker_range_header_unselected">Data di inizio - Data di fine</string>
+    <string name = "mtrl_picker_range_header_only_start_selected">%1$s - Data di fine</string>
+    <string name = "mtrl_picker_range_header_only_end_selected">Data di inizio - %1$s</string>
+    <string name = "mtrl_picker_range_header_selected">%1$s - %2$s</string>
+    <string name = "mtrl_picker_date_header_unselected">Data selezionata</string>
+    <string name = "mtrl_picker_text_input_date_hint">Data</string>
+    <string name = "mtrl_picker_text_input_date_range_start_hint">Data d\'inizio</string>
+    <string name = "mtrl_picker_text_input_date_range_end_hint">Data di fine</string>
+    <string name = "mtrl_picker_save">Salva</string>
+    <string name = "mtrl_picker_invalid_range">Intervallo non valido</string>
+    <string name = "mtrl_picker_out_of_range">Fuori intervallo: %1$s</string>
+    <string name = "mtrl_picker_invalid_format">Formato non valido.</string>
+    <string name = "mtrl_picker_invalid_format_use">Usa: %1$s</string>
+    <string name = "mtrl_picker_invalid_format_example">Esempio: %1$s</string>
+    <string name = "mtrl_picker_toggle_to_calendar_input_mode">Passa alla modalità di inserimento del calendario</string>
+    <string name="mtrl_picker_toggle_to_text_input_mode">Passa alla modalità di inserimento testo</string>
+    <string name="mtrl_picker_a11y_prev_month">Passa al mese precedente</string>
+    <string name="mtrl_picker_a11y_next_month">Passa al mese successivo</string>
+    <string name="mtrl_picker_toggle_to_year_selection">Tocca per passare alla selezione di un anno</string>
+    <string name="mtrl_picker_toggle_to_day_selection">Tocca per passare alla selezione di un giorno</string>
+    <string name="mtrl_picker_day_of_week_column_header">Colonna di giorni: %1$s</string>
+    <string name="mtrl_picker_announce_current_selection">Selezione attuale: %1$s</string>
+    <string name="mtrl_picker_navigate_to_year_description">Passa all\'anno %1$s</string>
+    <string name="time_picker_hour_label">ora</string>
+    <string name="time_picker_minute_label">minuto</string>
+    <string name="time_picker_header_text">Tempo impostato</string>
+    <string name="time_picker_input_error">Inserisci un orario valido</string>
+    <string name="time_picker_prompt_label">Digita l\'ora</string>
+
+    <!-- Material Time Picker Strings -->
+
 </resources>

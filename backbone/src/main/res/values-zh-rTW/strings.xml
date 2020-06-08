@@ -116,5 +116,35 @@
     <string name="rsb_edit_step_alert_step_skip_discard">不，不要略過</string>
     <string name="rsb_edit_step_alert_step_skip_positive">是的，略過</string>
     <string name="rsb_edit_step">編輯</string>
+    <string name="mtrl_picker_range_header_title">選擇日期範圍</string>
+    <string name="mtrl_picker_date_header_title">選擇日期</string>
+    <string name="mtrl_picker_range_header_unselected">開始日期 – 結束日期</string>
+    <string name="mtrl_picker_range_header_only_start_selected">％1$s – 結束日期</string>
+    <string name="mtrl_picker_range_header_only_end_selected">開始日期 – ％1$s</string>
+    <string name="mtrl_picker_range_header_selected">%1$s – %2$s</string>
+    <string name="mtrl_picker_date_header_unselected">選定日期</string>
+    <string name="mtrl_picker_text_input_date_hint">日期</string>
+    <string name="mtrl_picker_text_input_date_range_start_hint">開始日期</string>
+    <string name="mtrl_picker_text_input_date_range_end_hint">結束日期</string>
+    <string name="mtrl_picker_save">救</string>
+    <string name="mtrl_picker_invalid_range">範圍無效。</string>
+    <string name="mtrl_picker_out_of_range">超出範圍：％1$s</string>
+    <string name="mtrl_picker_invalid_format">無效的格式。</string>
+    <string name="mtrl_picker_invalid_format_use">使用：％1$s</string>
+    <string name="mtrl_picker_invalid_format_example">示例：％1$s</string>
+    <string name="mtrl_picker_toggle_to_calendar_input_mode">切換到日曆輸入模式</string>
+    <string name="mtrl_picker_toggle_to_text_input_mode">切換至文字輸入模式</string>
+    <string name="mtrl_picker_a11y_prev_month">更改為上個月</string>
+    <string name="mtrl_picker_a11y_next_month">改到下個月</string>
+    <string name="mtrl_picker_toggle_to_year_selection">點按即可切換到選擇年份</string>
+    <string name="mtrl_picker_toggle_to_day_selection">點按即可切換到選擇日期</string>
+    <string name="mtrl_picker_day_of_week_column_header">天列：％1$s</string>
+    <string name="mtrl_picker_announce_current_selection">當前選擇：％1$s</string>
+    <string name="mtrl_picker_navigate_to_year_description">導航至 ％1$s 年</string>
+    <string name="time_picker_hour_label">小時</string>
+    <string name="time_picker_minute_label">分鐘</string>
+    <string name="time_picker_header_text">設置時間</string>
+    <string name="time_picker_input_error">輸入有效時間</string>
+    <string name="time_picker_prompt_label">輸入時間</string>
 
 </resources>
