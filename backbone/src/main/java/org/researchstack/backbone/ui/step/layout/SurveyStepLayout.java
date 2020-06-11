@@ -1,5 +1,6 @@
 package org.researchstack.backbone.ui.step.layout;
 
+import androidx.core.text.HtmlCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import android.content.Context;
@@ -185,12 +186,12 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         if (questionStep != null) {
             if (!TextUtils.isEmpty(questionStep.getTitle())) {
                 title.setVisibility(View.VISIBLE);
-                title.setText(questionStep.getTitle());
+                title.setText(HtmlCompat.fromHtml(questionStep.getTitle(), HtmlCompat.FROM_HTML_MODE_LEGACY));
             }
 
             if (!TextUtils.isEmpty(questionStep.getText())) {
                 summary.setVisibility(View.VISIBLE);
-                summary.setText(Html.fromHtml(questionStep.getText()));
+                summary.setText(HtmlCompat.fromHtml(questionStep.getText(),HtmlCompat.FROM_HTML_MODE_LEGACY));
                 summary.setMovementMethod(new TextViewLinkHandler() {
                     @Override
                     public void onLinkClick(String url) {
