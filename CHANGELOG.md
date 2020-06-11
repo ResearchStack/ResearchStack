@@ -2,6 +2,11 @@
 
 ### Change log
 
+#### v1.7.2
+- Add translation for Google's Date Picker & Time Picker.
+- Add Date/Time format in Consent.
+- Fix translation errors. 
+
 #### v1.7.0
 - Add TimeZone to LocaleUtils and renamed the class to LocalizationUtils
 - Remove unused strings from project.
