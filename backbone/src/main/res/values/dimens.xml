@@ -15,8 +15,8 @@
     <dimen name="rsb_margin_left">16dp</dimen>
     <dimen name="rsb_margin_right">16dp</dimen>
     <!-- Text Size -->
-    <dimen name="rsb_text_size_title">35sp</dimen>
-    <dimen name="rsb_text_size_summary">18sp</dimen>
+    <dimen name="rsb_text_size_title">24sp</dimen>
+    <dimen name="rsb_text_size_summary">16sp</dimen>
     <!-- ReviewStep Dimensions -->
     <dimen name="rsb_reviewStep_item_bottom_padding">10dp</dimen>
     <dimen name="rsb_reviewStep_item_question_bottom_padding">10dp</dimen>
@@ -27,5 +27,4 @@
     <dimen name="rsb_reviewStep_item_top_margin">30dp</dimen>
     <dimen name="rsb_reviewStep_item_top_margin_in_form">10dp</dimen>
     <dimen name="rsb_reviewStep_section_item_top_margin_in_form">2dp</dimen>
-
 </resources>

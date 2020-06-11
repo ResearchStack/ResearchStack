@@ -65,11 +65,11 @@ open class TaskActivity : AppCompatActivity(), PermissionMediator {
         setSupportActionBar(findViewById(R.id.toolbar))
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         observe(viewModel.currentStepEvent) { showStep(it) }
         observe(viewModel.taskCompleted) { close(it) }
         observe(viewModel.moveReviewStep) {
-            showStepTitle(it.step)
             navController.navigate(it.step.destinationId, null,
                     NavOptions.Builder().setPopUpTo(
                             viewModel.firstStep.destinationId,
@@ -275,14 +275,7 @@ open class TaskActivity : AppCompatActivity(), PermissionMediator {
         if (navigationEvent.popUpToStep == null) {
             navController.navigate(navigationEvent.step.destinationId)
         }
-        showStepTitle(navigationEvent.step)
         setActivityTheme(viewModel.colorPrimary, viewModel.colorPrimaryDark)
-    }
-
-    private fun showStepTitle(step: Step) {
-        supportActionBar?.title =
-                if (viewModel.editing) ""
-                else viewModel.task.getTitleForStep(this, step)
     }
 
     private fun hideKeyboard() {

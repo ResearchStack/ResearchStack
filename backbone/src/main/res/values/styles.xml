@@ -6,10 +6,12 @@
         <item name="android:paddingRight">@dimen/rsb_margin_right</item>
         <item name="android:paddingTop">@dimen/rsb_padding_wedge</item>
         <item name="android:paddingBottom">@dimen/rsb_padding_wedge</item>
-        <item name="android:textColor">@color/rsb_black</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textSize">@dimen/rsb_text_size_title</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/rsb_black_87</item>
     </style>
+
 
     <style name="Backbone.Survey.Summary" parent="">
         <item name="android:layout_marginBottom">@dimen/rsb_padding_small</item>
@@ -18,7 +20,10 @@
         <item name="android:paddingBottom">@dimen/rsb_padding_small</item>
         <item name="android:textSize">@dimen/rsb_text_size_summary</item>
         <item name="android:fontFamily">sans-serif</item>
-        <item name="android:textColor">@color/rsb_black</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:letterSpacing">0.03</item>
+        <item name="android:lineSpacingExtra">12sp</item>
+        <item name="android:textColor">@color/rsb_black_60</item>
     </style>
 
     <style name="Backbone.Survey.Summary.Link">

@@ -27,6 +27,13 @@
         tools:text="@string/lorem_long"
         tools:visibility="visible" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/rsb_black_87"
+        android:alpha="0.16"
+        />
+
     <Space
         android:id="@+id/rsb_survey_step_body"
         android:layout_width="match_parent"
