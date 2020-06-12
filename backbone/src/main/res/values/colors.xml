@@ -22,8 +22,13 @@
 
     <color name="rsb_tab_indicator">#2196f3</color>
     <color name="rsb_tab_text_selected">#662196f3</color>
-    <color name="rsb_submit_disabled">#aaaaaa</color>
+    <color name="rsb_submit_disabled">#99000000</color>
 
     <color name="rsb_cell_header_grey">#aaaaaa</color>
     <color name="rsb_item_text_grey">#222222</color>
+
+    <color name="rsb_black_87">#de000000</color>
+    <color name="rsb_black_60">#99000000</color>
+
+
 </resources>
