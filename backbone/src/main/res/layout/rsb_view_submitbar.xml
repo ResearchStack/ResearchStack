@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?><!-- Change to LinearLayout for preview to work -->
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:filterTouchesWhenObscured="true"
-    android:minHeight="56dp">
+    android:minHeight="56dp"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/bar_submit_edit_cancel"
@@ -62,4 +63,4 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Save" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</merge>
