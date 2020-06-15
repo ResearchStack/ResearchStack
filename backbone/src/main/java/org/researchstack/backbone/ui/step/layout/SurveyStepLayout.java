@@ -174,7 +174,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         summary.setTextColor(secondaryTextColor);
         submitBar = findViewById(R.id.rsb_submit_bar);
         submitBar.setNegativeTitleColor(coloryPrimary);
-        submitBar.setPositiveTitleColor(R.color.rsb_black_60);
+        submitBar.setPositiveTitleColor(colorSecondary);
         submitBar.setEditCancelColor(coloryPrimary);
         submitBar.setEditSaveColor(colorSecondary);
         submitBar.setPositiveAction(view -> {
@@ -230,7 +230,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         LogExt.i(getClass(), "initStepBody()");
 
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        submitBar.setPositiveActionEnabled(R.color.rsb_black_60);
+        submitBar.setPositiveActionEnabled(getStep().getColorSecondary());
         if (stepBody != null) {
             mediator.removeSource(stepBody.isStepEmpty);
         }
