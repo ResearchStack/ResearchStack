@@ -3,17 +3,18 @@ package org.researchstack.backbone.ui.views;
 import android.content.Context;
 import android.content.res.TypedArray;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.utils.LocalizationUtils;
 
-public class SubmitBar extends LinearLayout {
+public class SubmitBar extends ConstraintLayout {
     private TextView positiveView;
     private TextView negativeView;
 
@@ -41,14 +42,14 @@ public class SubmitBar extends LinearLayout {
 
         setBackground(a.getDrawable(R.styleable.SubmitBar_android_background));
 
-        positiveView = (TextView) findViewById(R.id.bar_submit_positive);
+        positiveView = findViewById(R.id.bar_submit_positive);
         positiveView.setText(LocalizationUtils.getLocalizedString(getContext(),R.string.rsb_next));
 
-        negativeView = (TextView) findViewById(R.id.bar_submit_negative);
+        negativeView = findViewById(R.id.bar_submit_negative);
         negativeView.setText(LocalizationUtils.getLocalizedString(getContext(),R.string.rsb_step_skip));
 
-        editSaveView = (TextView) findViewById(R.id.bar_submit_edit_save);
-        editCancelView = (TextView) findViewById(R.id.bar_submit_edit_cancel);
+        editSaveView = findViewById(R.id.bar_submit_edit_save);
+        editCancelView = findViewById(R.id.bar_submit_edit_cancel);
 
         a.recycle();
     }
@@ -66,7 +67,7 @@ public class SubmitBar extends LinearLayout {
     }
 
     public void setPositiveAction(final OnClickListener action) {
-        positiveView.setOnClickListener(view -> action.onClick(view));
+        positiveView.setOnClickListener(action);
     }
 
     public void clearActions()
@@ -99,7 +100,6 @@ public class SubmitBar extends LinearLayout {
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Negative Action Helper Methods
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-
     public void setNegativeTitle(int title) {
         setNegativeTitle(getResources().getString(title));
     }
@@ -109,7 +109,7 @@ public class SubmitBar extends LinearLayout {
     }
 
     public void setNegativeAction(final OnClickListener action) {
-        negativeView.setOnClickListener(view -> action.onClick(view));
+        negativeView.setOnClickListener(action);
     }
 
     public View getNegativeActionView() {
@@ -121,11 +121,11 @@ public class SubmitBar extends LinearLayout {
     }
 
     public void setEditCancelAction(final OnClickListener action) {
-        editCancelView.setOnClickListener(view -> action.onClick(view));
+        editCancelView.setOnClickListener(action);
     }
 
     public void setEditSaveAction(final OnClickListener action) {
-        editSaveView.setOnClickListener(view -> action.onClick(view));
+        editSaveView.setOnClickListener(action);
     }
 
     public void setEditSaveColor(int color) {
