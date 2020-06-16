@@ -1,56 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?><!-- Change to LinearLayout for preview to work -->
 
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:filterTouchesWhenObscured="true"
-    android:gravity="center_vertical"
-    android:minHeight="56dp">
+    android:minHeight="56dp"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/bar_submit_edit_cancel"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:textAppearance="@style/TextStyle8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:padding="20dp"
         android:text="@string/rsb_consent_review_cancel"
+        android:textAllCaps="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="Cancel" />
-
-    <Space
-        android:id="@+id/_space"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/bar_submit_negative"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:textAppearance="@style/TextStyle8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:textAllCaps="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/bar_submit_edit_cancel"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="EXIT" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/bar_submit_postitive"
+        android:id="@+id/bar_submit_positive"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:textAppearance="@style/TextStyle8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="20dp"
+        android:textAllCaps="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="Submit" />
-
-    <Space
-        android:id="@+id/edit_space_view"
-        android:layout_width="0dp"
-        android:visibility="gone"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/bar_submit_edit_save"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:textAppearance="@style/TextStyle8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:textAllCaps="true"
+        android:gravity="center"
+        android:padding="20dp"
         android:text="@string/rsb_consent_review_save"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="Save" />
 
 </merge>
