@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.Parcelable;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
-import android.text.Html;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -186,12 +185,12 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         if (questionStep != null) {
             if (!TextUtils.isEmpty(questionStep.getTitle())) {
                 title.setVisibility(View.VISIBLE);
-                title.setText(HtmlCompat.fromHtml(questionStep.getTitle(), HtmlCompat.FROM_HTML_MODE_LEGACY));
+                title.setText(HtmlCompat.fromHtml(questionStep.getTitle(), HtmlCompat.FROM_HTML_MODE_COMPACT));
             }
 
             if (!TextUtils.isEmpty(questionStep.getText())) {
                 summary.setVisibility(View.VISIBLE);
-                summary.setText(HtmlCompat.fromHtml(questionStep.getText(),HtmlCompat.FROM_HTML_MODE_LEGACY));
+                summary.setText(HtmlCompat.fromHtml(questionStep.getText(), HtmlCompat.FROM_HTML_MODE_COMPACT));
                 summary.setMovementMethod(new TextViewLinkHandler() {
                     @Override
                     public void onLinkClick(String url) {
