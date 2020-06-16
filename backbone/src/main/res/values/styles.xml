@@ -221,4 +221,58 @@
         <item name="android:lineSpacingMultiplier">@dimen/rsb_reviewStep_item_answer_line_spacing_multiplier</item>
     </style>
 
+
+    <!-- Add all style from zeplin -->
+    <style name="H5SelectedOnSecondaryHighEmphasisLeft">
+        <item name="android:textSize">24sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/black_87</item>
+    </style>
+
+    <style name="TextStyle3">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:letterSpacing">0.03</item>
+        <item name="android:lineSpacingExtra">12sp</item>
+        <item name="android:textColor">@color/black_60</item>
+    </style>
+
+    <style name="TextStyle4">
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:textColor">@color/black_87</item>
+    </style>
+
+    <style name="TextStyle11">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:lineSpacingExtra">8sp</item>
+        <item name="android:textColor">@color/black_87</item>
+    </style>
+
+    <style name="TextStyle">
+        <item name="android:gravity">end</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:letterSpacing">0.09</item>
+        <item name="android:lineSpacingExtra">2sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TextStyle8">
+        <item name="android:gravity">end</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:letterSpacing">0.09</item>
+        <item name="android:lineSpacingExtra">2sp</item>
+        <item name="android:textColor">@color/black_38</item>
+    </style>
 </resources>

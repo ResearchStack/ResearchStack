@@ -71,7 +71,6 @@ android {
         }
     }
 
-    resourcePrefix 'rsb_'
 }
 
 dependencies {
