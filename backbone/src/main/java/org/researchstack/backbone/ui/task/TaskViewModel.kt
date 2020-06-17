@@ -24,6 +24,8 @@ import java.util.Date
 import java.util.Stack
 import kotlin.properties.Delegates
 
+@Deprecated("Deprecated as part of the new handling for the branching logic",
+        ReplaceWith("com.medable.axon.ui.taskrunner.NRSTaskViewModel"))
 internal class TaskViewModel(val context: Application, intent: Intent) : AndroidViewModel(context) {
 
     var editing: Boolean by Delegates.observable(false) { _, _, newValue ->
