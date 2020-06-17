@@ -36,10 +36,13 @@
         tools:visibility="visible" />
 
     <View
+        android:id="@+id/rsb_divider"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_marginTop="@dimen/rsb_margin_top_extra_small"
         android:background="@color/very_light_pink_six"
+        android:visibility="gone"
+        tools:visibility="visible"
         />
 
     <Space
