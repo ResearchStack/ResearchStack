@@ -27,7 +27,10 @@ import java.util.Set;
  * OrderedTask or NavigableOrderedTask and override particular {@link Task} methods than it
  * is to implement a new Task subclass directly. Override the methods {@link #getStepAfterStep} and
  * {@link #getStepBeforeStep}, and call super for all other methods.
+ *
+ * @deprecated use Axon's Task class instead
  */
+@Deprecated
 public class OrderedTask extends Task implements Serializable {
     protected List<Step> steps;
     /**

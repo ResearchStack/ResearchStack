@@ -27,7 +27,10 @@ import java.util.List;
  * to answer the question. Another example is {@link org.researchstack.backbone.step.FormStep},
  * which corresponds to a single screen that displays multiple questions or items for which
  * participants provide information, such as first name, last name, and birth date.
+ *
+ * @deprecated use Axon's Task class instead
  */
+@Deprecated
 public abstract class Task implements Serializable {
     private String identifier;
     /**
