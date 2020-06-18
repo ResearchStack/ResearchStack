@@ -275,4 +275,11 @@
         <item name="android:lineSpacingExtra">2sp</item>
         <item name="android:textColor">@color/black_38</item>
     </style>
+
+    <style name="TextStyle2">
+        <item name="android:textSize">24sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/black_87</item>
+    </style>
 </resources>

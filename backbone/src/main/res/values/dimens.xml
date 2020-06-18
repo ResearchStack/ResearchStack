@@ -11,6 +11,7 @@
     <dimen name="rsb_item_size_default">@dimen/rsb_item_size_small</dimen>
     <dimen name="rsb_item_size_divider">1dp</dimen>
     <!-- Item Margin -->
+    <dimen name="rsb_margin_top_10">10dp</dimen>
     <dimen name="rsb_margin_top_extra_small">12dp</dimen>
     <dimen name="rsb_margin_top_small">14dp</dimen>
     <dimen name="rsb_margin_top_large">20dp</dimen>
