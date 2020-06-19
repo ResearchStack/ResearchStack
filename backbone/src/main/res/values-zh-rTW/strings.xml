@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Debug -->
 
     <!-- Consent Section -->
@@ -102,19 +102,49 @@
     <string name="rsb_consent_role">參與者</string>
 
     <!-- Edit -->
-    <string name="rsb_consent_review_save">[zh-TW] Save</string>
-    <string name="rsb_edit_step_alert_cancel_positive">[zh-TW] YES, STOP MAKING CHANGES</string>
-    <string name="rsb_edit_step_alert_cancel_discard">[zh-TW] NO, KEEP EDITING</string>
-    <string name="rsb_edit_step_alert_cancel_title">[zh-TW] Do you want to stop making changes?</string>
-    <string name="rsb_edit_step_alert_cancel_content">[zh-TW] All changes will be discarded and your original response will be used.</string>
-    <string name="rsb_edit_step_alert_step_save_title">[zh-TW] Do you want to save your changes?</string>
-    <string name="rsb_edit_step_alert_step_save_content">[zh-TW] Other responses may be cleared and you may be asked to submit new information.</string>
-    <string name="rsb_edit_step_alert_step_save_discard">[zh-TW] No, Discard</string>
-    <string name="rsb_edit_step_alert_step_save_positive">[zh-TW] Yes, Save</string>
-    <string name="rsb_edit_step_alert_step_skip_title">[zh-TW] Do you want to skip this step?</string>
-    <string name="rsb_edit_step_alert_step_skip_content">[zh-TW] Your original response will be discarded..</string>
-    <string name="rsb_edit_step_alert_step_skip_discard">[zh-TW] NO, DON\'T SKIP</string>
-    <string name="rsb_edit_step_alert_step_skip_positive">[zh-TW] Yes, skip</string>
-    <string name="rsb_edit_step">[zh-TW] Edit</string>
+    <string name="rsb_consent_review_save">保存</string>
+    <string name="rsb_edit_step_alert_cancel_positive">是的，停止變更</string>
+    <string name="rsb_edit_step_alert_cancel_discard">不，繼續編輯</string>
+    <string name="rsb_edit_step_alert_cancel_title">您想停止變更嗎?</string>
+    <string name="rsb_edit_step_alert_cancel_content">所有的變更都將被放棄，將會採用原始響應</string>
+    <string name="rsb_edit_step_alert_step_save_title">您想保存您的變更嗎?</string>
+    <string name="rsb_edit_step_alert_step_save_content">其他的響應可能會被清除，您可能會被要求提交新的訊息</string>
+    <string name="rsb_edit_step_alert_step_save_discard">不，放棄變更</string>
+    <string name="rsb_edit_step_alert_step_save_positive">是的，保存變更</string>
+    <string name="rsb_edit_step_alert_step_skip_title">您想略過這一步嗎?</string>
+    <string name="rsb_edit_step_alert_step_skip_content">您的原始響應將會被放棄</string>
+    <string name="rsb_edit_step_alert_step_skip_discard">不，不要略過</string>
+    <string name="rsb_edit_step_alert_step_skip_positive">是的，略過</string>
+    <string name="rsb_edit_step">編輯</string>
+    <string name="mtrl_picker_range_header_title" tools:ignore="ResourceName" tools:override="true">選擇日期範圍</string>
+    <string name="mtrl_picker_date_header_title" tools:ignore="ResourceName" tools:override="true">選擇日期</string>
+    <string name="mtrl_picker_range_header_unselected" tools:ignore="ResourceName" tools:override="true">開始日期 – 結束日期</string>
+    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">％1$s – 結束日期</string>
+    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">開始日期 – ％1$s</string>
+    <string name="mtrl_picker_range_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s – %2$s</string>
+    <string name="mtrl_picker_date_header_unselected" tools:ignore="ResourceName" tools:override="true">選定日期</string>
+    <string name="mtrl_picker_text_input_date_hint" tools:ignore="ResourceName" tools:override="true">日期</string>
+    <string name="mtrl_picker_text_input_date_range_start_hint" tools:ignore="ResourceName" tools:override="true">開始日期</string>
+    <string name="mtrl_picker_text_input_date_range_end_hint" tools:ignore="ResourceName" tools:override="true">結束日期</string>
+    <string name="mtrl_picker_save" tools:ignore="ResourceName" tools:override="true">救</string>
+    <string name="mtrl_picker_invalid_range" tools:ignore="ResourceName" tools:override="true">範圍無效。</string>
+    <string name="mtrl_picker_out_of_range" tools:ignore="ResourceName" tools:override="true">超出範圍：％1$s</string>
+    <string name="mtrl_picker_invalid_format" tools:ignore="ResourceName" tools:override="true">無效的格式。</string>
+    <string name="mtrl_picker_invalid_format_use" tools:ignore="ResourceName" tools:override="true">使用：％1$s</string>
+    <string name="mtrl_picker_invalid_format_example" tools:ignore="ResourceName" tools:override="true">示例：％1$s</string>
+    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:ignore="ResourceName" tools:override="true">切換到日曆輸入模式</string>
+    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">切換至文字輸入模式</string>
+    <string name="mtrl_picker_a11y_prev_month" tools:ignore="ResourceName" tools:override="true">更改為上個月</string>
+    <string name="mtrl_picker_a11y_next_month" tools:ignore="ResourceName" tools:override="true">改到下個月</string>
+    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">點按即可切換到選擇年份</string>
+    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">點按即可切換到選擇日期</string>
+    <string name="mtrl_picker_day_of_week_column_header" tools:ignore="ResourceName" tools:override="true">天列：％1$s</string>
+    <string name="mtrl_picker_announce_current_selection" tools:ignore="ResourceName" tools:override="true">當前選擇：％1$s</string>
+    <string name="mtrl_picker_navigate_to_year_description" tools:ignore="ResourceName" tools:override="true">導航至 ％1$s 年</string>
+    <string name="time_picker_hour_label" tools:ignore="ResourceName" tools:override="true">小時</string>
+    <string name="time_picker_minute_label" tools:ignore="ResourceName" tools:override="true">分鐘</string>
+    <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">設置時間</string>
+    <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">輸入有效時間</string>
+    <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">輸入時間</string>
 
 </resources>

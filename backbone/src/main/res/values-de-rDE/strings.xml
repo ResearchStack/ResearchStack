@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Debug -->
 
     <!-- Consent Section -->
@@ -103,19 +103,54 @@
     <string name="rsb_consent_role">Teilnehmer</string>
 
     <!-- Edit -->
-    <string name="rsb_edit_step_alert_cancel_positive">[de-DE] YES, STOP MAKING CHANGES</string>
-    <string name="rsb_edit_step_alert_cancel_discard">[de-DE] NO, KEEP EDITING</string>
-    <string name="rsb_edit_step_alert_cancel_title">[de-DE] Do you want to stop making changes?</string>
-    <string name="rsb_edit_step_alert_cancel_content">[de-DE] All changes will be discarded and your original response will be used.</string>
-    <string name="rsb_edit_step_alert_step_save_title">[de-DE] Do you want to save your changes?</string>
-    <string name="rsb_edit_step_alert_step_save_content">[de-DE] Other responses may be cleared and you may be asked to submit new information.</string>
-    <string name="rsb_edit_step_alert_step_save_discard">[de-DE] No, Discard</string>
-    <string name="rsb_edit_step_alert_step_save_positive">[de-DE] Yes, Save</string>
-    <string name="rsb_consent_review_save">[de-DE] Save</string>
-    <string name="rsb_edit_step_alert_step_skip_title">[de-DE] Do you want to skip this step?</string>
-    <string name="rsb_edit_step_alert_step_skip_content">[de-DE] Your original response will be discarded.</string>
-    <string name="rsb_edit_step_alert_step_skip_discard">[de-DE] NO, DON\'T SKIP</string>
-    <string name="rsb_edit_step_alert_step_skip_positive">[de-DE] Yes, skip</string>
-    <string name="rsb_edit_step">[de-DE] Edit</string>
+    <string name="rsb_edit_step_alert_cancel_positive">JA, KEINE ÄNDERUNGEN MEHR VORNEHMEN</string>
+    <string name="rsb_edit_step_alert_cancel_discard">NEIN, WEITER BEARBEITEN</string>
+    <string name="rsb_edit_step_alert_cancel_title">Möchten Sie aufhören, Änderungen vorzunehmen?</string>
+    <string name="rsb_edit_step_alert_cancel_content">Alle Änderungen werden verworfen und Ihre ursprüngliche Antwort wird verwendet.</string>
+    <string name="rsb_edit_step_alert_step_save_title">Möchten Sie Ihre Änderungen speichern?</string>
+    <string name="rsb_edit_step_alert_step_save_content">Andere Antworten können gelöscht werden und Sie werden möglicherweise aufgefordert, neue Informationen einzureichen.</string>
+    <string name="rsb_edit_step_alert_step_save_discard">Nein, verwerfen</string>
+    <string name="rsb_edit_step_alert_step_save_positive">Ja, speichern</string>
+    <string name="rsb_consent_review_save">Speichern</string>
+    <string name="rsb_edit_step_alert_step_skip_title">Möchten Sie diesen Arbeitsschritt überspringen?</string>
+    <string name="rsb_edit_step_alert_step_skip_content">Ihre ursprüngliche Antwort wird verworfen.</string>
+    <string name="rsb_edit_step_alert_step_skip_discard">NEIN, NICHT ÜBERSPRINGEN</string>
+    <string name="rsb_edit_step_alert_step_skip_positive">Ja, überspringen</string>
+    <string name="rsb_edit_step">Bearbeiten</string>
 
+    <!-- Material Date Picker Strings -->
+    <string name="mtrl_picker_range_header_title" tools:ignore="ResourceName" tools:override="true">Wählen Sie einen Datumsbereich</string>
+    <string name="mtrl_picker_date_header_title" tools:ignore="ResourceName" tools:override="true">Wählen Sie ein Datum</string>
+    <string name="mtrl_picker_range_header_unselected" tools:ignore="ResourceName" tools:override="true">Anfangsdatum - Enddatum</string>
+    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">%1$s – Enddatum</string>
+    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">Anfangsdatum – %1$s</string>
+    <string name="mtrl_picker_range_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s – %2$s</string>
+    <string name="mtrl_picker_date_header_unselected" tools:ignore="ResourceName" tools:override="true">Ausgewähltes Datum</string>
+    <string name="mtrl_picker_date_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s</string>
+    <string name="mtrl_picker_confirm" tools:ignore="ResourceName" tools:override="true">@android:string/ok</string>
+    <string name="mtrl_picker_text_input_date_hint" tools:ignore="ResourceName" tools:override="true">Datum</string>
+    <string name="mtrl_picker_text_input_date_range_start_hint" tools:ignore="ResourceName" tools:override="true">Anfangsdatum</string>
+    <string name="mtrl_picker_text_input_date_range_end_hint" tools:ignore="ResourceName" tools:override="true">Enddatum</string>
+    <string name="mtrl_picker_save" tools:ignore="ResourceName" tools:override="true">Speichern</string>
+    <string name="mtrl_picker_invalid_range" tools:ignore="ResourceName" tools:override="true">Ungültiger Bereich.</string>
+    <string name="mtrl_picker_out_of_range" tools:ignore="ResourceName" tools:override="true">Außer Reichweite: %1$s</string>
+    <string name="mtrl_picker_invalid_format" tools:ignore="ResourceName" tools:override="true">Ungültiges Format.</string>
+    <string name="mtrl_picker_invalid_format_use" tools:ignore="ResourceName" tools:override="true">Verwenden: %1$s</string>
+    <string name="mtrl_picker_invalid_format_example" tools:ignore="ResourceName" tools:override="true">Beispiel: %1$s</string>
+    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:ignore="ResourceName" tools:override="true">Wechseln Sie in den Kalender-Eingabemodus</string>
+    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">Wechseln Sie in den Texteingabemodus</string>
+    <string name="mtrl_picker_a11y_prev_month" tools:ignore="ResourceName" tools:override="true">Zum Vormonat wechseln</string>
+    <string name="mtrl_picker_a11y_next_month" tools:ignore="ResourceName" tools:override="true">Wechseln Sie zum nächsten Monat</string>
+    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">Tippen Sie hier, um zur Auswahl eines Jahres zu wechseln</string>
+    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">Tippen Sie hier, um zur Auswahl eines Tages zu wechseln</string>
+    <string name="mtrl_picker_day_of_week_column_header" tools:ignore="ResourceName" tools:override="true">Spalte der Tage: %1$s</string>
+    <string name="mtrl_picker_announce_current_selection" tools:ignore="ResourceName" tools:override="true">Aktuelle Auswahl: %1$s</string>
+    <string name="mtrl_picker_navigate_to_year_description" tools:ignore="ResourceName" tools:override="true">Zum Jahr navigieren %1$s</string>
+    ​
+    <!-- Material Time Picker Strings -->
+    <string name="time_picker_hour_label" tools:ignore="ResourceName" tools:override="true">stunde</string>
+    <string name="time_picker_minute_label" tools:ignore="ResourceName" tools:override="true">minute</string>
+    <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">Zeit einstellen</string>
+    <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">Geben Sie eine gültige Zeit ein</string>
+    <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Geben Sie die Zeit ein</string>
 </resources>

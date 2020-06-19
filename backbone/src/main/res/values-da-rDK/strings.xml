@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Debug -->
 
     <!-- Consent Section -->
@@ -102,18 +102,54 @@
     <string name="rsb_consent_role">Deltager</string>
 
     <!-- Edit -->
-    <string name="rsb_edit_step_alert_cancel_positive">[da-DK] YES, STOP MAKING CHANGES</string>
-    <string name="rsb_edit_step_alert_cancel_discard">[da-DK] NO, KEEP EDITING</string>
-    <string name="rsb_edit_step_alert_cancel_title">[da-DK] Do you want to stop making changes?</string>
-    <string name="rsb_edit_step_alert_cancel_content">[da-DK] All changes will be discarded and your original response will be used.</string>
-    <string name="rsb_edit_step_alert_step_save_title">[da-DK] Do you want to save your changes?</string>
-    <string name="rsb_edit_step_alert_step_save_content">[da-DK] Other responses may be cleared and you may be asked to submit new information.</string>
-    <string name="rsb_edit_step_alert_step_save_discard">[da-DK] No, Discard</string>
-    <string name="rsb_edit_step_alert_step_save_positive">[da-DK] Yes, Save</string>
-    <string name="rsb_consent_review_save">[da-DK] Save</string>
-    <string name="rsb_edit_step_alert_step_skip_title">[da-DK] Do you want to skip this step?</string>
-    <string name="rsb_edit_step_alert_step_skip_content">[da-DK] Your original response will be discarded.</string>
-    <string name="rsb_edit_step_alert_step_skip_discard">[da-DK] NO, DON\'T SKIP</string>
-    <string name="rsb_edit_step_alert_step_skip_positive">[da-DK] Yes, skip</string>
-    <string name="rsb_edit_step">[da-DK] Edit</string>
+    <string name="rsb_edit_step_alert_cancel_positive">JA, STOP ÆNDRINGER</string>
+    <string name="rsb_edit_step_alert_cancel_discard">NEJ, FORTSÆT ÆNDRINGER</string>
+    <string name="rsb_edit_step_alert_cancel_title">Vil du fortsætte med at foretage ændringer?</string>
+    <string name="rsb_edit_step_alert_cancel_content">Alle ændringer vil blive slettet, og dit oprindelige svar vil blive brugt.</string>
+    <string name="rsb_edit_step_alert_step_save_title">Vil du gemme dine ændringer?</string>
+    <string name="rsb_edit_step_alert_step_save_content">Andre svar kan blive slettet, og du kan blive bedt om at indtaste nye oplysninger.</string>
+    <string name="rsb_edit_step_alert_step_save_discard">Nej, slet</string>
+    <string name="rsb_edit_step_alert_step_save_positive">Ja, gem</string>
+    <string name="rsb_consent_review_save">Gem</string>
+    <string name="rsb_edit_step_alert_step_skip_title">Vil du springe dette trin over?</string>
+    <string name="rsb_edit_step_alert_step_skip_content">Dit oprindelige svar vil blive slettet.</string>
+    <string name="rsb_edit_step_alert_step_skip_discard">NEJ, SPRING IKKE OVER</string>
+    <string name="rsb_edit_step_alert_step_skip_positive">Ja, spring over</string>
+    <string name="rsb_edit_step">Redigér</string>
+
+    <!-- Material Date Picker Strings -->
+    <string name="mtrl_picker_range_header_title" tools:ignore="ResourceName" tools:override="true">Vælg et datointerval</string>
+    <string name="mtrl_picker_date_header_title" tools:ignore="ResourceName" tools:override="true">Vælg en dato</string>
+    <string name="mtrl_picker_range_header_unselected" tools:ignore="ResourceName" tools:override="true">Startdato - Slutdato</string>
+    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">%1$s – Slutdato</string>
+    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">Start dato – %1$s</string>
+    <string name="mtrl_picker_range_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s – %2$s</string>
+    <string name="mtrl_picker_date_header_unselected" tools:ignore="ResourceName" tools:override="true">Valgt dato</string>
+    <string name="mtrl_picker_date_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s</string>
+    <string name="mtrl_picker_confirm" tools:ignore="ResourceName" tools:override="true">@android:string/ok</string>
+    <string name="mtrl_picker_text_input_date_hint" tools:ignore="ResourceName" tools:override="true">Dato</string>
+    <string name="mtrl_picker_text_input_date_range_start_hint" tools:ignore="ResourceName" tools:override="true">Start dato</string>
+    <string name="mtrl_picker_text_input_date_range_end_hint" tools:ignore="ResourceName" tools:override="true">Slutdato</string>
+    <string name="mtrl_picker_save" tools:ignore="ResourceName" tools:override="true">Spare</string>
+    <string name="mtrl_picker_invalid_range" tools:ignore="ResourceName" tools:override="true">Ugyldigt interval.</string>
+    <string name="mtrl_picker_out_of_range" tools:ignore="ResourceName" tools:override="true">Uden for rækkevidde: %1$s</string>
+    <string name="mtrl_picker_invalid_format" tools:ignore="ResourceName" tools:override="true">Ugyldigt format.</string>
+    <string name="mtrl_picker_invalid_format_use" tools:ignore="ResourceName" tools:override="true">Brug: %1$s</string>
+    <string name="mtrl_picker_invalid_format_example" tools:ignore="ResourceName" tools:override="true">Eksempel: %1$s</string>
+    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:ignore="ResourceName" tools:override="true">Skift til kalenderinputtilstand</string>
+    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">Skift til tekstindtastningstilstand</string>
+    <string name="mtrl_picker_a11y_prev_month" tools:ignore="ResourceName" tools:override="true">Skift til forrige måned</string>
+    <string name="mtrl_picker_a11y_next_month" tools:ignore="ResourceName" tools:override="true">Skift til næste måned</string>
+    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">Tryk for at skifte til valg af et år</string>
+    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">Tryk for at skifte til valg af en dag</string>
+    <string name="mtrl_picker_day_of_week_column_header" tools:ignore="ResourceName" tools:override="true">Kolonne af dage: %1$s</string>
+    <string name="mtrl_picker_announce_current_selection" tools:ignore="ResourceName" tools:override="true">Aktuelt valg: %1$s</string>
+    <string name="mtrl_picker_navigate_to_year_description" tools:ignore="ResourceName" tools:override="true">Naviger til år %1$s</string>
+    ​
+    <!-- Material Time Picker Strings -->
+    <string name="time_picker_hour_label" tools:ignore="ResourceName" tools:override="true">time</string>
+    <string name="time_picker_minute_label" tools:ignore="ResourceName" tools:override="true">minut</string>
+    <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">Fastsat tidspunkt</string>
+    <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">Indtast et gyldigt tidspunkt</string>
+    <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Skriv tid</string>
 </resources>

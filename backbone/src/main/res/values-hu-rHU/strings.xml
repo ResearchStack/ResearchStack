@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Consent Section -->
     <string name="rsb_consent">Hozzájárulás</string>
@@ -109,21 +109,50 @@
     <string name="rsb_consent_doc_line_signature">%1$s\'s Aláírás</string>
     <string name="rsb_consent_doc_line_date">Dátum</string>
     <string name="rsb_consent_role">Résztvevő</string>
-
     <!-- Edit -->
-    <string name="rsb_edit_step_alert_cancel_positive">[hu-HU] YES, STOP MAKING CHANGES</string>
-    <string name="rsb_edit_step_alert_cancel_discard">[hu-HU] NO, KEEP EDITING</string>
-    <string name="rsb_edit_step_alert_cancel_title">[hu-HU] Do you want to stop making changes?</string>
-    <string name="rsb_edit_step_alert_cancel_content">[hu-HU] All changes will be discarded and your original response will be used.</string>
-    <string name="rsb_edit_step_alert_step_save_title">[hu-HU] Do you want to save your changes?</string>
-    <string name="rsb_edit_step_alert_step_save_content">[hu-HU] Other responses may be cleared and you may be asked to submit new information.</string>
-    <string name="rsb_edit_step_alert_step_save_discard">[hu-HU] No, Discard</string>
-    <string name="rsb_edit_step_alert_step_save_positive">[hu-HU] Yes, Save</string>
-    <string name="rsb_consent_review_save">[hu-HU] Save</string>
-    <string name="rsb_edit_step_alert_step_skip_title">[hu-HU] Do you want to skip this step?</string>
-    <string name="rsb_edit_step_alert_step_skip_content">[hu-HU] Your original response will be discarded.</string>
-    <string name="rsb_edit_step_alert_step_skip_discard">[hu-HU] NO, DON\'T SKIP</string>
-    <string name="rsb_edit_step_alert_step_skip_positive">[hu-HU] Yes, skip</string>
-    <string name="rsb_edit_step">[hu-HU] Edit</string>
+    <string name="rsb_edit_step_alert_cancel_positive">IGEN, A MÓDOSÍTÁSOK LEÁLLÍTÁSA</string>
+    <string name="rsb_edit_step_alert_cancel_discard">NEM, FOLYTASSA A SZERKESZTÉST</string>
+    <string name="rsb_edit_step_alert_cancel_title">Szeretné abbahagyni a módosítást?</string>
+    <string name="rsb_edit_step_alert_cancel_content">Minden módosítást elvetünk, és az eredeti válaszát használjuk fel.</string>
+    <string name="rsb_edit_step_alert_step_save_title">Menti a módosításokat?</string>
+    <string name="rsb_edit_step_alert_step_save_content">Előfordulhat, hogy az egyéb válaszokat töröljük, és arra kérjük, hogy küldjön be új információkat.</string>
+    <string name="rsb_edit_step_alert_step_save_discard">Nem, elvetés</string>
+    <string name="rsb_edit_step_alert_step_save_positive">Igen, mentés</string>
+    <string name="rsb_consent_review_save">Mentés</string>
+    <string name="rsb_edit_step_alert_step_skip_title">Kihagyja ezt a lépést?</string>
+    <string name="rsb_edit_step_alert_step_skip_content">Az eredeti válaszát elvetjük.</string>
+    <string name="rsb_edit_step_alert_step_skip_discard">NEM, NE HAGYJA KI</string>
+    <string name="rsb_edit_step_alert_step_skip_positive">Igen, kihagyom</string>
+    <string name="rsb_edit_step">Szerkesztés</string>
+    <string name="mtrl_picker_range_header_title" tools:ignore="ResourceName" tools:override="true">Válasszon egy dátumtartományt</string>
+    <string name="mtrl_picker_date_header_title" tools:ignore="ResourceName" tools:override="true">Válasszon egy dátumot</string>
+    <string name="mtrl_picker_range_header_unselected" tools:ignore="ResourceName" tools:override="true">Kezdő dátum - záró dátum</string>
+    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">%1$s - záró dátum</string>
+    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">Kezdési dátum - %1$s</string>
+    <string name="mtrl_picker_range_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s - %2$s</string>
+    <string name="mtrl_picker_date_header_unselected" tools:ignore="ResourceName" tools:override="true">Kiválasztott dátum</string>
+    <string name="mtrl_picker_text_input_date_hint" tools:ignore="ResourceName" tools:override="true">Dátum</string>
+    <string name="mtrl_picker_text_input_date_range_start_hint" tools:ignore="ResourceName" tools:override="true">Kezdő dátum</string>
+    <string name="mtrl_picker_text_input_date_range_end_hint" tools:ignore="ResourceName" tools:override="true">Záró dátum</string>
+    <string name="mtrl_picker_save" tools:ignore="ResourceName" tools:override="true">Megment</string>
+    <string name="mtrl_picker_invalid_range" tools:ignore="ResourceName" tools:override="true">Érvénytelen tartomány.</string>
+    <string name="mtrl_picker_out_of_range" tools:ignore="ResourceName" tools:override="true">Tartományon kívül: %1$s</string>
+    <string name="mtrl_picker_invalid_format" tools:ignore="ResourceName" tools:override="true">Érvénytelen formátum.</string>
+    <string name="mtrl_picker_invalid_format_use" tools:ignore="ResourceName" tools:override="true">Használat: %1$s</string>
+    <string name="mtrl_picker_invalid_format_example" tools:ignore="ResourceName" tools:override="true">Példa: %1$s</string>
+    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:ignore="ResourceName" tools:override="true">Váltás naptárbeviteli módra</string>
+    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">Váltás szöveges beviteli módra</string>
+    <string name="mtrl_picker_a11y_prev_month" tools:ignore="ResourceName" tools:override="true">Váltás az előző hónapra</string>
+    <string name="mtrl_picker_a11y_next_month" tools:ignore="ResourceName" tools:override="true">Váltás a következő hónapra</string>
+    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">Koppintson az év kiválasztására</string>
+    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">Koppintson a nap kiválasztására</string>
+    <string name="mtrl_picker_day_of_week_column_header" tools:ignore="ResourceName" tools:override="true">Napok oszlopa: %1$s</string>
+    <string name="mtrl_picker_announce_current_selection" tools:ignore="ResourceName" tools:override="true">Jelenlegi választás: %1$s</string>
+    <string name="mtrl_picker_navigate_to_year_description" tools:ignore="ResourceName" tools:override="true">Keresse meg a (z) %1$s évet</string>
+    <string name="time_picker_hour_label" tools:ignore="ResourceName" tools:override="true">óra</string>
+    <string name="time_picker_minute_label" tools:ignore="ResourceName" tools:override="true">perc</string>
+    <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">Beállítani az időt</string>
+    <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">Adjon meg egy érvényes időt</string>
+    <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Írja be az időt</string>
 
 </resources>

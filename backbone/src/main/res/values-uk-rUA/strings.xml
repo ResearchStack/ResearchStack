@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Consent Section -->
     <string name="rsb_consent">Згода</string>
     <string name="rsb_consent_section_welcome">Ласкаво просимо</string>
@@ -100,18 +100,48 @@
     <string name="rsb_consent_role">Учасник</string>
 
     <!-- Edit -->
-    <string name="rsb_edit_step_alert_cancel_positive">[uk-UA] YES, STOP MAKING CHANGES</string>
-    <string name="rsb_edit_step_alert_cancel_discard">[uk-UA] NO, KEEP EDITING</string>
-    <string name="rsb_edit_step_alert_cancel_title">[uk-UA] Do you want to stop making changes?</string>
-    <string name="rsb_edit_step_alert_cancel_content">[uk-UA] All changes will be discarded and your original response will be used.</string>
-    <string name="rsb_edit_step_alert_step_save_title">[uk-UA] Do you want to save your changes?</string>
-    <string name="rsb_edit_step_alert_step_save_content">[uk-UA] Other responses may be cleared and you may be asked to submit new information.</string>
-    <string name="rsb_edit_step_alert_step_save_discard">[uk-UA] No, Discard</string>
-    <string name="rsb_edit_step_alert_step_save_positive">[uk-UA] Yes, Save</string>
-    <string name="rsb_consent_review_save">[uk-UA] Save</string>
-    <string name="rsb_edit_step_alert_step_skip_title">[uk-UA] Do you want to skip this step?</string>
-    <string name="rsb_edit_step_alert_step_skip_content">[uk-UA] Your original response will be discarded..</string>
-    <string name="rsb_edit_step_alert_step_skip_discard">[uk-UA] NO, DON\'T SKIP</string>
-    <string name="rsb_edit_step_alert_step_skip_positive">[uk-UA] Yes, skip</string>
-    <string name="rsb_edit_step">[uk-UA] Edit</string>
+    <string name="rsb_edit_step_alert_cancel_positive">ТАК, ПРИПИНИТИ ВНЕСЕННЯ ЗМІН</string>
+    <string name="rsb_edit_step_alert_cancel_discard">НІ, ПРОДОВЖИТИ РЕДАГУВАННЯ</string>
+    <string name="rsb_edit_step_alert_cancel_title">Ви хочете припинити внесення змін?</string>
+    <string name="rsb_edit_step_alert_cancel_content">Усі зміни буде скасовано, і буде використана ваша вихідна відповідь.</string>
+    <string name="rsb_edit_step_alert_step_save_title">Ви хочете зберегти внесені Вами зміни?</string>
+    <string name="rsb_edit_step_alert_step_save_content">Інші відповіді можуть бути видалені, і вас можуть попросити подати нову інформацію.</string>
+    <string name="rsb_edit_step_alert_step_save_discard">Ні, скасувати</string>
+    <string name="rsb_edit_step_alert_step_save_positive">Так, зберегти</string>
+    <string name="rsb_consent_review_save">Зберегти</string>
+    <string name="rsb_edit_step_alert_step_skip_title">Ви хочете пропустити цей крок?</string>
+    <string name="rsb_edit_step_alert_step_skip_content">Вашу вихідну відповідь буде відхилено.</string>
+    <string name="rsb_edit_step_alert_step_skip_discard">НІ, НЕ ПРОПУСКАТИ</string>
+    <string name="rsb_edit_step_alert_step_skip_positive">Так, пропустити</string>
+    <string name="rsb_edit_step">Редагувати</string>
+    <string name="mtrl_picker_range_header_title" tools:ignore="ResourceName" tools:override="true">Виберіть діапазон дат</string>
+    <string name="mtrl_picker_date_header_title" tools:ignore="ResourceName" tools:override="true">Виберіть дату</string>
+    <string name="mtrl_picker_range_header_unselected" tools:ignore="ResourceName" tools:override="true">Дата початку - Дата закінчення</string>
+    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">%1$s - Дата закінчення</string>
+    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">Дата початку - %1$s</string>
+    <string name="mtrl_picker_range_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s - %2$s</string>
+    <string name="mtrl_picker_date_header_unselected" tools:ignore="ResourceName" tools:override="true">Вибрана дата</string>
+    <string name="mtrl_picker_text_input_date_hint" tools:ignore="ResourceName" tools:override="true">Дата</string>
+    <string name="mtrl_picker_text_input_date_range_start_hint" tools:ignore="ResourceName" tools:override="true">"Дата початку "</string>
+    <string name="mtrl_picker_text_input_date_range_end_hint" tools:ignore="ResourceName" tools:override="true">Дата закінчення</string>
+    <string name="mtrl_picker_save" tools:ignore="ResourceName" tools:override="true">Зберегти</string>
+    <string name="mtrl_picker_invalid_range" tools:ignore="ResourceName" tools:override="true">Недійсний діапазон.</string>
+    <string name="mtrl_picker_out_of_range" tools:ignore="ResourceName" tools:override="true">Поза межами діапазону: %1$s</string>
+    <string name="mtrl_picker_invalid_format" tools:ignore="ResourceName" tools:override="true">Недійсний формат.</string>
+    <string name="mtrl_picker_invalid_format_use" tools:ignore="ResourceName" tools:override="true">Використання: %1$s</string>
+    <string name="mtrl_picker_invalid_format_example" tools:ignore="ResourceName" tools:override="true">Приклад: %1$s</string>
+    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:ignore="ResourceName" tools:override="true">Перехід у режим введення календаря</string>
+    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">Перехід у режим введення тексту</string>
+    <string name="mtrl_picker_a11y_prev_month" tools:ignore="ResourceName" tools:override="true">Перехід до попереднього місяця</string>
+    <string name="mtrl_picker_a11y_next_month" tools:ignore="ResourceName" tools:override="true">Перехід на наступний місяць</string>
+    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">Торкніться, щоб перейти до вибору року</string>
+    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">Торкніться, щоб перейти до вибору дня</string>
+    <string name="mtrl_picker_day_of_week_column_header" tools:ignore="ResourceName" tools:override="true">Стовпець днів: %1$s</string>
+    <string name="mtrl_picker_announce_current_selection" tools:ignore="ResourceName" tools:override="true">Поточний вибір: %1$s</string>
+    <string name="mtrl_picker_navigate_to_year_description" tools:ignore="ResourceName" tools:override="true">Перейдіть до року %1$s</string>
+    <string name="time_picker_hour_label" tools:ignore="ResourceName" tools:override="true">година</string>
+    <string name="time_picker_minute_label" tools:ignore="ResourceName" tools:override="true">хвилина</string>
+    <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">Встановити час</string>
+    <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">Введіть дійсний час</string>
+    <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Введіть час</string>
 </resources>

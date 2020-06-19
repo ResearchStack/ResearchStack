@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Consent Section -->
     <string name="rsb_consent">동의서</string>
     <string name="rsb_consent_section_welcome">환영합니다</string>
@@ -106,18 +106,51 @@
     <string name="rsb_consent_doc_line_signature">%1$s의 서명</string>
     <string name="rsb_consent_doc_line_date">날짜</string>
     <string name="rsb_consent_role">참가자</string>
-    <string name="rsb_edit_step_alert_cancel_positive">[ko-KR] YES, STOP MAKING CHANGES</string>
-    <string name="rsb_edit_step_alert_cancel_discard">[ko-KR] NO, KEEP EDITING</string>
-    <string name="rsb_edit_step_alert_cancel_title">[ko-KR] Do you want to stop making changes?</string>
-    <string name="rsb_edit_step_alert_cancel_content">[ko-KR] All changes will be discarded and your original response will be used.</string>
-    <string name="rsb_edit_step_alert_step_save_title">[ko-KR] Do you want to save your changes?</string>
-    <string name="rsb_edit_step_alert_step_save_content">[ko-KR] Other responses may be cleared and you may be asked to submit new information.</string>
-    <string name="rsb_edit_step_alert_step_save_discard">[ko-KR] No, Discard</string>
-    <string name="rsb_edit_step_alert_step_save_positive">[ko-KR] Yes, Save</string>
-    <string name="rsb_edit_step_alert_step_skip_title">[ko-KR] Do you want to skip this step?</string>
-    <string name="rsb_edit_step_alert_step_skip_content">[ko-KR] Your original response will be discarded.</string>
-    <string name="rsb_edit_step_alert_step_skip_discard">[ko-KR] NO, DON\'T SKIP</string>
-    <string name="rsb_edit_step_alert_step_skip_positive">[ko-KR] Yes, skip</string>
-    <string name="rsb_edit_step">[ko-KR] Edit</string>
-    <string name="rsb_consent_review_save">[ko-KR] Save</string>
+
+    <!-- Edit -->
+    <string name="rsb_consent_review_save">저장</string>
+    <string name="rsb_edit_step_alert_cancel_positive">네, 더 이상 변경하지 않습니다</string>
+    <string name="rsb_edit_step_alert_cancel_discard">아니오, 계속 편집합니다</string>
+    <string name="rsb_edit_step_alert_cancel_title">더 이상 변경하지 않겠습니까?</string>
+    <string name="rsb_edit_step_alert_cancel_content">모든 변경 사항을 폐기하고 본래의 답변이 사용됩니다.</string>
+    <string name="rsb_edit_step_alert_step_save_title">변경 사항을 저장하시겠습니까?</string>
+    <string name="rsb_edit_step_alert_step_save_content">다른 응답이 삭제되고 새로운 정보를 제출해달라고 요청될 수 있습니다.</string>
+    <string name="rsb_edit_step_alert_step_save_discard">아니오, 폐기합니다</string>
+    <string name="rsb_edit_step_alert_step_save_positive">네, 저장합니다</string>
+    <string name="rsb_edit_step_alert_step_skip_title">이 단계를 건너뛰겠습니까?</string>
+    <string name="rsb_edit_step_alert_step_skip_content">본래의 답변이 폐기됩니다.</string>
+    <string name="rsb_edit_step_alert_step_skip_discard">아니오, 건너뛰지 않습니다</string>
+    <string name="rsb_edit_step_alert_step_skip_positive">네, 건너뜁니다</string>
+    <string name="rsb_edit_step">수정</string>
+    <string name="mtrl_picker_range_header_title" tools:ignore="ResourceName" tools:override="true">날짜 범위를 선택하십시오</string>
+    <string name="mtrl_picker_date_header_title" tools:ignore="ResourceName" tools:override="true">날짜를 선택하십시오</string>
+    <string name="mtrl_picker_range_header_unselected" tools:ignore="ResourceName" tools:override="true">시작일 – 종료일</string>
+    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">%1$s – 종료일</string>
+    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">시작일 – %1$s</string>
+    <string name="mtrl_picker_range_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s - %2$s</string>
+    <string name="mtrl_picker_date_header_unselected" tools:ignore="ResourceName" tools:override="true">선택된 날짜</string>
+    <string name="mtrl_picker_text_input_date_hint" tools:ignore="ResourceName" tools:override="true">데이트</string>
+    <string name="mtrl_picker_text_input_date_range_start_hint" tools:ignore="ResourceName" tools:override="true">시작일</string>
+    <string name="mtrl_picker_text_input_date_range_end_hint" tools:ignore="ResourceName" tools:override="true">종료일</string>
+    <string name="mtrl_picker_save" tools:ignore="ResourceName" tools:override="true">저장</string>
+    <string name="mtrl_picker_invalid_range" tools:ignore="ResourceName" tools:override="true">유효하지 않은 범위입니다.</string>
+    <string name="mtrl_picker_out_of_range" tools:ignore="ResourceName" tools:override="true">범위를 벗어남 : %1$s</string>
+    <string name="mtrl_picker_invalid_format" tools:ignore="ResourceName" tools:override="true">잘못된 형식입니다.</string>
+    <string name="mtrl_picker_invalid_format_use" tools:ignore="ResourceName" tools:override="true">사용: %1$s</string>
+    <string name="mtrl_picker_invalid_format_example" tools:ignore="ResourceName" tools:override="true">예 : %1$s</string>
+    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:ignore="ResourceName" tools:override="true">캘린더 입력 모드로 전환</string>
+    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">텍스트 입력 모드로 전환</string>
+    <string name="mtrl_picker_a11y_prev_month" tools:ignore="ResourceName" tools:override="true">이전 달로 변경</string>
+    <string name="mtrl_picker_a11y_next_month" tools:ignore="ResourceName" tools:override="true">다음 달로 변경</string>
+    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">연도 선택으로 전환하려면 누릅니다</string>
+    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">탭하여 요일 선택으로 전환</string>
+    <string name="mtrl_picker_day_of_week_column_header" tools:ignore="ResourceName" tools:override="true">일수 : %1$s</string>
+    <string name="mtrl_picker_announce_current_selection" tools:ignore="ResourceName" tools:override="true">현재 선택 : %1$s</string>
+    <string name="mtrl_picker_navigate_to_year_description" tools:ignore="ResourceName" tools:override="true">%1$s 연도로 이동</string>
+    <string name="time_picker_hour_label" tools:ignore="ResourceName" tools:override="true">시</string>
+    <string name="time_picker_minute_label" tools:ignore="ResourceName" tools:override="true">분</string>
+    <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">시간 설정</string>
+    <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">유효한 시간을 입력하십시오</string>
+    <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">시간 입력</string>
+
 </resources>
