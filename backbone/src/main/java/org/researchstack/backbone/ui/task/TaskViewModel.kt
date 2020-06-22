@@ -22,6 +22,7 @@ import org.researchstack.backbone.ui.task.TaskActivity.Companion.EXTRA_TASK
 import org.researchstack.backbone.ui.task.TaskActivity.Companion.EXTRA_TASK_RESULT
 import java.util.Date
 import java.util.Stack
+import java.util.UUID
 import kotlin.properties.Delegates
 
 @Deprecated("Deprecated as part of the new handling for the branching logic",
@@ -75,7 +76,7 @@ internal class TaskViewModel(val context: Application, intent: Intent) : Android
 
     init {
         taskResult = intent.extras?.get(EXTRA_TASK_RESULT) as TaskResult?
-                ?: TaskResult(task.identifier).apply { startDate = Date() }
+                ?: TaskResult(UUID.randomUUID().toString()).apply { startDate = Date() }
 
         task.validateParameters()
     }
