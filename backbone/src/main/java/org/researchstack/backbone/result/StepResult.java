@@ -57,6 +57,30 @@ public class StepResult<T> extends Result implements Cloneable {
         setEndDate(new Date());
     }
 
+    /**
+     * Creates a StepResult from known step result, start and end dates.
+     * <p>
+     * Using this constructor ensures that the StepResult has the correct identifier and answer
+     * format for the corresponding step.
+     *
+     * @param step the step used to create the StepResult
+     * @param result step result value
+     * @param startDate start date that was captured when the user started this step result
+     * @param endDate end date that was captured the last time the user modified this step
+     */
+    public StepResult(Step step, T result, Date startDate, Date endDate) {
+        super(step.getIdentifier());
+        this.results = new HashMap<>();
+
+        if (step instanceof QuestionStep) {
+            answerFormat = ((QuestionStep) step).getAnswerFormat();
+        }
+        setStartDate(startDate);
+        // this will be updated when the result is set
+        setEndDate(endDate);
+        setResultForIdentifier(DEFAULT_KEY, result);
+    }
+
     public Map<String, T> getResults() {
         return results;
     }
