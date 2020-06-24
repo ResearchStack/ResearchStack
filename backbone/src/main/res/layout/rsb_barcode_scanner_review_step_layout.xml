@@ -20,7 +20,7 @@
 
     <TextView
         android:id="@+id/barcodeStepQuestionAnswer"
-        style="@style/rsb_review_step_sub_step_answer_style"
+        style="@style/TextStyle4_BarCode"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constrainedHeight="true"

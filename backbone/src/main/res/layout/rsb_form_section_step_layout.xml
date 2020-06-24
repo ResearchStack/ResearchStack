@@ -10,8 +10,6 @@
     <TextView
         android:id="@+id/formSectionStepQuestionTitle"
         style="@style/rsb_review_step_form_step_section_title_style"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
