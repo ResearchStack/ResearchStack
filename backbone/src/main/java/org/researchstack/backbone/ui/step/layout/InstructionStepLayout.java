@@ -7,6 +7,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.core.text.HtmlCompat;
+
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.result.StepResult;
@@ -87,16 +89,16 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
 
             // Set Title
             if (!TextUtils.isEmpty(step.getTitle())) {
-                TextView title = (TextView) findViewById(R.id.rsb_intruction_title);
+                TextView title = findViewById(R.id.rsb_intruction_title);
                 title.setVisibility(View.VISIBLE);
-                title.setText(step.getTitle());
+                title.setText(HtmlCompat.fromHtml(step.getTitle(),HtmlCompat.FROM_HTML_MODE_COMPACT));
             }
 
             // Set Summary
             if (!TextUtils.isEmpty(step.getText())) {
-                TextView summary = (TextView) findViewById(R.id.rsb_intruction_text);
+                TextView summary = findViewById(R.id.rsb_intruction_text);
                 summary.setVisibility(View.VISIBLE);
-                summary.setText(Html.fromHtml(step.getText()));
+                summary.setText(HtmlCompat.fromHtml(step.getText(),HtmlCompat.FROM_HTML_MODE_COMPACT));
                 summary.setMovementMethod(new TextViewLinkHandler() {
                     @Override
                     public void onLinkClick(String url) {
@@ -111,7 +113,7 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
             }
 
             // Set Next / Skip
-            final SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
+            final SubmitBar submitBar = findViewById(R.id.rsb_submit_bar);
             submitBar.setPositiveTitle(LocalizationUtils.getLocalizedString(getContext(), R.string.rsb_next));
             submitBar.setPositiveAction(view -> {
                 callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
