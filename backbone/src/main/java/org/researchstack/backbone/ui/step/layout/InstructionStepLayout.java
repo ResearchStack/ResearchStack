@@ -86,7 +86,6 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
 
     private void initializeStep() {
         if (step != null) {
-
             // Set Title
             if (!TextUtils.isEmpty(step.getTitle())) {
                 TextView title = findViewById(R.id.rsb_intruction_title);
