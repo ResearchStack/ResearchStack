@@ -25,6 +25,8 @@
         style="@style/rsb_review_step_sub_step_answer_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/rsb_reviewStep_item_margin_form"
+        android:layout_marginEnd="@dimen/rsb_reviewStep_item_margin_form"
         android:visibility="gone"
         app:layout_constrainedHeight="true"
         app:layout_constraintEnd_toEndOf="parent"
