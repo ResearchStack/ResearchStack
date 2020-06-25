@@ -1,28 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?><!-- Change to RelativeLayout for preview to work -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:filterTouchesWhenObscured="true"
-    android:orientation="vertical">
+    android:filterTouchesWhenObscured="true">
 
     <TextView
         android:id="@+id/rsb_intruction_title"
-        style="@style/Backbone.Survey.Title"
+        style="@style/H5SelectedOnSecondaryHighEmphasisLeft"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/black_87"
         android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="@dimen/rsb_margin_left"
+        android:layout_marginEnd="@dimen/rsb_margin_right"
+        android:layout_marginTop="@dimen/rsb_margin_top_large"
         tools:text="@string/lorem_name"
         tools:visibility="visible" />
 
     <TextView
         android:id="@+id/rsb_intruction_text"
-        style="@style/Backbone.Survey.Summary"
+        style="@style/TextStyle3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColorLink="?attr/colorAccent"
+        android:textColor="@color/black_60"
+        android:layout_marginStart="@dimen/rsb_margin_left"
+        android:layout_marginEnd="@dimen/rsb_margin_right"
+        android:layout_marginTop="@dimen/rsb_margin_top_10"
         android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rsb_intruction_title"
         tools:text="@string/lorem_long"
         tools:visibility="visible" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
