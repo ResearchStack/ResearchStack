@@ -2,7 +2,6 @@ package org.researchstack.backbone.ui.step.layout;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.Html;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
@@ -90,14 +89,14 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
             if (!TextUtils.isEmpty(step.getTitle())) {
                 TextView title = findViewById(R.id.rsb_intruction_title);
                 title.setVisibility(View.VISIBLE);
-                title.setText(HtmlCompat.fromHtml(step.getTitle(),HtmlCompat.FROM_HTML_MODE_COMPACT));
+                title.setText(HtmlCompat.fromHtml(step.getTitle(), HtmlCompat.FROM_HTML_MODE_COMPACT));
             }
 
             // Set Summary
             if (!TextUtils.isEmpty(step.getText())) {
                 TextView summary = findViewById(R.id.rsb_intruction_text);
                 summary.setVisibility(View.VISIBLE);
-                summary.setText(HtmlCompat.fromHtml(step.getText(),HtmlCompat.FROM_HTML_MODE_COMPACT));
+                summary.setText(HtmlCompat.fromHtml(step.getText(), HtmlCompat.FROM_HTML_MODE_COMPACT));
                 summary.setMovementMethod(new TextViewLinkHandler() {
                     @Override
                     public void onLinkClick(String url) {
