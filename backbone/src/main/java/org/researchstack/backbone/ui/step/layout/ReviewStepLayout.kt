@@ -11,5 +11,4 @@ import org.researchstack.backbone.ui.step.ReviewStepRowClickHandler
 interface ReviewStepLayout : StepLayout {
     var clickHandler: ReviewStepRowClickHandler?
     var taskResult: TaskResult?
-    var taskSteps: List<Step>?
 }
