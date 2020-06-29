@@ -142,8 +142,10 @@
     <style name="rsb_image_capture_step_style">
         <item name="android:layout_width">220dp</item>
         <item name="android:layout_height">170dp</item>
-        <item name="android:layout_marginStart">16dp</item>
         <item name="android:scaleType">centerCrop</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginBottom">13dp</item>
     </style>
 
     <style name="rsb_image_capture_fullscreen_style">
@@ -157,67 +159,70 @@
         <item name="android:paddingBottom">@dimen/rsb_reviewStep_item_bottom_padding</item>
     </style>
 
-    <style name="rsb_review_step_list_style">
-        <item name="android:paddingStart">11dp</item>
-        <item name="android:paddingEnd">11dp</item>
-        <item name="android:paddingTop">20dp</item>
-        <item name="android:paddingBottom">20dp</item>
-    </style>
 
     <style name="rsb_review_step_title_style">
-        <item name="android:textColor">@color/rsb_black</item>
         <item name="android:textSize">32sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:paddingStart">8dp</item>
-        <item name="android:paddingEnd">8dp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="rsb_review_step_sub_title_style">
-        <item name="android:textColor">@color/rsb_warm_gray</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:paddingBottom">10dp</item>
-        <item name="android:paddingStart">8dp</item>
-        <item name="android:paddingEnd">8dp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/brownish_grey</item>
     </style>
 
     <style name="rsb_review_step_form_step_section_title_style">
         <item name="android:textColor">@color/rsb_black</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginBottom">13dp</item>
     </style>
 
     <style name="rsb_review_step_form_sub_step_title_style">
         <item name="android:textColor">@color/rsb_black</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginBottom">13dp</item>
+
     </style>
 
     <style name="rsb_review_step_sub_step_title_style">
         <item name="android:textColor">@color/rsb_black</item>
         <item name="android:textSize">18sp</item>
-        <item name="android:paddingStart">8dp</item>
-        <item name="android:paddingEnd">8dp</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginBottom">13dp</item>
     </style>
-
     <style name="rsb_review_step_sub_step_question_style">
-        <item name="android:textColor">@color/rsb_warm_gray</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:paddingStart">8dp</item>
-        <item name="android:paddingEnd">8dp</item>
         <item name="android:paddingBottom">@dimen/rsb_reviewStep_item_question_bottom_padding</item>
-        <item name="android:textStyle">italic</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/brownish_grey</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginBottom">13dp</item>
     </style>
 
     <style name="rsb_review_step_sub_step_answer_style">
-        <item name="android:background">@color/rsb_athens_gray</item>
+        <item name="android:background">@color/pale_grey</item>
         <item name="android:textColor">@color/rsb_greyish_brown</item>
+        <item name="android:fontFamily">sans-serif</item>
         <item name="android:paddingBottom">5dp</item>
         <item name="android:paddingTop">5dp</item>
         <item name="android:paddingStart">8dp</item>
         <item name="android:paddingEnd">8dp</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:textStyle">normal</item>
         <item name="android:lineSpacingMultiplier">@dimen/rsb_reviewStep_item_answer_line_spacing_multiplier</item>
     </style>
 
@@ -281,5 +286,17 @@
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/black_87</item>
+    </style>
+
+    <style name="TextStyle4_BarCode">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/rsb_greyish_brown</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:background">@color/pale_grey</item>
     </style>
 </resources>
