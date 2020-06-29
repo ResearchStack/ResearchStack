@@ -282,4 +282,28 @@
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/black_87</item>
     </style>
+    <style name="TextStyleConsentDesc">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:letterSpacing">0.03</item>
+        <item name="android:lineSpacingExtra">9sp</item>
+        <item name="android:textColor">@color/black_60</item>
+    </style>
+    <style name="TextStyle18">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:letterSpacing">0.03</item>
+        <item name="android:lineSpacingExtra">8sp</item>
+        <item name="android:textColor">@color/black_60</item>
+    </style>
+    <style name="ButtonSecondaryLeft">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:letterSpacing">0.09</item>
+        <item name="android:lineSpacingExtra">2sp</item>
+        <item name="android:textColor">@color/cerulean</item>
+    </style>
 </resources>

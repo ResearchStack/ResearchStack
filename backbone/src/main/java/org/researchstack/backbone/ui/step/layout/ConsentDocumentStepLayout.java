@@ -8,6 +8,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 
@@ -25,7 +27,7 @@ import org.researchstack.backbone.utils.LocalizationUtils;
  * {@link #stepResult}
  * {@link #confirmationDialogBody}
  */
-public class ConsentDocumentStepLayout extends LinearLayout implements StepLayout {
+public class ConsentDocumentStepLayout extends ConstraintLayout implements StepLayout {
     private StepCallbacks callbacks;
 
     private String confirmationDialogBody;
@@ -98,7 +100,6 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
     }
 
     private void initializeStep() {
-        setOrientation(VERTICAL);
         LayoutInflater.from(getContext()).inflate(R.layout.rsb_step_layout_consent_doc, this, true);
 
         WebView pdfView = findViewById(R.id.webview);
