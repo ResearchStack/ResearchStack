@@ -34,4 +34,7 @@
     <dimen name="rsb_reviewStep_item_bottom_margin_form">10dp</dimen>
     <dimen name="rsb_reviewStep_item_margin_form">8dp</dimen>
     <dimen name="rsb_formstep_divider_height">2dp</dimen>
+    <dimen name="reviewStep_itemview_margin">11dp</dimen>
+    <dimen name="reviewStep_header_itemview_margin">20dp</dimen>
+
 </resources>
