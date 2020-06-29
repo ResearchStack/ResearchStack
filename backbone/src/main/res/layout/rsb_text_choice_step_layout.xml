@@ -29,17 +29,15 @@
         app:layout_constraintTop_toBottomOf="@id/textChoiceStepQuestionTitle"
         tools:text="Question" />
 
-    <TextView
+    <LinearLayout
         android:id="@+id/textChoiceStepQuestionAnswer"
-        style="@style/rsb_review_step_sub_step_answer_style"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         app:layout_constrainedHeight="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/reviewStepEditButtonBottomBarrier"
-        tools:text="Answer" />
+        app:layout_constraintTop_toTopOf="@id/reviewStepEditButtonBottomBarrier" />
 
     <include layout="@layout/rsb_review_step_edit_button_layout" />
 </androidx.constraintlayout.widget.ConstraintLayout>
