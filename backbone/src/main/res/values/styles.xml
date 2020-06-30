@@ -60,6 +60,7 @@
     </style>
 
     <style name="Widget.Backbone.SignatureView" parent="">
+        <item name="android:background">@android:color/transparent</item>
         <item name="signatureColor">?android:attr/textColorPrimary</item>
         <item name="signaturePrintColor">@android:color/black</item>
         <item name="signatureStrokeSize">1dp</item>
