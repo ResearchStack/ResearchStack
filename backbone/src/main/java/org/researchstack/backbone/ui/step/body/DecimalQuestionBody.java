@@ -32,9 +32,7 @@ public class DecimalQuestionBody implements StepBody {
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // View Fields
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-    private int viewType;
     private EditText editText;
-    private TextInputLayout textEntry;
 
     public DecimalQuestionBody(Step step, StepResult result) {
         this.step = (QuestionStep) step;
@@ -44,8 +42,6 @@ public class DecimalQuestionBody implements StepBody {
 
     @Override
     public View getBodyView(int viewType, LayoutInflater inflater, ViewGroup parent) {
-        this.viewType = viewType;
-
         View view = getViewForType(viewType, inflater, parent);
 
         LinearLayout.MarginLayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
