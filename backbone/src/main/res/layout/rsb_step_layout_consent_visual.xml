@@ -75,6 +75,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/summary"
         android:layout_marginTop="@dimen/rsb_margin_top_large"
+        android:textAllCaps="true"
         tools:text="More Info" />
 
 </merge>

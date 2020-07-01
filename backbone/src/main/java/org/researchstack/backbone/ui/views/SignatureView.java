@@ -182,7 +182,8 @@ public class SignatureView extends View {
         if (sigPath.isEmpty()) {
             hintPaint.setColor(hintTextColor);
             int baselineY = drawBounds.bottom;
-            canvas.drawText(hintText, drawBounds.left, baselineY, hintPaint);
+            int paddingBottom =  (int) getResources().getDisplayMetrics().density * 10;
+            canvas.drawText(hintText, drawBounds.left, baselineY - paddingBottom, hintPaint);
         } else {
             canvas.drawPath(sigPath, sigPaint);
         }

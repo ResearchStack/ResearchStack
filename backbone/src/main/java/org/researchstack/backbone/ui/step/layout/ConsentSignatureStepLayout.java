@@ -97,18 +97,18 @@ public class ConsentSignatureStepLayout extends ConstraintLayout implements Step
     private void initializeStep() {
         LayoutInflater.from(getContext()).inflate(R.layout.rsb_step_layout_consent_signature, this, true);
 
-        TextView title = (TextView) findViewById(R.id.title);
+        TextView title = findViewById(R.id.title);
         title.setTextColor(step.getPrincipalTextColor());
         title.setText(step.getTitle());
 
-        TextView text = (TextView) findViewById(R.id.summary);
+        TextView text = findViewById(R.id.summary);
         text.setText(step.getText());
 
-        final AppCompatTextView clear = (AppCompatTextView) findViewById(R.id.layout_consent_review_signature_clear);
+        final AppCompatTextView clear = findViewById(R.id.layout_consent_review_signature_clear);
         clear.setTextColor(step.getPrimaryColor());
         clear.setText(LocalizationUtils.getLocalizedString(getContext(), R.string.rsb_consent_signature_clear));
 
-        signatureView = (SignatureView) findViewById(R.id.layout_consent_review_signature);
+        signatureView = findViewById(R.id.layout_consent_review_signature);
         signatureView.setCallbacks(new SignatureCallbacks() {
             @Override
             public void onSignatureStarted() {

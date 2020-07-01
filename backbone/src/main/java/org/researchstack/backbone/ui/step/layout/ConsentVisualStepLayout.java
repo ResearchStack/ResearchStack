@@ -136,13 +136,17 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
         }
 
         // Set Title
-        TextView titleView = (TextView) findViewById(R.id.title);
+        TextView titleView = findViewById(R.id.title);
         if (TextUtils.isEmpty(data.getTitle())) {
             titleView.setText(LocalizationUtils.getLocalizedString(getContext(), data.getType().getTitleResId()));
         } else {
             titleView.setText(data.getTitle());
         }
         titleView.setTextColor(principalTextColor);
+
+        // Set Header color
+        TextView headerView = findViewById(R.id.header);
+        headerView.setTextColor(step.getPrimaryColor());
 
         // Set Summary
         TextView summaryView = findViewById(R.id.summary);
