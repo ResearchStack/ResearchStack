@@ -39,18 +39,14 @@
         android:id="@+id/fullScreenImageEditStep"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="16dp"
+        android:layout_margin="20dp"
         android:contentDescription="@string/rsb_edit_step"
         android:drawableStart="@drawable/rsb_ic_edit"
         android:drawablePadding="10dp"
         android:drawableTint="@android:color/white"
-        android:text="@string/rsb_edit_step"
         android:textAllCaps="true"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fullScreenImage"
-        tools:ignore="HardcodedText" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
