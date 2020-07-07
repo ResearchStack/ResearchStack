@@ -60,6 +60,7 @@
     </style>
 
     <style name="Widget.Backbone.SignatureView" parent="">
+        <item name="android:background">@android:color/transparent</item>
         <item name="signatureColor">?android:attr/textColorPrimary</item>
         <item name="signaturePrintColor">@android:color/black</item>
         <item name="signatureStrokeSize">1dp</item>
@@ -298,5 +299,30 @@
         <item name="android:paddingStart">8dp</item>
         <item name="android:paddingEnd">8dp</item>
         <item name="android:background">@color/pale_grey</item>
+    </style>
+
+    <style name="TextStyleConsentDesc">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:letterSpacing">0.03</item>
+        <item name="android:lineSpacingExtra">9sp</item>
+        <item name="android:textColor">@color/black_60</item>
+    </style>
+    <style name="TextStyle18">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:letterSpacing">0.03</item>
+        <item name="android:lineSpacingExtra">8sp</item>
+        <item name="android:textColor">@color/black_60</item>
+    </style>
+    <style name="ButtonSecondaryLeft">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:letterSpacing">0.09</item>
+        <item name="android:lineSpacingExtra">2sp</item>
+        <item name="android:textColor">@color/cerulean</item>
     </style>
 </resources>

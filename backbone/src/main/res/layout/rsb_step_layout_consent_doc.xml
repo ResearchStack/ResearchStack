@@ -4,19 +4,45 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:filterTouchesWhenObscured="true"
-    android:orientation="vertical">
+    android:filterTouchesWhenObscured="true">
+
+    <TextView
+        android:id="@+id/header"
+        style="@style/TextStyle4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/rsb_margin_left"
+        android:layout_marginEnd="@dimen/rsb_margin_right"
+        android:layout_marginTop="@dimen/rsb_margin_top_large"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/rsb_consent"/>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="@dimen/rsb_margin_top_extra_small"
+        android:background="@color/very_light_pink_six"
+        app:layout_constraintTop_toBottomOf="@id/header"/>
 
     <WebView
         android:id="@+id/webview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        app:layout_constraintBottom_toTopOf="@+id/submit_bar"
+        app:layout_constraintTop_toBottomOf="@id/divider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <org.researchstack.backbone.ui.views.SubmitBar
         android:id="@+id/submit_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:negativeActionTitle="@string/rsb_disagree"
         app:positiveActionTitle="@string/rsb_agree" />
 

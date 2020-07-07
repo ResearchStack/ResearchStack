@@ -2,6 +2,9 @@ package org.researchstack.backbone.ui.step.body;
 
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.widget.AppCompatCheckBox;
+import androidx.core.widget.CompoundButtonCompat;
+
+import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,6 +83,8 @@ public class MultiChoiceQuestionBody<T> implements StepBody {
                     radioGroup,
                     false);
             checkBox.setText(item.getText());
+            CompoundButtonCompat.setButtonTintList(checkBox, ColorStateList.valueOf(step.getPrimaryColor()));
+
             checkBox.setId(i);
             radioGroup.addView(checkBox);
 

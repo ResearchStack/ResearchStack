@@ -1,36 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:filterTouchesWhenObscured="true"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:filterTouchesWhenObscured="true">
 
     <TextView
         android:id="@+id/label"
+        style="@style/TextStyle4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:minHeight="@dimen/rsb_item_size_default"
-        android:textColor="?android:attr/textColorSecondary"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:textSize="16sp"
-        tools:text="title" />
+        android:layout_marginStart="@dimen/rsb_margin_left"
+        android:layout_marginEnd="@dimen/rsb_margin_right"
+        android:layout_marginTop="@dimen/rsb_margin_top"
+        tools:text="title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/value"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:imeOptions="actionNext"
-        android:inputType="text"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:minHeight="@dimen/rsb_item_size_default"
-        android:singleLine="true"
-        android:textColor="?android:attr/textColorPrimary"
-        android:textSize="14sp"
-        tools:text="Value" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label"
+        android:layout_marginStart="@dimen/rsb_margin_left"
+        android:layout_marginEnd="@dimen/rsb_margin_right"
+        android:layout_marginTop="@dimen/rsb_margin_top"
+        android:paddingBottom="@dimen/rsb_padding_medium"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-</LinearLayout>
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black_87"
+            android:padding="@dimen/rsb_padding_medium"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

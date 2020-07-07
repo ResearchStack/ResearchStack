@@ -3,11 +3,12 @@ package org.researchstack.backbone.ui.step.layout;
 import android.content.Context;
 import android.graphics.Bitmap;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import android.util.AttributeSet;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +28,7 @@ import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.util.Date;
 
-public class ConsentSignatureStepLayout extends RelativeLayout implements StepLayout {
+public class ConsentSignatureStepLayout extends ConstraintLayout implements StepLayout {
     public static final String KEY_SIGNATURE = "ConsentSignatureStep.Signature";
     public static final String KEY_SIGNATURE_DATE = "ConsentSignatureStep.Signature.Date";
 
@@ -96,18 +97,18 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
     private void initializeStep() {
         LayoutInflater.from(getContext()).inflate(R.layout.rsb_step_layout_consent_signature, this, true);
 
-        TextView title = (TextView) findViewById(R.id.title);
+        TextView title = findViewById(R.id.title);
         title.setTextColor(step.getPrincipalTextColor());
         title.setText(step.getTitle());
 
-        TextView text = (TextView) findViewById(R.id.summary);
+        TextView text = findViewById(R.id.summary);
         text.setText(step.getText());
 
-        final AppCompatTextView clear = (AppCompatTextView) findViewById(R.id.layout_consent_review_signature_clear);
+        final AppCompatTextView clear = findViewById(R.id.layout_consent_review_signature_clear);
         clear.setTextColor(step.getPrimaryColor());
         clear.setText(LocalizationUtils.getLocalizedString(getContext(), R.string.rsb_consent_signature_clear));
 
-        signatureView = (SignatureView) findViewById(R.id.layout_consent_review_signature);
+        signatureView = findViewById(R.id.layout_consent_review_signature);
         signatureView.setCallbacks(new SignatureCallbacks() {
             @Override
             public void onSignatureStarted() {
