@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.answerformat.IntegerAnswerFormat;
 import org.researchstack.backbone.result.StepResult;
@@ -72,10 +74,10 @@ public class IntegerQuestionBody implements StepBody {
     private View initViewCompact(LayoutInflater inflater, ViewGroup parent) {
         View formItemView = inflater.inflate(R.layout.rsb_item_edit_text_compact, parent, false);
 
-        TextView title = (TextView) formItemView.findViewById(R.id.label);
+        TextView title = formItemView.findViewById(R.id.label);
         title.setText(step.getTitle());
 
-        editText = (EditText) formItemView.findViewById(R.id.value);
+        editText = ((TextInputLayout) formItemView.findViewById(R.id.value)).getEditText();
         setFilters(parent.getContext());
 
         return formItemView;

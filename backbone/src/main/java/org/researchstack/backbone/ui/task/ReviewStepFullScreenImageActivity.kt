@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.rsb_activity_full_screen_image.*
@@ -15,6 +16,7 @@ import org.researchstack.backbone.BuildConfig
 import org.researchstack.backbone.R
 import org.researchstack.backbone.step.Step
 import org.researchstack.backbone.ui.step.fragments.ReviewStepFragment
+import org.researchstack.backbone.utils.LocalizationUtils
 
 
 class ReviewStepFullScreenImageActivity : AppCompatActivity(), View.OnClickListener {
@@ -40,7 +42,11 @@ class ReviewStepFullScreenImageActivity : AppCompatActivity(), View.OnClickListe
                     WindowManager.LayoutParams.FLAG_SECURE
             )
         }
+
         setContentView(R.layout.rsb_activity_full_screen_image)
+
+        val editText = findViewById<TextView>(R.id.fullScreenImageEditStep)
+        editText.text = LocalizationUtils.getLocalizedString(this, R.string.rsb_edit_step)
 
         initCallbacks()
     }

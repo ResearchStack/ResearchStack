@@ -66,6 +66,7 @@
     <color name="brown_grey">#979797</color>
     <color name="melon">#ff8256</color>
     <color name="coral_pink">#ef6a6e</color>
-    
     <color name="suggestion_bg">#e0e0e0</color>
+    <color name="brownish_grey">#757575</color>
+    <color name="pale_grey">#f7f8fa</color>
 </resources>

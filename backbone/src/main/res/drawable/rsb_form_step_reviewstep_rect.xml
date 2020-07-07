@@ -5,4 +5,5 @@
     <stroke
         android:width="@dimen/rsb_reviewStep_form_border_width"
         android:color="@color/rsb_concrete" />
+    <corners android:radius="4dp"/>
 </shape>

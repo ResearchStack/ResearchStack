@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.answerformat.DecimalAnswerFormat;
 import org.researchstack.backbone.result.StepResult;
@@ -30,7 +32,6 @@ public class DecimalQuestionBody implements StepBody {
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // View Fields
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-    private int viewType;
     private EditText editText;
 
     public DecimalQuestionBody(Step step, StepResult result) {
@@ -41,8 +42,6 @@ public class DecimalQuestionBody implements StepBody {
 
     @Override
     public View getBodyView(int viewType, LayoutInflater inflater, ViewGroup parent) {
-        this.viewType = viewType;
-
         View view = getViewForType(viewType, inflater, parent);
 
         LinearLayout.MarginLayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -72,10 +71,10 @@ public class DecimalQuestionBody implements StepBody {
     private View initViewCompact(LayoutInflater inflater, ViewGroup parent) {
         View formItemView = inflater.inflate(R.layout.rsb_item_edit_text_compact, parent, false);
 
-        TextView title = (TextView) formItemView.findViewById(R.id.label);
+        TextView title = formItemView.findViewById(R.id.label);
         title.setText(step.getTitle());
 
-        editText = (EditText) formItemView.findViewById(R.id.value);
+        editText = ((TextInputLayout)formItemView.findViewById(R.id.value)).getEditText();
         setFilters(parent.getContext());
 
         return formItemView;

@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.answerformat.TextAnswerFormat;
 import org.researchstack.backbone.result.StepResult;
@@ -29,7 +31,7 @@ public class TextQuestionBody implements StepBody {
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // View Fields
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-    private EditText editText;
+    private TextInputLayout textEntry;
 
     public TextQuestionBody(Step step, StepResult result) {
         this.step = (QuestionStep) step;
@@ -40,11 +42,11 @@ public class TextQuestionBody implements StepBody {
     public View getBodyView(int viewType, LayoutInflater inflater, ViewGroup parent) {
         View body = inflater.inflate(R.layout.rsb_item_edit_text_compact, parent, false);
 
-        editText = body.findViewById(R.id.value);
+        textEntry = body.findViewById(R.id.value);
         if (step.getPlaceholder() != null) {
-            editText.setHint(step.getPlaceholder());
+            textEntry.getEditText().setHint(step.getPlaceholder());
         } else {
-            editText.setHint(LocalizationUtils.getLocalizedString(inflater.getContext(),R.string.rsb_hint_step_body_text));
+            textEntry.getEditText().setHint(LocalizationUtils.getLocalizedString(inflater.getContext(),R.string.rsb_hint_step_body_text));
         }
 
         TextView title = body.findViewById(R.id.label);
@@ -58,11 +60,11 @@ public class TextQuestionBody implements StepBody {
         // Restore previous result
         String stringResult = result.getResult();
         if (!TextUtils.isEmpty(stringResult)) {
-            editText.setText(stringResult);
+            textEntry.getEditText().setText(stringResult);
         }
 
         // Set result on text change
-        editText.addTextChangedListener(new TextWatcher() {
+        textEntry.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(final CharSequence s, final int start, final int count, final int after) {
 
@@ -82,12 +84,12 @@ public class TextQuestionBody implements StepBody {
         // Format EditText from TextAnswerFormat
         TextAnswerFormat format = (TextAnswerFormat) step.getAnswerFormat();
 
-        editText.setSingleLine(!format.isMultipleLines());
+        textEntry.getEditText().setSingleLine(!format.isMultipleLines());
 
         if (format.getMaximumLength() > TextAnswerFormat.UNLIMITED_LENGTH) {
             InputFilter.LengthFilter maxLengthFilter = new InputFilter.LengthFilter(format.getMaximumLength());
-            InputFilter[] filters = ViewUtils.addFilter(editText.getFilters(), maxLengthFilter);
-            editText.setFilters(filters);
+            InputFilter[] filters = ViewUtils.addFilter(textEntry.getEditText().getFilters(), maxLengthFilter);
+            textEntry.getEditText().setFilters(filters);
         }
 
         LinearLayout.MarginLayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -109,7 +111,7 @@ public class TextQuestionBody implements StepBody {
     @Override
     public BodyAnswer getBodyAnswerState() {
         TextAnswerFormat format = (TextAnswerFormat) step.getAnswerFormat();
-        if (!format.isAnswerValid(editText.getText().toString())) {
+        if (!format.isAnswerValid(textEntry.getEditText().getText().toString())) {
             return BodyAnswer.INVALID;
         }
 
