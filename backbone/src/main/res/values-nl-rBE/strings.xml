@@ -96,7 +96,7 @@
     <string name="rsb_error_assetvideoview_button">ok</string>
 
     <!-- Consent -->
-    <string name="rsb_consent_doc_line_printed_name">{1}Naam van $s\ (afgedrukt)</string>
+    <string name="rsb_consent_doc_line_printed_name">Naam van %1$s (afgedrukt)</string>
     <string name="rsb_consent_doc_line_signature">Handtekening van %1$s\'s</string>
     <string name="rsb_consent_doc_line_date">Datum</string>
     <string name="rsb_consent_role">Deelnemer</string>

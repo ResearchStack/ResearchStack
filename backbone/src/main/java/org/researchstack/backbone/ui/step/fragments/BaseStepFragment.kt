@@ -19,6 +19,8 @@ import org.researchstack.backbone.ui.step.layout.StepLayout
 import org.researchstack.backbone.ui.step.layout.SurveyStepLayout
 import org.researchstack.backbone.ui.task.TaskViewModel
 
+@Deprecated("Deprecated as part of the new handling for the branching logic",
+        ReplaceWith("com.medable.axon.ui.taskrunner.fragments.NRSBaseStepFragment"))
 internal open class BaseStepFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentLayoutId), StepCallbacks {
 
     protected val viewModel: TaskViewModel by sharedViewModel()

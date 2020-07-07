@@ -21,6 +21,8 @@ import java.text.DateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
+@Deprecated("Deprecated as part of the new handling for the branching logic",
+        ReplaceWith("com.medable.axon.ui.taskrunner.NRSConsentTaskActivity"))
 class ConsentTaskActivity : TaskActivity() {
     private val viewModel: TaskViewModel by viewModel { parametersOf(intent) }
     private var consentHtml: String? = null
