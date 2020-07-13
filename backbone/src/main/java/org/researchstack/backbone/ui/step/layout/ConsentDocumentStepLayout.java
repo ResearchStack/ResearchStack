@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.LinearLayout;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -35,6 +34,8 @@ public class ConsentDocumentStepLayout extends ConstraintLayout implements StepL
 
     private ConsentDocumentStep step;
     private StepResult<Boolean> stepResult;
+
+    private SubmitBar submitBar;
 
     public ConsentDocumentStepLayout(Context context) {
         super(context);
@@ -114,15 +115,10 @@ public class ConsentDocumentStepLayout extends ConstraintLayout implements StepL
             @Override
             public void onPageFinished(WebView view, String url)
             {
-                final SubmitBar submitBar = findViewById(R.id.submit_bar);
+                submitBar = findViewById(R.id.submit_bar);
+                setSubmitBarButtonsActions();
                 submitBar.setPositiveTitleColor(step.getColorSecondary());
-                submitBar.setPositiveAction(actionView -> showDialog((dialog, which) -> {
-                    stepResult.setResult(true);
-                    callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, stepResult);
-                    submitBar.clearActions();
-                }));
                 submitBar.setNegativeTitleColor(step.getPrimaryColor());
-                submitBar.setNegativeAction(actionView -> disagreeConsent());
                 submitBar.setNegativeTitle(LocalizationUtils.getLocalizedString(getContext(),R.string.rsb_disagree));
                 submitBar.setPositiveTitle(LocalizationUtils.getLocalizedString(getContext(),R.string.rsb_agree));
             }
@@ -130,6 +126,20 @@ public class ConsentDocumentStepLayout extends ConstraintLayout implements StepL
 
         pdfView.loadData(htmlContent, "text/html; charset=UTF-8", null);
 
+    }
+
+    private void setSubmitBarButtonsActions() {
+        submitBar.setPositiveAction(actionView -> submitBarOnClick());
+        submitBar.setNegativeAction(actionView -> disagreeConsent());
+    }
+
+    private void submitBarOnClick() {
+        submitBar.clearActions();
+        showDialog((dialog, which) -> {
+            stepResult.setResult(true);
+            callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, stepResult);
+            submitBar.clearActions();
+        });
     }
 
     private void disagreeConsent() {
@@ -148,6 +158,7 @@ public class ConsentDocumentStepLayout extends ConstraintLayout implements StepL
                 .negativeText(LocalizationUtils.getLocalizedString(getContext(),R.string.rsb_consent_review_cancel))
                 .positiveText(LocalizationUtils.getLocalizedString(getContext(),R.string.rsb_agree))
                 .onPositive(positiveAction)
+                .cancelListener(dialog -> setSubmitBarButtonsActions())
                 .show();
     }
 }
