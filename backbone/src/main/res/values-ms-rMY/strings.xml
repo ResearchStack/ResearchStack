@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='UTF-8'?><resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Consent Section -->
+    <string name="rsb_consent">Persetujuan</string>
+    <string name="rsb_consent_section_welcome">Selamat Datang</string>
+    <string name="rsb_consent_section_data_gathering">Pengumpulan Data</string>
+    <string name="rsb_consent_section_privacy">Privasi</string>
+    <string name="rsb_consent_section_data_use">Penggunaan Data</string>
+    <string name="rsb_consent_section_time_commitment">Komitmen Masa</string>
+    <string name="rsb_consent_section_study_survey">Tinjauan Kajian</string>
+    <string name="rsb_consent_section_study_tasks">Tugasan Kajian</string>
+    <string name="rsb_consent_section_withdrawing">Menarik Diri</string>
+
+    <!-- Consent section learn more -->
+    <string name="rsb_consent_section_more_info">Ketahui lebih lanjut</string>
+    <string name="rsb_consent_section_more_info_data_gathering">Ketahui lebih lanjut tentang cara data dikumpulkan
+    </string>
+    <string name="rsb_consent_section_more_info_data_use">Ketahui lebih lanjut tentang cara data digunakan</string>
+    <string name="rsb_consent_section_more_info_privacy">Ketahui lebih lanjut tentang cara privasi dan identiti anda dilindungi
+    </string>
+    <string name="rsb_consent_section_more_info_welcome">Ketahui lebih lanjut tentang kajian ini terlebih dahulu</string>
+    <string name="rsb_consent_section_more_info_study_survey">Ketahui lebih lanjut tentang tinjauan kajian
+    </string>
+    <string name="rsb_consent_section_more_info_time_commitment">Ketahui lebih lanjut tentang kesan kajian terhadap masa anda
+    </string>
+    <string name="rsb_consent_section_more_info_study_tasks">Ketahui lebih lanjut tentang tugas yang terlibat
+    </string>
+    <string name="rsb_consent_section_more_info_withdrawing">Ketahui lebih lanjut tentang penarikan diri</string>
+
+    <!-- Consent doc step -->
+    <string name="rsb_consent_review_alert_title">Semakan</string>
+    <string name="rsb_consent_review_cancel">Batal</string>
+
+    <string name="rsb_saving_consent">Menyimpan Persetujuan</string>
+    <string name="rsb_please_wait">Sila tunggu&#8230;</string>
+
+    <!-- Consent form step -->
+
+    <string name="rsb_consent_dob_full">Tarikh Lahir</string>
+
+    <!-- Consent sig step -->
+    <string name="rsb_consent_signature_title">Tandatangan</string>
+    <string name="rsb_consent_signature_instruction">Turunkan tandatangan menggunakan jari anda pada baris di bawah.
+    </string>
+    <string name="rsb_consent_signature_placeholder">Tandatangan Di Sini</string>
+    <string name="rsb_consent_signature_clear">Kosongkan</string>
+
+    <!-- Other -->
+
+    <string name="rsb_done">Selesai</string>
+    <string name="rsb_step_skip">Langkau</string>
+    <string name="rsb_next">seterusnya</string>
+    <string name="rsb_name_first">Nama Pertama</string>
+    <string name="rsb_name_last">Nama Terakhir</string>
+    <string name="rsb_disagree">Tidak Bersetuju</string>
+    <string name="rsb_agree">Bersetuju</string>
+    <string name="rsb_cancel">Batal</string>
+    <string name="rsb_format_step_title">Langkah %1$s daripada %2$s</string>
+    <string name="rsb_hours">Jam</string>
+    <string name="rsb_minutes">Minit</string>
+    <string name="rsb_task_cancel_title">Tinggalkan Aktiviti</string>
+    <string name="rsb_task_cancel_text">Anda pasti mahu meninggalkan aktiviti ini dan membuang hasilnya?</string>
+    <string name="rsb_task_cancel_positive">Buang Hasil</string>
+
+    <!-- Step Errors -->
+    <string name="rsb_error_invalid_signature">Tandatangan Tidak Sah</string>
+    <string name="rsb_invalid_answer_default">Jawapan tidak sah, cuba lagi!</string>
+    <string name="rsb_invalid_answer_date_over">Jawapan tidak sah, tarikh mestilah sebelum %1$s</string>
+    <string name="rsb_invalid_answer_date_under">Jawapan tidak sah, tarikh mestilah selepas %1$s</string>
+    <string name="rsb_invalid_answer_integer_over">Jawapan tidak sah, nilai anda mestilah %1$s atau lebih rendah</string>
+    <string name="rsb_invalid_answer_integer_under">Jawapan tidak sah, nilai anda mestilah %1$s atau lebih tinggi</string>
+    <string name="rsb_invalid_answer_choice">Sila pilih satu nilai!</string>
+    <string name="rsb_invalid_answer_date_none">Sila pilih tarikh.</string>
+    <string name="rsb_birth_date_too_old">Anda mestilah berumur %1$s tahun atau ke bawah</string>
+    <string name="rsb_birth_date_too_young">Anda mesti berumur sekurang-kurangnya %1$s tahun</string>
+
+    <!-- Body Hints -->
+    <string name="rsb_hint_step_body_int">Masukkan nombor %1$d-%2$d</string>
+    <string name="rsb_hint_step_body_dec">Masukkan nombor %1$.2f-%2$.2f</string>
+    <string name="rsb_hint_step_body_int_no_max">Masukkan nombor</string>
+    <string name="rsb_hint_step_body_date">Masukkan tarikh</string>
+    <string name="rsb_hint_step_body_time">Masukkan masa</string>
+    <string name="rsb_hint_step_body_datetime">Masukkan tarikh dan masa</string>
+    <string name="rsb_hint_step_body_text">Jawapan</string>
+
+    <!-- Graphing -->
+    <string name="rsb_chart_progress_center">%1$s daripada %2$s</string>
+    <string name="rsb_chart_pie_value">%1$s&#65285;</string>
+
+    <!-- AssetVideoView -->
+
+    <!-- Text for error alert when a video container is not valid for progressive download/playback. -->
+    <string name="rsb_error_assetvideoview_invalid_progressive_playback">Video ini tidak sah untuk distrim ke peranti ini.</string>
+    <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
+    <string name="rsb_error_assetvideoview_unknown">Tidak dapat memainkan video ini.</string>
+    <!-- Button to close error alert when a video cannot be played -->
+    <string name="rsb_error_assetvideoview_button">OK</string>
+
+    <!-- Consent -->
+    <string name="rsb_consent_doc_line_printed_name">Nama %1$s(dicetak)</string>
+    <string name="rsb_consent_doc_line_signature">Tandatangan %1$s</string>
+    <string name="rsb_consent_doc_line_date">Tarikh</string>
+    <string name="rsb_consent_role">Peserta</string>
+
+    <!-- Edit -->
+    <string name="rsb_consent_review_save">Simpan</string>
+    <string name="rsb_edit_step_alert_cancel_positive">YA, BERHENTI MEMBUAT PERUBAHAN</string>
+    <string name="rsb_edit_step_alert_cancel_discard">TIDAK, TERUSKAN MENYUNTING</string>
+    <string name="rsb_edit_step_alert_cancel_title">Anda mahu berhenti membuat perubahan?</string>
+    <string name="rsb_edit_step_alert_cancel_content">Semua perubahan akan dibuang dan jawapan asal anda akan digunakan.</string>
+    <string name="rsb_edit_step_alert_step_save_title">Anda mahu menyimpan perubahan anda?</string>
+    <string name="rsb_edit_step_alert_step_save_content">Jawapan lain mungkin dikosongkan dan anda mungkin diminta untuk menghantar maklumat baharu.</string>
+    <string name="rsb_edit_step_alert_step_save_discard">Tidak, Buang</string>
+    <string name="rsb_edit_step_alert_step_save_positive">Ya, Simpan</string>
+    <string name="rsb_edit_step_alert_step_skip_title">Anda mahu melangkau langkah ini?</string>
+    <string name="rsb_edit_step_alert_step_skip_content">Respons asal anda akan dibuang.</string>
+    <string name="rsb_edit_step_alert_step_skip_discard">TIDAK, JANGAN LANGKAU</string>
+    <string name="rsb_edit_step_alert_step_skip_positive">Ya, langkau</string>
+    <string name="rsb_edit_step">Sunting</string>
+
+    <!-- Material Date Picker Strings -->
+    <string name="mtrl_picker_range_header_title" tools:ignore="ResourceName" tools:override="true">Pilih Julat Tarikh</string>
+    <string name="mtrl_picker_date_header_title" tools:ignore="ResourceName" tools:override="true">Pilih Tarikh</string>
+    <string name="mtrl_picker_range_header_unselected" tools:ignore="ResourceName" tools:override="true">Tarikh mula – Tarikh akhir</string>
+    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">%1$s – Tarikh akhir</string>
+    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">Tarikh mula – %1$s</string>
+    <string name="mtrl_picker_range_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s – %2$s</string>
+    <string name="mtrl_picker_date_header_unselected" tools:ignore="ResourceName" tools:override="true">Tarikh yang dipilih</string>
+    <string name="mtrl_picker_date_header_selected" translatable="false" tools:ignore="ResourceName" tools:override="true">%1$s</string>
+    <string name="mtrl_picker_confirm" translatable="false" tools:ignore="ResourceName" tools:override="true">@android:string/ok</string>
+    <string name="mtrl_picker_text_input_date_hint" tools:ignore="ResourceName" tools:override="true">Tarikh</string>
+    <string name="mtrl_picker_text_input_date_range_start_hint" tools:ignore="ResourceName" tools:override="true">Tarikh mula</string>
+    <string name="mtrl_picker_text_input_date_range_end_hint" tools:ignore="ResourceName" tools:override="true">Tarikh akhir</string>
+    <string name="mtrl_picker_save" tools:ignore="ResourceName" tools:override="true">Simpan</string>
+    <string name="mtrl_picker_invalid_range" tools:ignore="ResourceName" tools:override="true">Julat tidak sah.</string>
+    <string name="mtrl_picker_out_of_range" tools:ignore="ResourceName" tools:override="true">Di luar julat: %1$s</string>
+    <string name="mtrl_picker_invalid_format" tools:ignore="ResourceName" tools:override="true">Format tidak sah.</string>
+    <string name="mtrl_picker_invalid_format_use" tools:ignore="ResourceName" tools:override="true">Gunakan: %1$s</string>
+    <string name="mtrl_picker_invalid_format_example" tools:ignore="ResourceName" tools:override="true">Contoh: %1$s</string>
+    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:ignore="ResourceName" tools:override="true">Tukar ke mod input kalendar</string>
+    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">Tukar ke mod input teks</string>
+    <string name="mtrl_picker_a11y_prev_month" tools:ignore="ResourceName" tools:override="true">Tukar ke bulan sebelumnya</string>
+    <string name="mtrl_picker_a11y_next_month" tools:ignore="ResourceName" tools:override="true">Tukar ke bulan seterusnya</string>
+    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">Ketik untuk beralih ke pemilihan tahun</string>
+    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">Ketik untuk beralih ke pemilihan hari</string>
+    <string name="mtrl_picker_day_of_week_column_header" tools:ignore="ResourceName" tools:override="true">Lajur hari: %1$s</string>
+    <string name="mtrl_picker_announce_current_selection" tools:ignore="ResourceName" tools:override="true">Pilihan semasa: %1$s</string>
+    <string name="mtrl_picker_navigate_to_year_description" tools:ignore="ResourceName" tools:override="true">Pergi ke tahun %1$s</string>
+
+    <!-- Material Time Picker Strings -->
+    <string name="time_picker_hour_label" tools:ignore="ResourceName" tools:override="true">Jam</string>
+    <string name="time_picker_minute_label" tools:ignore="ResourceName" tools:override="true">minit</string>
+    <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">Tetapkan masa</string>
+    <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">Masukkan masa yang sah</string>
+    <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Taipkan masa</string>
+
+</resources>
