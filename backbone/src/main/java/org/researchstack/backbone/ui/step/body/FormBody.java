@@ -1,6 +1,6 @@
 package org.researchstack.backbone.ui.step.body;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +12,7 @@ import org.researchstack.backbone.step.FormStep;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.utils.LogExt;
+import org.researchstack.backbone.utils.ViewUtils;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -23,11 +24,13 @@ public class FormBody implements StepBody {
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     private FormStep step;
     private StepResult<StepResult> result;
+    private ViewGroup parent;
 
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // View Fields
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     private List<StepBody> formStepChildren;
+    private List<QuestionStep> questionSteps;
 
     public FormBody(Step step, StepResult result) {
         this.step = (FormStep) step;
@@ -36,25 +39,35 @@ public class FormBody implements StepBody {
 
     @Override
     public View getBodyView(int viewType, LayoutInflater inflater, ViewGroup parent) {
+        this.parent = parent;
         // Inflate our container for each compact child StepBody
         LinearLayout body = (LinearLayout) inflater.inflate(R.layout.rsb_step_layout_form_body,
                 parent,
                 false);
 
-        List<QuestionStep> questionSteps = step.getFormSteps();
+        questionSteps = step.getFormSteps();
         formStepChildren = new ArrayList<>(questionSteps.size());
 
         // Iterate through all steps and generate each compact view. Store each StepBody child in a
         // list to iterate over (e.g. within getStepResult())
-        for (QuestionStep questionStep : questionSteps) {
-            StepBody stepBody = createStepBody(questionStep);
-            View bodyView = stepBody.getBodyView(VIEW_TYPE_COMPACT, inflater, body);
-            body.addView(bodyView);
+        for (int i = 0; i < questionSteps.size(); i++) {
+            StepBody stepBody = createStepBody(questionSteps.get(i));
+            if (!questionSteps.get(i).isHidden()) {
+                View bodyView = stepBody.getBodyView(VIEW_TYPE_COMPACT, inflater, body);
+                body.addView(bodyView);
 
+                if (i < questionSteps.size() - 1) {
+                    body.addView(getDividerView(inflater, body));
+                }
+            }
             formStepChildren.add(stepBody);
         }
 
         return body;
+    }
+
+    private View getDividerView(LayoutInflater inflater, ViewGroup parent) {
+        return inflater.inflate(R.layout.rsb_form_step_divider, parent, false);
     }
 
     @Override
@@ -65,7 +78,6 @@ public class FormBody implements StepBody {
                 result.setResultForIdentifier(childResult.getIdentifier(), childResult);
             }
         }
-
         return result;
     }
 
@@ -77,6 +89,8 @@ public class FormBody implements StepBody {
                 return bodyAnswer;
             }
         }
+
+        ViewUtils.hideSoftInputMethod(parent);
 
         return BodyAnswer.VALID;
     }
@@ -93,5 +107,9 @@ public class FormBody implements StepBody {
             LogExt.e(this.getClass(), "Cannot instantiate step body for step " + questionStep.getStepTitle() + ", class name: " + cls.getCanonicalName());
             throw new RuntimeException(e);
         }
+    }
+
+    public List<QuestionStep> getQuestionSteps() {
+        return questionSteps;
     }
 }

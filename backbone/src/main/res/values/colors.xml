@@ -1,20 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="rsb_colorPrimary">#3F51B5</color>
-    <color name="rsb_colorPrimaryDark">#303F9F</color>
-    <color name="rsb_colorAccent">#FF4081</color>
+    <color name="rsb_colorPrimary">#2e2156</color>
+    <color name="rsb_colorPrimaryDark">#261c4a</color>
+    <color name="rsb_colorAccent">@color/rsb_black</color>
     <color name="rsb_colorAccentDark">#cc3367</color>
     <color name="rsb_black">#000</color>
     <color name="rsb_black_20">#33000000</color>
     <color name="rsb_black_40">#66000000</color>
     <color name="rsb_white_60">#CCFFFFFF</color>
     <color name="rsb_warm_gray">#FF757575</color>
+    <color name="rsb_greyish_brown">#474747</color>
+    <color name="rsb_athens_gray">#F7F8FA</color>
     <color name="rsb_warm_gray_20">#33757575</color>
+    <color name="rsb_concrete">#f2f2f2</color>
     <color name="rsb_submit_bar_gray">#EEEEEE</color>
     <color name="rsb_submit_bar_negative">#979797</color>
     <color name="rsb_list_divider">#e5e5e5</color>
     <color name="rsb_error">#ffff5722</color>
+    <color name="rsb_jade_green_10">#182aa367</color>
+    <color name="rsb_jade_green">#2aa367</color>
 
     <color name="rsb_tab_indicator">#2196f3</color>
     <color name="rsb_tab_text_selected">#662196f3</color>
+    <color name="rsb_submit_disabled">#99000000</color>
+
+    <color name="rsb_cell_header_grey">#aaaaaa</color>
+    <color name="rsb_item_text_grey">#222222</color>
+
+    <color name="rsb_black_87">#de000000</color>
+    <color name="rsb_black_60">#99000000</color>
+
+    <!-- All colors on the styleGuide  -->
+    <color name="dark_grey_blue">#32295c</color>
+    <color name="very_light_pink">#eeeeee</color>
+    <color name="cerulean">#008ecc</color>
+    <color name="black_60">#99000000</color>
+    <color name="black_87">#de000000</color>
+    <color name="white">#ffffff</color>
+    <color name="dark_blue_grey">#251a45</color>
+    <color name="black_12">#1e000000</color>
+    <color name="light_blue_grey">#c3c4d7</color>
+    <color name="pale_purple">#9d9ebb</color>
+    <color name="black_54">#8a000000</color>
+    <color name="black_32">#51191919</color>
+    <color name="black_38">#61000000</color>
+    <color name="bluegrey">#73afca</color>
+    <color name="black">#000000</color>
+    <color name="scarlet">#b00020</color>
+    <color name="black_20">#33000000</color>
+    <color name="black_40">#66000000</color>
+    <color name="black_two_60">#99191919</color>
+    <color name="very_light_pink_two">#d1d1d1</color>
+    <color name="black_24">#3d000000</color>
+    <color name="black_two">#191919</color>
+    <color name="black_50">#80000000</color>
+    <color name="very_light_pink_three">#f2f2f2</color>
+    <color name="ice_blue">#ebeef0</color>
+    <color name="white_two">#fafafa</color>
+    <color name="very_light_pink_84">#d7e8e8e8</color>
+    <color name="white_three">#f5f5f5</color>
+    <color name="very_light_pink_four">#bbbbbb</color>
+    <color name="very_light_pink_five">#ededed</color>
+    <color name="very_light_pink_six">#dbdbdb</color>
+    <color name="soft_blue">#5699ff</color>
+    <color name="brown_grey">#979797</color>
+    <color name="melon">#ff8256</color>
+    <color name="coral_pink">#ef6a6e</color>
+    <color name="suggestion_bg">#e0e0e0</color>
+    <color name="brownish_grey">#757575</color>
+    <color name="pale_grey">#f7f8fa</color>
 </resources>

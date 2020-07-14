@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rsb_task_nav_graph"
+    app:startDestination="@id/rsb_empty_step_fragment">
+
+    <fragment
+        android:id="@+id/rsb_empty_step_fragment"
+        android:name="org.researchstack.backbone.ui.step.fragments.EmptyStepFragment"
+        android:label="EmptyStepFragment" />
+
+    <fragment
+        android:id="@+id/rsb_instruction_step_fragment"
+        android:name="org.researchstack.backbone.ui.step.fragments.InstructionStepFragment"
+        android:label="InstructionStepFragment" />
+
+    <fragment
+        android:id="@+id/rsb_boolean_step_fragment"
+        android:name="org.researchstack.backbone.ui.step.fragments.BooleanStepFragment"
+        android:label="BooleanStepFragment" />
+
+    <fragment
+        android:id="@+id/rsb_completion_step_fragment"
+        android:name="org.researchstack.backbone.ui.step.fragments.CompletionStepFragment"
+        android:label="CompletionStepFragment" />
+
+    <fragment
+        android:id="@+id/rsb_autocomplete_fragment"
+        android:name="org.researchstack.backbone.ui.step.fragments.AutoCompleteStepFragment"
+        android:label="AutoCompleteStepFragment" />
+
+    <fragment
+        android:id="@+id/rsb_barcode_scanner_step_fragment"
+        android:name="org.researchstack.backbone.ui.step.fragments.BarcodeScannerStepFragment"
+        android:label="BarcodeScannerStepFragment" />
+
+    <fragment
+        android:id="@+id/rsb_image_capture_step_fragment"
+        android:name="org.researchstack.backbone.ui.step.fragments.ImageCaptureStepFragment"
+        android:label="ImageCaptureStepFragment" />
+
+    <fragment
+        android:id="@+id/rsb_image_choice_step_fragment"
+        android:name="org.researchstack.backbone.ui.step.fragments.SurveyFragment"
+        android:label="ImageChoiceStepFragment" />
+
+    <fragment
+        android:id="@+id/rsb_text_choice_step_fragment"
+        android:name="org.researchstack.backbone.ui.step.fragments.SurveyFragment"
+        android:label="TextChoiceStepFragment" />
+
+    <fragment
+        android:id="@+id/rsb_continuous_scale_step_fragment"
+        android:name="org.researchstack.backbone.ui.step.fragments.SurveyFragment"
+        android:label="ContinuousScaleStepFragment" />
+
+    <fragment
+        android:id="@+id/rsb_integer_scale_step_fragment"
+        android:name="org.researchstack.backbone.ui.step.fragments.SurveyFragment"
+        android:label="IntegerScaleStepFragment" />
+
+    <fragment
+        android:id="@+id/rsb_text_scale_step_fragment"
+        android:name="org.researchstack.backbone.ui.step.fragments.SurveyFragment"
+        android:label="TextScaleStepFragment" />
+
+    <fragment
+        android:id="@+id/rsb_time_interval_step_fragment"
+        android:name="org.researchstack.backbone.ui.step.fragments.SurveyFragment"
+        android:label="TimeIntervalStepFragment" />
+
+    <fragment
+        android:id="@+id/rsb_date_time_step_fragment"
+        android:name="org.researchstack.backbone.ui.step.fragments.SurveyFragment"
+        android:label="DateTimeStepFragment" />
+
+    <fragment
+        android:id="@+id/rsb_time_of_day_step_fragment"
+        android:name="org.researchstack.backbone.ui.step.fragments.SurveyFragment"
+        android:label="TimeOfDayStepFragment" />
+
+    <fragment
+        android:id="@+id/rsb_numeric_step_fragment"
+        android:name="org.researchstack.backbone.ui.step.fragments.SurveyFragment"
+        android:label="NumericStepFragment" />
+
+    <fragment
+        android:id="@+id/rsb_location_step_fragment"
+        android:name="org.researchstack.backbone.ui.step.fragments.SurveyFragment"
+        android:label="LocationStepFragment" />
+
+    <fragment
+        android:id="@+id/rsb_value_picker_step_fragment"
+        android:name="org.researchstack.backbone.ui.step.fragments.SurveyFragment"
+        android:label="ValuePickerStepFragment" />
+
+    <fragment
+        android:id="@+id/rsb_text_step_fragment"
+        android:name="org.researchstack.backbone.ui.step.fragments.SurveyFragment"
+        android:label="TextStepFragment" />
+
+    <fragment
+        android:id="@+id/rsb_form_step_fragment"
+        android:name="org.researchstack.backbone.ui.step.fragments.SurveyFragment"
+        android:label="FormStepFragment" />
+
+    <fragment
+        android:id="@+id/rsb_web_view_step_fragment"
+        android:name="org.researchstack.backbone.ui.step.fragments.WebViewStepFragment"
+        android:label="WebViewStepFragment" />
+
+    <fragment
+        android:id="@+id/rsb_google_fit_permission_step_fragment"
+        android:name="org.researchstack.backbone.ui.step.fragments.GoogleFitPermissionStepFragment"
+        android:label="GoogleFitPermissionStepFragment" />
+
+    <fragment
+        android:id="@+id/rsb_survey_fragment"
+        android:name="org.researchstack.backbone.ui.step.fragments.SurveyFragment"
+        android:label="SurveyFragment" />
+
+    <fragment
+        android:id="@+id/rsb_review_step_fragment"
+        android:name="org.researchstack.backbone.ui.step.fragments.ReviewStepFragment"
+        android:label="ReviewStepFragment" />
+
+    <fragment
+        android:id="@+id/rsb_consent_visual_step_fragment"
+        android:name="org.researchstack.backbone.ui.step.fragments.ConsentVisualStepFragment"
+        android:label="ConsentVisualStepFragment" />
+
+    <fragment
+        android:id="@+id/rsb_consent_document_step_fragment"
+        android:name="org.researchstack.backbone.ui.step.fragments.ConsentDocumentStepFragment"
+        android:label="ConsentDocumentStepFragment" />
+
+    <fragment
+        android:id="@+id/rsb_consent_signature_step_fragment"
+        android:name="org.researchstack.backbone.ui.step.fragments.ConsentSignatureStepFragment"
+        android:label="ConsentSignatureStepFragment" />
+
+    <action android:id="@+id/rsb_action_global_rsb_review_step_fragment"
+        app:destination="@id/rsb_review_step_fragment"
+        app:launchSingleTop="true"/>
+
+</navigation>

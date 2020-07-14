@@ -1,8 +1,9 @@
 package org.researchstack.backbone.utils;
 
 import android.content.Context;
+import android.util.TypedValue;
 
-import org.researchstack.backbone.StorageAccess;
+import androidx.annotation.AttrRes;
 
 
 public class ResUtils {
@@ -15,8 +16,6 @@ public class ResUtils {
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
     /**
-     * Should this be here or should {@link StorageAccess} have the
-     * ability to write files to SDCard
      *
      * @return of SD-Card storage folder name (used to save and share consent-PDF)
      */
@@ -57,5 +56,20 @@ public class ResUtils {
     public static int getRawResourceId(Context context, String name) {
         return context.getResources().getIdentifier(name, "raw", context.getPackageName());
     }
+
+    /**
+     * Try to find a res. If not find throw an error
+     * @param context
+     * @param attributeResId
+     * @return
+     */
+    public static int resolveOrThrow(Context context, @AttrRes int attributeResId) {
+        TypedValue typedValue = new TypedValue();
+        if (context.getTheme().resolveAttribute(attributeResId, typedValue, true)) {
+            return typedValue.data;
+        }
+        throw new IllegalArgumentException(context.getResources().getResourceName(attributeResId));
+    }
+
 
 }

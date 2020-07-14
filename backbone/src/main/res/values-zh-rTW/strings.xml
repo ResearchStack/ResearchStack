@@ -1,0 +1,150 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Debug -->
+
+    <!-- Consent Section -->
+    <string name="rsb_consent">同意</string>
+    <string name="rsb_consent_section_welcome">歡迎</string>
+    <string name="rsb_consent_section_data_gathering">資料收集</string>
+    <string name="rsb_consent_section_privacy">隱私</string>
+    <string name="rsb_consent_section_data_use">資料使用</string>
+    <string name="rsb_consent_section_time_commitment">時間承諾</string>
+    <string name="rsb_consent_section_study_survey">研究調查</string>
+    <string name="rsb_consent_section_study_tasks">研究任務</string>
+    <string name="rsb_consent_section_withdrawing">退出研究</string>
+
+    <!-- Consent section learn more -->
+    <string name="rsb_consent_section_more_info">深入瞭解</string>
+    <string name="rsb_consent_section_more_info_data_gathering">深入瞭解如何收集資料</string>
+    <string name="rsb_consent_section_more_info_data_use">深入瞭解如何使用資料</string>
+    <string name="rsb_consent_section_more_info_privacy">深入瞭解您的隱私和身分如何受到保護</string>
+    <string name="rsb_consent_section_more_info_welcome">首先深入瞭解此研究</string>
+    <string name="rsb_consent_section_more_info_study_survey">深入瞭解此研究調查</string>
+    <string name="rsb_consent_section_more_info_time_commitment">深入瞭解此研究對您的時間的影響</string>
+    <string name="rsb_consent_section_more_info_study_tasks">深入瞭解所涉及的任務</string>
+    <string name="rsb_consent_section_more_info_withdrawing">深入瞭解退出研究</string>
+
+    <!-- Consent sharing step -->
+
+    <!-- Consent doc step -->
+    <string name="rsb_consent_review_alert_title">檢閱</string>
+    <string name="rsb_consent_review_cancel">取消</string>
+
+    <string name="rsb_saving_consent">儲存同意</string>
+    <string name="rsb_please_wait">請稍候&#8230;</string>
+
+    <!-- Consent form step -->
+    <string name="rsb_consent_dob_full">出生日期</string>
+
+    <!-- Consent sig step -->
+    <string name="rsb_consent_signature_title">簽名</string>
+    <string name="rsb_consent_signature_instruction">請在下方欄位用手指簽名。</string>
+    <string name="rsb_consent_signature_placeholder">請在此處簽名</string>
+    <string name="rsb_consent_signature_clear">清除</string>
+
+    <!-- Quiz -->
+
+    <!-- Other -->
+    <string name="rsb_done">完成</string>
+    <string name="rsb_step_skip">略過</string>
+    <string name="rsb_next">下一步</string>
+    <string name="rsb_name_first">名字</string>
+    <string name="rsb_name_last">姓氏</string>
+    <string name="rsb_disagree">不同意</string>
+    <string name="rsb_agree">同意</string>
+    <string name="rsb_cancel">取消</string>
+    <string name="rsb_format_step_title">第 %1$s 個步驟，共 %2$s 個</string>
+    <string name="rsb_hours">小時</string>
+    <string name="rsb_minutes">分鐘</string>
+    <string name="rsb_task_cancel_title">離開活動</string>
+    <string name="rsb_task_cancel_text">您確定要離開此活動並捨棄其結果嗎？</string>
+    <string name="rsb_task_cancel_positive">捨棄結果</string>
+
+    <!-- Step Errors -->
+    <string name="rsb_error_invalid_signature">簽名無效</string>
+    <string name="rsb_invalid_answer_default">答案無效，請再試一次！</string>
+    <string name="rsb_invalid_answer_date_over">答案無效，日期必須在 %1$s 之前</string>
+    <string name="rsb_invalid_answer_date_under">答案無效，日期必須在 %1$s 之後</string>
+    <string name="rsb_invalid_answer_integer_over">答案無效，日期必須在 %1$s 之後</string>
+    <string name="rsb_invalid_answer_integer_under">答案無效，您的值必須大於或等於 %1$s</string>
+    <string name="rsb_invalid_answer_choice">請選擇一個值！</string>
+    <string name="rsb_invalid_answer_date_none">請選擇一個日期。</string>
+    <string name="rsb_birth_date_too_old">您的年齡必須小於或等於 %1$s 歲</string>
+    <string name="rsb_birth_date_too_young">您的年齡必須至少為 %1$s 歲</string>
+
+    <!-- Pin Code -->
+
+    <!-- Body Hints -->
+    <string name="rsb_hint_step_body_int">輸入一個 %1$d-%2$d 之間的數字</string>
+    <string name="rsb_hint_step_body_dec">輸入一個 %1$.2f-%2$.2f 之間的數字</string>
+    <string name="rsb_hint_step_body_int_no_max">輸入一個數字</string>
+    <string name="rsb_hint_step_body_date">輸入日期</string>
+    <string name="rsb_hint_step_body_time">輸入時間</string>
+    <string name="rsb_hint_step_body_datetime">輸入日期和時間</string>
+    <string name="rsb_hint_step_body_text">答案</string>
+
+    <!-- Graphing -->
+    <string name="rsb_chart_progress_center">第 %1$s 個，共 %2$s 個</string>
+    <string name="rsb_chart_pie_value">%1$s&#65285;</string>
+
+    <!-- AssetVideoView -->
+    <!-- Title for error alert when a video cannot be played.  it can be used by any app. -->
+    <!-- Text for error alert when a video container is not valid for progressive download/playback. -->
+    <string name="rsb_error_assetvideoview_invalid_progressive_playback">此影片無法有效串流到此裝置。</string>
+    <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
+    <string name="rsb_error_assetvideoview_unknown">無法播放此影片。</string>
+    <!-- Button to close error alert when a video cannot be played -->
+    <string name="rsb_error_assetvideoview_button">確定</string>
+
+    <!-- Consent -->
+    <string name="rsb_consent_doc_line_printed_name">%1$s 的姓名（正楷）</string>
+    <string name="rsb_consent_doc_line_signature">%1$s 的簽名</string>
+    <string name="rsb_consent_doc_line_date">日期</string>
+    <string name="rsb_consent_role">參與者</string>
+
+    <!-- Edit -->
+    <string name="rsb_consent_review_save">保存</string>
+    <string name="rsb_edit_step_alert_cancel_positive">是的，停止變更</string>
+    <string name="rsb_edit_step_alert_cancel_discard">不，繼續編輯</string>
+    <string name="rsb_edit_step_alert_cancel_title">您想停止變更嗎?</string>
+    <string name="rsb_edit_step_alert_cancel_content">所有的變更都將被放棄，將會採用原始響應</string>
+    <string name="rsb_edit_step_alert_step_save_title">您想保存您的變更嗎?</string>
+    <string name="rsb_edit_step_alert_step_save_content">其他的響應可能會被清除，您可能會被要求提交新的訊息</string>
+    <string name="rsb_edit_step_alert_step_save_discard">不，放棄變更</string>
+    <string name="rsb_edit_step_alert_step_save_positive">是的，保存變更</string>
+    <string name="rsb_edit_step_alert_step_skip_title">您想略過這一步嗎?</string>
+    <string name="rsb_edit_step_alert_step_skip_content">您的原始響應將會被放棄</string>
+    <string name="rsb_edit_step_alert_step_skip_discard">不，不要略過</string>
+    <string name="rsb_edit_step_alert_step_skip_positive">是的，略過</string>
+    <string name="rsb_edit_step">編輯</string>
+    <string name="mtrl_picker_range_header_title" tools:ignore="ResourceName" tools:override="true">選擇日期範圍</string>
+    <string name="mtrl_picker_date_header_title" tools:ignore="ResourceName" tools:override="true">選擇日期</string>
+    <string name="mtrl_picker_range_header_unselected" tools:ignore="ResourceName" tools:override="true">開始日期 – 結束日期</string>
+    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">％1$s – 結束日期</string>
+    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">開始日期 – ％1$s</string>
+    <string name="mtrl_picker_range_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s – %2$s</string>
+    <string name="mtrl_picker_date_header_unselected" tools:ignore="ResourceName" tools:override="true">選定日期</string>
+    <string name="mtrl_picker_text_input_date_hint" tools:ignore="ResourceName" tools:override="true">日期</string>
+    <string name="mtrl_picker_text_input_date_range_start_hint" tools:ignore="ResourceName" tools:override="true">開始日期</string>
+    <string name="mtrl_picker_text_input_date_range_end_hint" tools:ignore="ResourceName" tools:override="true">結束日期</string>
+    <string name="mtrl_picker_save" tools:ignore="ResourceName" tools:override="true">救</string>
+    <string name="mtrl_picker_invalid_range" tools:ignore="ResourceName" tools:override="true">範圍無效。</string>
+    <string name="mtrl_picker_out_of_range" tools:ignore="ResourceName" tools:override="true">超出範圍：％1$s</string>
+    <string name="mtrl_picker_invalid_format" tools:ignore="ResourceName" tools:override="true">無效的格式。</string>
+    <string name="mtrl_picker_invalid_format_use" tools:ignore="ResourceName" tools:override="true">使用：％1$s</string>
+    <string name="mtrl_picker_invalid_format_example" tools:ignore="ResourceName" tools:override="true">示例：％1$s</string>
+    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:ignore="ResourceName" tools:override="true">切換到日曆輸入模式</string>
+    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">切換至文字輸入模式</string>
+    <string name="mtrl_picker_a11y_prev_month" tools:ignore="ResourceName" tools:override="true">更改為上個月</string>
+    <string name="mtrl_picker_a11y_next_month" tools:ignore="ResourceName" tools:override="true">改到下個月</string>
+    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">點按即可切換到選擇年份</string>
+    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">點按即可切換到選擇日期</string>
+    <string name="mtrl_picker_day_of_week_column_header" tools:ignore="ResourceName" tools:override="true">天列：％1$s</string>
+    <string name="mtrl_picker_announce_current_selection" tools:ignore="ResourceName" tools:override="true">當前選擇：％1$s</string>
+    <string name="mtrl_picker_navigate_to_year_description" tools:ignore="ResourceName" tools:override="true">導航至 ％1$s 年</string>
+    <string name="time_picker_hour_label" tools:ignore="ResourceName" tools:override="true">小時</string>
+    <string name="time_picker_minute_label" tools:ignore="ResourceName" tools:override="true">分鐘</string>
+    <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">設置時間</string>
+    <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">輸入有效時間</string>
+    <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">輸入時間</string>
+
+</resources>

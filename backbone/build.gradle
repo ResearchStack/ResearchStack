@@ -1,26 +1,58 @@
 apply plugin: 'com.android.library'
-apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'com.neenbedankt.android-apt'
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
-
-version = '1.1.2'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'maven'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+
+    compileSdkVersion 29
+    buildToolsVersion '29.0.3'
+
+    afterEvaluate {
+        def originalFilePath = "$buildDir/outputs/aar/backbone-release.aar"
+        def newFilePath = originalFilePath.replace(".aar", "_v${defaultConfig.versionName}.aar")
+        def debugFile = file(originalFilePath)
+
+        tasks.named("assembleRelease").configure {
+            doLast {
+                debugFile.renameTo(newFilePath)
+            }
+        }
+    }
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 23
-        versionCode 6
-        versionName version
+        minSdkVersion 23
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.8.0"
+        dimension "default"
     }
+
     buildTypes {
+        debug {
+            minifyEnabled false
+            debuggable true
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    flavorDimensions "default"
+
+    productFlavors {
+        def useSecureFlagProd = rootProject.hasProperty("useSecureFlagProd") ? rootProject.useSecureFlagProd : true
+        def useSecureFlagDev = rootProject.hasProperty("useSecureFlagDev") ? rootProject.useSecureFlagDev : false
+
+        prod {
+            buildConfigField 'boolean', 'USE_SECURE_FLAG', "$useSecureFlagProd"
+        }
+
+        dev {
+            buildConfigField 'boolean', 'USE_SECURE_FLAG', "$useSecureFlagDev"
+        }
+
     }
 
     compileOptions {
@@ -33,99 +65,66 @@ android {
         exclude 'META-INF/NOTICE.txt'
     }
 
-    resourcePrefix 'rsb_'
-}
+    android {
+        lintOptions {
+            abortOnError false
+        }
+    }
 
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
-ext {
-    bintrayRepo = 'ResearchStack'
-    bintrayName = 'Backbone'
-
-    publishedGroupId = 'org.researchstack'
-    libraryName = 'Backbone'
-    artifact = 'backbone'
-
-    libraryDescription = 'Backbone description'
-
-    siteUrl = 'https://researchstack.org'
-    gitUrl = 'https://github.com/ResearchStack/ResearchStack.git'
-
-    libraryVersion = version
-
-    userOrgName = 'researchstack'
-    developerId = properties.getProperty("bintray.user")
-    developerName = properties.getProperty("bintray.developerName")
-    developerEmail = properties.getProperty("bintray.developerEmail")
-
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:23.2.1'
-    compile 'com.android.support:cardview-v7:23.2.1'
-    compile 'com.android.support:preference-v14:23.2.1'
-    compile 'com.android.support:design:23.2.1'
-    compile 'com.google.code.gson:gson:2.4'
-    compile 'io.reactivex:rxjava:1.1.3'
-    compile 'io.reactivex:rxandroid:1.1.0'
-    compile 'com.jakewharton.rxbinding:rxbinding:0.2.0'
-    compile 'com.jakewharton.rxbinding:rxbinding-support-v4:0.2.0'
-    compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.2.0'
-    compile 'com.jakewharton.rxbinding:rxbinding-design:0.2.0'
-    compile 'com.github.PhilJay:MPAndroidChart:v2.2.3'
+    def kotlinVersion = '1.3.70'
+    def koinVersion = '2.1.5'
+    def navVersion = '2.2.2'
+    def coreTestingVersion = '2.1.0'
+    def mockitoKotlinVersion = "2.2.0"
+    def mockitoVersion = '3.2.4'
 
-    compile 'com.scottyab:aes-crypto:0.0.3'
-    compile 'co.touchlab.squeaky:squeaky-query:0.4.0.0'
-    apt 'co.touchlab.squeaky:squeaky-processor:0.4.0.0'
-    compile 'net.zetetic:android-database-sqlcipher:3.5.4@aar'
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.robolectric:robolectric:3.0'
-    testCompile 'org.mockito:mockito-core:1.10.19'
-}
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-group = publishedGroupId                               // Maven Group ID for the artifact
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
 
-install {
-    repositories.mavenInstaller {
-        // This generates POM.xml with proper parameters
-        pom {
-            project {
-                packaging 'aar'
-                groupId publishedGroupId
-                artifactId artifact
+    // Material components
+    implementation "com.google.android.material:material:1.1.0"
 
-                // Add your description here
-                name libraryName
-                description libraryDescription
-                url siteUrl
+    // Koin for Android
+    implementation "org.koin:koin-android:$koinVersion"
 
-                // Set your license
-                licenses {
-                    license {
-                        name licenseName
-                        url licenseUrl
-                    }
-                }
-                developers {
-                    developer {
-                        id developerId
-                        name developerName
-                        email developerEmail
-                    }
-                }
-                scm {
-                    connection gitUrl
-                    developerConnection gitUrl
-                    url siteUrl
-                }
-            }
-        }
-    }
+    // Koin Android ViewModel feature
+    implementation "org.koin:koin-android-viewmodel:$koinVersion"
+
+    // Koin Android X ViewModel feature
+    implementation "org.koin:koin-androidx-viewmodel:$koinVersion"
+
+    // Navigation Component
+    implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
+
+    // Android x
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.legacy:legacy-preference-v14:1.0.0'
+
+    // Android Lifecycle Extensions
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+
+    // Misc libs
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation "com.afollestad.material-dialogs:core:0.9.0.2"
+
+    // JUnit 4 framework
+    testImplementation 'junit:junit:4.13'
+
+    // Mockito framework
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVersion"
+
+    // Android core testing
+    testImplementation "androidx.arch.core:core-testing:$coreTestingVersion"
 }
 
 if (project.hasProperty("android")) { // Android libraries
@@ -142,7 +141,9 @@ if (project.hasProperty("android")) { // Android libraries
     afterEvaluate {
         javadoc.classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
         javadoc.classpath += files(android.libraryVariants.collect { variant ->
-            variant.javaCompile.classpath.files
+            variant.getJavaCompileProvider().configure {
+                it.classpath.files
+            }
         })
     }
 } else { // Java libraries
@@ -152,29 +153,63 @@ if (project.hasProperty("android")) { // Android libraries
     }
 }
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
+def RS_POM_GROUP = "com.medable.researchstack"
+def RS_POM_DESCRIPTION = "Medable's ResearchStack fork"
+def RS_POM_LICENCE_NAME = "The Apache Software License, Version 2.0"
+def RS_POM_LICENCE_URL = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+def RS_POM_LICENCE_DIST = "repo"
+
+afterEvaluate { project ->
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+
+                pom.groupId = RS_POM_GROUP
+                pom.artifactId = project.getProperties().BB_POM_ARTIFACT_ID
+                pom.version = android.defaultConfig.versionName
+
+                def deployPath = file('./')
+                repository(url: "file://${deployPath.absolutePath}/../../Android-SDK/")
+
+                pom.project {
+                    name project.getProperties().BB_POM_NAME
+                    packaging project.getProperties().BB_POM_PACKAGING
+                    description RS_POM_DESCRIPTION
+
+                    licenses {
+                        license {
+                            name RS_POM_LICENCE_NAME
+                            url RS_POM_LICENCE_URL
+                            distribution RS_POM_LICENCE_DIST
+                        }
+                    }
+                }
+
+                pom.whenConfigured { pom ->
+                    pom.dependencies.forEach { dep ->
+                        if (dep.getVersion() == "unspecified") {
+                            dep.setGroupId(RS_POM_GROUP)
+                            dep.setVersion(android.defaultConfig.versionName)
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
-artifacts {
-    archives javadocJar
-    archives sourcesJar
-}
+buildscript {
 
-bintray {
-    user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apikey")
+    repositories {
+        google()
+        jcenter()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
+    }
 
-    configurations = ['archives']
-    pkg {
-        repo = bintrayRepo
-        name = bintrayName
-        userOrg = userOrgName
-        desc = libraryDescription
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = allLicenses
-        publish = true
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.72"
     }
 }

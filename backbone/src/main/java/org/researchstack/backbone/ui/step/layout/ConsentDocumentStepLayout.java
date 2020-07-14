@@ -1,12 +1,16 @@
 package org.researchstack.backbone.ui.step.layout;
 
 import android.content.Context;
-import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
-import android.widget.LinearLayout;
+import android.webkit.WebViewClient;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
+
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.Theme;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.StepResult;
@@ -14,6 +18,7 @@ import org.researchstack.backbone.step.ConsentDocumentStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.views.SubmitBar;
+import org.researchstack.backbone.utils.LocalizationUtils;
 
 /**
  * Implement saved state for the following objects:
@@ -21,7 +26,7 @@ import org.researchstack.backbone.ui.views.SubmitBar;
  * {@link #stepResult}
  * {@link #confirmationDialogBody}
  */
-public class ConsentDocumentStepLayout extends LinearLayout implements StepLayout {
+public class ConsentDocumentStepLayout extends ConstraintLayout implements StepLayout {
     private StepCallbacks callbacks;
 
     private String confirmationDialogBody;
@@ -29,6 +34,8 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
 
     private ConsentDocumentStep step;
     private StepResult<Boolean> stepResult;
+
+    private SubmitBar submitBar;
 
     public ConsentDocumentStepLayout(Context context) {
         super(context);
@@ -73,29 +80,85 @@ public class ConsentDocumentStepLayout extends LinearLayout implements StepLayou
         this.callbacks = callbacks;
     }
 
-    private void initializeStep() {
-        setOrientation(VERTICAL);
-        LayoutInflater.from(getContext()).inflate(R.layout.rsb_step_layout_consent_doc, this, true);
-
-        WebView pdfView = (WebView) findViewById(R.id.webview);
-        pdfView.loadData(htmlContent, "text/html; charset=UTF-8", null);
-
-        SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
-        submitBar.setPositiveAction(v -> showDialog());
-        submitBar.setNegativeAction(v -> callbacks.onCancelStep());
+    @Override
+    public void setCancelEditMode(boolean isCancelEdit) {
+        // no-op: Only needed when the user is on edit mode inside regular steps
     }
 
-    private void showDialog() {
-        new AlertDialog.Builder(getContext()).setTitle(R.string.rsb_consent_review_alert_title)
-                .setMessage(confirmationDialogBody)
-                .setCancelable(false)
-                .setPositiveButton(R.string.rsb_agree, (dialog, which) -> {
-                    stepResult.setResult(true);
-                    callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, stepResult);
-                })
-                .setNegativeButton(R.string.rsb_consent_review_cancel, (dialog, which) -> {
-                    // Gives them a chance to read it again
-                })
+    @Override
+    public void setRemoveFromBackStack(boolean removeFromBackStack) {
+        // no-op: Only needed when the user is on edit mode inside regular steps
+    }
+
+    @Override
+    public void isEditView(boolean isEditView) {
+        // no-op: Only needed when the user is on edit mode inside regular steps
+    }
+
+    @Override
+    public StepResult getStepResult() {
+        return stepResult;
+    }
+
+    private void initializeStep() {
+        LayoutInflater.from(getContext()).inflate(R.layout.rsb_step_layout_consent_doc, this, true);
+
+        WebView pdfView = findViewById(R.id.webview);
+
+        pdfView.setWebViewClient(new WebViewClient()
+        {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                return false;
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url)
+            {
+                submitBar = findViewById(R.id.submit_bar);
+                setSubmitBarButtonsActions();
+                submitBar.setPositiveTitleColor(step.getColorSecondary());
+                submitBar.setNegativeTitleColor(step.getPrimaryColor());
+                submitBar.setNegativeTitle(LocalizationUtils.getLocalizedString(getContext(),R.string.rsb_disagree));
+                submitBar.setPositiveTitle(LocalizationUtils.getLocalizedString(getContext(),R.string.rsb_agree));
+            }
+        });
+
+        pdfView.loadData(htmlContent, "text/html; charset=UTF-8", null);
+
+    }
+
+    private void setSubmitBarButtonsActions() {
+        submitBar.setPositiveAction(actionView -> submitBarOnClick());
+        submitBar.setNegativeAction(actionView -> disagreeConsent());
+    }
+
+    private void submitBarOnClick() {
+        submitBar.clearActions();
+        showDialog((dialog, which) -> {
+            stepResult.setResult(true);
+            callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, stepResult);
+            submitBar.clearActions();
+        });
+    }
+
+    private void disagreeConsent() {
+        stepResult.setResult(false);
+        callbacks.onSaveStep(StepCallbacks.ACTION_END, step, stepResult);
+    }
+
+    private void showDialog(MaterialDialog.SingleButtonCallback positiveAction) {
+        new MaterialDialog.Builder(getContext())
+                .title(LocalizationUtils.getLocalizedString(getContext(),R.string.rsb_consent_review_alert_title))
+                .content(confirmationDialogBody)
+                .theme(Theme.LIGHT)
+                .cancelable(false)
+                .positiveColor(step.getColorSecondary())
+                .negativeColor(step.getPrimaryColor())
+                .negativeText(LocalizationUtils.getLocalizedString(getContext(),R.string.rsb_consent_review_cancel))
+                .positiveText(LocalizationUtils.getLocalizedString(getContext(),R.string.rsb_agree))
+                .onPositive(positiveAction)
+                .cancelListener(dialog -> setSubmitBarButtonsActions())
                 .show();
     }
 }

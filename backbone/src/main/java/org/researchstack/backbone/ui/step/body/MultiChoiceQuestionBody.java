@@ -1,8 +1,10 @@
 package org.researchstack.backbone.ui.step.body;
 
-import android.content.res.Resources;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.AppCompatCheckBox;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.widget.AppCompatCheckBox;
+import androidx.core.widget.CompoundButtonCompat;
+
+import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,11 +52,8 @@ public class MultiChoiceQuestionBody<T> implements StepBody {
     public View getBodyView(int viewType, LayoutInflater inflater, ViewGroup parent) {
         View view = getViewForType(viewType, inflater, parent);
 
-        Resources res = parent.getResources();
         LinearLayout.MarginLayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.leftMargin = res.getDimensionPixelSize(R.dimen.rsb_margin_left);
-        layoutParams.rightMargin = res.getDimensionPixelSize(R.dimen.rsb_margin_right);
         view.setLayoutParams(layoutParams);
 
         return view;
@@ -84,6 +83,8 @@ public class MultiChoiceQuestionBody<T> implements StepBody {
                     radioGroup,
                     false);
             checkBox.setText(item.getText());
+            CompoundButtonCompat.setButtonTintList(checkBox, ColorStateList.valueOf(step.getPrimaryColor()));
+
             checkBox.setId(i);
             radioGroup.addView(checkBox);
 

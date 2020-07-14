@@ -19,4 +19,15 @@ public interface StepLayout {
     boolean isBackEventConsumed();
 
     void setCallbacks(StepCallbacks callbacks);
+
+    void setCancelEditMode(boolean isCancelEdit);
+
+    void setRemoveFromBackStack(boolean removeFromBackStack);
+
+    void isEditView(boolean isEditView);
+
+    /**
+     * @return StepResult for a step even if it's not yet saved
+     */
+    StepResult getStepResult();
 }

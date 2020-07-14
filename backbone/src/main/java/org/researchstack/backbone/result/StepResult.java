@@ -1,12 +1,20 @@
 package org.researchstack.backbone.result;
 
+import androidx.annotation.NonNull;
+
 import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * The StepResult class represents a result produced by a {@link org.researchstack.backbone.ui.step.layout.StepLayout}
@@ -19,7 +27,7 @@ import java.util.Map;
  * For example, an {@link QuestionStep} object produces a result of type <code>T</code> that becomes
  * a child of the {@link StepResult} object.
  */
-public class StepResult<T> extends Result {
+public class StepResult<T> extends Result implements Cloneable {
     /**
      * When StepResult only has a single value, pair that value with the following key
      */
@@ -47,6 +55,30 @@ public class StepResult<T> extends Result {
         setStartDate(new Date());
         // this will be updated when the result is set
         setEndDate(new Date());
+    }
+
+    /**
+     * Creates a StepResult from known step result, start and end dates.
+     * <p>
+     * Using this constructor ensures that the StepResult has the correct identifier and answer
+     * format for the corresponding step.
+     *
+     * @param step the step used to create the StepResult
+     * @param result step result value
+     * @param startDate start date that was captured when the user started this step result
+     * @param endDate end date that was captured the last time the user modified this step
+     */
+    public StepResult(Step step, T result, Date startDate, Date endDate) {
+        super(step.getIdentifier());
+        this.results = new HashMap<>();
+
+        if (step instanceof QuestionStep) {
+            answerFormat = ((QuestionStep) step).getAnswerFormat();
+        }
+        setStartDate(startDate);
+        // this will be updated when the result is set
+        setEndDate(endDate);
+        setResultForIdentifier(DEFAULT_KEY, result);
     }
 
     public Map<String, T> getResults() {
@@ -107,5 +139,74 @@ public class StepResult<T> extends Result {
      */
     public AnswerFormat getAnswerFormat() {
         return answerFormat;
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (other == null || getClass() != other.getClass()) {
+            return false;
+        }
+        if (!super.equals(other)) {
+            return false;
+        }
+        final StepResult<?> that = (StepResult<?>) other;
+        return Objects.equals(getResults(), that.getResults()) &&
+                Objects.equals(getAnswerFormat(), that.getAnswerFormat());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getResults(), getAnswerFormat());
+    }
+
+    @NonNull
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        StepResult cloned = (StepResult) super.clone();
+
+        cloned.results = new HashMap<>();
+        for (Map.Entry<String, T> e : results.entrySet()) {
+            boolean isCloned = false;
+            if (e.getValue() instanceof Cloneable) {
+                try {
+                    // This is going to clone any object of the type Cloneable, This is inevitable because we need to
+                    // clone every answer in the results map in order to able to make changes to the original object
+                    // without affecting the cloned one.
+                    Method method = e.getValue().getClass().getDeclaredMethod("clone");
+                    method.setAccessible(true);
+
+                    cloned.results.put(e.getKey(), method.invoke(e.getValue()));
+                    isCloned = true;
+                } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            if (!isCloned) {
+                cloned.results.put(e.getKey(), e.getValue());
+            }
+        }
+
+        cloned.answerFormat = answerFormat;
+        cloned.setStartDate((Date) getStartDate().clone());
+        // this will be updated when the result is set
+        cloned.setEndDate((Date) getEndDate().clone());
+        return cloned;
+    }
+
+    public Boolean allValuesAreNull() {
+        int count = 0;
+        for (Map.Entry<String, T> e : results.entrySet()) {
+            final T value = e.getValue();
+            final boolean isNull = value instanceof StepResult ?
+                    ((StepResult) value).getResult() == null
+                    : value == null;
+            if (isNull) {
+                count++;
+            }
+        }
+        return results.size() == count;
     }
 }

@@ -1,26 +1,28 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'com.neenbedankt.android-apt'
-apply plugin: 'com.jfrog.bintray'
-
-version = '1.1.2'
-
+apply plugin: 'maven'
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
 
-    lintOptions {
-        warning "InvalidPackage"
+    compileSdkVersion 27
+    buildToolsVersion '28.0.3'
+
+    libraryVariants.all { variant ->
+        variant.outputs.all { output ->
+            outputFileName = new File(".", output.outputFile.name.replace(".aar", "_v${defaultConfig.versionName}.aar"))
+        }
     }
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 23
-        versionCode 6
-        versionName version
+        minSdkVersion 19
+        targetSdkVersion 22
+        versionCode 7
+        versionName "1.0.10"
     }
+
     buildTypes {
+        debug {
+            minifyEnabled false
+            debuggable true
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -37,36 +39,15 @@ android {
         exclude 'META-INF/NOTICE.txt'
     }
 
+    android {
+        lintOptions {
+            abortOnError false
+        }
+    }
+
     resourcePrefix 'rss_'
 }
 
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
-ext {
-    bintrayRepo = 'ResearchStack'
-    bintrayName = 'Skin'
-
-    publishedGroupId = 'org.researchstack'
-    libraryName = 'Skin'
-    artifact = 'skin'
-
-    libraryDescription = 'Skin description'
-
-    siteUrl = 'https://researchstack.org'
-    gitUrl = 'https://github.com/ResearchStack/ResearchStack.git'
-
-    libraryVersion = version
-
-    userOrgName = 'researchstack'
-    developerId = properties.getProperty("bintray.user")
-    developerName = properties.getProperty("bintray.developerName")
-    developerEmail = properties.getProperty("bintray.developerEmail")
-
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
-}
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar', '*.so'])
@@ -79,47 +60,17 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta3'
     compile 'com.squareup.okhttp3:logging-interceptor:3.0.0-RC1'
+    implementation "com.android.support:support-compat:27.1.0"
+    compile 'com.android.support:support-v4:27.1.0'
+    compile 'com.android.support:design:27.1.0'
+    implementation 'io.reactivex:rxjava:1.1.3'
+    implementation 'io.reactivex:rxandroid:1.1.0'
+    implementation 'com.jakewharton.rxbinding:rxbinding:0.2.0'
+    implementation 'com.jakewharton.rxbinding:rxbinding-support-v4:0.2.0'
+    implementation 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.2.0'
+    implementation 'com.jakewharton.rxbinding:rxbinding-design:0.2.0'
+    implementation 'com.android.support:preference-v7:27.1.1'
 
-}
-
-// this could be a script, since it is used in two places
-group = publishedGroupId                               // Maven Group ID for the artifact
-install {
-    repositories.mavenInstaller {
-        // This generates POM.xml with proper parameters
-        pom {
-            project {
-                packaging 'aar'
-                groupId publishedGroupId
-                artifactId artifact
-
-                // Add your description here
-                name libraryName
-                description libraryDescription
-                url siteUrl
-
-                // Set your license
-                licenses {
-                    license {
-                        name licenseName
-                        url licenseUrl
-                    }
-                }
-                developers {
-                    developer {
-                        id developerId
-                        name developerName
-                        email developerEmail
-                    }
-                }
-                scm {
-                    connection gitUrl
-                    developerConnection gitUrl
-                    url siteUrl
-                }
-            }
-        }
-    }
 }
 
 if (project.hasProperty("android")) { // Android libraries
@@ -131,7 +82,6 @@ if (project.hasProperty("android")) { // Android libraries
     task javadoc(type: Javadoc) {
         failOnError false
         source = android.sourceSets.main.java.srcDirs
-        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
     }
 
     afterEvaluate {
@@ -147,29 +97,56 @@ if (project.hasProperty("android")) { // Android libraries
     }
 }
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
+def RS_POM_GROUP="com.medable.researchstack"
+def RS_POM_DESCRIPTION="Medable's ResearchStack fork"
+def RS_POM_LICENCE_NAME="The Apache Software License, Version 2.0"
+def RS_POM_LICENCE_URL="http://www.apache.org/licenses/LICENSE-2.0.txt"
+def RS_POM_LICENCE_DIST="repo"
+
+afterEvaluate { project ->
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+
+                pom.groupId = RS_POM_GROUP
+                pom.artifactId = project.getProperties().SK_POM_ARTIFACT_ID
+                pom.version = android.defaultConfig.versionName
+
+                def deployPath = file('./')
+                repository(url: "file://${deployPath.absolutePath}/../../Android-SDK/")
+
+                pom.project {
+                    name project.getProperties().SK_POM_NAME
+                    packaging project.getProperties().SK_POM_PACKAGING
+                    description RS_POM_DESCRIPTION
+
+                    licenses {
+                        license {
+                            name RS_POM_LICENCE_NAME
+                            url RS_POM_LICENCE_URL
+                            distribution RS_POM_LICENCE_DIST
+                        }
+                    }
+                }
+
+                pom.whenConfigured { pom ->
+                    pom.dependencies.forEach { dep ->
+                        if (dep.getVersion() == "unspecified") {
+                            dep.setGroupId(RS_POM_GROUP)
+                            dep.setVersion(android.defaultConfig.versionName)
+                        }
+                    }
+                }
+
+            }
+        }
+    }
 }
-
-artifacts {
-    archives javadocJar
-    archives sourcesJar
-}
-
-bintray {
-    user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apikey")
-
-    configurations = ['archives']
-    pkg {
-        repo = bintrayRepo
-        name = bintrayName
-        userOrg = userOrgName
-        desc = libraryDescription
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = allLicenses
-        publish = true
+buildscript {
+    repositories {
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
 }

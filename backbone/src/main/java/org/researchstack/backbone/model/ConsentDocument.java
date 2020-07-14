@@ -1,6 +1,6 @@
 package org.researchstack.backbone.model;
 
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
 
 import java.io.Serializable;
 import java.util.ArrayList;

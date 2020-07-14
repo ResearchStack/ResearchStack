@@ -1,0 +1,148 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Consent Section -->
+    <string name="rsb_consent">Medgivande</string>
+    <string name="rsb_consent_section_welcome">Välkommen</string>
+    <string name="rsb_consent_section_data_gathering">Datainsamling</string>
+    <string name="rsb_consent_section_privacy">Integritet</string>
+    <string name="rsb_consent_section_data_use">Dataanvändning</string>
+    <string name="rsb_consent_section_time_commitment">Tidsåtagande</string>
+    <string name="rsb_consent_section_study_survey">Studieundersökning</string>
+    <string name="rsb_consent_section_study_tasks">Studieuppgifter</string>
+    <string name="rsb_consent_section_withdrawing">Återkallande</string>
+
+    <!-- Consent section learn more -->
+    <string name="rsb_consent_section_more_info">Läs mer</string>
+    <string name="rsb_consent_section_more_info_data_gathering">Läs mer om hur data samlas in</string>
+    <string name="rsb_consent_section_more_info_data_use">Läs mer om hur data används</string>
+    <string name="rsb_consent_section_more_info_privacy">Läs mer om hur din integritet och identitet skyddas</string>
+    <string name="rsb_consent_section_more_info_welcome">Läs mer om studien först</string>
+    <string name="rsb_consent_section_more_info_study_survey">Läs mer om studieundersökningen</string>
+    <string name="rsb_consent_section_more_info_time_commitment">Läs mer om hur studien påverkar din tid</string>
+    <string name="rsb_consent_section_more_info_study_tasks">Läs mer om vilka uppgifter som ingår</string>
+    <string name="rsb_consent_section_more_info_withdrawing">Läs mer om återkallande</string>
+
+    <!-- Consent sharing step -->
+
+    <!-- Consent doc step -->
+    <string name="rsb_consent_review_alert_title">Gå igenom</string>
+    <string name="rsb_consent_review_cancel">Avbryt</string>
+
+    <string name="rsb_saving_consent">Medgivande av lagring</string>
+    <string name="rsb_please_wait">Vänligen vänta&#8230;</string>
+
+    <!-- Consent form step -->
+    <string name="rsb_consent_dob_full">Födelsedatum</string>
+
+    <!-- Consent sig step -->
+    <string name="rsb_consent_signature_title">Signatur</string>
+    <string name="rsb_consent_signature_instruction">Signera med fingret på raden nedan.</string>
+    <string name="rsb_consent_signature_placeholder">Signera här</string>
+    <string name="rsb_consent_signature_clear">Rensa</string>
+
+    <!-- Quiz -->
+
+    <!-- Other -->
+    <string name="rsb_done">Klart</string>
+    <string name="rsb_step_skip">Hoppa över</string>
+    <string name="rsb_next">nästa</string>
+    <string name="rsb_name_first">Förnamn</string>
+    <string name="rsb_name_last">Efternamn</string>
+    <string name="rsb_disagree">Håller inte med</string>
+    <string name="rsb_agree">Håller med</string>
+    <string name="rsb_cancel">Avbryt</string>
+    <string name="rsb_format_step_title">Steg %1$s av %2$s</string>
+    <string name="rsb_hours">Timmar</string>
+    <string name="rsb_minutes">Minuter</string>
+    <string name="rsb_task_cancel_title">Lämna aktivitet</string>
+    <string name="rsb_task_cancel_text">Är du säker på att du vill lämna denna aktivitet och makulera resultaten?</string>
+    <string name="rsb_task_cancel_positive">Makulera resultat</string>
+
+    <!-- Step Errors -->
+    <string name="rsb_error_invalid_signature">Ogiltig signatur</string>
+    <string name="rsb_invalid_answer_default">Ogiltigt svar. Försök igen!</string>
+    <string name="rsb_invalid_answer_date_over">Ogiltigt svar. Datum måste infalla före %1$s</string>
+    <string name="rsb_invalid_answer_date_under">Ogiltigt svar. Datum måste infalla efter %1$s</string>
+    <string name="rsb_invalid_answer_integer_over">Ogiltigt svar. Datum måste infalla efter %1$s</string>
+    <string name="rsb_invalid_answer_integer_under">Ogiltigt svar. Värdet måste vara minst %1$s</string>
+    <string name="rsb_invalid_answer_choice">Välj ett värde!</string>
+    <string name="rsb_invalid_answer_date_none">Välj ett datum.</string>
+    <string name="rsb_birth_date_too_old">Du får vara högst %1$s år gammal</string>
+    <string name="rsb_birth_date_too_young">Du måste vara minst %1$s år gammal</string>
+
+    <!-- Pin Code -->
+
+    <!-- Body Hints -->
+    <string name="rsb_hint_step_body_int">Ange ett tal %1$d-%2$d</string>
+    <string name="rsb_hint_step_body_dec">Ange ett tal %1$.2f-%2$.2f</string>
+    <string name="rsb_hint_step_body_int_no_max">Ange ett tal</string>
+    <string name="rsb_hint_step_body_date">Ange ett datum</string>
+    <string name="rsb_hint_step_body_time">Ange en tid</string>
+    <string name="rsb_hint_step_body_datetime">Ange datum och tid</string>
+    <string name="rsb_hint_step_body_text">Svar</string>
+
+    <!-- Graphing -->
+    <string name="rsb_chart_progress_center">%1$s av %2$s</string>
+    <string name="rsb_chart_pie_value">%1$s&#65285;</string>
+
+    <!-- AssetVideoView -->
+    <!-- Title for error alert when a video cannot be played.  it can be used by any app. -->
+    <!-- Text for error alert when a video container is not valid for progressive download/playback. -->
+    <string name="rsb_error_assetvideoview_invalid_progressive_playback">Denna video är inte giltig för strömning till denna enhet.</string>
+    <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
+    <string name="rsb_error_assetvideoview_unknown">Videon kan inte spelas upp.</string>
+    <!-- Button to close error alert when a video cannot be played -->
+    <string name="rsb_error_assetvideoview_button">OK</string>
+
+    <!-- Consent -->
+    <string name="rsb_consent_doc_line_printed_name">%1$s\'s namn (texta)</string>
+    <string name="rsb_consent_doc_line_signature">%1$s\'s Signatur</string>
+    <string name="rsb_consent_doc_line_date">Datum</string>
+    <string name="rsb_consent_role">Deltagare</string>
+
+    <!-- Edit -->
+    <string name="rsb_edit_step_alert_cancel_positive">JA, AVBRYT REDIGERINGEN</string>
+    <string name="rsb_edit_step_alert_cancel_discard">NEJ, FORTSÄTT REDIGERINGEN</string>
+    <string name="rsb_edit_step_alert_cancel_title">Vill du avbryta redigeringen?</string>
+    <string name="rsb_edit_step_alert_cancel_content">Alla ändringar kommer att raderas och ditt ursprungliga svar kommer att användas.</string>
+    <string name="rsb_edit_step_alert_step_save_title">Vill du spara dina ändringar?</string>
+    <string name="rsb_edit_step_alert_step_save_content">Andra svar kan raderas och du kan bli ombedd att skicka in ny information.</string>
+    <string name="rsb_edit_step_alert_step_save_discard">Nej, radera</string>
+    <string name="rsb_edit_step_alert_step_save_positive">Ja, spara</string>
+    <string name="rsb_consent_review_save">Spara</string>
+    <string name="rsb_edit_step_alert_step_skip_title">Vill du hoppa över det här steget?</string>
+    <string name="rsb_edit_step_alert_step_skip_content">Ditt ursprungliga svar kommer att raderas.</string>
+    <string name="rsb_edit_step_alert_step_skip_discard">NEJ, HOPPA INTE ÖVER</string>
+    <string name="rsb_edit_step_alert_step_skip_positive">Ja, hoppa över</string>
+    <string name="rsb_edit_step">Redigera</string>
+    <string name="mtrl_picker_range_header_title" tools:ignore="ResourceName" tools:override="true">Välj ett datumintervall</string>
+    <string name="mtrl_picker_date_header_title" tools:ignore="ResourceName" tools:override="true">Välj ett datum</string>
+    <string name="mtrl_picker_range_header_unselected" tools:ignore="ResourceName" tools:override="true">Startdatum - Slutdatum</string>
+    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">%1$s - Slutdatum</string>
+    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">Startdatum- %1$s</string>
+    <string name="mtrl_picker_range_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s - %2$s</string>
+    <string name="mtrl_picker_date_header_unselected" tools:ignore="ResourceName" tools:override="true">Valt datum</string>
+    <string name="mtrl_picker_text_input_date_hint" tools:ignore="ResourceName" tools:override="true">Datum</string>
+    <string name="mtrl_picker_text_input_date_range_start_hint" tools:ignore="ResourceName" tools:override="true">Startdatum</string>
+    <string name="mtrl_picker_text_input_date_range_end_hint" tools:ignore="ResourceName" tools:override="true">Slutdatum</string>
+    <string name="mtrl_picker_save" tools:ignore="ResourceName" tools:override="true">Spara</string>
+    <string name="mtrl_picker_invalid_range" tools:ignore="ResourceName" tools:override="true">Ogiltigt intervall.</string>
+    <string name="mtrl_picker_out_of_range" tools:ignore="ResourceName" tools:override="true">Utanför intervallet: %1$s</string>
+    <string name="mtrl_picker_invalid_format" tools:ignore="ResourceName" tools:override="true">Ogiltigt format.</string>
+    <string name="mtrl_picker_invalid_format_use" tools:ignore="ResourceName" tools:override="true">Använd: %1$s</string>
+    <string name="mtrl_picker_invalid_format_example" tools:ignore="ResourceName" tools:override="true">Exempel: %1$s</string>
+    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:ignore="ResourceName" tools:override="true">Byt till kalenderinmatningsläge</string>
+    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">Byt till textinmatningsläge</string>
+    <string name="mtrl_picker_a11y_prev_month" tools:ignore="ResourceName" tools:override="true">Byt till föregående månad</string>
+    <string name="mtrl_picker_a11y_next_month" tools:ignore="ResourceName" tools:override="true">Byt till nästa månad</string>
+    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">Toque para cambiar a seleccionar un año</string>
+    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">Tryck för att växla för att välja en dag</string>
+    <string name="mtrl_picker_day_of_week_column_header" tools:ignore="ResourceName" tools:override="true">Dagars kolumn: %1$s</string>
+    <string name="mtrl_picker_announce_current_selection" tools:ignore="ResourceName" tools:override="true">Nuvarande val: %1$s</string>
+    <string name="mtrl_picker_navigate_to_year_description" tools:ignore="ResourceName" tools:override="true">Navigera till år %1$s</string>
+    <string name="time_picker_hour_label" tools:ignore="ResourceName" tools:override="true">timme</string>
+    <string name="time_picker_minute_label" tools:ignore="ResourceName" tools:override="true">minut</string>
+    <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">Ställ klockan</string>
+    <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">Ange en giltig tid</string>
+    <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Skriv in tid</string>
+
+</resources>

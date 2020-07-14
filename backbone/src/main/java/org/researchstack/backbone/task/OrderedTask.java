@@ -5,6 +5,7 @@ import android.content.Context;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
+import org.researchstack.backbone.utils.LocalizationUtils;
 import org.researchstack.backbone.utils.TextUtils;
 
 import java.io.Serializable;
@@ -26,11 +27,12 @@ import java.util.Set;
  * OrderedTask or NavigableOrderedTask and override particular {@link Task} methods than it
  * is to implement a new Task subclass directly. Override the methods {@link #getStepAfterStep} and
  * {@link #getStepBeforeStep}, and call super for all other methods.
+ *
+ * @deprecated use Axon's Task class instead
  */
+@Deprecated
 public class OrderedTask extends Task implements Serializable {
-
     protected List<Step> steps;
-
     /**
      * Returns an initialized ordered task using the specified identifier and array of steps.
      *
@@ -64,6 +66,10 @@ public class OrderedTask extends Task implements Serializable {
     public Step getStepAfterStep(Step step, TaskResult result) {
         if (step == null) {
             return steps.get(0);
+        }
+
+        if (step.isCompletionStep()) {
+            return null;
         }
 
         int nextIndex = steps.indexOf(step) + 1;
@@ -122,9 +128,20 @@ public class OrderedTask extends Task implements Serializable {
         String title = super.getTitleForStep(context, step);
         if (TextUtils.isEmpty(title)) {
             int currentIndex = steps.indexOf(step);
-            title = context.getString(R.string.rsb_format_step_title,
-                    currentIndex + 1,
-                    steps.size());
+            int currentIndexWithoutHidden = 0;
+            int maxIndexWithoutHidden = 0;
+            for(int i = 0; i < steps.size();i++) {
+                step = steps.get(i);
+                if (!step.isHidden()) {
+                   maxIndexWithoutHidden++;
+                   if (i <= currentIndex) {
+                       currentIndexWithoutHidden++;
+                   }
+                }
+            }
+            title = LocalizationUtils.getLocalizedString(context, R.string.rsb_format_step_title,
+                    currentIndexWithoutHidden,
+                    maxIndexWithoutHidden);
         }
         return title;
     }
@@ -153,5 +170,12 @@ public class OrderedTask extends Task implements Serializable {
      */
     public List<Step> getSteps() {
         return new ArrayList<>(steps);
+    }
+
+    @Override
+    public void resetCompletedTask(List<String> list) {
+        // no-op: During a ReviewStep, the user can change its responses. In Ordered tasks,
+        // step Ids don't change and they are always in the same position,
+        // so there is no need to reset it.
     }
 }

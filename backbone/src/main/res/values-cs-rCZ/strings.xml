@@ -1,0 +1,155 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Debug -->
+
+    <!-- Consent Section -->
+    <string name="rsb_consent">Souhlas</string>
+    <string name="rsb_consent_section_welcome">Vítejte</string>
+    <string name="rsb_consent_section_data_gathering">Shromažďování údajů</string>
+    <string name="rsb_consent_section_privacy">Ochrana osobních údajů</string>
+    <string name="rsb_consent_section_data_use">Použití údajů</string>
+    <string name="rsb_consent_section_time_commitment">Časový závazek</string>
+    <string name="rsb_consent_section_study_survey">Výzkumná studie</string>
+    <string name="rsb_consent_section_study_tasks">Úkoly studie</string>
+    <string name="rsb_consent_section_withdrawing">Odstoupení</string>
+
+    <!-- Consent section learn more -->
+    <string name="rsb_consent_section_more_info">Zjistit více</string>
+    <string name="rsb_consent_section_more_info_data_gathering">Zjistit více o shromažďování údajů</string>
+    <string name="rsb_consent_section_more_info_data_use">Zjistit více o použití údajů</string>
+    <string name="rsb_consent_section_more_info_privacy">Zjistit více o tom, jak jsou chráněny vaše osobní údaje a totožnost</string>
+    <string name="rsb_consent_section_more_info_welcome">Nejprve zjistit o studii více</string>
+    <string name="rsb_consent_section_more_info_study_survey">Zjistit více o studii</string>
+    <string name="rsb_consent_section_more_info_time_commitment">Zjistit více o časové náročnosti studie</string>
+    <string name="rsb_consent_section_more_info_study_tasks">Zjistit více o zahrnutých úkolech</string>
+    <string name="rsb_consent_section_more_info_withdrawing">Zjistit více o odstoupení</string>
+
+    <!-- Consent sharing step -->
+
+    <!-- Consent doc step -->
+    <string name="rsb_consent_review_alert_title">Kontrola</string>
+    <string name="rsb_consent_review_cancel">Zrušit</string>
+
+    <string name="rsb_saving_consent">Ukládání souhlasu</string>
+    <string name="rsb_please_wait">Počkejte prosím&#8230;</string>
+
+    <!-- Consent form step -->
+    <string name="rsb_consent_dob_full">Datum narození</string>
+
+    <!-- Consent sig step -->
+    <string name="rsb_consent_signature_title">Podpis</string>
+    <string name="rsb_consent_signature_instruction">Podepište se prosím prstem na řádek níže.</string>
+    <string name="rsb_consent_signature_placeholder">Podepište se sem</string>
+    <string name="rsb_consent_signature_clear">Vymazat</string>
+
+    <!-- Quiz -->
+
+    <!-- Other -->
+    <string name="rsb_done">Hotovo</string>
+    <string name="rsb_step_skip">Přeskočit</string>
+    <string name="rsb_next">další</string>
+    <string name="rsb_name_first">Křestní jméno</string>
+    <string name="rsb_name_last">Příjmení</string>
+    <string name="rsb_disagree">Nesouhlasím</string>
+    <string name="rsb_agree">Souhlasím</string>
+    <string name="rsb_cancel">Zrušit</string>
+    <string name="rsb_format_step_title">Krok %1$s z %2$s</string>
+    <string name="rsb_hours">Hodin</string>
+    <string name="rsb_minutes">Minut</string>
+    <string name="rsb_task_cancel_title">Opustit aktivitu</string>
+    <string name="rsb_task_cancel_text">Opravdu chcete opustit tuto aktivitu a zahodit její výsledky?</string>
+    <string name="rsb_task_cancel_positive">Zahodit výsledky</string>
+
+    <!-- Step Errors -->
+    <string name="rsb_error_invalid_signature">Neplatný podpis</string>
+    <string name="rsb_invalid_answer_default">Neplatná odpověď, zkuste to znovu!</string>
+    <string name="rsb_invalid_answer_date_over">Neplatná odpověď, datum musí být dřívější než %1$s</string>
+    <string name="rsb_invalid_answer_date_under">Neplatná odpověď, datum musí být pozdější než %1$s</string>
+    <string name="rsb_invalid_answer_integer_over">Neplatná odpověď, hodnota musí být %1$s nebo nižší</string>
+    <string name="rsb_invalid_answer_integer_under">Neplatná odpověď, hodnota musí být %1$s nebo vyšší</string>
+    <string name="rsb_invalid_answer_choice">Zvolte prosím hodnotu!</string>
+    <string name="rsb_invalid_answer_date_none">Vyberte prosím datum.</string>
+    <string name="rsb_birth_date_too_old">Musí vám být %1$s let nebo méně</string>
+    <string name="rsb_birth_date_too_young">Musí vám být alespoň %1$s let</string>
+
+    <!-- Pin Code -->
+
+    <!-- Body Hints -->
+    <string name="rsb_hint_step_body_int">Zadejte číslo %1$d-%2$d</string>
+    <string name="rsb_hint_step_body_dec">Zadejte číslo %1$.2f-%2$.2f</string>
+    <string name="rsb_hint_step_body_int_no_max">Zadejte číslo</string>
+    <string name="rsb_hint_step_body_date">Zadejte datum</string>
+    <string name="rsb_hint_step_body_time">Zadejte čas</string>
+    <string name="rsb_hint_step_body_datetime">Zadejte datum a čas</string>
+    <string name="rsb_hint_step_body_text">Odpověď</string>
+
+    <!-- Graphing -->
+    <string name="rsb_chart_progress_center">%1$s z %2$s</string>
+    <string name="rsb_chart_pie_value">%1$s&#65285;</string>
+
+    <!-- AssetVideoView -->
+    <!-- Title for error alert when a video cannot be played.  it can be used by any app. -->
+    <!-- Text for error alert when a video container is not valid for progressive download/playback. -->
+    <string name="rsb_error_assetvideoview_invalid_progressive_playback">Toto video není platné pro streaming na tomto zařízení.</string>
+    <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
+    <string name="rsb_error_assetvideoview_unknown">Toto video nelze přehrát.</string>
+    <!-- Button to close error alert when a video cannot be played -->
+    <string name="rsb_error_assetvideoview_button">ok</string>
+
+    <!-- Consent -->
+    <string name="rsb_consent_doc_line_printed_name">Jméno %1$s\'s (vytištěno)</string>
+    <string name="rsb_consent_doc_line_signature">Podpis %1$s\'s</string>
+    <string name="rsb_consent_doc_line_date">Datum</string>
+    <string name="rsb_consent_role">Účastník</string>
+
+    <!-- Edit -->
+    <string name="rsb_edit_step_alert_cancel_positive">ANO, ZRUŠIT PROVÁDĚNÍ ZMĚN</string>
+    <string name="rsb_edit_step_alert_cancel_discard">NE, POKRAČOVAT V ÚPRAVĚ</string>
+    <string name="rsb_edit_step_alert_cancel_title">Přejete si zrušit provádění změn?</string>
+    <string name="rsb_edit_step_alert_cancel_content">Všechny změny budou zrušeny a bude použita vaše původní odpověď.</string>
+    <string name="rsb_edit_step_alert_step_save_title">Přejete si uložit své změny?</string>
+    <string name="rsb_edit_step_alert_step_save_content">Ostatní odpovědi mohou být vymazány a můžete být požádáni o zadání nových údajů.</string>
+    <string name="rsb_edit_step_alert_step_save_discard">Ne, zrušit</string>
+    <string name="rsb_edit_step_alert_step_save_positive">Ano, uložit</string>
+    <string name="rsb_consent_review_save">Uložit</string>
+    <string name="rsb_edit_step_alert_step_skip_title">Přejete si tento krok přeskočit?</string>
+    <string name="rsb_edit_step_alert_step_skip_content">Vaše původní odpověď bude zrušena.</string>
+    <string name="rsb_edit_step_alert_step_skip_discard">NE, NEPŘESKAKOVAT</string>
+    <string name="rsb_edit_step_alert_step_skip_positive">Ano, přeskočit</string>
+    <string name="rsb_edit_step">Upravit</string>
+
+    <!-- Material Date Picker Strings -->
+    <string name="mtrl_picker_range_header_title" tools:override="true" tools:ignore="ResourceName">Vyberte časové období</string>
+    <string name="mtrl_picker_date_header_title" tools:override="true" tools:ignore="ResourceName">Vyberte datum</string>
+    <string name="mtrl_picker_range_header_unselected" tools:override="true" tools:ignore="ResourceName">Datum zahájení - Datum ukončení</string>
+    <string name="mtrl_picker_range_header_only_start_selected" tools:override="true" tools:ignore="ResourceName">%1$s – Datum ukončení</string>
+    <string name="mtrl_picker_range_header_only_end_selected" tools:override="true" tools:ignore="ResourceName">Datum začátku – %1$s</string>
+    <string name="mtrl_picker_range_header_selected" tools:override="true" tools:ignore="ResourceName">%1$s – %2$s</string>
+    <string name="mtrl_picker_date_header_unselected" tools:override="true" tools:ignore="ResourceName">Vybrané datum</string>
+    <string name="mtrl_picker_date_header_selected" tools:override="true" tools:ignore="ResourceName">%1$s</string>
+    <string name="mtrl_picker_confirm" tools:override="true" tools:ignore="ResourceName">@android:string/ok</string>
+    <string name="mtrl_picker_text_input_date_hint" tools:override="true" tools:ignore="ResourceName">datum</string>
+    <string name="mtrl_picker_text_input_date_range_start_hint" tools:override="true" tools:ignore="ResourceName">Datum začátku</string>
+    <string name="mtrl_picker_text_input_date_range_end_hint" tools:override="true" tools:ignore="ResourceName">Datum ukončení</string>
+    <string name="mtrl_picker_save" tools:override="true" tools:ignore="ResourceName">ušetřit</string>
+    <string name="mtrl_picker_invalid_range" tools:override="true" tools:ignore="ResourceName">Neplatný rozsah.</string>
+    <string name="mtrl_picker_out_of_range" tools:override="true" tools:ignore="ResourceName">Mimo dosah: %1$s</string>
+    <string name="mtrl_picker_invalid_format" tools:override="true" tools:ignore="ResourceName">Nesprávný formát.</string>
+    <string name="mtrl_picker_invalid_format_use" tools:override="true" tools:ignore="ResourceName">Použití: %1$s</string>
+    <string name="mtrl_picker_invalid_format_example" tools:override="true" tools:ignore="ResourceName">Příklad: %1$s</string>
+    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:override="true" tools:ignore="ResourceName">Přepnutí do režimu zadávání kalendáře</string>
+    <string name="mtrl_picker_toggle_to_text_input_mode" tools:override="true" tools:ignore="ResourceName">Přepnutí do režimu zadávání textu</string>
+    <string name="mtrl_picker_a11y_prev_month" tools:override="true" tools:ignore="ResourceName">Změnit na předchozí měsíc</string>
+    <string name="mtrl_picker_a11y_next_month" tools:override="true" tools:ignore="ResourceName">Změnit na další měsíc</string>
+    <string name="mtrl_picker_toggle_to_year_selection" tools:override="true" tools:ignore="ResourceName">Klepnutím přepnete na výběr roku</string>
+    <string name="mtrl_picker_toggle_to_day_selection" tools:override="true" tools:ignore="ResourceName">Klepnutím přepnete na výběr dne</string>
+    <string name="mtrl_picker_day_of_week_column_header" tools:override="true" tools:ignore="ResourceName">Sloupec dní: %1$s</string>
+    <string name="mtrl_picker_announce_current_selection" tools:override="true" tools:ignore="ResourceName">Aktuální výběr: %1$s</string>
+    <string name="mtrl_picker_navigate_to_year_description" tools:override="true" tools:ignore="ResourceName">Přejděte na rok %1$s</string>
+    ​
+    <!-- Material Time Picker Strings -->
+    <string name="time_picker_hour_label" tools:override="true" tools:ignore="ResourceName">hodina</string>
+    <string name="time_picker_minute_label" tools:override="true" tools:ignore="ResourceName">minuta</string>
+    <string name="time_picker_header_text" tools:override="true"  tools:ignore="ResourceName">Nastavit čas</string>
+    <string name="time_picker_input_error" tools:override="true" tools:ignore="ResourceName">Zadejte platný čas</string>
+    <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Zadejte čas</string>
+</resources>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/rsb_boolean_step_layout">
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/reviewStepEditButtonStartBarrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="start"
+        app:constraint_referenced_ids="reviewStepEditButton" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/reviewStepEditButtonBottomBarrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="reviewStepEditButton" />
+
+    <ImageButton
+        android:id="@+id/reviewStepEditButton"
+        android:background="?android:attr/selectableItemBackground"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingEnd="9dp"
+        android:paddingStart="9dp"
+        android:contentDescription="Edit"
+        android:src="@drawable/rsb_ic_edit"
+        android:tint="@android:color/darker_gray"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingBottom="8dp"
+        tools:ignore="HardcodedText" />
+</merge>

@@ -1,10 +1,16 @@
 package org.researchstack.backbone.result;
 
-import android.net.Uri;
+import org.jetbrains.annotations.NotNull;
+import org.researchstack.backbone.step.Step;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.UUID;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.util.Pair;
+import kotlin.Deprecated;
 
 /**
  * An TaskResult object is a result that contains all the step results generated from one run of a
@@ -17,18 +23,25 @@ import java.util.UUID;
  * <p>
  * The <code>results</code> property contains the step results for the task.
  */
-public class TaskResult extends Result {
+public class TaskResult extends Result implements Cloneable {
     private Map<String, StepResult> results;
 
-    // unimplemented but exists in RK, implement or delete if not needed
-    private UUID uuidTask;
-
-    // unimplemented but exists in RK, implement or delete if not needed
-    private Uri outputDirectory;
+    // Maintain a Second map that stores the full step and results combined, instead of just the
+    // identifier. In time, the original "identifier, result" map should be removed in favor of this
+    // one.
+    // WHY? It simplifies ReviewStep's data source.
+    private Map<Step, StepResult> stepsAndResults;
 
     public TaskResult(String identifier) {
         super(identifier);
         this.results = new HashMap<>();
+        this.stepsAndResults = new LinkedHashMap<>();
+    }
+
+    public TaskResult(TaskResult taskResult) {
+        super(taskResult.getIdentifier());
+        this.results = new HashMap<>();
+        this.stepsAndResults = new LinkedHashMap<>();
     }
 
     /**
@@ -36,18 +49,40 @@ public class TaskResult extends Result {
      *
      * @return a Map of the StepResults
      */
+    @Deprecated(message = "Prefer to use getStepsAndResults()")
     public Map<String, StepResult> getResults() {
         return results;
+    }
+
+    public Map<Step, StepResult> getStepsAndResults() {
+        return stepsAndResults;
     }
 
     /**
      * Returns a step result for the specified step identifier, if one exists.
      *
      * @param identifier The identifier for which to search.
-     * @return The result for the specified step, or {@link nil} for none.
+     * @return The result for the specified step, or {@link null} for none.
      */
     public StepResult getStepResult(String identifier) {
         return results.get(identifier);
+    }
+
+    /**
+     * Returns a Pair containing the Step and its StepResult.
+     *
+     * @param identifier the Identifier of the Step
+     * @return a Pair with the Step and its StepResult. The Pair will never be null, but if either
+     * Step or StepResult cannot be found or are null, the pair will contain null values.
+     */
+    public Pair<Step, StepResult> getStepAndResult(String identifier) {
+        for (Step step : stepsAndResults.keySet()) {
+            if (step.getIdentifier().equals(identifier)) {
+                return new Pair<>(step, stepsAndResults.get(step));
+            }
+        }
+
+        return new Pair<>(null, null);
     }
 
     /**
@@ -56,7 +91,53 @@ public class TaskResult extends Result {
      * @param identifier the Step and StepResult's identifier
      * @param stepResult the StepResult for this identifier
      */
+    @Deprecated(message = "Prefer to pass the full Step via setStepResultForStep(Step, StepResult)")
     public void setStepResultForStepIdentifier(String identifier, StepResult stepResult) {
         results.put(identifier, stepResult);
+    }
+
+    /**
+     * Saves the Step's result associated with the entire step.
+     *
+     * @param step       the Step
+     * @param stepResult the StepResult for this Step
+     */
+    public void setStepResultForStep(@NonNull Step step, @Nullable StepResult stepResult) {
+        results.put(step.getIdentifier(), stepResult);
+        stepsAndResults.put(step, stepResult);
+    }
+
+    /**
+     * Remove the Step's result associated with the entire step
+     *
+     * @param step the Step
+     */
+    public void removeStepResultForStep(@NonNull Step step) {
+        results.remove(step.getIdentifier());
+        stepsAndResults.remove(step);
+    }
+
+    @NotNull
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        TaskResult cloned = (TaskResult) super.clone();
+
+        cloned.results = new HashMap<>();
+        for (Map.Entry<String, StepResult> e : results.entrySet()) {
+            // Some steps, like Health Data Permission can throw a NullPointerException because they
+            // don't have real results so it must be taken into consideration when cloning references.
+            if (e.getKey() != null && e.getValue() != null) {
+                cloned.results.put(e.getKey(), (StepResult) e.getValue().clone());
+            }
+        }
+
+        cloned.stepsAndResults = new LinkedHashMap<>();
+        for (Map.Entry<Step, StepResult> e : stepsAndResults.entrySet()) {
+            if (e.getKey() != null && e.getValue() != null) {
+                cloned.stepsAndResults.put((Step) e.getKey().clone(), (StepResult) e.getValue().clone());
+            }
+        }
+
+        return cloned;
     }
 }

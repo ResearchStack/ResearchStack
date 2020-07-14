@@ -2,15 +2,15 @@ package org.researchstack.backbone.ui.step.layout;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import android.util.AttributeSet;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.jakewharton.rxbinding.view.RxView;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.StepResult;
@@ -21,14 +21,14 @@ import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.views.SignatureView;
 import org.researchstack.backbone.ui.views.SubmitBar;
 import org.researchstack.backbone.utils.FormatHelper;
+import org.researchstack.backbone.utils.LocalizationUtils;
 import org.researchstack.backbone.utils.TextUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ConsentSignatureStepLayout extends RelativeLayout implements StepLayout {
+public class ConsentSignatureStepLayout extends ConstraintLayout implements StepLayout {
     public static final String KEY_SIGNATURE = "ConsentSignatureStep.Signature";
     public static final String KEY_SIGNATURE_DATE = "ConsentSignatureStep.Signature.Date";
 
@@ -74,19 +74,41 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
         this.callbacks = callbacks;
     }
 
-    private void initializeStep() {
-        LayoutInflater.from(getContext())
-                .inflate(R.layout.rsb_step_layout_consent_signature, this, true);
+    @Override
+    public void setCancelEditMode(boolean isCancelEdit) {
+        //no-op only when user on edit mode inside regular steps
+    }
 
-        TextView title = (TextView) findViewById(R.id.title);
+    @Override
+    public void setRemoveFromBackStack(boolean removeFromBackStack) {
+        // no-op: Only needed when the user is on edit mode inside regular steps
+    }
+
+    @Override
+    public void isEditView(boolean isEditView) {
+        // no-op: Only needed when the user is on edit mode inside regular steps
+    }
+
+    @Override
+    public StepResult getStepResult() {
+        return result;
+    }
+
+    private void initializeStep() {
+        LayoutInflater.from(getContext()).inflate(R.layout.rsb_step_layout_consent_signature, this, true);
+
+        TextView title = findViewById(R.id.title);
+        title.setTextColor(step.getPrincipalTextColor());
         title.setText(step.getTitle());
 
-        TextView text = (TextView) findViewById(R.id.summary);
+        TextView text = findViewById(R.id.summary);
         text.setText(step.getText());
 
-        View clear = findViewById(R.id.layout_consent_review_signature_clear);
+        final AppCompatTextView clear = findViewById(R.id.layout_consent_review_signature_clear);
+        clear.setTextColor(step.getPrimaryColor());
+        clear.setText(LocalizationUtils.getLocalizedString(getContext(), R.string.rsb_consent_signature_clear));
 
-        signatureView = (SignatureView) findViewById(R.id.layout_consent_review_signature);
+        signatureView = findViewById(R.id.layout_consent_review_signature);
         signatureView.setCallbacks(new SignatureCallbacks() {
             @Override
             public void onSignatureStarted() {
@@ -101,8 +123,13 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
             }
         });
 
-        RxView.clicks(clear).subscribe(v -> {
-            signatureView.clearSignature();
+        clear.setOnClickListener(new OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                signatureView.clearSignature();
+            }
         });
 
         clear.setClickable(signatureView.isSignatureDrawn());
@@ -110,22 +137,33 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
         // view.setAlpha() is not working, this is kind of a hack around that
         clear.animate().alpha(signatureView.isSignatureDrawn() ? 1 : 0);
 
-        SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
+        final SubmitBar submitBar = (SubmitBar) findViewById(R.id.submit_bar);
         submitBar.getNegativeActionView().setVisibility(View.GONE);
-        submitBar.setPositiveAction(v -> {
-            if (signatureView.isSignatureDrawn()) {
-                setDataToResult();
-                callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, result);
-            } else {
-                Toast.makeText(getContext(), R.string.rsb_error_invalid_signature, Toast.LENGTH_SHORT).show();
+        submitBar.setPositiveTitleColor(step.getColorSecondary());
+        submitBar.setPositiveTitle(LocalizationUtils.getLocalizedString(getContext(),
+                R.string.rsb_done));
+        submitBar.setPositiveAction(new OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                if (signatureView.isSignatureDrawn()) {
+                    setDataToResult();
+                    callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, step, result);
+                    submitBar.clearActions();
+                } else {
+                    Toast.makeText(getContext(), LocalizationUtils.getLocalizedString(getContext(),
+                            R.string.rsb_error_invalid_signature), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
 
     private void setDataToResult() {
+
         String format = ((ConsentSignatureStep) step).getSignatureDateFormat();
         DateFormat signatureDateFormat = !TextUtils.isEmpty(format)
-                ? new SimpleDateFormat(format)
+                ? DateFormat.getDateInstance(DateFormat.MEDIUM, LocalizationUtils.getLocaleFromString(LocalizationUtils.getPreferredLocale(getContext())))
                 : FormatHelper.getSignatureFormat();
         String formattedSignDate = signatureDateFormat.format(new Date());
 
@@ -145,5 +183,4 @@ public class ConsentSignatureStepLayout extends RelativeLayout implements StepLa
             return null;
         }
     }
-
 }

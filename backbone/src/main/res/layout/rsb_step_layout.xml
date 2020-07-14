@@ -6,26 +6,44 @@
     android:layout_height="wrap_content"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
+    android:filterTouchesWhenObscured="true"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/rsb_survey_title"
-        style="@style/Backbone.Survey.Title"
+        style="@style/H5SelectedOnSecondaryHighEmphasisLeft"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/black_87"
+        android:layout_marginStart="@dimen/rsb_margin_left"
+        android:layout_marginEnd="@dimen/rsb_margin_right"
+        android:layout_marginTop="@dimen/rsb_margin_top_large"
         android:visibility="gone"
         tools:text="@string/lorem_name"
         tools:visibility="visible" />
 
     <TextView
         android:id="@+id/rsb_survey_text"
-        style="@style/Backbone.Survey.Summary"
+        style="@style/TextStyle3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColorLink="?attr/colorAccent"
+        android:layout_marginStart="@dimen/rsb_margin_left"
+        android:layout_marginEnd="@dimen/rsb_margin_right"
+        android:layout_marginTop="@dimen/rsb_margin_top_small"
+        android:textColor="@color/black_60"
         android:visibility="gone"
         tools:text="@string/lorem_long"
         tools:visibility="visible" />
+
+    <View
+        android:id="@+id/rsb_divider"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="@dimen/rsb_margin_top_extra_small"
+        android:background="@color/very_light_pink_six"
+        android:visibility="gone"
+        tools:visibility="visible"
+        />
 
     <Space
         android:id="@+id/rsb_survey_step_body"

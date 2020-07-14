@@ -19,12 +19,10 @@
 
 package org.researchstack.backbone.ui.views;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 
 import org.researchstack.backbone.R;
@@ -142,17 +140,7 @@ public class StepSwitcher extends FrameLayout {
                         .setInterpolator(interpolator)
                         .setDuration(animationTime)
                         .translationX(-1 * newTranslationX)
-                        .withEndAction(() -> {
-                            InputMethodManager imm = (InputMethodManager) getContext()
-                                    .getSystemService(Activity.INPUT_METHOD_SERVICE);
-
-                            if (imm.isActive() && imm.isAcceptingText()) {
-                                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-                            }
-
-                            removeView(currentStep);
-
-                        });
+                        .withEndAction(() -> removeView(currentStep));
             }
         });
     }

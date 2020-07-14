@@ -3,14 +3,19 @@ package org.researchstack.backbone.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ViewUtils {
 
@@ -61,6 +66,18 @@ public class ViewUtils {
         }
     }
 
+    public static void hideSoftInputMethod(ViewGroup parent) {
+        try {
+            InputMethodManager imm = (InputMethodManager) parent.getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                imm.hideSoftInputFromWindow(parent.getWindowToken(), 0);
+                parent.clearFocus();
+            }
+        } catch (NullPointerException e) {
+            Log.e("CSSL", "NPE: " + e.getMessage());
+        }
+    }
+
     public static void showSoftInputMethod(EditText editText) {
         editText.requestFocus();
         InputMethodManager imm = (InputMethodManager) editText.getContext()
@@ -88,4 +105,30 @@ public class ViewUtils {
         }
     }
 
+    /**
+     * Find all views of this type.
+     *
+     * @param root root view to start with.
+     * @param classType class to find.
+     * @param recursive recursive through root.
+     * @param <T> class type.
+     * @return all found views.
+     */
+    @NonNull
+    public static <T> List<T> findViewsOf(ViewGroup root, Class<T> classType, boolean recursive) {
+        List<T> collection = new ArrayList<>();
+        findViewsOf(root, classType, recursive, collection);
+        return collection;
+    }
+
+    private static <T> void findViewsOf(ViewGroup root, Class<T> classType, boolean recursive, List<T> collection) {
+        for(int i=0; i < root.getChildCount(); i++) {
+            View child = root.getChildAt(i);
+            if(classType.isAssignableFrom(child.getClass())) {
+                collection.add((T)child);
+            } else if(child instanceof ViewGroup && recursive) {
+                findViewsOf((ViewGroup)child, classType, recursive, collection);
+            }
+        }
+    }
 }

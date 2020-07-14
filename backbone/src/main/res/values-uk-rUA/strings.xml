@@ -1,0 +1,147 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Consent Section -->
+    <string name="rsb_consent">Згода</string>
+    <string name="rsb_consent_section_welcome">Ласкаво просимо</string>
+    <string name="rsb_consent_section_data_gathering">Збір даних</string>
+    <string name="rsb_consent_section_privacy">Конфіденційність</string>
+    <string name="rsb_consent_section_data_use">Використання даних</string>
+    <string name="rsb_consent_section_time_commitment">Час виконання</string>
+    <string name="rsb_consent_section_study_survey">Опитування у рамках дослідження</string>
+    <string name="rsb_consent_section_study_tasks">Завдання у рамках дослідження</string>
+    <string name="rsb_consent_section_withdrawing">Передчасне виключення із дослідження</string>
+
+    <!-- Consent section learn more -->
+    <string name="rsb_consent_section_more_info">Детальніше</string>
+    <string name="rsb_consent_section_more_info_data_gathering">Детальніше про спосіб збирання даних</string>
+    <string name="rsb_consent_section_more_info_data_use">Детальніше про використання даних</string>
+    <string name="rsb_consent_section_more_info_privacy">Детальніше про захист Вашої конфіденційності та особистості</string>
+    <string name="rsb_consent_section_more_info_welcome">Спочатку дізнайтеся більше про дослідження</string>
+    <string name="rsb_consent_section_more_info_study_survey">Детальніше про опитування в рамках дослідження</string>
+    <string name="rsb_consent_section_more_info_time_commitment">Детальніше про вплив дослідження на Ваш час</string>
+    <string name="rsb_consent_section_more_info_study_tasks">Детальніше про завдання, включені у дослідження</string>
+    <string name="rsb_consent_section_more_info_withdrawing">Детальніше про передчасне виключення із дослідження</string>
+
+    <!-- Consent sharing step -->
+
+    <!-- Consent doc step -->
+    <string name="rsb_consent_review_alert_title">Перегляд</string>
+    <string name="rsb_consent_review_cancel">Скасувати</string>
+
+    <string name="rsb_saving_consent">Збереження форми згоди</string>
+    <string name="rsb_please_wait">Зачекайте, будь ласка&#8230;</string>
+
+    <!-- Consent form step -->
+    <string name="rsb_consent_dob_full">Дата народження</string>
+
+    <!-- Consent sig step -->
+    <string name="rsb_consent_signature_title">Підпис</string>
+    <string name="rsb_consent_signature_instruction">Поставте підпис пальцем на лінії нижче.</string>
+    <string name="rsb_consent_signature_placeholder">Підпишіть тут</string>
+    <string name="rsb_consent_signature_clear">Очистити</string>
+
+    <!-- Quiz -->
+
+    <!-- Other -->
+    <string name="rsb_done">Готово</string>
+    <string name="rsb_step_skip">Пропустити</string>
+    <string name="rsb_next">далі</string>
+    <string name="rsb_name_first">Ім’я</string>
+    <string name="rsb_name_last">Прізвище</string>
+    <string name="rsb_disagree">Не погоджуюсь</string>
+    <string name="rsb_agree">Погоджуюсь</string>
+    <string name="rsb_cancel">Скасувати</string>
+    <string name="rsb_format_step_title">Крок %1$s з %2$s</string>
+    <string name="rsb_hours">Години</string>
+    <string name="rsb_minutes">Хвилини</string>
+    <string name="rsb_task_cancel_title">Залишити</string>
+    <string name="rsb_task_cancel_text">Ви впевнені, що хочете залишити та скинути результати?</string>
+    <string name="rsb_task_cancel_positive">Скинути результати</string>
+
+    <!-- Step Errors -->
+    <string name="rsb_error_invalid_signature">Підпис недійсний</string>
+    <string name="rsb_invalid_answer_default">Невірна відповідь, спробуйте ще раз!</string>
+    <string name="rsb_invalid_answer_date_over">Невірна відповідь, дата повинна бути до %1$s</string>
+    <string name="rsb_invalid_answer_date_under">Невірна відповідь, дата повинна бути після %1$s</string>
+    <string name="rsb_invalid_answer_integer_over">Невірна відповідь, дата повинна бути після %1$s</string>
+    <string name="rsb_invalid_answer_integer_under">Невірна відповідь, Ваше значення повинно бути %1$s або більше</string>
+    <string name="rsb_invalid_answer_choice">Виберіть значення!</string>
+    <string name="rsb_invalid_answer_date_none">Виберіть дату.</string>
+    <string name="rsb_birth_date_too_old">Вам має бути %1$s років або менше</string>
+    <string name="rsb_birth_date_too_young">Вам має бути принаймні %1$s років</string>
+
+    <!-- Pin Code -->
+
+    <!-- Body Hints -->
+    <string name="rsb_hint_step_body_int">Введіть число %1$d-%2$d</string>
+    <string name="rsb_hint_step_body_dec">Введіть число %1$.2f-%2$.2f</string>
+    <string name="rsb_hint_step_body_int_no_max">Введіть число</string>
+    <string name="rsb_hint_step_body_date">Введіть дату</string>
+    <string name="rsb_hint_step_body_time">Введіть час</string>
+    <string name="rsb_hint_step_body_datetime">Введіть дату та час</string>
+    <string name="rsb_hint_step_body_text">Відповідь</string>
+
+    <!-- Graphing -->
+    <string name="rsb_chart_progress_center">%1$s з %2$s</string>
+    <string name="rsb_chart_pie_value">%1$s&#65285;</string>
+
+    <!-- AssetVideoView -->
+    <!-- Title for error alert when a video cannot be played.  it can be used by any app. -->
+    <!-- Text for error alert when a video container is not valid for progressive download/playback. -->
+    <string name="rsb_error_assetvideoview_invalid_progressive_playback">Це відео не підходить для потокової передачі на цей пристрій.</string>
+    <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
+    <string name="rsb_error_assetvideoview_unknown">Неможливо відтворити це відео.</string>
+    <!-- Button to close error alert when a video cannot be played -->
+    <string name="rsb_error_assetvideoview_button">Oк</string>
+
+    <!-- Consent -->
+    <string name="rsb_consent_doc_line_printed_name">%1$s\'s Ім’я (друкованими літерами)</string>
+    <string name="rsb_consent_doc_line_signature">%1$s\'s Підпис</string>
+    <string name="rsb_consent_doc_line_date">Дата</string>
+    <string name="rsb_consent_role">Учасник</string>
+
+    <!-- Edit -->
+    <string name="rsb_edit_step_alert_cancel_positive">ТАК, ПРИПИНИТИ ВНЕСЕННЯ ЗМІН</string>
+    <string name="rsb_edit_step_alert_cancel_discard">НІ, ПРОДОВЖИТИ РЕДАГУВАННЯ</string>
+    <string name="rsb_edit_step_alert_cancel_title">Ви хочете припинити внесення змін?</string>
+    <string name="rsb_edit_step_alert_cancel_content">Усі зміни буде скасовано, і буде використана ваша вихідна відповідь.</string>
+    <string name="rsb_edit_step_alert_step_save_title">Ви хочете зберегти внесені Вами зміни?</string>
+    <string name="rsb_edit_step_alert_step_save_content">Інші відповіді можуть бути видалені, і вас можуть попросити подати нову інформацію.</string>
+    <string name="rsb_edit_step_alert_step_save_discard">Ні, скасувати</string>
+    <string name="rsb_edit_step_alert_step_save_positive">Так, зберегти</string>
+    <string name="rsb_consent_review_save">Зберегти</string>
+    <string name="rsb_edit_step_alert_step_skip_title">Ви хочете пропустити цей крок?</string>
+    <string name="rsb_edit_step_alert_step_skip_content">Вашу вихідну відповідь буде відхилено.</string>
+    <string name="rsb_edit_step_alert_step_skip_discard">НІ, НЕ ПРОПУСКАТИ</string>
+    <string name="rsb_edit_step_alert_step_skip_positive">Так, пропустити</string>
+    <string name="rsb_edit_step">Редагувати</string>
+    <string name="mtrl_picker_range_header_title" tools:ignore="ResourceName" tools:override="true">Виберіть діапазон дат</string>
+    <string name="mtrl_picker_date_header_title" tools:ignore="ResourceName" tools:override="true">Виберіть дату</string>
+    <string name="mtrl_picker_range_header_unselected" tools:ignore="ResourceName" tools:override="true">Дата початку - Дата закінчення</string>
+    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">%1$s - Дата закінчення</string>
+    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">Дата початку - %1$s</string>
+    <string name="mtrl_picker_range_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s - %2$s</string>
+    <string name="mtrl_picker_date_header_unselected" tools:ignore="ResourceName" tools:override="true">Вибрана дата</string>
+    <string name="mtrl_picker_text_input_date_hint" tools:ignore="ResourceName" tools:override="true">Дата</string>
+    <string name="mtrl_picker_text_input_date_range_start_hint" tools:ignore="ResourceName" tools:override="true">"Дата початку "</string>
+    <string name="mtrl_picker_text_input_date_range_end_hint" tools:ignore="ResourceName" tools:override="true">Дата закінчення</string>
+    <string name="mtrl_picker_save" tools:ignore="ResourceName" tools:override="true">Зберегти</string>
+    <string name="mtrl_picker_invalid_range" tools:ignore="ResourceName" tools:override="true">Недійсний діапазон.</string>
+    <string name="mtrl_picker_out_of_range" tools:ignore="ResourceName" tools:override="true">Поза межами діапазону: %1$s</string>
+    <string name="mtrl_picker_invalid_format" tools:ignore="ResourceName" tools:override="true">Недійсний формат.</string>
+    <string name="mtrl_picker_invalid_format_use" tools:ignore="ResourceName" tools:override="true">Використання: %1$s</string>
+    <string name="mtrl_picker_invalid_format_example" tools:ignore="ResourceName" tools:override="true">Приклад: %1$s</string>
+    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:ignore="ResourceName" tools:override="true">Перехід у режим введення календаря</string>
+    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">Перехід у режим введення тексту</string>
+    <string name="mtrl_picker_a11y_prev_month" tools:ignore="ResourceName" tools:override="true">Перехід до попереднього місяця</string>
+    <string name="mtrl_picker_a11y_next_month" tools:ignore="ResourceName" tools:override="true">Перехід на наступний місяць</string>
+    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">Торкніться, щоб перейти до вибору року</string>
+    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">Торкніться, щоб перейти до вибору дня</string>
+    <string name="mtrl_picker_day_of_week_column_header" tools:ignore="ResourceName" tools:override="true">Стовпець днів: %1$s</string>
+    <string name="mtrl_picker_announce_current_selection" tools:ignore="ResourceName" tools:override="true">Поточний вибір: %1$s</string>
+    <string name="mtrl_picker_navigate_to_year_description" tools:ignore="ResourceName" tools:override="true">Перейдіть до року %1$s</string>
+    <string name="time_picker_hour_label" tools:ignore="ResourceName" tools:override="true">година</string>
+    <string name="time_picker_minute_label" tools:ignore="ResourceName" tools:override="true">хвилина</string>
+    <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">Встановити час</string>
+    <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">Введіть дійсний час</string>
+    <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Введіть час</string>
+</resources>

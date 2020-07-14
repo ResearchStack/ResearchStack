@@ -17,6 +17,11 @@ public class ConsentDocumentStep extends Step {
     }
 
     @Override
+    public int getDestinationId() {
+        return R.id.rsb_consent_document_step_fragment;
+    }
+
+    @Override
     public int getStepTitle() {
         return R.string.rsb_consent;
     }

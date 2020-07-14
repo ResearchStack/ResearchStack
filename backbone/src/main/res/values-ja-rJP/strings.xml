@@ -1,0 +1,153 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Consent Section -->
+    <string name="rsb_consent">同意</string>
+    <string name="rsb_consent_section_welcome">ようこそ</string>
+    <string name="rsb_consent_section_data_gathering">データ収集</string>
+    <string name="rsb_consent_section_privacy">プライバシー</string>
+    <string name="rsb_consent_section_data_use">データの使用</string>
+    <string name="rsb_consent_section_time_commitment">時間コミットメント</string>
+    <string name="rsb_consent_section_study_survey">スタディ調査</string>
+    <string name="rsb_consent_section_study_tasks">スタディタスク</string>
+    <string name="rsb_consent_section_withdrawing">辞退</string>
+
+    <!-- Consent section learn more -->
+    <string name="rsb_consent_section_more_info">詳細</string>
+    <string name="rsb_consent_section_more_info_data_gathering">データの収集方法についての詳細
+    </string>
+    <string name="rsb_consent_section_more_info_data_use">データの使用方法についての詳細</string>
+    <string name="rsb_consent_section_more_info_privacy">プライバシーや個人情報の保護方法についての詳細
+    </string>
+    <string name="rsb_consent_section_more_info_welcome">スタディについての詳細</string>
+    <string name="rsb_consent_section_more_info_study_survey">スタディ調査についての詳細
+    </string>
+    <string name="rsb_consent_section_more_info_time_commitment">スタディがあなたの時間に与える影響についての詳細
+    </string>
+    <string name="rsb_consent_section_more_info_study_tasks">含まれるタスクについての詳細
+    </string>
+    <string name="rsb_consent_section_more_info_withdrawing">辞退についての詳細</string>
+
+    <!-- Consent sharing step -->
+
+    <!-- Consent doc step -->
+    <string name="rsb_consent_review_alert_title">レビュー</string>
+    <string name="rsb_consent_review_cancel">キャンセル</string>
+
+    <string name="rsb_saving_consent">同意を保存</string>
+    <string name="rsb_please_wait">お待ちください&#8230;</string>
+
+    <!-- Consent form step -->
+    <string name="rsb_consent_dob_full">誕生日</string>
+
+    <!-- Consent sig step -->
+    <string name="rsb_consent_signature_title">署名</string>
+    <string name="rsb_consent_signature_instruction">下の線上に指で署名してください。
+    </string>
+    <string name="rsb_consent_signature_placeholder">ここに署名</string>
+    <string name="rsb_consent_signature_clear">クリア</string>
+
+    <!-- Quiz -->
+
+    <!-- Other -->
+    <string name="rsb_done">終了</string>
+    <string name="rsb_step_skip">スキップ</string>
+    <string name="rsb_next">次へ</string>
+    <string name="rsb_name_first">名</string>
+    <string name="rsb_name_last">姓</string>
+    <string name="rsb_disagree">同意しない</string>
+    <string name="rsb_agree">同意する</string>
+    <string name="rsb_cancel">キャンセル</string>
+    <string name="rsb_format_step_title">ステップ%1$s/%2$s</string>
+    <string name="rsb_hours">時</string>
+    <string name="rsb_minutes">分</string>
+    <string name="rsb_task_cancel_title">アクティビティから退出</string>
+    <string name="rsb_task_cancel_text">本当にこのアクティビティを退出して、結果を破棄してよろしいですか？</string>
+    <string name="rsb_task_cancel_positive">結果を破棄</string>
+
+    <!-- Step Errors -->
+    <string name="rsb_error_invalid_signature">署名は無効です</string>
+    <string name="rsb_invalid_answer_default">無効な回答です。再試行してください！</string>
+    <string name="rsb_invalid_answer_date_over">無効な回答です。日付は%1$sより前でなければなりません</string>
+    <string name="rsb_invalid_answer_date_under">無効な回答です。日付は%1$sより後でなければなりません</string>
+    <string name="rsb_invalid_answer_integer_over">無効な回答です。値は%1$s以下でなければなりません</string>
+    <string name="rsb_invalid_answer_integer_under">無効な回答です。値は%1$s以上でなければなりません</string>
+    <string name="rsb_invalid_answer_choice">値を選択してください！</string>
+    <string name="rsb_invalid_answer_date_none">日付を選択してください。</string>
+    <string name="rsb_birth_date_too_old">%1$s歳以下でなければなりません</string>
+    <string name="rsb_birth_date_too_young">%1$s歳以上でなければなりません</string>
+
+    <!-- Pin Code -->
+
+    <!-- Body Hints -->
+    <string name="rsb_hint_step_body_int">番号を入力してください%1$d-%2$d</string>
+    <string name="rsb_hint_step_body_dec">番号を入力してください %1$.2f-%2$.2f</string>
+    <string name="rsb_hint_step_body_int_no_max">番号を入力してください</string>
+    <string name="rsb_hint_step_body_date">日付を入力してください</string>
+    <string name="rsb_hint_step_body_time">時刻を入力してください</string>
+    <string name="rsb_hint_step_body_datetime">日時を入力してください</string>
+    <string name="rsb_hint_step_body_text">回答</string>
+
+    <!-- Graphing -->
+    <string name="rsb_chart_progress_center">%2$s/%1$s</string>
+    <string name="rsb_chart_pie_value">%1$s&#65285;</string>
+
+    <!-- AssetVideoView -->
+    <!-- Title for error alert when a video cannot be played.  it can be used by any app. -->
+    <!-- Text for error alert when a video container is not valid for progressive download/playback. -->
+    <string name="rsb_error_assetvideoview_invalid_progressive_playback">この動画はこのデバイスで有効にストリームできません。</string>
+    <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
+    <string name="rsb_error_assetvideoview_unknown">この動画を再生できません。</string>
+    <!-- Button to close error alert when a video cannot be played -->
+    <string name="rsb_error_assetvideoview_button">OK</string>
+
+    <!-- Consent -->
+    <string name="rsb_consent_doc_line_printed_name">%1$sの名前（印字）</string>
+    <string name="rsb_consent_doc_line_signature">%1$sの署名</string>
+    <string name="rsb_consent_doc_line_date">日付</string>
+    <string name="rsb_consent_role">参加者</string>
+
+    <!-- Edit -->
+    <string name="rsb_edit_step_alert_cancel_positive">はい。編集をやめます</string>
+    <string name="rsb_edit_step_alert_cancel_discard">いいえ。編集を続きます</string>
+    <string name="rsb_edit_step_alert_cancel_title">編集をやめたいですか？</string>
+    <string name="rsb_edit_step_alert_cancel_content">すべての変更点は破棄され、もとの回答が使われます。</string>
+    <string name="rsb_edit_step_alert_step_save_title">変更を保存しますか</string>
+    <string name="rsb_edit_step_alert_step_save_content">他の回答がクリアされ、新しい情報を提出するようお願いされる可能性があります。</string>
+    <string name="rsb_edit_step_alert_step_save_discard">いいえ。破棄</string>
+    <string name="rsb_edit_step_alert_step_save_positive">はい。保存</string>
+    <string name="rsb_consent_review_save">保存</string>
+    <string name="rsb_edit_step_alert_step_skip_title">本ステップをスキップしますか？</string>
+    <string name="rsb_edit_step_alert_step_skip_content">元の回答が破棄されます。</string>
+    <string name="rsb_edit_step_alert_step_skip_discard">いいえ。スキップしない</string>
+    <string name="rsb_edit_step_alert_step_skip_positive">はい。スキップ</string>
+    <string name="rsb_edit_step">編集する</string>
+    <string name="mtrl_picker_range_header_title" tools:ignore="ResourceName" tools:override="true">日付範囲を選択</string>
+    <string name="mtrl_picker_date_header_title" tools:ignore="ResourceName" tools:override="true">日付を選択</string>
+    <string name="mtrl_picker_range_header_unselected" tools:ignore="ResourceName" tools:override="true">開始日 – 終了日</string>
+    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">%1$s - 終了日</string>
+    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">開始日 – %1$s</string>
+    <string name="mtrl_picker_range_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s - %2$s</string>
+    <string name="mtrl_picker_date_header_unselected" tools:ignore="ResourceName" tools:override="true">選択した日付</string>
+    <string name="mtrl_picker_text_input_date_hint" tools:ignore="ResourceName" tools:override="true">日付</string>
+    <string name="mtrl_picker_text_input_date_range_start_hint" tools:ignore="ResourceName" tools:override="true">開始日</string>
+    <string name="mtrl_picker_text_input_date_range_end_hint" tools:ignore="ResourceName" tools:override="true">終了日</string>
+    <string name="mtrl_picker_save" tools:ignore="ResourceName" tools:override="true">セーブ</string>
+    <string name="mtrl_picker_invalid_range" tools:ignore="ResourceName" tools:override="true">範囲が無効です。</string>
+    <string name="mtrl_picker_out_of_range" tools:ignore="ResourceName" tools:override="true">範囲外：％1$s</string>
+    <string name="mtrl_picker_invalid_format" tools:ignore="ResourceName" tools:override="true">無効な形式。</string>
+    <string name="mtrl_picker_invalid_format_use" tools:ignore="ResourceName" tools:override="true">使用：％1$s</string>
+    <string name="mtrl_picker_invalid_format_example" tools:ignore="ResourceName" tools:override="true">例：％1$s</string>
+    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:ignore="ResourceName" tools:override="true">カレンダー入力モードに切り替え</string>
+    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">テキスト入力モードに切り替え</string>
+    <string name="mtrl_picker_a11y_prev_month" tools:ignore="ResourceName" tools:override="true">前月に変更</string>
+    <string name="mtrl_picker_a11y_next_month" tools:ignore="ResourceName" tools:override="true">来月に変更</string>
+    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">タップして年の選択に切り替えます</string>
+    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">タップして日を選択するように切り替えます</string>
+    <string name="mtrl_picker_day_of_week_column_header" tools:ignore="ResourceName" tools:override="true">日の列：％1$s</string>
+    <string name="mtrl_picker_announce_current_selection" tools:ignore="ResourceName" tools:override="true">現在の選択：％1$s</string>
+    <string name="mtrl_picker_navigate_to_year_description" tools:ignore="ResourceName" tools:override="true">年 ％1$s に移動</string>
+    <string name="time_picker_hour_label" tools:ignore="ResourceName" tools:override="true">時間</string>
+    <string name="time_picker_minute_label" tools:ignore="ResourceName" tools:override="true">分</string>
+    <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">時間を設定する</string>
+    <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">有効な時間を入力してください</string>
+    <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">時間を入力してください</string>
+</resources>

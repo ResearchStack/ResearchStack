@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='UTF-8'?><resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Consent Section -->
+    <string name="rsb_consent">ஒப்புதல்</string>
+    <string name="rsb_consent_section_welcome">நல்வரவு</string>
+    <string name="rsb_consent_section_data_gathering">தரவு ஒருங்கிணைத்தல்</string>
+    <string name="rsb_consent_section_privacy">தனியுரிமை</string>
+    <string name="rsb_consent_section_data_use">தரவு உபயோகம்</string>
+    <string name="rsb_consent_section_time_commitment">நேர அர்ப்பணிப்பு</string>
+    <string name="rsb_consent_section_study_survey">ஆய்வு கணக்கெடுப்பு</string>
+    <string name="rsb_consent_section_study_tasks">பணி ஆய்வு</string>
+    <string name="rsb_consent_section_withdrawing">விலகுதல்</string>
+
+    <!-- Consent section learn more -->
+    <string name="rsb_consent_section_more_info">மேலும் அறிய</string>
+    <string name="rsb_consent_section_more_info_data_gathering">தரவு எவ்வாறு ஒருங்கமைக்கப்படுகிறது என்பது பற்றி மேலும் அறிக
+    </string>
+    <string name="rsb_consent_section_more_info_data_use">தரவு எவ்வாறு உபயோகிக்கப்படுகிறது என்பது பற்றி மேலும் அறிக</string>
+    <string name="rsb_consent_section_more_info_privacy">உங்கள் தனியுரிமை மற்றும் அடையாளம் எவ்வாறு பாதுகாக்கப்படுகிறது என்பது பற்றி மேலும் அறிக
+    </string>
+    <string name="rsb_consent_section_more_info_welcome">முதலில் ஆய்வு பற்றி மேலும் அறிந்துகொள்ளவும்</string>
+    <string name="rsb_consent_section_more_info_study_survey">ஆய்வு கணக்கெடுப்பு பற்றி மேலும் அறிக
+    </string>
+    <string name="rsb_consent_section_more_info_time_commitment">உங்கள் நேரத்தின் மீதான ஆய்வின் தாக்கத்தைப் பற்றி மேலும் அறிக
+    </string>
+    <string name="rsb_consent_section_more_info_study_tasks">ஈடுபடுத்தப்பட்டுள்ள  பணிகளைப் பற்றி மேலும் அறிக
+    </string>
+    <string name="rsb_consent_section_more_info_withdrawing">விலகுதல் பற்றி மேலும் தெரிந்து கொள்க</string>
+
+    <!-- Consent doc step -->
+    <string name="rsb_consent_review_alert_title">மதிப்பாய்வு</string>
+    <string name="rsb_consent_review_cancel">ரத்து</string>
+
+    <string name="rsb_saving_consent">ஒப்புதலை சேமித்தல்</string>
+    <string name="rsb_please_wait">தயவு செய்து காத்திருக்கவும்&#8230;</string>
+
+    <!-- Consent form step -->
+
+    <string name="rsb_consent_dob_full">பிறந்த தேதி</string>
+
+    <!-- Consent sig step -->
+    <string name="rsb_consent_signature_title">கையொப்பம்</string>
+    <string name="rsb_consent_signature_instruction">கீழுள்ள கோட்டில் உங்கள் விரலைப் பயன்படுத்தி கையொப்பமிடவும்.
+    </string>
+    <string name="rsb_consent_signature_placeholder">இங்கு கையொப்பமிடவும்</string>
+    <string name="rsb_consent_signature_clear">அகற்றவும்</string>
+
+    <!-- Other -->
+
+    <string name="rsb_done">முடிந்தது</string>
+    <string name="rsb_step_skip">தவிர்க்கவும்</string>
+    <string name="rsb_next">அடுத்தது</string>
+    <string name="rsb_name_first">முதற்பெயர்</string>
+    <string name="rsb_name_last">கடைசி பெயர்</string>
+    <string name="rsb_disagree">மறுக்கப்படுகிறது</string>
+    <string name="rsb_agree">ஒப்புக்கொள்ளப்படுகிறது</string>
+    <string name="rsb_cancel">ரத்து</string>
+    <string name="rsb_format_step_title">நிலை %1$s இன் %2$s</string>
+    <string name="rsb_hours">மணி நேரம்</string>
+    <string name="rsb_minutes">வினாடிகள்</string>
+    <string name="rsb_task_cancel_title">செயலைபாடுகளை விட்டுச் செல்</string>
+    <string name="rsb_task_cancel_text">இந்தச் செயல்பாட்டை விட்டுவிட்டு அதன் முடிவுகளை அகற்ற விரும்புகிறீர்களா?</string>
+    <string name="rsb_task_cancel_positive">முடிவுகளை அகற்று</string>
+
+    <!-- Step Errors -->
+    <string name="rsb_error_invalid_signature">கையொப்பம் தவறு</string>
+    <string name="rsb_invalid_answer_default">தவறான விடை, மீண்டும் முயற்சிக்கவும்!</string>
+    <string name="rsb_invalid_answer_date_over">தவறான விடை, தரவு இதற்கு முன் இருக்கவேண்டும் %1$s</string>
+    <string name="rsb_invalid_answer_date_under">தவறான விடை, தேதி இதற்குப்பின் இருக்கவேண்டும் %1$s</string>
+    <string name="rsb_invalid_answer_integer_over">தவறான விடை, உங்கள் மதிப்பு %1$s அல்லது குறைவாக இருக்கவேண்டும்</string>
+    <string name="rsb_invalid_answer_integer_under">தவறான விடை, உங்கள் மதிப்பு %1$s அல்லது அதிகமாக இருக்கவேண்டும்</string>
+    <string name="rsb_invalid_answer_choice">தயவு செய்து ஒரு மதிப்பைத் தேர்ந்தெடுக்கவும்!</string>
+    <string name="rsb_invalid_answer_date_none">தயவு செய்து ஒரு தேதியைத் தேர்ந்தெடுக்கவும்!</string>
+    <string name="rsb_birth_date_too_old">நீங்கள் %1$s வயதினர் அல்லது குறைவானவராக இருக்கவேண்டும்</string>
+    <string name="rsb_birth_date_too_young">நீங்கள் குறைந்த பட்சம் %1$s வயதினராக இருக்கவேண்டும்</string>
+
+    <!-- Body Hints -->
+    <string name="rsb_hint_step_body_int">எண்ணை உள்ளிடவும் %1$d-%2$d</string>
+    <string name="rsb_hint_step_body_dec">எண்ணை உள்ளிடவும் %1$.2f-%2$.2f</string>
+    <string name="rsb_hint_step_body_int_no_max">எண்ணை உள்ளிடவும்</string>
+    <string name="rsb_hint_step_body_date">தேதியை உள்ளிடவும்</string>
+    <string name="rsb_hint_step_body_time">நேரத்தை உள்ளிடவும்</string>
+    <string name="rsb_hint_step_body_datetime">தேதி மற்றும் நேரத்தை உள்ளிடவும்</string>
+    <string name="rsb_hint_step_body_text">பதில்</string>
+
+    <!-- Graphing -->
+    <string name="rsb_chart_progress_center">%1$s இன் %2$s</string>
+    <string name="rsb_chart_pie_value">%1$s&#65285;</string>
+
+    <!-- AssetVideoView -->
+
+    <!-- Text for error alert when a video container is not valid for progressive download/playback. -->
+    <string name="rsb_error_assetvideoview_invalid_progressive_playback">இந்த வீடியோ இச்சாதனத்தில் ஸ்ட்ரீமிங் செய்ய சரியானது இல்லை.</string>
+    <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
+    <string name="rsb_error_assetvideoview_unknown">இந்த வீடியோவை இயக்க முடியாது.</string>
+    <!-- Button to close error alert when a video cannot be played -->
+    <string name="rsb_error_assetvideoview_button">OK</string>
+
+    <!-- Consent -->
+    <string name="rsb_consent_doc_line_printed_name">%1$s\'s பெயர் (அச்சிடப்பட்டது)</string>
+    <string name="rsb_consent_doc_line_signature">%1$s\'s கையொப்பம்</string>
+    <string name="rsb_consent_doc_line_date">தேதி</string>
+    <string name="rsb_consent_role">பங்கேற்பாளர்</string>
+
+    <!-- Edit -->
+    <string name="rsb_consent_review_save">சேமி</string>
+    <string name="rsb_edit_step_alert_cancel_positive">ஆம், மாற்றம் செய்வதை நிறுத்தவும்</string>
+    <string name="rsb_edit_step_alert_cancel_discard">இல்லை, திருத்தலை தொடரவும்</string>
+    <string name="rsb_edit_step_alert_cancel_title">மாற்றங்களைச் செய்வதை நிறுத்த விரும்புகிறீர்களா?</string>
+    <string name="rsb_edit_step_alert_cancel_content">அனைத்து மாற்றங்களும் அகற்றப்பட்டு, உங்கள் அசல் பதில் பயன்படுத்தப்படும்.</string>
+    <string name="rsb_edit_step_alert_step_save_title">உங்கள் மாற்றங்களைச் சேமிக்க விரும்புகிறீர்களா?</string>
+    <string name="rsb_edit_step_alert_step_save_content">உங்களுடைய பிற பதில்கள் அகற்றப்பட்டு புதிய தகவல்களைச் சமர்ப்பிக்கும்படி கேட்கப்படுவீர்கள்.</string>
+    <string name="rsb_edit_step_alert_step_save_discard">இல்லை, அகற்று</string>
+    <string name="rsb_edit_step_alert_step_save_positive">ஆம், சேமி</string>
+    <string name="rsb_edit_step_alert_step_skip_title">இந்த நிலையை தவிர்க்க விரும்புகிறீர்களா?</string>
+    <string name="rsb_edit_step_alert_step_skip_content">உங்கள் அசல் பதில்கள் அகற்றப்படும்</string>
+    <string name="rsb_edit_step_alert_step_skip_discard">இல்லை, வேண்டாம் தவிர்க்கவும்</string>
+    <string name="rsb_edit_step_alert_step_skip_positive">ஆம், தவிர்க்கவும்</string>
+    <string name="rsb_edit_step">திருத்தியமைத்தல்</string>
+
+    <!-- Material Date Picker Strings -->
+    <string name="mtrl_picker_range_header_title" tools:ignore="ResourceName" tools:override="true">தேதி வரம்பை தேர்வு செய்யவும்</string>
+    <string name="mtrl_picker_date_header_title" tools:ignore="ResourceName" tools:override="true">தேதியை தேர்வுசெய்யவும்</string>
+    <string name="mtrl_picker_range_header_unselected" tools:ignore="ResourceName" tools:override="true">துவங்கும் நாள் – முடியும் நாள்</string>
+    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">%1$s – முடியும் நாள்</string>
+    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">துவங்கும் நாள் – %1$s</string>
+    <string name="mtrl_picker_range_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s – %2$s</string>
+    <string name="mtrl_picker_date_header_unselected" tools:ignore="ResourceName" tools:override="true">தேர்ந்தெடுக்கப்பட்ட தேதி</string>
+    <string name="mtrl_picker_date_header_selected" translatable="false" tools:ignore="ResourceName" tools:override="true">%1$s</string>
+    <string name="mtrl_picker_confirm" translatable="false" tools:ignore="ResourceName" tools:override="true">@android:string/ok</string>
+    <string name="mtrl_picker_text_input_date_hint" tools:ignore="ResourceName" tools:override="true">தேதி</string>
+    <string name="mtrl_picker_text_input_date_range_start_hint" tools:ignore="ResourceName" tools:override="true">துவங்கும் நாள்</string>
+    <string name="mtrl_picker_text_input_date_range_end_hint" tools:ignore="ResourceName" tools:override="true">முடியும் நாள்</string>
+    <string name="mtrl_picker_save" tools:ignore="ResourceName" tools:override="true">சேமி</string>
+    <string name="mtrl_picker_invalid_range" tools:ignore="ResourceName" tools:override="true">தவறான வரம்பு.</string>
+    <string name="mtrl_picker_out_of_range" tools:ignore="ResourceName" tools:override="true">வரம்பிற்கு வெளியே உள்ளது: %1$s</string>
+    <string name="mtrl_picker_invalid_format" tools:ignore="ResourceName" tools:override="true">தவறான வடிவம்.</string>
+    <string name="mtrl_picker_invalid_format_use" tools:ignore="ResourceName" tools:override="true">உபயோகித்தல்: %1$s</string>
+    <string name="mtrl_picker_invalid_format_example" tools:ignore="ResourceName" tools:override="true">உதாரணம்: %1$s</string>
+    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:ignore="ResourceName" tools:override="true">காலண்டர் உள்ளீடு முறைக்கு மாற்றவும்</string>
+    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">உரை உள்ளீடு முறைக்கு மாற்றவும்</string>
+    <string name="mtrl_picker_a11y_prev_month" tools:ignore="ResourceName" tools:override="true">முந்தைய மாதத்திற்கு மாற்றவும்</string>
+    <string name="mtrl_picker_a11y_next_month" tools:ignore="ResourceName" tools:override="true">அடுத்த மாதத்திற்கு மாற்றவும்</string>
+    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">வருடத்தை தேர்ந்தெடுக்க ‘switch’ ஐத் தட்டவும்</string>
+    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">கிழமையைத் தேர்ந்தெடுக்க ‘switch’ ஐத் தட்டவும்</string>
+    <string name="mtrl_picker_day_of_week_column_header" tools:ignore="ResourceName" tools:override="true">நாட்களின் வரிசை: %1$s</string>
+    <string name="mtrl_picker_announce_current_selection" tools:ignore="ResourceName" tools:override="true">சமீபத்திய தேர்வு: %1$s</string>
+    <string name="mtrl_picker_navigate_to_year_description" tools:ignore="ResourceName" tools:override="true">ஆண்டுகளுக்குச் செல் %1$s</string>
+
+    <!-- Material Time Picker Strings -->
+    <string name="time_picker_hour_label" tools:ignore="ResourceName" tools:override="true">மணி நேரம்</string>
+    <string name="time_picker_minute_label" tools:ignore="ResourceName" tools:override="true">நிமிடங்கள்</string>
+    <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">நேரத்தை அமைக்கவும்</string>
+    <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">சரியான நேரத்தை உள்ளிடவும்</string>
+    <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">நேரத்தை உள்ளிடவும்</string>
+
+</resources>
