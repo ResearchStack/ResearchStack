@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/rsb_reviewStep_item_bottom_margin_form"
         android:layout_marginStart="@dimen/rsb_reviewStep_item_margin_form"
-        app:layout_constrainedHeight="true"
         app:layout_constraintBottom_toTopOf="@id/formStepSkipped"
         app:layout_constraintEnd_toEndOf="@id/reviewStepEditButtonStartBarrier"
         app:layout_constraintStart_toStartOf="parent"
