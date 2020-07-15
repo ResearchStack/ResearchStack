@@ -149,6 +149,8 @@
     <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">Inserisci un orario valido</string>
     <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Digita l\'ora</string>
 
+    <string name="rsb_consent_text_question_error">[it-rIT]*Field Required</string>
+
     <!-- Material Time Picker Strings -->
 
 </resources>

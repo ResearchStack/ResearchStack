@@ -147,4 +147,5 @@
     <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">Voer een geldige tijd in</string>
     <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Voer tijd in</string>
 
+    <string name="rsb_consent_text_question_error">[nl-rNL]*Field Required</string>
 </resources>

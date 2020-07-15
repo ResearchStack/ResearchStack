@@ -1,15 +1,15 @@
 package org.researchstack.backbone.ui.step.body;
 
+import android.content.Context;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.researchstack.backbone.R;
@@ -27,6 +27,7 @@ public class TextQuestionBody implements StepBody {
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     private QuestionStep step;
     private StepResult<String> result;
+    private Context context;
 
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // View Fields
@@ -41,20 +42,10 @@ public class TextQuestionBody implements StepBody {
     @Override
     public View getBodyView(int viewType, LayoutInflater inflater, ViewGroup parent) {
         View body = inflater.inflate(R.layout.rsb_item_edit_text_compact, parent, false);
-
+        context = body.getContext();
         textEntry = body.findViewById(R.id.value);
-        if (step.getPlaceholder() != null) {
-            textEntry.getEditText().setHint(step.getPlaceholder());
-        } else {
-            textEntry.getEditText().setHint(LocalizationUtils.getLocalizedString(inflater.getContext(),R.string.rsb_hint_step_body_text));
-        }
-
-        TextView title = body.findViewById(R.id.label);
-
         if (viewType == VIEW_TYPE_COMPACT) {
-            title.setText(step.getTitle());
-        } else {
-            title.setVisibility(View.GONE);
+            textEntry.setHint(step.getTitle());
         }
 
         // Restore previous result
@@ -77,6 +68,10 @@ public class TextQuestionBody implements StepBody {
 
             @Override
             public void afterTextChanged(final Editable s) {
+                if (textEntry.isErrorEnabled()) {
+                    textEntry.setErrorEnabled(false);
+                    textEntry.getEditText().setTextColor(ContextCompat.getColor(context, R.color.black_87));
+                }
                 result.setResult(s.toString());
             }
         });
@@ -112,6 +107,8 @@ public class TextQuestionBody implements StepBody {
     public BodyAnswer getBodyAnswerState() {
         TextAnswerFormat format = (TextAnswerFormat) step.getAnswerFormat();
         if (!format.isAnswerValid(textEntry.getEditText().getText().toString())) {
+            textEntry.setError(LocalizationUtils.getLocalizedString(context, R.string.rsb_consent_text_question_error));
+            textEntry.getEditText().setTextColor(ContextCompat.getColor(context, R.color.red_scarlet));
             return BodyAnswer.INVALID;
         }
 

@@ -151,4 +151,5 @@
     <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">Введите правильное время</string>
     <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Введите время</string>
 
+    <string name="rsb_consent_text_question_error">[ru-rRU]*Field Required</string>
 </resources>
