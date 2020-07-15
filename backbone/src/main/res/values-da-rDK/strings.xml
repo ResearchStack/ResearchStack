@@ -152,4 +152,6 @@
     <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">Fastsat tidspunkt</string>
     <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">Indtast et gyldigt tidspunkt</string>
     <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Skriv tid</string>
+
+    <string name="rsb_consent_text_question_error">[da-rDK]*Field Required</string>
 </resources>

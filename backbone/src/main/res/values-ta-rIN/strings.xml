@@ -154,4 +154,6 @@
     <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">சரியான நேரத்தை உள்ளிடவும்</string>
     <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">நேரத்தை உள்ளிடவும்</string>
 
+    <string name="rsb_consent_text_question_error">[ta-rIN]*Field Required</string>
+
 </resources>

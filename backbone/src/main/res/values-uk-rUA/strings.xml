@@ -144,4 +144,6 @@
     <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">Встановити час</string>
     <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">Введіть дійсний час</string>
     <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Введіть час</string>
+
+    <string name="rsb_consent_text_question_error">[uk-rUA]*Field Required</string>
 </resources>

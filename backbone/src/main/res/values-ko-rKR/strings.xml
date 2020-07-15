@@ -153,4 +153,6 @@
     <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">유효한 시간을 입력하십시오</string>
     <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">시간 입력</string>
 
+    <string name="rsb_consent_text_question_error">[ko-rKR]*Field Required</string>
+
 </resources>

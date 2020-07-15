@@ -25,6 +25,7 @@ public class FormBody implements StepBody {
     private FormStep step;
     private StepResult<StepResult> result;
     private ViewGroup parent;
+    private static final String CONSENT_ID_FORM = "user_info_form";
 
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // View Fields
@@ -56,7 +57,7 @@ public class FormBody implements StepBody {
                 View bodyView = stepBody.getBodyView(VIEW_TYPE_COMPACT, inflater, body);
                 body.addView(bodyView);
 
-                if (i < questionSteps.size() - 1) {
+                if (i < questionSteps.size() - 1 && !step.getIdentifier().equals(CONSENT_ID_FORM)) {
                     body.addView(getDividerView(inflater, body));
                 }
             }

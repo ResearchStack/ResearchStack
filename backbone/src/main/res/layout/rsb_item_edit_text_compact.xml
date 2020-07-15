@@ -7,39 +7,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:filterTouchesWhenObscured="true">
 
-    <TextView
-        android:id="@+id/label"
-        style="@style/TextStyle4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:layout_marginStart="@dimen/rsb_margin_left"
-        android:layout_marginEnd="@dimen/rsb_margin_right"
-        android:layout_marginTop="@dimen/rsb_margin_top"
-        tools:text="title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/value"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/label"
         android:layout_marginStart="@dimen/rsb_margin_left"
         android:layout_marginEnd="@dimen/rsb_margin_right"
-        android:layout_marginTop="@dimen/rsb_margin_top"
-        android:paddingBottom="@dimen/rsb_padding_medium"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        android:layout_marginTop="20dp"
+        app:boxStrokeErrorColor="@color/red_scarlet"
+        app:errorIconTint="@color/red_scarlet"
+        app:errorTextColor="@color/red_scarlet"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black_87"
             android:padding="@dimen/rsb_padding_medium"
-            />
+            android:textColor="@color/black_87" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

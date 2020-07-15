@@ -154,4 +154,6 @@
     <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">Digite um horário válido</string>
     <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Digite o horário</string>
 
+    <string name="rsb_consent_text_question_error">[pt-rBR]*Field Required</string>
+
 </resources>

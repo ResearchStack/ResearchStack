@@ -157,4 +157,6 @@
     <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">Ingrese una hora válida</string>
     <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Escribe a tiempo</string>
 
+    <string name="rsb_consent_text_question_error">[es-rES]*Field Required</string>
+
 </resources>

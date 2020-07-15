@@ -150,4 +150,6 @@
     <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">時間を設定する</string>
     <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">有効な時間を入力してください</string>
     <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">時間を入力してください</string>
+
+    <string name="rsb_consent_text_question_error">[ja-rJP]*Field Required</string>
 </resources>

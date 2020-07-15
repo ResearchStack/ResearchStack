@@ -154,4 +154,6 @@
     <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">Masukkan masa yang sah</string>
     <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Taipkan masa</string>
 
+    <string name="rsb_consent_text_question_error">[ms-rMY]*Field Required</string>
+
 </resources>
