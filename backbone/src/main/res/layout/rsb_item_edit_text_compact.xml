@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:filterTouchesWhenObscured="true">
-
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/value"
@@ -16,7 +13,6 @@
         android:layout_marginStart="@dimen/rsb_margin_left"
         android:layout_marginEnd="@dimen/rsb_margin_right"
         android:layout_marginTop="20dp"
-        app:boxStrokeErrorColor="@color/red_scarlet"
         app:errorIconTint="@color/red_scarlet"
         app:errorTextColor="@color/red_scarlet"
         app:layout_constraintEnd_toEndOf="parent"
