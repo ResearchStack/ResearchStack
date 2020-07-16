@@ -13,6 +13,7 @@
         android:layout_marginStart="@dimen/rsb_margin_left"
         android:layout_marginEnd="@dimen/rsb_margin_right"
         android:layout_marginTop="20dp"
+        app:boxStrokeErrorColor="@color/red_scarlet"
         app:errorIconTint="@color/red_scarlet"
         app:errorTextColor="@color/red_scarlet"
         app:layout_constraintEnd_toEndOf="parent"

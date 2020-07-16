@@ -88,7 +88,7 @@ dependencies {
     testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
 
     // Material components
-    implementation "com.google.android.material:material:1.1.0"
+    implementation "com.google.android.material:material:1.2.0-beta01"
 
     // Koin for Android
     implementation "org.koin:koin-android:$koinVersion"
