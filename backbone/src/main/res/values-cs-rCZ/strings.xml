@@ -26,7 +26,7 @@
     <!-- Consent sharing step -->
 
     <!-- Consent doc step -->
-    <string name="rsb_consent_review_alert_title">Kontrola</string>
+    <string name="rsb_consent_review_alert_title">Zkontrolovat</string>
     <string name="rsb_consent_review_cancel">Zrušit</string>
 
     <string name="rsb_saving_consent">Ukládání souhlasu</string>
@@ -93,15 +93,16 @@
     <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
     <string name="rsb_error_assetvideoview_unknown">Toto video nelze přehrát.</string>
     <!-- Button to close error alert when a video cannot be played -->
-    <string name="rsb_error_assetvideoview_button">ok</string>
+    <string name="rsb_error_assetvideoview_button">OK</string>
 
     <!-- Consent -->
-    <string name="rsb_consent_doc_line_printed_name">Jméno %1$s\'s (vytištěno)</string>
-    <string name="rsb_consent_doc_line_signature">Podpis %1$s\'s</string>
+    <string name="rsb_consent_doc_line_printed_name">Jméno %1$s (tiskacím písmem)</string>
+    <string name="rsb_consent_doc_line_signature">Podpis %1$s</string>
     <string name="rsb_consent_doc_line_date">Datum</string>
     <string name="rsb_consent_role">Účastník</string>
 
     <!-- Edit -->
+    <string name="rsb_consent_review_save">Uložit</string>
     <string name="rsb_edit_step_alert_cancel_positive">ANO, ZRUŠIT PROVÁDĚNÍ ZMĚN</string>
     <string name="rsb_edit_step_alert_cancel_discard">NE, POKRAČOVAT V ÚPRAVĚ</string>
     <string name="rsb_edit_step_alert_cancel_title">Přejete si zrušit provádění změn?</string>
@@ -110,7 +111,6 @@
     <string name="rsb_edit_step_alert_step_save_content">Ostatní odpovědi mohou být vymazány a můžete být požádáni o zadání nových údajů.</string>
     <string name="rsb_edit_step_alert_step_save_discard">Ne, zrušit</string>
     <string name="rsb_edit_step_alert_step_save_positive">Ano, uložit</string>
-    <string name="rsb_consent_review_save">Uložit</string>
     <string name="rsb_edit_step_alert_step_skip_title">Přejete si tento krok přeskočit?</string>
     <string name="rsb_edit_step_alert_step_skip_content">Vaše původní odpověď bude zrušena.</string>
     <string name="rsb_edit_step_alert_step_skip_discard">NE, NEPŘESKAKOVAT</string>
@@ -118,39 +118,37 @@
     <string name="rsb_edit_step">Upravit</string>
 
     <!-- Material Date Picker Strings -->
-    <string name="mtrl_picker_range_header_title" tools:override="true" tools:ignore="ResourceName">Vyberte časové období</string>
-    <string name="mtrl_picker_date_header_title" tools:override="true" tools:ignore="ResourceName">Vyberte datum</string>
-    <string name="mtrl_picker_range_header_unselected" tools:override="true" tools:ignore="ResourceName">Datum zahájení - Datum ukončení</string>
-    <string name="mtrl_picker_range_header_only_start_selected" tools:override="true" tools:ignore="ResourceName">%1$s – Datum ukončení</string>
-    <string name="mtrl_picker_range_header_only_end_selected" tools:override="true" tools:ignore="ResourceName">Datum začátku – %1$s</string>
-    <string name="mtrl_picker_range_header_selected" tools:override="true" tools:ignore="ResourceName">%1$s – %2$s</string>
-    <string name="mtrl_picker_date_header_unselected" tools:override="true" tools:ignore="ResourceName">Vybrané datum</string>
-    <string name="mtrl_picker_date_header_selected" tools:override="true" tools:ignore="ResourceName">%1$s</string>
-    <string name="mtrl_picker_confirm" tools:override="true" tools:ignore="ResourceName">@android:string/ok</string>
-    <string name="mtrl_picker_text_input_date_hint" tools:override="true" tools:ignore="ResourceName">datum</string>
-    <string name="mtrl_picker_text_input_date_range_start_hint" tools:override="true" tools:ignore="ResourceName">Datum začátku</string>
-    <string name="mtrl_picker_text_input_date_range_end_hint" tools:override="true" tools:ignore="ResourceName">Datum ukončení</string>
-    <string name="mtrl_picker_save" tools:override="true" tools:ignore="ResourceName">ušetřit</string>
-    <string name="mtrl_picker_invalid_range" tools:override="true" tools:ignore="ResourceName">Neplatný rozsah.</string>
-    <string name="mtrl_picker_out_of_range" tools:override="true" tools:ignore="ResourceName">Mimo dosah: %1$s</string>
-    <string name="mtrl_picker_invalid_format" tools:override="true" tools:ignore="ResourceName">Nesprávný formát.</string>
-    <string name="mtrl_picker_invalid_format_use" tools:override="true" tools:ignore="ResourceName">Použití: %1$s</string>
-    <string name="mtrl_picker_invalid_format_example" tools:override="true" tools:ignore="ResourceName">Příklad: %1$s</string>
-    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:override="true" tools:ignore="ResourceName">Přepnutí do režimu zadávání kalendáře</string>
-    <string name="mtrl_picker_toggle_to_text_input_mode" tools:override="true" tools:ignore="ResourceName">Přepnutí do režimu zadávání textu</string>
-    <string name="mtrl_picker_a11y_prev_month" tools:override="true" tools:ignore="ResourceName">Změnit na předchozí měsíc</string>
-    <string name="mtrl_picker_a11y_next_month" tools:override="true" tools:ignore="ResourceName">Změnit na další měsíc</string>
-    <string name="mtrl_picker_toggle_to_year_selection" tools:override="true" tools:ignore="ResourceName">Klepnutím přepnete na výběr roku</string>
-    <string name="mtrl_picker_toggle_to_day_selection" tools:override="true" tools:ignore="ResourceName">Klepnutím přepnete na výběr dne</string>
-    <string name="mtrl_picker_day_of_week_column_header" tools:override="true" tools:ignore="ResourceName">Sloupec dní: %1$s</string>
-    <string name="mtrl_picker_announce_current_selection" tools:override="true" tools:ignore="ResourceName">Aktuální výběr: %1$s</string>
-    <string name="mtrl_picker_navigate_to_year_description" tools:override="true" tools:ignore="ResourceName">Přejděte na rok %1$s</string>
-    ​
+    <string name="mtrl_picker_range_header_title" tools:ignore="ResourceName" tools:override="true">Vyberte rozmezí datumů</string>
+    <string name="mtrl_picker_date_header_title" tools:ignore="ResourceName" tools:override="true">Vyberte datum</string>
+    <string name="mtrl_picker_range_header_unselected" tools:ignore="ResourceName" tools:override="true">Počáteční datum – Koncové datum</string>
+    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">%1$s – Koncové datum</string>
+    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">Počáteční datum – %1$s</string>
+    <string name="mtrl_picker_range_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s – %2$s</string>
+    <string name="mtrl_picker_date_header_unselected" tools:ignore="ResourceName" tools:override="true">Zvolené datum</string>
+    <string name="mtrl_picker_text_input_date_hint" tools:ignore="ResourceName" tools:override="true">Datum</string>
+    <string name="mtrl_picker_text_input_date_range_start_hint" tools:ignore="ResourceName" tools:override="true">Počáteční datum</string>
+    <string name="mtrl_picker_text_input_date_range_end_hint" tools:ignore="ResourceName" tools:override="true">Koncové datum</string>
+    <string name="mtrl_picker_save" tools:ignore="ResourceName" tools:override="true">Uložit</string>
+    <string name="mtrl_picker_invalid_range" tools:ignore="ResourceName" tools:override="true">Neplatné rozmezí.</string>
+    <string name="mtrl_picker_out_of_range" tools:ignore="ResourceName" tools:override="true">Mimo rozmezí: %1$s</string>
+    <string name="mtrl_picker_invalid_format" tools:ignore="ResourceName" tools:override="true">Neplatný formát.</string>
+    <string name="mtrl_picker_invalid_format_use" tools:ignore="ResourceName" tools:override="true">Použijte: %1$s</string>
+    <string name="mtrl_picker_invalid_format_example" tools:ignore="ResourceName" tools:override="true">Příklad: %1$s</string>
+    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:ignore="ResourceName" tools:override="true">Přepnout do módu výběru z kalendáře</string>
+    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">Přepnout do módu textového vstupu</string>
+    <string name="mtrl_picker_a11y_prev_month" tools:ignore="ResourceName" tools:override="true">Změnit na předchozí měsíc</string>
+    <string name="mtrl_picker_a11y_next_month" tools:ignore="ResourceName" tools:override="true">Změnit na následující měsíc</string>
+    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">Klepněte pro přechod na výběr roku</string>
+    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">Klepněte pro přechod na výběr dne</string>
+    <string name="mtrl_picker_day_of_week_column_header" tools:ignore="ResourceName" tools:override="true">Sloupec dní: %1$s</string>
+    <string name="mtrl_picker_announce_current_selection" tools:ignore="ResourceName" tools:override="true">Aktuální vybraná volba: %1$s</string>
+    <string name="mtrl_picker_navigate_to_year_description" tools:ignore="ResourceName" tools:override="true">Přesunout na rok %1$s</string>
+
     <!-- Material Time Picker Strings -->
-    <string name="time_picker_hour_label" tools:override="true" tools:ignore="ResourceName">hodina</string>
-    <string name="time_picker_minute_label" tools:override="true" tools:ignore="ResourceName">minuta</string>
-    <string name="time_picker_header_text" tools:override="true"  tools:ignore="ResourceName">Nastavit čas</string>
-    <string name="time_picker_input_error" tools:override="true" tools:ignore="ResourceName">Zadejte platný čas</string>
-    <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Zadejte čas</string>
+    <string name="time_picker_hour_label" tools:ignore="ResourceName" tools:override="true">hodin</string>
+    <string name="time_picker_minute_label" tools:ignore="ResourceName" tools:override="true">minuta</string>
+    <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">Nastavit čas</string>
+    <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">Zadejte platný čas</string>
+    <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Vepište čas</string>
     <string name="rsb_consent_text_question_error">[cs-rCZ]*Field Required</string>
 </resources>

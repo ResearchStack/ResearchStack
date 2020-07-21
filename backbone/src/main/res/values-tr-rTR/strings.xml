@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Consent Section -->
     <string name="rsb_consent">Onam</string>
-    <string name="rsb_consent_section_welcome">Hoş Geldiniz</string>
+    <string name="rsb_consent_section_welcome">Hoşgeldiniz</string>
     <string name="rsb_consent_section_data_gathering">Veri Toplama</string>
     <string name="rsb_consent_section_privacy">Gizlilik Politikası</string>
     <string name="rsb_consent_section_data_use">Veri Kullanımı</string>
@@ -24,8 +24,8 @@
     <!-- Consent sharing step -->
 
     <!-- Consent doc step -->
-    <string name="rsb_consent_review_alert_title">İnceleme</string>
-    <string name="rsb_consent_review_cancel">İptal Et</string>
+    <string name="rsb_consent_review_alert_title">Gözden Geçir </string>
+    <string name="rsb_consent_review_cancel">İptal</string>
 
     <string name="rsb_saving_consent">Onam Kaydediliyor</string>
     <string name="rsb_please_wait">Lütfen bekleyin&#8230;</string>
@@ -42,14 +42,14 @@
     <!-- Quiz -->
 
     <!-- Other -->
-    <string name="rsb_done">Tamam</string>
+    <string name="rsb_done">Tamamlandı</string>
     <string name="rsb_step_skip">Atla</string>
     <string name="rsb_next">ileri</string>
     <string name="rsb_name_first">Ad</string>
     <string name="rsb_name_last">Soyad</string>
     <string name="rsb_disagree">Reddet</string>
     <string name="rsb_agree">Kabul Et</string>
-    <string name="rsb_cancel">İptal Et</string>
+    <string name="rsb_cancel">İptal</string>
     <string name="rsb_format_step_title">Adım %1$s / %2$s</string>
     <string name="rsb_hours">Saat</string>
     <string name="rsb_minutes">Dakika</string>
@@ -60,19 +60,19 @@
     <!-- Step Errors -->
     <string name="rsb_error_invalid_signature">İmza Geçersiz</string>
     <string name="rsb_invalid_answer_default">Geçersiz yanıt, tekrar deneyin!</string>
-    <string name="rsb_invalid_answer_date_over">Geçersiz yanıt, tarih, %1$s tarihinden önce olmalıdır</string>
+    <string name="rsb_invalid_answer_date_over">Geçersiz yanıt, tarih, %1$s$s tarihinden önce olmalıdır</string>
     <string name="rsb_invalid_answer_date_under">Geçersiz yanıt, tarih, %1$s tarihinden sonra olmalıdır</string>
-    <string name="rsb_invalid_answer_integer_over">Geçersiz yanıt, tarih, %1$s tarihinden sonra olmalıdır</string>
-    <string name="rsb_invalid_answer_integer_under">Geçersiz yanıt, değeriniz %1$s veya daha fazla olmalıdır</string>
+    <string name="rsb_invalid_answer_integer_over">Geçersiz yanıt, değeriniz %1$s$s veya daha az olmalıdır</string>
+    <string name="rsb_invalid_answer_integer_under">Geçersiz yanıt, değeriniz %1$s$s veya daha fazla olmalıdır</string>
     <string name="rsb_invalid_answer_choice">Lütfen bir değer seçin!</string>
     <string name="rsb_invalid_answer_date_none">Lütfen bir tarih seçin.</string>
-    <string name="rsb_birth_date_too_old">Yaşınız %1$s veya daha küçük olmalıdır</string>
-    <string name="rsb_birth_date_too_young">En az %1$s yaşında olmalısınız</string>
+    <string name="rsb_birth_date_too_old">Yaşınız %1$s$s veya daha küçük olmalıdır</string>
+    <string name="rsb_birth_date_too_young">En az %1$s$s yaşında olmalısınız</string>
 
     <!-- Pin Code -->
 
     <!-- Body Hints -->
-    <string name="rsb_hint_step_body_int">%1$d-%2$d arasında bir sayı girin</string>
+    <string name="rsb_hint_step_body_int">Sayı girin</string>
     <string name="rsb_hint_step_body_dec">%1$.2f-%2$.2f arasında bir sayı girin</string>
     <string name="rsb_hint_step_body_int_no_max">Sayı girin</string>
     <string name="rsb_hint_step_body_date">Tarih girin</string>
@@ -90,15 +90,17 @@
     <string name="rsb_error_assetvideoview_invalid_progressive_playback">Bu video, bu cihazda çalıştırmak için geçerli değil.</string>
     <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
     <string name="rsb_error_assetvideoview_unknown">Bu video oynatılamıyor.</string>
-    <string name="rsb_error_assetvideoview_button">tamam</string>
+    <!-- Button to close error alert when a video cannot be played -->
+    <string name="rsb_error_assetvideoview_button">Tamam</string>
 
     <!-- Consent -->
-    <string name="rsb_consent_doc_line_printed_name">%1$s\'s Adı (basılı)</string>
+    <string name="rsb_consent_doc_line_printed_name">%1$s\'s\ Adı (basılı)</string>
     <string name="rsb_consent_doc_line_signature">%1$s\'s İmzası</string>
     <string name="rsb_consent_doc_line_date">Tarih</string>
     <string name="rsb_consent_role">Katılımcı</string>
 
     <!-- Edit -->
+    <string name="rsb_consent_review_save">Kaydet</string>
     <string name="rsb_edit_step_alert_cancel_positive">EVET, DEĞİŞİKLİK YAPMAYI DURDUR</string>
     <string name="rsb_edit_step_alert_cancel_discard">HAYIR, DÜZENLEMEYE DEVAM ET</string>
     <string name="rsb_edit_step_alert_cancel_title">Değişiklik yapmayı bırakmak istiyor musunuz?</string>
@@ -107,37 +109,40 @@
     <string name="rsb_edit_step_alert_step_save_content">Diğer yanıtlar silinebilir ve sizden yeni bilgiler göndermeniz istenebilir.</string>
     <string name="rsb_edit_step_alert_step_save_discard">Hayır, Sil</string>
     <string name="rsb_edit_step_alert_step_save_positive">Evet, Kaydet</string>
-    <string name="rsb_consent_review_save">Kaydet</string>
     <string name="rsb_edit_step_alert_step_skip_title">Bu adımı atlamak istiyor musunuz?</string>
     <string name="rsb_edit_step_alert_step_skip_content">Orijinal yanıtınız silinecektir.</string>
     <string name="rsb_edit_step_alert_step_skip_discard">HAYIR, ATLAMA</string>
     <string name="rsb_edit_step_alert_step_skip_positive">Evet, atla</string>
     <string name="rsb_edit_step">Düzenle</string>
-    <string name="mtrl_picker_range_header_title" tools:ignore="ResourceName" tools:override="true">Bir Tarih Aralığı Seçin</string>
-    <string name="mtrl_picker_date_header_title" tools:ignore="ResourceName" tools:override="true">Bir Tarih Seçin</string>
-    <string name="mtrl_picker_range_header_unselected" tools:ignore="ResourceName" tools:override="true">Baslangic Tarihi - Bitis tarihi</string>
-    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">%1$s - Bitis tarihi</string>
-    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">Baslangic Tarihi - %1$s</string>
-    <string name="mtrl_picker_range_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s - %2$s</string>
-    <string name="mtrl_picker_date_header_unselected" tools:ignore="ResourceName" tools:override="true">Seçilen tarih</string>
+
+    <!-- Material Date Picker Strings -->
+    <string name="mtrl_picker_range_header_title" tools:ignore="ResourceName" tools:override="true">Tarih aralığı seçin</string>
+    <string name="mtrl_picker_date_header_title" tools:ignore="ResourceName" tools:override="true">Tarih seçin</string>
+    <string name="mtrl_picker_range_header_unselected" tools:ignore="ResourceName" tools:override="true">Başlangıç Tarihi – Bitiş Tarihi</string>
+    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">%1$s – Bitiş Tarihi</string>
+    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">Başlangıç Tarihi – </string>
+    <string name="mtrl_picker_range_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s – %2$s</string>
+    <string name="mtrl_picker_date_header_unselected" tools:ignore="ResourceName" tools:override="true">Seçilen Tarih</string>
     <string name="mtrl_picker_text_input_date_hint" tools:ignore="ResourceName" tools:override="true">Tarih</string>
-    <string name="mtrl_picker_text_input_date_range_start_hint" tools:ignore="ResourceName" tools:override="true">Baslangic Tarihi</string>
-    <string name="mtrl_picker_text_input_date_range_end_hint" tools:ignore="ResourceName" tools:override="true">Bitis tarihi</string>
-    <string name="mtrl_picker_save" tools:ignore="ResourceName" tools:override="true">Kayıt etmek</string>
+    <string name="mtrl_picker_text_input_date_range_start_hint" tools:ignore="ResourceName" tools:override="true">Başlangıç Tarihi</string>
+    <string name="mtrl_picker_text_input_date_range_end_hint" tools:ignore="ResourceName" tools:override="true">Bitiş Tarihi</string>
+    <string name="mtrl_picker_save" tools:ignore="ResourceName" tools:override="true">Kaydet</string>
     <string name="mtrl_picker_invalid_range" tools:ignore="ResourceName" tools:override="true">Geçersiz aralık.</string>
     <string name="mtrl_picker_out_of_range" tools:ignore="ResourceName" tools:override="true">Aralık dışında: %1$s</string>
     <string name="mtrl_picker_invalid_format" tools:ignore="ResourceName" tools:override="true">Geçersiz format.</string>
-    <string name="mtrl_picker_invalid_format_use" tools:ignore="ResourceName" tools:override="true">Kullanım: %1$s</string>
+    <string name="mtrl_picker_invalid_format_use" tools:ignore="ResourceName" tools:override="true">Kullan: %1$s</string>
     <string name="mtrl_picker_invalid_format_example" tools:ignore="ResourceName" tools:override="true">Örnek: %1$s</string>
-    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:ignore="ResourceName" tools:override="true">Takvim giriş moduna geçme</string>
-    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">Metin giriş moduna geçme</string>
+    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:ignore="ResourceName" tools:override="true">Takvim giriş moduna geç</string>
+    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">Metin giriş moduna geç</string>
     <string name="mtrl_picker_a11y_prev_month" tools:ignore="ResourceName" tools:override="true">Önceki aya değiştir</string>
-    <string name="mtrl_picker_a11y_next_month" tools:ignore="ResourceName" tools:override="true">Gelecek aya geç</string>
-    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">Bir yıl seçmeye geçmek için dokunun</string>
-    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">Bir gün seçmeye geçmek için dokunun</string>
+    <string name="mtrl_picker_a11y_next_month" tools:ignore="ResourceName" tools:override="true">Sonraki aya değiştir</string>
+    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">Yıl seçmeye geçmek için dokunun</string>
+    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">Gün seçmeye geçmek için dokunun</string>
     <string name="mtrl_picker_day_of_week_column_header" tools:ignore="ResourceName" tools:override="true">Gün sütunu: %1$s</string>
     <string name="mtrl_picker_announce_current_selection" tools:ignore="ResourceName" tools:override="true">Geçerli seçim: %1$s</string>
-    <string name="mtrl_picker_navigate_to_year_description" tools:ignore="ResourceName" tools:override="true">%1$s yılına git</string>
+    <string name="mtrl_picker_navigate_to_year_description" tools:ignore="ResourceName" tools:override="true">%1$s yılına gidin</string>
+
+    <!-- Material Time Picker Strings -->
     <string name="time_picker_hour_label" tools:ignore="ResourceName" tools:override="true">saat</string>
     <string name="time_picker_minute_label" tools:ignore="ResourceName" tools:override="true">dakika</string>
     <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">Ayarlanan zaman</string>

@@ -26,7 +26,7 @@
     <!-- Consent sharing step -->
 
     <!-- Consent doc step -->
-    <string name="rsb_consent_review_alert_title">Gennemse</string>
+    <string name="rsb_consent_review_alert_title">Gennemgang</string>
     <string name="rsb_consent_review_cancel">Annullér</string>
 
     <string name="rsb_saving_consent">Gemmer samtykke</string>
@@ -62,9 +62,9 @@
     <!-- Step Errors -->
     <string name="rsb_error_invalid_signature">Ugyldig underskrift</string>
     <string name="rsb_invalid_answer_default">Ugyldigt svar. Prøv igen!</string>
-    <string name="rsb_invalid_answer_date_over">Ugyldigt svar. Dato skal være før %1$s</string>
-    <string name="rsb_invalid_answer_date_under">Ugyldigt svar. Dato skal være efter %1$s</string>
-    <string name="rsb_invalid_answer_integer_over">Ugyldigt svar. Dato skal være efter %1$s</string>
+    <string name="rsb_invalid_answer_date_over">Ugyldigt svar. Datoen skal være før %1$s</string>
+    <string name="rsb_invalid_answer_date_under">Ugyldigt svar. Datoen skal være efter %1$s</string>
+    <string name="rsb_invalid_answer_integer_over">Ugyldigt svar. Din værdi skal være %1$s eller lavere</string>
     <string name="rsb_invalid_answer_integer_under">Ugyldigt svar. Din værdi skal være %1$s eller højere</string>
     <string name="rsb_invalid_answer_choice">Vælg venligst en værdi!</string>
     <string name="rsb_invalid_answer_date_none">Vælg en dato.</string>
@@ -74,9 +74,9 @@
     <!-- Pin Code -->
 
     <!-- Body Hints -->
-    <string name="rsb_hint_step_body_int">Indtast et nummer %1$d-%2$d</string>
+    <string name="rsb_hint_step_body_int">Indtast et tal %1$d-%2$d</string>
     <string name="rsb_hint_step_body_dec">Indtast et nummer %1$.2f-%2$.2f</string>
-    <string name="rsb_hint_step_body_int_no_max">Indtast et nummer</string>
+    <string name="rsb_hint_step_body_int_no_max">Indtast et tal</string>
     <string name="rsb_hint_step_body_date">Indtast en dato</string>
     <string name="rsb_hint_step_body_time">Indtast et tidspunkt</string>
     <string name="rsb_hint_step_body_datetime">Indtast en dato og et tidspunkt</string>
@@ -84,7 +84,7 @@
 
     <!-- Graphing -->
     <string name="rsb_chart_progress_center">%1$s af %2$s</string>
-    <string name="rsb_chart_pie_value">%1$s&#65285;</string>
+    <string name="rsb_chart_pie_value">%1$s &#65285;</string>
 
     <!-- AssetVideoView -->
     <!-- Title for error alert when a video cannot be played.  it can be used by any app. -->
@@ -93,15 +93,16 @@
     <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
     <string name="rsb_error_assetvideoview_unknown">Kan ikke afspille denne video.</string>
     <!-- Button to close error alert when a video cannot be played -->
-    <string name="rsb_error_assetvideoview_button">ok</string>
+    <string name="rsb_error_assetvideoview_button">OK</string>
 
     <!-- Consent -->
-    <string name="rsb_consent_doc_line_printed_name">%1$s\'s\'s Navn (trykte bogstaver)</string>
-    <string name="rsb_consent_doc_line_signature">%1$s\'s Underskrift</string>
+    <string name="rsb_consent_doc_line_printed_name">%1$s navn (trykte bogstaver)</string>
+    <string name="rsb_consent_doc_line_signature">%1$s underskrift</string>
     <string name="rsb_consent_doc_line_date">Dato</string>
     <string name="rsb_consent_role">Deltager</string>
 
     <!-- Edit -->
+    <string name="rsb_consent_review_save">Gem</string>
     <string name="rsb_edit_step_alert_cancel_positive">JA, STOP ÆNDRINGER</string>
     <string name="rsb_edit_step_alert_cancel_discard">NEJ, FORTSÆT ÆNDRINGER</string>
     <string name="rsb_edit_step_alert_cancel_title">Vil du fortsætte med at foretage ændringer?</string>
@@ -110,7 +111,6 @@
     <string name="rsb_edit_step_alert_step_save_content">Andre svar kan blive slettet, og du kan blive bedt om at indtaste nye oplysninger.</string>
     <string name="rsb_edit_step_alert_step_save_discard">Nej, slet</string>
     <string name="rsb_edit_step_alert_step_save_positive">Ja, gem</string>
-    <string name="rsb_consent_review_save">Gem</string>
     <string name="rsb_edit_step_alert_step_skip_title">Vil du springe dette trin over?</string>
     <string name="rsb_edit_step_alert_step_skip_content">Dit oprindelige svar vil blive slettet.</string>
     <string name="rsb_edit_step_alert_step_skip_discard">NEJ, SPRING IKKE OVER</string>
@@ -118,39 +118,37 @@
     <string name="rsb_edit_step">Redigér</string>
 
     <!-- Material Date Picker Strings -->
-    <string name="mtrl_picker_range_header_title" tools:ignore="ResourceName" tools:override="true">Vælg et datointerval</string>
-    <string name="mtrl_picker_date_header_title" tools:ignore="ResourceName" tools:override="true">Vælg en dato</string>
-    <string name="mtrl_picker_range_header_unselected" tools:ignore="ResourceName" tools:override="true">Startdato - Slutdato</string>
-    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">%1$s – Slutdato</string>
-    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">Start dato – %1$s</string>
+    <string name="mtrl_picker_range_header_title" tools:ignore="ResourceName" tools:override="true">Vælg et tidsinterval</string>
+    <string name="mtrl_picker_date_header_title" tools:ignore="ResourceName" tools:override="true">Vælge en dato</string>
+    <string name="mtrl_picker_range_header_unselected" tools:ignore="ResourceName" tools:override="true">Startdato – slutdato</string>
+    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">%1$s – slutdato</string>
+    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">Startdato – %1$s</string>
     <string name="mtrl_picker_range_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s – %2$s</string>
     <string name="mtrl_picker_date_header_unselected" tools:ignore="ResourceName" tools:override="true">Valgt dato</string>
-    <string name="mtrl_picker_date_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s</string>
-    <string name="mtrl_picker_confirm" tools:ignore="ResourceName" tools:override="true">@android:string/ok</string>
     <string name="mtrl_picker_text_input_date_hint" tools:ignore="ResourceName" tools:override="true">Dato</string>
-    <string name="mtrl_picker_text_input_date_range_start_hint" tools:ignore="ResourceName" tools:override="true">Start dato</string>
+    <string name="mtrl_picker_text_input_date_range_start_hint" tools:ignore="ResourceName" tools:override="true">Startdato</string>
     <string name="mtrl_picker_text_input_date_range_end_hint" tools:ignore="ResourceName" tools:override="true">Slutdato</string>
-    <string name="mtrl_picker_save" tools:ignore="ResourceName" tools:override="true">Spare</string>
+    <string name="mtrl_picker_save" tools:ignore="ResourceName" tools:override="true">Gem</string>
     <string name="mtrl_picker_invalid_range" tools:ignore="ResourceName" tools:override="true">Ugyldigt interval.</string>
-    <string name="mtrl_picker_out_of_range" tools:ignore="ResourceName" tools:override="true">Uden for rækkevidde: %1$s</string>
+    <string name="mtrl_picker_out_of_range" tools:ignore="ResourceName" tools:override="true">Udenfor intervallet: %1$s</string>
     <string name="mtrl_picker_invalid_format" tools:ignore="ResourceName" tools:override="true">Ugyldigt format.</string>
     <string name="mtrl_picker_invalid_format_use" tools:ignore="ResourceName" tools:override="true">Brug: %1$s</string>
     <string name="mtrl_picker_invalid_format_example" tools:ignore="ResourceName" tools:override="true">Eksempel: %1$s</string>
-    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:ignore="ResourceName" tools:override="true">Skift til kalenderinputtilstand</string>
-    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">Skift til tekstindtastningstilstand</string>
-    <string name="mtrl_picker_a11y_prev_month" tools:ignore="ResourceName" tools:override="true">Skift til forrige måned</string>
-    <string name="mtrl_picker_a11y_next_month" tools:ignore="ResourceName" tools:override="true">Skift til næste måned</string>
-    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">Tryk for at skifte til valg af et år</string>
-    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">Tryk for at skifte til valg af en dag</string>
-    <string name="mtrl_picker_day_of_week_column_header" tools:ignore="ResourceName" tools:override="true">Kolonne af dage: %1$s</string>
-    <string name="mtrl_picker_announce_current_selection" tools:ignore="ResourceName" tools:override="true">Aktuelt valg: %1$s</string>
-    <string name="mtrl_picker_navigate_to_year_description" tools:ignore="ResourceName" tools:override="true">Naviger til år %1$s</string>
-    ​
+    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:ignore="ResourceName" tools:override="true">Skift til kalenderindtastning</string>
+    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">Skift til tekstindtastning</string>
+    <string name="mtrl_picker_a11y_prev_month" tools:ignore="ResourceName" tools:override="true">Ændr til forrige måned</string>
+    <string name="mtrl_picker_a11y_next_month" tools:ignore="ResourceName" tools:override="true">Ændr til næste måned</string>
+    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">Tryk for at skifte til valg af år</string>
+    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">Tryk for at skifte til valg af dag</string>
+    <string name="mtrl_picker_day_of_week_column_header" tools:ignore="ResourceName" tools:override="true">Kolonne med dage: %1$s</string>
+    <string name="mtrl_picker_announce_current_selection" tools:ignore="ResourceName" tools:override="true">Aktuelt valgt: %1$s</string>
+    <string name="mtrl_picker_navigate_to_year_description" tools:ignore="ResourceName" tools:override="true">Gå til år%1$s</string>
+
     <!-- Material Time Picker Strings -->
     <string name="time_picker_hour_label" tools:ignore="ResourceName" tools:override="true">time</string>
     <string name="time_picker_minute_label" tools:ignore="ResourceName" tools:override="true">minut</string>
-    <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">Fastsat tidspunkt</string>
-    <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">Indtast et gyldigt tidspunkt</string>
+    <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">Indstil tid</string>
+    <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">Indtast en gyldig tid</string>
     <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Skriv tid</string>
 
     <string name="rsb_consent_text_question_error">[da-rDK]*Field Required</string>

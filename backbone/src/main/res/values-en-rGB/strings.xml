@@ -33,7 +33,7 @@
     <string name="rsb_please_wait">Please wait&#8230;</string>
 
     <!-- Consent form step -->
-    <string name="rsb_consent_dob_full">Date of Birth</string>
+    <string name="rsb_consent_dob_full">Date of birth</string>
 
     <!-- Consent sig step -->
     <string name="rsb_consent_signature_title">Signature</string>
@@ -64,7 +64,7 @@
     <string name="rsb_invalid_answer_default">Invalid answer, try again!</string>
     <string name="rsb_invalid_answer_date_over">Invalid answer, date must be before %1$s</string>
     <string name="rsb_invalid_answer_date_under">Invalid answer, date must be after %1$s</string>
-    <string name="rsb_invalid_answer_integer_over">Invalid answer, date must be after %1$s</string>
+    <string name="rsb_invalid_answer_integer_over">Invalid answer, your value must be %1$s or lower</string>
     <string name="rsb_invalid_answer_integer_under">Invalid answer, your value must be %1$s or higher</string>
     <string name="rsb_invalid_answer_choice">Please select a value!</string>
     <string name="rsb_invalid_answer_date_none">Please choose a date.</string>
@@ -89,9 +89,9 @@
     <!-- AssetVideoView -->
     <!-- Title for error alert when a video cannot be played.  it can be used by any app. -->
     <!-- Text for error alert when a video container is not valid for progressive download/playback. -->
-    <string name="rsb_error_assetvideoview_invalid_progressive_playback">This video isn\'t valid for streaming to this device.</string>
+    <string name="rsb_error_assetvideoview_invalid_progressive_playback">This video is not valid for streaming to this device.</string>
     <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
-    <string name="rsb_error_assetvideoview_unknown">Can\'t play this video.</string>
+    <string name="rsb_error_assetvideoview_unknown">Cannot play this video.</string>
     <!-- Button to close error alert when a video cannot be played -->
     <string name="rsb_error_assetvideoview_button">OK</string>
 
@@ -102,6 +102,7 @@
     <string name="rsb_consent_role">Participant</string>
 
     <!-- Edit -->
+    <string name="rsb_consent_review_save">Save</string>
     <string name="rsb_edit_step_alert_cancel_positive">YES, STOP MAKING CHANGES</string>
     <string name="rsb_edit_step_alert_cancel_discard">NO, KEEP EDITING</string>
     <string name="rsb_edit_step_alert_cancel_title">Do you want to stop making changes?</string>
@@ -110,7 +111,6 @@
     <string name="rsb_edit_step_alert_step_save_content">Other responses may be cleared and you may be asked to submit new information.</string>
     <string name="rsb_edit_step_alert_step_save_discard">No, Discard</string>
     <string name="rsb_edit_step_alert_step_save_positive">Yes, Save</string>
-    <string name="rsb_consent_review_save">Save</string>
     <string name="rsb_edit_step_alert_step_skip_title">Do you want to skip this step?</string>
     <string name="rsb_edit_step_alert_step_skip_content">Your original response will be discarded.</string>
     <string name="rsb_edit_step_alert_step_skip_discard">NO, DO NoT SKIP</string>
@@ -125,8 +125,6 @@
     <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">Start date – %1$s</string>
     <string name="mtrl_picker_range_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s – %2$s</string>
     <string name="mtrl_picker_date_header_unselected" tools:ignore="ResourceName" tools:override="true">Selected date</string>
-    <string name="mtrl_picker_date_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s</string>
-    <string name="mtrl_picker_confirm" tools:ignore="ResourceName" tools:override="true">@android:string/ok</string>
     <string name="mtrl_picker_text_input_date_hint" tools:ignore="ResourceName" tools:override="true">Date</string>
     <string name="mtrl_picker_text_input_date_range_start_hint" tools:ignore="ResourceName" tools:override="true">Start date</string>
     <string name="mtrl_picker_text_input_date_range_end_hint" tools:ignore="ResourceName" tools:override="true">End date</string>
@@ -147,8 +145,8 @@
     <string name="mtrl_picker_navigate_to_year_description" tools:ignore="ResourceName" tools:override="true">Navigate to year %1$s</string>
     ​
     <!-- Material Time Picker Strings -->
-    <string name="time_picker_hour_label" tools:ignore="ResourceName" tools:override="true">hour</string>
-    <string name="time_picker_minute_label" tools:ignore="ResourceName" tools:override="true">minute</string>
+    <string name="time_picker_hour_label" tools:ignore="ResourceName" tools:override="true">Hour</string>
+    <string name="time_picker_minute_label" tools:ignore="ResourceName" tools:override="true">Minute</string>
     <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">Set time</string>
     <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">Enter a valid time</string>
     <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Type in time</string>

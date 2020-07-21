@@ -42,7 +42,7 @@
     <!-- Quiz -->
 
     <!-- Other -->
-    <string name="rsb_done">Klart</string>
+    <string name="rsb_done">Gjort</string>
     <string name="rsb_step_skip">Hoppa över</string>
     <string name="rsb_next">nästa</string>
     <string name="rsb_name_first">Förnamn</string>
@@ -61,8 +61,8 @@
     <string name="rsb_error_invalid_signature">Ogiltig signatur</string>
     <string name="rsb_invalid_answer_default">Ogiltigt svar. Försök igen!</string>
     <string name="rsb_invalid_answer_date_over">Ogiltigt svar. Datum måste infalla före %1$s</string>
-    <string name="rsb_invalid_answer_date_under">Ogiltigt svar. Datum måste infalla efter %1$s</string>
-    <string name="rsb_invalid_answer_integer_over">Ogiltigt svar. Datum måste infalla efter %1$s</string>
+    <string name="rsb_invalid_answer_date_under">Ogiltigt svar. Datum måste infalla efter %1</string>
+    <string name="rsb_invalid_answer_integer_over">Ogiltigt svar. Värdet får vara högst %1$s</string>
     <string name="rsb_invalid_answer_integer_under">Ogiltigt svar. Värdet måste vara minst %1$s</string>
     <string name="rsb_invalid_answer_choice">Välj ett värde!</string>
     <string name="rsb_invalid_answer_date_none">Välj ett datum.</string>
@@ -72,7 +72,7 @@
     <!-- Pin Code -->
 
     <!-- Body Hints -->
-    <string name="rsb_hint_step_body_int">Ange ett tal %1$d-%2$d</string>
+    <string name="rsb_hint_step_body_int">Ange ett tal</string>
     <string name="rsb_hint_step_body_dec">Ange ett tal %1$.2f-%2$.2f</string>
     <string name="rsb_hint_step_body_int_no_max">Ange ett tal</string>
     <string name="rsb_hint_step_body_date">Ange ett datum</string>
@@ -94,12 +94,13 @@
     <string name="rsb_error_assetvideoview_button">OK</string>
 
     <!-- Consent -->
-    <string name="rsb_consent_doc_line_printed_name">%1$s\'s namn (texta)</string>
-    <string name="rsb_consent_doc_line_signature">%1$s\'s Signatur</string>
+    <string name="rsb_consent_doc_line_printed_name">%1$ss namn (texta)</string>
+    <string name="rsb_consent_doc_line_signature">%1$ss signatur</string>
     <string name="rsb_consent_doc_line_date">Datum</string>
     <string name="rsb_consent_role">Deltagare</string>
 
     <!-- Edit -->
+    <string name="rsb_consent_review_save">Spara</string>
     <string name="rsb_edit_step_alert_cancel_positive">JA, AVBRYT REDIGERINGEN</string>
     <string name="rsb_edit_step_alert_cancel_discard">NEJ, FORTSÄTT REDIGERINGEN</string>
     <string name="rsb_edit_step_alert_cancel_title">Vill du avbryta redigeringen?</string>
@@ -108,42 +109,45 @@
     <string name="rsb_edit_step_alert_step_save_content">Andra svar kan raderas och du kan bli ombedd att skicka in ny information.</string>
     <string name="rsb_edit_step_alert_step_save_discard">Nej, radera</string>
     <string name="rsb_edit_step_alert_step_save_positive">Ja, spara</string>
-    <string name="rsb_consent_review_save">Spara</string>
     <string name="rsb_edit_step_alert_step_skip_title">Vill du hoppa över det här steget?</string>
     <string name="rsb_edit_step_alert_step_skip_content">Ditt ursprungliga svar kommer att raderas.</string>
     <string name="rsb_edit_step_alert_step_skip_discard">NEJ, HOPPA INTE ÖVER</string>
     <string name="rsb_edit_step_alert_step_skip_positive">Ja, hoppa över</string>
     <string name="rsb_edit_step">Redigera</string>
+
+    <!-- Material Date Picker Strings -->
     <string name="mtrl_picker_range_header_title" tools:ignore="ResourceName" tools:override="true">Välj ett datumintervall</string>
     <string name="mtrl_picker_date_header_title" tools:ignore="ResourceName" tools:override="true">Välj ett datum</string>
-    <string name="mtrl_picker_range_header_unselected" tools:ignore="ResourceName" tools:override="true">Startdatum - Slutdatum</string>
-    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">%1$s - Slutdatum</string>
-    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">Startdatum- %1$s</string>
-    <string name="mtrl_picker_range_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s - %2$s</string>
+    <string name="mtrl_picker_range_header_unselected" tools:ignore="ResourceName" tools:override="true">Startdatum – slutdatum</string>
+    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">%1$s – slutdatum</string>
+    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">Startdatum – %1$s</string>
+    <string name="mtrl_picker_range_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s – %2$s</string>
     <string name="mtrl_picker_date_header_unselected" tools:ignore="ResourceName" tools:override="true">Valt datum</string>
     <string name="mtrl_picker_text_input_date_hint" tools:ignore="ResourceName" tools:override="true">Datum</string>
     <string name="mtrl_picker_text_input_date_range_start_hint" tools:ignore="ResourceName" tools:override="true">Startdatum</string>
     <string name="mtrl_picker_text_input_date_range_end_hint" tools:ignore="ResourceName" tools:override="true">Slutdatum</string>
     <string name="mtrl_picker_save" tools:ignore="ResourceName" tools:override="true">Spara</string>
     <string name="mtrl_picker_invalid_range" tools:ignore="ResourceName" tools:override="true">Ogiltigt intervall.</string>
-    <string name="mtrl_picker_out_of_range" tools:ignore="ResourceName" tools:override="true">Utanför intervallet: %1$s</string>
+    <string name="mtrl_picker_out_of_range" tools:ignore="ResourceName" tools:override="true">Utanför intervall: %1$s</string>
     <string name="mtrl_picker_invalid_format" tools:ignore="ResourceName" tools:override="true">Ogiltigt format.</string>
     <string name="mtrl_picker_invalid_format_use" tools:ignore="ResourceName" tools:override="true">Använd: %1$s</string>
     <string name="mtrl_picker_invalid_format_example" tools:ignore="ResourceName" tools:override="true">Exempel: %1$s</string>
-    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:ignore="ResourceName" tools:override="true">Byt till kalenderinmatningsläge</string>
-    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">Byt till textinmatningsläge</string>
-    <string name="mtrl_picker_a11y_prev_month" tools:ignore="ResourceName" tools:override="true">Byt till föregående månad</string>
-    <string name="mtrl_picker_a11y_next_month" tools:ignore="ResourceName" tools:override="true">Byt till nästa månad</string>
-    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">Toque para cambiar a seleccionar un año</string>
-    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">Tryck för att växla för att välja en dag</string>
-    <string name="mtrl_picker_day_of_week_column_header" tools:ignore="ResourceName" tools:override="true">Dagars kolumn: %1$s</string>
-    <string name="mtrl_picker_announce_current_selection" tools:ignore="ResourceName" tools:override="true">Nuvarande val: %1$s</string>
+    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:ignore="ResourceName" tools:override="true">Växla över till kalenderinmatning</string>
+    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">Växla över till textinmatning</string>
+    <string name="mtrl_picker_a11y_prev_month" tools:ignore="ResourceName" tools:override="true">Ändra till föregående månad</string>
+    <string name="mtrl_picker_a11y_next_month" tools:ignore="ResourceName" tools:override="true">Ändra till nästa månad</string>
+    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">Tryck för att välja ett år</string>
+    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">Tryck för att välja en dag</string>
+    <string name="mtrl_picker_day_of_week_column_header" tools:ignore="ResourceName" tools:override="true">Kolumn med dagar: %1$s</string>
+    <string name="mtrl_picker_announce_current_selection" tools:ignore="ResourceName" tools:override="true">Aktuellt val: %1$s</string>
     <string name="mtrl_picker_navigate_to_year_description" tools:ignore="ResourceName" tools:override="true">Navigera till år %1$s</string>
+
+    <!-- Material Time Picker Strings -->
     <string name="time_picker_hour_label" tools:ignore="ResourceName" tools:override="true">timme</string>
     <string name="time_picker_minute_label" tools:ignore="ResourceName" tools:override="true">minut</string>
-    <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">Ställ klockan</string>
+    <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">Ställ in tid</string>
     <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">Ange en giltig tid</string>
-    <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Skriv in tid</string>
+    <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Ange tid</string>
 
     <string name="rsb_consent_text_question_error">[sv-rSE]*Field Required</string>
 </resources>

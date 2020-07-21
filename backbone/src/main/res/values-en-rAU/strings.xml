@@ -14,12 +14,12 @@
 
     <!-- Consent section learn more -->
     <string name="rsb_consent_section_more_info">Learn more</string>
-    <string name="rsb_consent_section_more_info_data_gathering">Learn more about how data are gathered</string>
-    <string name="rsb_consent_section_more_info_data_use">Learn more about how data are used</string>
+    <string name="rsb_consent_section_more_info_data_gathering">Learn more about how data is gathered</string>
+    <string name="rsb_consent_section_more_info_data_use">Learn more about how data is used</string>
     <string name="rsb_consent_section_more_info_privacy">Learn more about how your privacy and identity are protected</string>
     <string name="rsb_consent_section_more_info_welcome">Learn more about the study first</string>
     <string name="rsb_consent_section_more_info_study_survey">Learn more about the study survey</string>
-    <string name="rsb_consent_section_more_info_time_commitment">Learn more about the study\'s impact on your time</string>
+    <string name="rsb_consent_section_more_info_time_commitment">Learn more about the study’s impact on your time</string>
     <string name="rsb_consent_section_more_info_study_tasks">Learn more about the tasks involved</string>
     <string name="rsb_consent_section_more_info_withdrawing">Learn more about withdrawing</string>
 
@@ -33,7 +33,7 @@
     <string name="rsb_please_wait">Please wait&#8230;</string>
 
     <!-- Consent form step -->
-    <string name="rsb_consent_dob_full">Date of Birth</string>
+    <string name="rsb_consent_dob_full">Date of birth</string>
 
     <!-- Consent sig step -->
     <string name="rsb_consent_signature_title">Signature</string>
@@ -46,7 +46,7 @@
     <!-- Other -->
     <string name="rsb_done">Done</string>
     <string name="rsb_step_skip">Skip</string>
-    <string name="rsb_next">next</string>
+    <string name="rsb_next">Next</string>
     <string name="rsb_name_first">First Name</string>
     <string name="rsb_name_last">Last Name</string>
     <string name="rsb_disagree">Disagree</string>
@@ -61,10 +61,10 @@
 
     <!-- Step Errors -->
     <string name="rsb_error_invalid_signature">Signature Invalid</string>
-    <string name="rsb_invalid_answer_default">Invalid answer, please try again!</string>
+    <string name="rsb_invalid_answer_default">Invalid answer, try again!</string>
     <string name="rsb_invalid_answer_date_over">Invalid answer, date must be before %1$s</string>
     <string name="rsb_invalid_answer_date_under">Invalid answer, date must be after %1$s</string>
-    <string name="rsb_invalid_answer_integer_over">Invalid answer, date must be after %1$s</string>
+    <string name="rsb_invalid_answer_integer_over">Invalid answer, your value must be %1$s or lower</string>
     <string name="rsb_invalid_answer_integer_under">Invalid answer, your value must be %1$s or higher</string>
     <string name="rsb_invalid_answer_choice">Please select a value!</string>
     <string name="rsb_invalid_answer_date_none">Please choose a date.</string>
@@ -79,7 +79,7 @@
     <string name="rsb_hint_step_body_int_no_max">Enter a number</string>
     <string name="rsb_hint_step_body_date">Enter a date</string>
     <string name="rsb_hint_step_body_time">Enter a time</string>
-    <string name="rsb_hint_step_body_datetime">Enter a date and time</string>
+    <string name="rsb_hint_step_body_datetime">Enter a date and a time</string>
     <string name="rsb_hint_step_body_text">Answer</string>
 
     <!-- Graphing -->
@@ -102,6 +102,7 @@
     <string name="rsb_consent_role">Participant</string>
 
     <!-- Edit -->
+    <string name="rsb_consent_review_save">Save</string>
     <string name="rsb_edit_step_alert_cancel_positive">YES, STOP MAKING CHANGES</string>
     <string name="rsb_edit_step_alert_cancel_discard">NO, KEEP EDITING</string>
     <string name="rsb_edit_step_alert_cancel_title">Do you want to stop making changes?</string>
@@ -110,7 +111,6 @@
     <string name="rsb_edit_step_alert_step_save_content">Other responses may be cleared and you may be asked to submit new information.</string>
     <string name="rsb_edit_step_alert_step_save_discard">No, Discard</string>
     <string name="rsb_edit_step_alert_step_save_positive">Yes, Save</string>
-    <string name="rsb_consent_review_save">Save</string>
     <string name="rsb_edit_step_alert_step_skip_title">Do you want to skip this step?</string>
     <string name="rsb_edit_step_alert_step_skip_content">Your original response will be discarded.</string>
     <string name="rsb_edit_step_alert_step_skip_discard">NO, DO NOT SKIP</string>
@@ -125,8 +125,6 @@
     <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">Start date – %1$s</string>
     <string name="mtrl_picker_range_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s – %2$s</string>
     <string name="mtrl_picker_date_header_unselected" tools:ignore="ResourceName" tools:override="true">Selected date</string>
-    <string name="mtrl_picker_date_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s</string>
-    <string name="mtrl_picker_confirm" tools:ignore="ResourceName" tools:override="true">@android:string/ok</string>
     <string name="mtrl_picker_text_input_date_hint" tools:ignore="ResourceName" tools:override="true">Date</string>
     <string name="mtrl_picker_text_input_date_range_start_hint" tools:ignore="ResourceName" tools:override="true">Start date</string>
     <string name="mtrl_picker_text_input_date_range_end_hint" tools:ignore="ResourceName" tools:override="true">End date</string>
@@ -147,8 +145,8 @@
     <string name="mtrl_picker_navigate_to_year_description" tools:ignore="ResourceName" tools:override="true">Navigate to year %1$s</string>
     ​
     <!-- Material Time Picker Strings -->
-    <string name="time_picker_hour_label" tools:ignore="ResourceName" tools:override="true">hour</string>
-    <string name="time_picker_minute_label" tools:ignore="ResourceName" tools:override="true">minute</string>
+    <string name="time_picker_hour_label" tools:ignore="ResourceName" tools:override="true">Hours</string>
+    <string name="time_picker_minute_label" tools:ignore="ResourceName" tools:override="true">Minute</string>
     <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">Set time</string>
     <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">Enter a valid time</string>
     <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Type in time</string>

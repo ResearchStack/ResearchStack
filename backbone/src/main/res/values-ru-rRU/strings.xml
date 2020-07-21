@@ -5,7 +5,7 @@
     <string name="rsb_consent_section_data_gathering">Сбор данных</string>
     <string name="rsb_consent_section_privacy">Конфиденциальность</string>
     <string name="rsb_consent_section_data_use">Использование данных</string>
-    <string name="rsb_consent_section_time_commitment">Затраты времени</string>
+    <string name="rsb_consent_section_time_commitment">Требуемое время</string>
     <string name="rsb_consent_section_study_survey">Анкета исследования</string>
     <string name="rsb_consent_section_study_tasks">Задачи исследования</string>
     <string name="rsb_consent_section_withdrawing">Отзыв согласия</string>
@@ -15,21 +15,21 @@
     <string name="rsb_consent_section_more_info_data_gathering">Узнать больше о сборе данных
     </string>
     <string name="rsb_consent_section_more_info_data_use">Узнать больше об использовании данных</string>
-    <string name="rsb_consent_section_more_info_privacy">Узнать больше о защите конфиденциальности и персональных данных
+    <string name="rsb_consent_section_more_info_privacy">Узнать больше о защите личных данных и конфиденциальности
     </string>
-    <string name="rsb_consent_section_more_info_welcome">Узнать больше об исследовании</string>
+    <string name="rsb_consent_section_more_info_welcome">Узнать больше о самом исследовании</string>
     <string name="rsb_consent_section_more_info_study_survey">Узнать больше об анкете исследования
     </string>
-    <string name="rsb_consent_section_more_info_time_commitment">Узнать больше о том, сколько времени понадобится вам на участие в исследовании
+    <string name="rsb_consent_section_more_info_time_commitment">Узнать больше о количестве времени, которое потребуется для участия в исследовании
     </string>
-    <string name="rsb_consent_section_more_info_study_tasks">Узнать больше о задачах, содержащихся в исследовании
+    <string name="rsb_consent_section_more_info_study_tasks">Узнать больше о задачах, которые потребуется выполнить в ходе исследования
     </string>
     <string name="rsb_consent_section_more_info_withdrawing">Узнать больше об отзыве согласия</string>
 
     <!-- Consent sharing step -->
 
     <!-- Consent doc step -->
-    <string name="rsb_consent_review_alert_title">Просмотр</string>
+    <string name="rsb_consent_review_alert_title">Обзор</string>
     <string name="rsb_consent_review_cancel">Отмена</string>
 
     <string name="rsb_saving_consent">Сохранение согласия</string>
@@ -40,9 +40,9 @@
 
     <!-- Consent sig step -->
     <string name="rsb_consent_signature_title">Подпись</string>
-    <string name="rsb_consent_signature_instruction">Подпишитесь с помощью пальца в строке ниже.
+    <string name="rsb_consent_signature_instruction">Подпишитесь на линии ниже, используя палец.
     </string>
-    <string name="rsb_consent_signature_placeholder">Подписаться здесь</string>
+    <string name="rsb_consent_signature_placeholder">Подпишитесь здесь</string>
     <string name="rsb_consent_signature_clear">Очистить</string>
 
     <!-- Quiz -->
@@ -53,33 +53,33 @@
     <string name="rsb_next">далее</string>
     <string name="rsb_name_first">Имя</string>
     <string name="rsb_name_last">Фамилия</string>
-    <string name="rsb_disagree">Не согласен</string>
-    <string name="rsb_agree">Согласен</string>
+    <string name="rsb_disagree">Не соглашаюсь</string>
+    <string name="rsb_agree">Соглашаюсь</string>
     <string name="rsb_cancel">Отмена</string>
     <string name="rsb_format_step_title">Этап %1$s из %2$s</string>
-    <string name="rsb_hours">Часов</string>
-    <string name="rsb_minutes">Минут</string>
+    <string name="rsb_hours">Часов:</string>
+    <string name="rsb_minutes">Минут:</string>
     <string name="rsb_task_cancel_title">Покинуть действие</string>
-    <string name="rsb_task_cancel_text">Вы действительно хотите покинуть действие и сбросить его результаты?</string>
+    <string name="rsb_task_cancel_text">Вы действительно хотите покинуть действие и сбросить имеющиеся результаты?</string>
     <string name="rsb_task_cancel_positive">Сбросить результаты</string>
 
     <!-- Step Errors -->
     <string name="rsb_error_invalid_signature">Недопустимая подпись</string>
-    <string name="rsb_invalid_answer_default">Недопустимый ответ. Попробуйте заново!</string>
-    <string name="rsb_invalid_answer_date_over">Недопустимый ответ. Дата должна быть ранее %1$s</string>
-    <string name="rsb_invalid_answer_date_under">Недопустимый ответ. Дата должна быть позднее %1$s</string>
-    <string name="rsb_invalid_answer_integer_over">Недопустимый ответ. Значение не должно быть ниже %1$s</string>
-    <string name="rsb_invalid_answer_integer_under">Недопустимый ответ. Значение не должно быть выше %1$s</string>
+    <string name="rsb_invalid_answer_default">Недопустимый ответ. Попробуйте снова!</string>
+    <string name="rsb_invalid_answer_date_over">Недопустимый ответ. Введите дату ранее %1$s</string>
+    <string name="rsb_invalid_answer_date_under">Недопустимый ответ. Введите дату позже %1$s</string>
+    <string name="rsb_invalid_answer_integer_over">Недопустимый ответ. Значение не должно быть больше %1$s</string>
+    <string name="rsb_invalid_answer_integer_under">Недопустимый ответ. Значение не должно быть меньше %1$s</string>
     <string name="rsb_invalid_answer_choice">Выберите значение!</string>
     <string name="rsb_invalid_answer_date_none">Выберите дату.</string>
-    <string name="rsb_birth_date_too_old">Максимальный возраст: %1$s</string>
-    <string name="rsb_birth_date_too_young">Минимальный возраст: %1$s</string>
+    <string name="rsb_birth_date_too_old">Вам должно быть не более %1$s лет (года)</string>
+    <string name="rsb_birth_date_too_young">Вам должно быть не менее %1$s лет (года)</string>
 
     <!-- Pin Code -->
 
     <!-- Body Hints -->
-    <string name="rsb_hint_step_body_int">Введите число %1$d-%2$d</string>
-    <string name="rsb_hint_step_body_dec">Введите число %1$.2f-%2$.2f</string>
+    <string name="rsb_hint_step_body_int">Введите число от %1$d до %2$d</string>
+    <string name="rsb_hint_step_body_dec">Введите число от %1$.2f до %2$.2f</string>
     <string name="rsb_hint_step_body_int_no_max">Введите число</string>
     <string name="rsb_hint_step_body_date">Введите дату</string>
     <string name="rsb_hint_step_body_time">Введите время</string>
@@ -93,19 +93,20 @@
     <!-- AssetVideoView -->
     <!-- Title for error alert when a video cannot be played.  it can be used by any app. -->
     <!-- Text for error alert when a video container is not valid for progressive download/playback. -->
-    <string name="rsb_error_assetvideoview_invalid_progressive_playback">Невозможно воспроизвести данный видеоролик в потоковом режиме на этом устройстве.</string>
+    <string name="rsb_error_assetvideoview_invalid_progressive_playback">Ваше устройство не может воспроизвести это видео в потоковом режиме.</string>
     <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
-    <string name="rsb_error_assetvideoview_unknown">Невозможно воспроизвести видео.</string>
+    <string name="rsb_error_assetvideoview_unknown">Невозможно воспроизвести это видео.</string>
     <!-- Button to close error alert when a video cannot be played -->
     <string name="rsb_error_assetvideoview_button">OK</string>
 
     <!-- Consent -->
-    <string name="rsb_consent_doc_line_printed_name">Полное имя участника %1$s</string>
-    <string name="rsb_consent_doc_line_signature">Подпись участника %1$s</string>
+    <string name="rsb_consent_doc_line_printed_name">%1$s: полное имя</string>
+    <string name="rsb_consent_doc_line_signature">%1$s: подпись</string>
     <string name="rsb_consent_doc_line_date">Дата</string>
     <string name="rsb_consent_role">Участник</string>
 
     <!-- Edit -->
+    <string name="rsb_consent_review_save">Сохранить</string>
     <string name="rsb_edit_step_alert_cancel_positive">ДА, ОСТАНОВИТЬ ВНЕСЕНИЕ ИЗМЕНЕНИЙ</string>
     <string name="rsb_edit_step_alert_cancel_discard">НЕТ, ПРОДОЛЖИТЬ РЕДАКТИРОВАНИЕ</string>
     <string name="rsb_edit_step_alert_cancel_title">Остановить внесение изменений?</string>
@@ -114,41 +115,44 @@
     <string name="rsb_edit_step_alert_step_save_content">Могут быть сброшены другие ответы, и вам может потребоваться отправить новую информацию.</string>
     <string name="rsb_edit_step_alert_step_save_discard">Нет, отменить</string>
     <string name="rsb_edit_step_alert_step_save_positive">Да, сохранить</string>
-    <string name="rsb_consent_review_save">Сохранить</string>
     <string name="rsb_edit_step_alert_step_skip_title">Пропустить этот шаг?</string>
     <string name="rsb_edit_step_alert_step_skip_content">Исходный ответ будет сброшен.</string>
     <string name="rsb_edit_step_alert_step_skip_discard">НЕТ, НЕ ПРОПУСКАТЬ</string>
     <string name="rsb_edit_step_alert_step_skip_positive">Да, пропустить</string>
     <string name="rsb_edit_step">Редактировать</string>
+
+    <!-- Material Date Picker Strings -->
     <string name="mtrl_picker_range_header_title" tools:ignore="ResourceName" tools:override="true">Выберите диапазон дат</string>
     <string name="mtrl_picker_date_header_title" tools:ignore="ResourceName" tools:override="true">Выберите дату</string>
-    <string name="mtrl_picker_range_header_unselected" tools:ignore="ResourceName" tools:override="true">Дата начала - Дата окончания</string>
-    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">%1$s - Дата окончания</string>
-    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">Дата начала - %1$s</string>
-    <string name="mtrl_picker_range_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s - %2$s</string>
-    <string name="mtrl_picker_date_header_unselected" tools:ignore="ResourceName" tools:override="true">Выбранная дата</string>
-    <string name="mtrl_picker_text_input_date_hint" tools:ignore="ResourceName" tools:override="true">Свидание</string>
+    <string name="mtrl_picker_range_header_unselected" tools:ignore="ResourceName" tools:override="true">Дата начала – Дата окончания</string>
+    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">%1$s – Дата окончания</string>
+    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">Дата начала – %1$s</string>
+    <string name="mtrl_picker_range_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s – %2$s</string>
+    <string name="mtrl_picker_date_header_unselected" tools:ignore="ResourceName" tools:override="true">Выберите дату</string>
+    <string name="mtrl_picker_text_input_date_hint" tools:ignore="ResourceName" tools:override="true">Дата</string>
     <string name="mtrl_picker_text_input_date_range_start_hint" tools:ignore="ResourceName" tools:override="true">Дата начала</string>
     <string name="mtrl_picker_text_input_date_range_end_hint" tools:ignore="ResourceName" tools:override="true">Дата окончания</string>
     <string name="mtrl_picker_save" tools:ignore="ResourceName" tools:override="true">Сохранить</string>
-    <string name="mtrl_picker_invalid_range" tools:ignore="ResourceName" tools:override="true">Неверный диапазон</string>
-    <string name="mtrl_picker_out_of_range" tools:ignore="ResourceName" tools:override="true">Вне диапазона: %1$s</string>
+    <string name="mtrl_picker_invalid_range" tools:ignore="ResourceName" tools:override="true">Недопустимый диапазон.</string>
+    <string name="mtrl_picker_out_of_range" tools:ignore="ResourceName" tools:override="true">Вне допустимого диапазона: %1$s</string>
     <string name="mtrl_picker_invalid_format" tools:ignore="ResourceName" tools:override="true">Недопустимый формат.</string>
     <string name="mtrl_picker_invalid_format_use" tools:ignore="ResourceName" tools:override="true">Использование: %1$s</string>
     <string name="mtrl_picker_invalid_format_example" tools:ignore="ResourceName" tools:override="true">Пример: %1$s</string>
-    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:ignore="ResourceName" tools:override="true">Переключиться в режим ввода календаря</string>
-    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">Переключиться в режим ввода текста</string>
+    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:ignore="ResourceName" tools:override="true">Переключиться в календарный режим ввода</string>
+    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">Переключиться в текстовый режим ввода</string>
     <string name="mtrl_picker_a11y_prev_month" tools:ignore="ResourceName" tools:override="true">Изменить на предыдущий месяц</string>
     <string name="mtrl_picker_a11y_next_month" tools:ignore="ResourceName" tools:override="true">Изменить на следующий месяц</string>
-    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">Нажмите, чтобы перейти к выбору года</string>
-    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">Нажмите, чтобы перейти к выбору дня</string>
+    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">Нажмите для перехода к выбору года</string>
+    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">Нажмите для перехода к выбору дня</string>
     <string name="mtrl_picker_day_of_week_column_header" tools:ignore="ResourceName" tools:override="true">Столбец дней: %1$s</string>
     <string name="mtrl_picker_announce_current_selection" tools:ignore="ResourceName" tools:override="true">Текущий выбор: %1$s</string>
-    <string name="mtrl_picker_navigate_to_year_description" tools:ignore="ResourceName" tools:override="true">Перейдите к году %1$s</string>
-    <string name="time_picker_hour_label" tools:ignore="ResourceName" tools:override="true">час</string>
-    <string name="time_picker_minute_label" tools:ignore="ResourceName" tools:override="true">минут</string>
-    <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">Установить время</string>
-    <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">Введите правильное время</string>
+    <string name="mtrl_picker_navigate_to_year_description" tools:ignore="ResourceName" tools:override="true">Переключитесь на год %1$s</string>
+
+    <!-- Material Time Picker Strings -->
+    <string name="time_picker_hour_label" tools:ignore="ResourceName" tools:override="true">ч</string>
+    <string name="time_picker_minute_label" tools:ignore="ResourceName" tools:override="true">минута</string>
+    <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">Установите время</string>
+    <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">Введите допустимое время</string>
     <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Введите время</string>
 
     <string name="rsb_consent_text_question_error">[ru-rRU]*Field Required</string>

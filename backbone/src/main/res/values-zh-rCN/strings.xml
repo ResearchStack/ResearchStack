@@ -10,10 +10,10 @@
     <string name="rsb_consent_section_time_commitment">时间保证</string>
     <string name="rsb_consent_section_study_survey">研究调查</string>
     <string name="rsb_consent_section_study_tasks">研究任务</string>
-    <string name="rsb_consent_section_withdrawing">正在撤回</string>
+    <string name="rsb_consent_section_withdrawing">撤销</string>
 
     <!-- Consent section learn more -->
-    <string name="rsb_consent_section_more_info">了解更多</string>
+    <string name="rsb_consent_section_more_info">学到更多</string>
     <string name="rsb_consent_section_more_info_data_gathering">详细了解如何收集数据</string>
     <string name="rsb_consent_section_more_info_data_use">详细了解如何使用数据</string>
     <string name="rsb_consent_section_more_info_privacy">详细了解您的隐私和身份如何受到保护</string>
@@ -26,7 +26,7 @@
     <!-- Consent sharing step -->
 
     <!-- Consent doc step -->
-    <string name="rsb_consent_review_alert_title">评论</string>
+    <string name="rsb_consent_review_alert_title">审核</string>
     <string name="rsb_consent_review_cancel">取消</string>
 
     <string name="rsb_saving_consent">保存同意</string>
@@ -52,24 +52,24 @@
     <string name="rsb_disagree">不同意</string>
     <string name="rsb_agree">同意</string>
     <string name="rsb_cancel">取消</string>
-    <string name="rsb_format_step_title">%2$s的步骤%1$s</string>
+    <string name="rsb_format_step_title">第%1$s步，共%2$s步</string>
     <string name="rsb_hours">小时</string>
     <string name="rsb_minutes">分钟</string>
     <string name="rsb_task_cancel_title">离开活动</string>
-    <string name="rsb_task_cancel_text">您确定要离开此活动并删除其结果吗？</string>
-    <string name="rsb_task_cancel_positive">删除结果</string>
+    <string name="rsb_task_cancel_text">您确定要离开此活动并丢弃其结果吗？</string>
+    <string name="rsb_task_cancel_positive">丢弃结果</string>
 
     <!-- Step Errors -->
     <string name="rsb_error_invalid_signature">签名无效</string>
     <string name="rsb_invalid_answer_default">答案无效，请再试一次！</string>
-    <string name="rsb_invalid_answer_date_over">答案无效，日期必须在%1$s之前</string>
+    <string name="rsb_invalid_answer_date_over">答案无效，日期必须在%1$s$s之前</string>
     <string name="rsb_invalid_answer_date_under">答案无效，日期必须在%1$s之后</string>
-    <string name="rsb_invalid_answer_integer_over">答案无效，日期必须在%1$s之后</string>
-    <string name="rsb_invalid_answer_integer_under">答案无效，您输入的值必须不低于%1$s</string>
+    <string name="rsb_invalid_answer_integer_over">答案无效，您的值必须为%1$s$s或更低</string>
+    <string name="rsb_invalid_answer_integer_under">答案无效，您的值必须为%1$s$s或更高</string>
     <string name="rsb_invalid_answer_choice">请选择一个值！</string>
     <string name="rsb_invalid_answer_date_none">请选择一个日期。</string>
-    <string name="rsb_birth_date_too_old">您必须年龄为不大于%1$s</string>
-    <string name="rsb_birth_date_too_young">您必须在%1$s岁以上</string>
+    <string name="rsb_birth_date_too_old">您必须年龄为%1$s$s或更小</string>
+    <string name="rsb_birth_date_too_young">您必须至少%1$s$s岁</string>
 
     <!-- Pin Code -->
 
@@ -83,7 +83,7 @@
     <string name="rsb_hint_step_body_text">回答</string>
 
     <!-- Graphing -->
-    <string name="rsb_chart_progress_center">%2$s的%1$s</string>
+    <string name="rsb_chart_progress_center">第%1$s，共%2$s</string>
     <string name="rsb_chart_pie_value">%1$s&#65285;</string>
 
     <!-- AssetVideoView -->
@@ -93,15 +93,16 @@
     <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
     <string name="rsb_error_assetvideoview_unknown">无法播放此视频。</string>
     <!-- Button to close error alert when a video cannot be played -->
-    <string name="rsb_error_assetvideoview_button">确定</string>
+    <string name="rsb_error_assetvideoview_button">好的</string>
 
     <!-- Consent -->
-    <string name="rsb_consent_doc_line_printed_name">%1$s\'s\的姓名（印刷体）</string>
+    <string name="rsb_consent_doc_line_printed_name">%1$s\'s\的名称（打印）</string>
     <string name="rsb_consent_doc_line_signature">%1$s\'s的签名</string>
     <string name="rsb_consent_doc_line_date">日期</string>
     <string name="rsb_consent_role">参加者</string>
 
     <!-- Edit -->
+    <string name="rsb_consent_review_save">保存</string>
     <string name="rsb_edit_step_alert_cancel_positive">是，停止更改</string>
     <string name="rsb_edit_step_alert_cancel_discard">不，继续编辑</string>
     <string name="rsb_edit_step_alert_cancel_title">您要停止更改吗？</string>
@@ -110,41 +111,44 @@
     <string name="rsb_edit_step_alert_step_save_content">将清除其他回答，您需要提交新的信息。</string>
     <string name="rsb_edit_step_alert_step_save_discard">不，放弃</string>
     <string name="rsb_edit_step_alert_step_save_positive">是，保存</string>
-    <string name="rsb_consent_review_save">保存</string>
     <string name="rsb_edit_step_alert_step_skip_title">您要跳过这步吗？</string>
     <string name="rsb_edit_step_alert_step_skip_content">将删除您最初的回答。</string>
     <string name="rsb_edit_step_alert_step_skip_discard">不，不要跳过</string>
     <string name="rsb_edit_step_alert_step_skip_positive">是，跳过</string>
     <string name="rsb_edit_step">编辑</string>
+
+    <!-- Material Date Picker Strings -->
     <string name="mtrl_picker_range_header_title" tools:ignore="ResourceName" tools:override="true">选择日期范围</string>
     <string name="mtrl_picker_date_header_title" tools:ignore="ResourceName" tools:override="true">选择日期</string>
     <string name="mtrl_picker_range_header_unselected" tools:ignore="ResourceName" tools:override="true">开始日期 – 结束日期</string>
-    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">％1$s – 结束日期</string>
-    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">开始日期 – ％1$s</string>
+    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">%1$s – 结束日期</string>
+    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">开始日期 – %1$s</string>
     <string name="mtrl_picker_range_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s – %2$s</string>
-    <string name="mtrl_picker_date_header_unselected" tools:ignore="ResourceName" tools:override="true">选定日期</string>
+    <string name="mtrl_picker_date_header_unselected" tools:ignore="ResourceName" tools:override="true">选择的日期</string>
     <string name="mtrl_picker_text_input_date_hint" tools:ignore="ResourceName" tools:override="true">日期</string>
     <string name="mtrl_picker_text_input_date_range_start_hint" tools:ignore="ResourceName" tools:override="true">开始日期</string>
     <string name="mtrl_picker_text_input_date_range_end_hint" tools:ignore="ResourceName" tools:override="true">结束日期</string>
-    <string name="mtrl_picker_save" tools:ignore="ResourceName" tools:override="true">救</string>
-    <string name="mtrl_picker_invalid_range" tools:ignore="ResourceName" tools:override="true">范围无效。</string>
-    <string name="mtrl_picker_out_of_range" tools:ignore="ResourceName" tools:override="true">超出范围：％1$s</string>
-    <string name="mtrl_picker_invalid_format" tools:ignore="ResourceName" tools:override="true">无效的格式。</string>
-    <string name="mtrl_picker_invalid_format_use" tools:ignore="ResourceName" tools:override="true">使用：％1$s</string>
-    <string name="mtrl_picker_invalid_format_example" tools:ignore="ResourceName" tools:override="true">示例：％1$s</string>
+    <string name="mtrl_picker_save" tools:ignore="ResourceName" tools:override="true">保存</string>
+    <string name="mtrl_picker_invalid_range" tools:ignore="ResourceName" tools:override="true">无效范围</string>
+    <string name="mtrl_picker_out_of_range" tools:ignore="ResourceName" tools:override="true">超出范围：%1$s</string>
+    <string name="mtrl_picker_invalid_format" tools:ignore="ResourceName" tools:override="true">无效格式。</string>
+    <string name="mtrl_picker_invalid_format_use" tools:ignore="ResourceName" tools:override="true">使用：%1$s</string>
+    <string name="mtrl_picker_invalid_format_example" tools:ignore="ResourceName" tools:override="true">示例：%1$s</string>
     <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:ignore="ResourceName" tools:override="true">切换到日历输入模式</string>
-    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">切换至文字输入模式</string>
-    <string name="mtrl_picker_a11y_prev_month" tools:ignore="ResourceName" tools:override="true">更改为上个月</string>
-    <string name="mtrl_picker_a11y_next_month" tools:ignore="ResourceName" tools:override="true">改到下个月</string>
-    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">点按即可切换到选择年份</string>
-    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">点按即可切换到选择日期</string>
-    <string name="mtrl_picker_day_of_week_column_header" tools:ignore="ResourceName" tools:override="true">天列：％1$s</string>
-    <string name="mtrl_picker_announce_current_selection" tools:ignore="ResourceName" tools:override="true">当前选择：％1$s</string>
-    <string name="mtrl_picker_navigate_to_year_description" tools:ignore="ResourceName" tools:override="true">导航至 ％1$s 年</string>
+    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">切换到文本输入模式</string>
+    <string name="mtrl_picker_a11y_prev_month" tools:ignore="ResourceName" tools:override="true">更改为上月</string>
+    <string name="mtrl_picker_a11y_next_month" tools:ignore="ResourceName" tools:override="true">更改为下月</string>
+    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">点击以切换到选择年份</string>
+    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">点击以切换到选择日子</string>
+    <string name="mtrl_picker_day_of_week_column_header" tools:ignore="ResourceName" tools:override="true">日子列：%1$s</string>
+    <string name="mtrl_picker_announce_current_selection" tools:ignore="ResourceName" tools:override="true">当前选择：%1$s</string>
+    <string name="mtrl_picker_navigate_to_year_description" tools:ignore="ResourceName" tools:override="true">导航到年份 %1$s</string>
+
+    <!-- Material Time Picker Strings -->
     <string name="time_picker_hour_label" tools:ignore="ResourceName" tools:override="true">小时</string>
     <string name="time_picker_minute_label" tools:ignore="ResourceName" tools:override="true">分钟</string>
-    <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">设置时间</string>
-    <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">输入有效时间</string>
+    <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">设定的时间</string>
+    <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">输入有效的时间</string>
     <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">输入时间</string>
 
     <string name="rsb_consent_text_question_error">[zh-rCN]*Field Required</string>
