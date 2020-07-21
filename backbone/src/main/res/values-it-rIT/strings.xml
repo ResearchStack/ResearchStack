@@ -15,11 +15,11 @@
     <!-- Consent section learn more -->
     <string name="rsb_consent_section_more_info">Maggiori informazioni</string>
     <string name="rsb_consent_section_more_info_data_gathering">Maggiori informazioni sulla raccolta dei dati</string>
-    <string name="rsb_consent_section_more_info_data_use">Maggiori informazioni sull\'uso dei dati</string>
+    <string name="rsb_consent_section_more_info_data_use">Maggiori informazioni sull’uso dei dati</string>
     <string name="rsb_consent_section_more_info_privacy">Maggiori informazioni sulla protezione di dati e identità</string>
     <string name="rsb_consent_section_more_info_welcome">Per prima cosa maggiori informazioni sullo studio</string>
     <string name="rsb_consent_section_more_info_study_survey">Maggiori informazioni sul questionario dello studio</string>
-    <string name="rsb_consent_section_more_info_time_commitment">Maggiori informazioni sull\'impatto dello studio a livello di tempo</string>
+    <string name="rsb_consent_section_more_info_time_commitment">Maggiori informazioni sull’impatto dello studio a livello di tempo</string>
     <string name="rsb_consent_section_more_info_study_tasks">Maggiori informazioni sulle attività incluse</string>
     <string name="rsb_consent_section_more_info_withdrawing">Maggiori informazioni sul ritiro</string>
 
@@ -29,7 +29,7 @@
     <string name="rsb_consent_review_alert_title">Revisione</string>
     <string name="rsb_consent_review_cancel">Annulla</string>
 
-    <string name="rsb_saving_consent">Salvataggio del consenso in corso&#8230;</string>
+    <string name="rsb_saving_consent">Salvataggio del consenso in corso</string>
     <string name="rsb_please_wait">Attendere&#8230;</string>
 
     <!-- Consent form step -->
@@ -46,44 +46,42 @@
     <!-- Other -->
     <string name="rsb_done">Fatto</string>
     <string name="rsb_step_skip">Salta</string>
-    <string name="rsb_next">avanti</string>
+    <string name="rsb_next">Avanti</string>
     <string name="rsb_name_first">Nome</string>
     <string name="rsb_name_last">Cognome</string>
     <string name="rsb_disagree">In disaccordo</string>
-    <string name="rsb_agree">D\'accordo</string>
+    <string name="rsb_agree">D’accordo</string>
     <string name="rsb_cancel">Annulla</string>
-    <string name="rsb_format_step_title">Fase %1$s di %2$s</string>
+    <string name="rsb_format_step_title">Step %1$s di %2$s</string>
     <string name="rsb_hours">Ore</string>
     <string name="rsb_minutes">Minuti</string>
-    <string name="rsb_task_cancel_title">Abbandona attività</string>
+    <string name="rsb_task_cancel_title">Abbandona Attività</string>
     <string name="rsb_task_cancel_text">Abbandonare questa attività ed eliminare i relativi risultati?</string>
     <string name="rsb_task_cancel_positive">Elimina risultati</string>
 
     <!-- Step Errors -->
     <string name="rsb_error_invalid_signature">Firma non valida</string>
-    <string name="rsb_invalid_answer_default">Risposta non valida, riprova!</string>
-    <string name="rsb_invalid_answer_date_over">Risposta non valida, la data dev\'essere precedente al %1$s</string>
-    <string name="rsb_invalid_answer_date_under">Risposta non valida, la data dev\'essere successiva al %1$s</string>
-    <string name="rsb_invalid_answer_integer_over">Risposta non valida, la data dev\'essere successiva al %1$s</string>
-    <string name="rsb_invalid_answer_integer_under">Risposta non valida, il valore dev\'essere superiore o pari a %1$s</string>
+    <string name="rsb_invalid_answer_default">Risposta non valida, riprovare.</string>
+    <string name="rsb_invalid_answer_date_over">Risposta non valida, la data dev’essere precedente al %1$s</string>
+    <string name="rsb_invalid_answer_date_under">Risposta non valida, la data dev’essere successiva al %1$s</string>
+    <string name="rsb_invalid_answer_integer_over">Risposta non valida, il valore dev’essere superiore o pari a %1$s</string>
+    <string name="rsb_invalid_answer_integer_under">Risposta non valida, il valore dev’essere superiore o pari a %1$s</string>
     <string name="rsb_invalid_answer_choice">Selezionare un valore.</string>
     <string name="rsb_invalid_answer_date_none">Selezionare una data.</string>
-    <string name="rsb_birth_date_too_old">L\'utente deve avere al massimo %1$s anni</string>
-    <string name="rsb_birth_date_too_young">L\'utente deve avere almeno %1$s anni</string>
-
-    <!-- Pin Code -->
+    <string name="rsb_birth_date_too_old">L’utente deve avere al massimo %1$s anni</string>
+    <string name="rsb_birth_date_too_young">L’utente deve avere almeno %1$s anni</string>
 
     <!-- Body Hints -->
-    <string name="rsb_hint_step_body_int">Inserire un numero nell\'intervallo %1$d-%2$d</string>
-    <string name="rsb_hint_step_body_dec">Inserire un numero nell\'intervallo %1$.2f-%2$.2f</string>
+    <string name="rsb_hint_step_body_int">Inserire un numero %1$d-%2$d</string>
+    <string name="rsb_hint_step_body_dec">Inserire un numero nell’intervallo %1$.2f-%2$.2f</string>
     <string name="rsb_hint_step_body_int_no_max">Inserire un numero</string>
     <string name="rsb_hint_step_body_date">Inserire una data</string>
-    <string name="rsb_hint_step_body_time">Inserire un\'ora</string>
-    <string name="rsb_hint_step_body_datetime">Inserire una data e un\'ora</string>
+    <string name="rsb_hint_step_body_time">Inserire un’ora</string>
+    <string name="rsb_hint_step_body_datetime">Inserire una data e un’ora</string>
     <string name="rsb_hint_step_body_text">Risposta</string>
 
     <!-- Graphing -->
-    <string name="rsb_chart_progress_center">%1$s di %2$s</string>
+    <string name="rsb_chart_progress_center">%1$s of %2$s</string>
     <string name="rsb_chart_pie_value">%1$s&#65285;</string>
 
     <!-- AssetVideoView -->
@@ -96,12 +94,13 @@
     <string name="rsb_error_assetvideoview_button">OK</string>
 
     <!-- Consent -->
-    <string name="rsb_consent_doc_line_printed_name">Nome di %1$s (stampato)</string>
-    <string name="rsb_consent_doc_line_signature">Firma di %1$s</string>
+    <string name="rsb_consent_doc_line_printed_name">Nome di %1$s\'s (stampato)</string>
+    <string name="rsb_consent_doc_line_signature">Firma di %1$s\'s</string>
     <string name="rsb_consent_doc_line_date">Data</string>
     <string name="rsb_consent_role">Partecipante</string>
 
     <!-- Edit -->
+    <string name="rsb_consent_review_save">Salvare</string>
     <string name="rsb_edit_step_alert_cancel_positive">Sì, CAMBIAMENTI COMPLETATI</string>
     <string name="rsb_edit_step_alert_cancel_discard">NO, CONTINUA A MODIFICARE</string>
     <string name="rsb_edit_step_alert_cancel_title">Vuoi interrompere la modifica?</string>
@@ -110,7 +109,6 @@
     <string name="rsb_edit_step_alert_step_save_content">Altre risposte potrebbero essere cancellate e potrebbe esservi chiesto di inviare nuove informazioni.</string>
     <string name="rsb_edit_step_alert_step_save_discard">No, Scarta</string>
     <string name="rsb_edit_step_alert_step_save_positive">Sì, Salva</string>
-    <string name="rsb_consent_review_save">Salvare</string>
     <string name="rsb_edit_step_alert_step_skip_title">Vuoi salvare questo passaggio?</string>
     <string name="rsb_edit_step_alert_step_skip_content">La tua risposta originale sarà scartata.</string>
     <string name="rsb_edit_step_alert_step_skip_discard">NO, NON SALTARE</string>
@@ -118,39 +116,41 @@
     <string name="rsb_edit_step">Modifica</string>
 
     <!-- Material Date Picker Strings -->
-    <string name="mtrl_picker_range_header_title" tools:ignore="ResourceName" tools:override="true">Seleziona un intervallo di date</string>
-    <string name="mtrl_picker_date_header_title" tools:ignore="ResourceName" tools:override="true">Seleziona una data</string>
-    <string name="mtrl_picker_range_header_unselected" tools:ignore="ResourceName" tools:override="true">Data di inizio - Data di fine</string>
-    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">%1$s - Data di fine</string>
-    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">Data di inizio - %1$s</string>
-    <string name="mtrl_picker_range_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s - %2$s</string>
-    <string name="mtrl_picker_date_header_unselected" tools:ignore="ResourceName" tools:override="true">Data selezionata</string>
+    <string name="mtrl_picker_range_header_title" tools:ignore="ResourceName" tools:override="true">Sélectionnez une plage de dates</string>
+    <string name="mtrl_picker_date_header_title" tools:ignore="ResourceName" tools:override="true">Sélectionnez une plage de dates</string>
+    <string name="mtrl_picker_range_header_unselected" tools:ignore="ResourceName" tools:override="true">Date de début – Date de fin</string>
+    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">%1$s – Date de fin</string>
+    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">Date de début – %1$s</string>
+    <string name="mtrl_picker_range_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s – %2$s</string>
+    <string name="mtrl_picker_date_header_unselected" tools:ignore="ResourceName" tools:override="true">Date sélectionnée</string>
+    <string name="mtrl_picker_date_header_selected" translatable="false" tools:ignore="ResourceName" tools:override="true">%1$s</string>
+    <string name="mtrl_picker_confirm" translatable="false" tools:ignore="ResourceName" tools:override="true">@android:string/ok</string>
     <string name="mtrl_picker_text_input_date_hint" tools:ignore="ResourceName" tools:override="true">Data</string>
-    <string name="mtrl_picker_text_input_date_range_start_hint" tools:ignore="ResourceName" tools:override="true">Data d\'inizio</string>
-    <string name="mtrl_picker_text_input_date_range_end_hint" tools:ignore="ResourceName" tools:override="true">Data di fine</string>
-    <string name="mtrl_picker_save" tools:ignore="ResourceName" tools:override="true">Salva</string>
-    <string name="mtrl_picker_invalid_range" tools:ignore="ResourceName" tools:override="true">Intervallo non valido</string>
-    <string name="mtrl_picker_out_of_range" tools:ignore="ResourceName" tools:override="true">Fuori intervallo: %1$s</string>
-    <string name="mtrl_picker_invalid_format" tools:ignore="ResourceName" tools:override="true">Formato non valido.</string>
-    <string name="mtrl_picker_invalid_format_use" tools:ignore="ResourceName" tools:override="true">Usa: %1$s</string>
-    <string name="mtrl_picker_invalid_format_example" tools:ignore="ResourceName" tools:override="true">Esempio: %1$s</string>
-    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:ignore="ResourceName" tools:override="true">Passa alla modalità di inserimento del calendario</string>
-    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">Passa alla modalità di inserimento testo</string>
-    <string name="mtrl_picker_a11y_prev_month" tools:ignore="ResourceName" tools:override="true">Passa al mese precedente</string>
-    <string name="mtrl_picker_a11y_next_month" tools:ignore="ResourceName" tools:override="true">Passa al mese successivo</string>
-    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">Tocca per passare alla selezione di un anno</string>
-    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">Tocca per passare alla selezione di un giorno</string>
-    <string name="mtrl_picker_day_of_week_column_header" tools:ignore="ResourceName" tools:override="true">Colonna di giorni: %1$s</string>
-    <string name="mtrl_picker_announce_current_selection" tools:ignore="ResourceName" tools:override="true">Selezione attuale: %1$s</string>
-    <string name="mtrl_picker_navigate_to_year_description" tools:ignore="ResourceName" tools:override="true">Passa all\'anno %1$s</string>
-    <string name="time_picker_hour_label" tools:ignore="ResourceName" tools:override="true">ora</string>
-    <string name="time_picker_minute_label" tools:ignore="ResourceName" tools:override="true">minuto</string>
-    <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">Tempo impostato</string>
-    <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">Inserisci un orario valido</string>
-    <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Digita l\'ora</string>
-
-    <string name="rsb_consent_text_question_error">[it-rIT]*Field Required</string>
+    <string name="mtrl_picker_text_input_date_range_start_hint" tools:ignore="ResourceName" tools:override="true">Date de début – </string>
+    <string name="mtrl_picker_text_input_date_range_end_hint" tools:ignore="ResourceName" tools:override="true"> – Date de fin</string>
+    <string name="mtrl_picker_save" tools:ignore="ResourceName" tools:override="true">Salvare</string>
+    <string name="mtrl_picker_invalid_range" tools:ignore="ResourceName" tools:override="true">Plage invalide.</string>
+    <string name="mtrl_picker_out_of_range" tools:ignore="ResourceName" tools:override="true">Hors de portée : %1$s</string>
+    <string name="mtrl_picker_invalid_format" tools:ignore="ResourceName" tools:override="true">Formato Id non valido</string>
+    <string name="mtrl_picker_invalid_format_use" tools:ignore="ResourceName" tools:override="true">Utilisation : %1$s</string>
+    <string name="mtrl_picker_invalid_format_example" tools:ignore="ResourceName" tools:override="true">Exemple: %1$s</string>
+    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:ignore="ResourceName" tools:override="true">Passer en mode de saisie du calendrier</string>
+    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">Passer en mode de saisie de texte</string>
+    <string name="mtrl_picker_a11y_prev_month" tools:ignore="ResourceName" tools:override="true">Changement par rapport au mois précédent</string>
+    <string name="mtrl_picker_a11y_next_month" tools:ignore="ResourceName" tools:override="true">Passage au mois prochain</string>
+    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">Appuyez sur pour passer à la sélection d\'une année</string>
+    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">Appuyez sur pour passer à la sélection d\'une année</string>
+    <string name="mtrl_picker_day_of_week_column_header" tools:ignore="ResourceName" tools:override="true">Colonne de jours: %1$s</string>
+    <string name="mtrl_picker_announce_current_selection" tools:ignore="ResourceName" tools:override="true">Sélection actuelle: %1$s</string>
+    <string name="mtrl_picker_navigate_to_year_description" tools:ignore="ResourceName" tools:override="true">Aller à l\'année %1$s.</string>
 
     <!-- Material Time Picker Strings -->
+    <string name="time_picker_hour_label" tools:ignore="ResourceName" tools:override="true">ora</string>
+    <string name="time_picker_minute_label" tools:ignore="ResourceName" tools:override="true">Minute</string>
+    <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">Durée déterminée</string>
+    <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">Entrez une heure valide</string>
+    <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Saisir l\'heure</string>
+
+    <string name="rsb_consent_text_question_error">[it-rIT]*Field Required</string>
 
 </resources>

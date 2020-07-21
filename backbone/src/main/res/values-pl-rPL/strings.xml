@@ -4,41 +4,36 @@
 
     <!-- Consent Section -->
     <string name="rsb_consent">Zgoda</string>
-    <string name="rsb_consent_section_welcome">Witamy</string>
-    <string name="rsb_consent_section_data_gathering">Gromadzenie danych </string>
+    <string name="rsb_consent_section_welcome">Powitanie</string>
+    <string name="rsb_consent_section_data_gathering">Gromadzenie danych</string>
     <string name="rsb_consent_section_privacy">Prywatność</string>
-    <string name="rsb_consent_section_data_use">Użycie danych </string>
-    <string name="rsb_consent_section_time_commitment">Zaangażowanie czasowe </string>
-    <string name="rsb_consent_section_study_survey">Ankieta do badania </string>
-    <string name="rsb_consent_section_study_tasks">Zadania w badaniu </string>
+    <string name="rsb_consent_section_data_use">Wykorzystywanie danych</string>
+    <string name="rsb_consent_section_time_commitment">Poświęcenie czasu</string>
+    <string name="rsb_consent_section_study_survey">Ankieta badawcza</string>
+    <string name="rsb_consent_section_study_tasks">Zadania badawcze</string>
     <string name="rsb_consent_section_withdrawing">Wycofywanie</string>
 
     <!-- Consent section learn more -->
-    <string name="rsb_consent_section_more_info">Dowiedz się więcej </string>
-    <string name="rsb_consent_section_more_info_data_gathering">Dowiedz się więcej o tym, jak dane są gromadzone
-
+    <string name="rsb_consent_section_more_info">Dowiedz się więcej</string>
+    <string name="rsb_consent_section_more_info_data_gathering">Dowiedz się więcej o sposobie gromadzenia danych
     </string>
-    <string name="rsb_consent_section_more_info_data_use">Dowiedz się więcej o tym, jak dane są wykorzystywane      </string>
-    <string name="rsb_consent_section_more_info_privacy">Dowiedz się więcej o tym, jak chronimy Twoją prywatność i tożsamość
-
+    <string name="rsb_consent_section_more_info_data_use">Dowiedz się więcej o sposobie wykorzystywania danych</string>
+    <string name="rsb_consent_section_more_info_privacy">Dowiedz się więcej o ochronie prywatności i tożsamości
     </string>
-    <string name="rsb_consent_section_more_info_welcome">Najpierw dowiedz się więcej o badaniu     </string>
-    <string name="rsb_consent_section_more_info_study_survey">Najpierw dowiedz się więcej o ankiecie do badania
+    <string name="rsb_consent_section_more_info_welcome">Najpierw dowiedz się więcej o badaniu</string>
+    <string name="rsb_consent_section_more_info_study_survey">Dowiedz się więcej o ankiecie badawczej
     </string>
-    <string name="rsb_consent_section_more_info_time_commitment">Dowiedz się więcej o tym, jak badanie wpłynie na Twój czas    \'
-
+    <string name="rsb_consent_section_more_info_time_commitment">Dowiedz się więcej, ile czasu zajmie Ci badanie
     </string>
-    <string name="rsb_consent_section_more_info_study_tasks">Dowiedz się więcej o zadaniach z tym związanych
+    <string name="rsb_consent_section_more_info_study_tasks">Dowiedz się więcej o zadaniach do wykonania
     </string>
-    <string name="rsb_consent_section_more_info_withdrawing">Dowiedz się więcej o wycofaniu się   </string>
-
-    <!-- Consent sharing step -->
+    <string name="rsb_consent_section_more_info_withdrawing">Dowiedz się więcej o wycofywaniu się</string>
 
     <!-- Consent doc step -->
     <string name="rsb_consent_review_alert_title">Przegląd</string>
     <string name="rsb_consent_review_cancel">Anuluj</string>
 
-    <string name="rsb_saving_consent">Zapisywanie zgody </string>
+    <string name="rsb_saving_consent">Zapisywanie zgody</string>
     <string name="rsb_please_wait">Zaczekaj&#8230;</string>
 
     <!-- Consent form step -->
@@ -46,9 +41,9 @@
 
     <!-- Consent sig step -->
     <string name="rsb_consent_signature_title">Podpis</string>
-    <string name="rsb_consent_signature_instruction">Podpisz palcem na linii poniżej.
+    <string name="rsb_consent_signature_instruction">Podpisz palcem na poniższej linii.
     </string>
-    <string name="rsb_consent_signature_placeholder">Podpisz tutaj </string>
+    <string name="rsb_consent_signature_placeholder">Podpisz tutaj</string>
     <string name="rsb_consent_signature_clear">Wyczyść</string>
 
     <!-- Quiz -->
@@ -62,56 +57,57 @@
     <string name="rsb_disagree">Nie zgadzam się</string>
     <string name="rsb_agree">Zgadzam się</string>
     <string name="rsb_cancel">Anuluj</string>
-    <string name="rsb_format_step_title">Krok %1$s z %2$s</string>
+    <string name="rsb_format_step_title">Etap %1$s z %2$s</string>
     <string name="rsb_hours">Godz.</string>
     <string name="rsb_minutes">Min</string>
-    <string name="rsb_task_cancel_title">Opuść aktywność </string>
-    <string name="rsb_task_cancel_text">Czy na pewno chcesz opuścić tą aktywność i odrzucić wyniki?            </string>
-    <string name="rsb_task_cancel_positive">Odrzuć wyniki </string>
+    <string name="rsb_task_cancel_title">Opuść działanie</string>
+    <string name="rsb_task_cancel_text">Czy na pewno chcesz opuścić to działanie i odrzucić jego wyniki?</string>
+    <string name="rsb_task_cancel_positive">Odrzuć wyniki</string>
 
     <!-- Step Errors -->
-    <string name="rsb_error_invalid_signature">Podpis nieprawidłowy </string>
-    <string name="rsb_invalid_answer_default">Nieprawidłowa odpowiedź. Spróbuj ponownie.   </string>
-    <string name="rsb_invalid_answer_date_over">Nieprawidłowa odpowiedź. Data musi przypadać wcześniej niż       %1$s</string>
-    <string name="rsb_invalid_answer_date_under">Nieprawidłowa odpowiedź. Data musi przypadać później niż       %1$s</string>
-    <string name="rsb_invalid_answer_integer_over">Nieprawidłowa odpowiedź. Twoja wartość musi wynosić %1$s lub mniej        </string>
-    <string name="rsb_invalid_answer_integer_under">Nieprawidłowa odpowiedź. Twoja wartość musi wynosić %1$s lub więcej        </string>
-    <string name="rsb_invalid_answer_choice">Wybierz wartość!   </string>
-    <string name="rsb_invalid_answer_date_none">Wybierz datę.   </string>
-    <string name="rsb_birth_date_too_old">Musisz być w wieku %1$s lat lub mniej      </string>
-    <string name="rsb_birth_date_too_young">Musisz być w wieku co najmniej %1$s lat       </string>
+    <string name="rsb_error_invalid_signature">Nieprawidłowy podpis</string>
+    <string name="rsb_invalid_answer_default">Nieprawidłowa odpowiedź, spróbuj ponownie!</string>
+    <string name="rsb_invalid_answer_date_over">Nieprawidłowa odpowiedź, data musi być wcześniejsza niż %1$s</string>
+    <string name="rsb_invalid_answer_date_under">Nieprawidłowa odpowiedź, data musi być późniejsza niż %1$s</string>
+    <string name="rsb_invalid_answer_integer_over">Nieprawidłowa odpowiedź, wartość musi wynosić co najwyżej %1$s</string>
+    <string name="rsb_invalid_answer_integer_under">Nieprawidłowa odpowiedź, wartość musi wynosić co najmniej %1$s</string>
+    <string name="rsb_invalid_answer_choice">Wybierz wartość!</string>
+    <string name="rsb_invalid_answer_date_none">Wybierz datę.</string>
+    <string name="rsb_birth_date_too_old">Twój wiek w latach musi wynosić co najwyżej: %1$s</string>
+    <string name="rsb_birth_date_too_young">Twój wiek w latach musi wynosić co najmniej: %1$s</string>
 
     <!-- Pin Code -->
 
     <!-- Body Hints -->
-    <string name="rsb_hint_step_body_int">Wprowadź liczbę %1$d-%2$d   </string>
-    <string name="rsb_hint_step_body_dec">Wprowadź liczbę %1$.2f-%2$.2f   </string>
-    <string name="rsb_hint_step_body_int_no_max">Wprowadź liczbę  </string>
-    <string name="rsb_hint_step_body_date">Wprowadź datę  </string>
-    <string name="rsb_hint_step_body_time">Wprowadź godzinę  </string>
-    <string name="rsb_hint_step_body_datetime">Wprowadź datę i godzinę     </string>
+    <string name="rsb_hint_step_body_int">Wprowadź liczbę %1$d-%2$d</string>
+    <string name="rsb_hint_step_body_dec">Wprowadź liczbę %1$.2f-%2$.2f</string>
+    <string name="rsb_hint_step_body_int_no_max">Wprowadź liczbę</string>
+    <string name="rsb_hint_step_body_date">Wprowadź datę</string>
+    <string name="rsb_hint_step_body_time">Wprowadź godzinę</string>
+    <string name="rsb_hint_step_body_datetime">Wprowadź datę i godzinę</string>
     <string name="rsb_hint_step_body_text">Odpowiedź</string>
 
     <!-- Graphing -->
-    <string name="rsb_chart_progress_center"> %1$s z %2$s</string>
+    <string name="rsb_chart_progress_center">%1$s z %2$s</string>
     <string name="rsb_chart_pie_value">%1$s&#65285;</string>
 
     <!-- AssetVideoView -->
     <!-- Title for error alert when a video cannot be played.  it can be used by any app. -->
     <!-- Text for error alert when a video container is not valid for progressive download/playback. -->
-    <string name="rsb_error_assetvideoview_invalid_progressive_playback">Te materiały wideo nie są prawidłowe do przesyłania strumieniowego na to urządzenie.  \'      </string>
+    <string name="rsb_error_assetvideoview_invalid_progressive_playback">Tego filmu nie można transmitować na to urządzenie.</string>
     <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
-    <string name="rsb_error_assetvideoview_unknown">Nie można odtworzyć tych materiałów wideo.\'   </string>
+    <string name="rsb_error_assetvideoview_unknown">Nie można odtworzyć tego filmu.</string>
     <!-- Button to close error alert when a video cannot be played -->
     <string name="rsb_error_assetvideoview_button">OK</string>
 
     <!-- Consent -->
-    <string name="rsb_consent_doc_line_printed_name">Imię i nazwisko %1$s (drukowane)\'  </string>
-    <string name="rsb_consent_doc_line_signature">Podpis %1$s\' </string>
+    <string name="rsb_consent_doc_line_printed_name">Nazwisko %1$s (drukowanymi literami)</string>
+    <string name="rsb_consent_doc_line_signature">Podpis %1$s</string>
     <string name="rsb_consent_doc_line_date">Data</string>
     <string name="rsb_consent_role">Uczestnik</string>
 
     <!-- Edit -->
+    <string name="rsb_consent_review_save">Zapisz</string>
     <string name="rsb_edit_step_alert_cancel_positive">TAK, PRZESTAŃ WPROWADZAĆ ZMIANY</string>
     <string name="rsb_edit_step_alert_cancel_discard">NIE, KONTYNUUJ EDYCJĘ</string>
     <string name="rsb_edit_step_alert_cancel_title">Czy chcesz przestać wprowadzać zmiany?</string>
@@ -120,42 +116,47 @@
     <string name="rsb_edit_step_alert_step_save_content">Inne odpowiedzi mogą zostać wyczyszczone, a użytkownik może zostać poproszony o przesłanie nowych informacji.</string>
     <string name="rsb_edit_step_alert_step_save_discard">Nie, odrzuć</string>
     <string name="rsb_edit_step_alert_step_save_positive">Tak, zapisz</string>
-    <string name="rsb_consent_review_save">Zapisz</string>
     <string name="rsb_edit_step_alert_step_skip_title">Czy chcesz pominąć ten krok?</string>
     <string name="rsb_edit_step_alert_step_skip_content">Twoja pierwotna odpowiedź zostanie odrzucona.</string>
     <string name="rsb_edit_step_alert_step_skip_discard">NIE, NIE POMIJAJ</string>
     <string name="rsb_edit_step_alert_step_skip_positive">Tak, pomiń</string>
     <string name="rsb_edit_step">Edytuj</string>
+
+    <!-- Material Date Picker Strings -->
     <string name="mtrl_picker_range_header_title" tools:ignore="ResourceName" tools:override="true">Wybierz zakres dat</string>
     <string name="mtrl_picker_date_header_title" tools:ignore="ResourceName" tools:override="true">Wybierz datę</string>
-    <string name="mtrl_picker_range_header_unselected" tools:ignore="ResourceName" tools:override="true">Data rozpoczęcia - Data zakończenia</string>
-    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">%1$s - Data zakończenia</string>
-    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">Data rozpoczęcia - %1$s</string>
-    <string name="mtrl_picker_range_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s - %2$s</string>
+    <string name="mtrl_picker_range_header_unselected" tools:ignore="ResourceName" tools:override="true">Data rozpoczęcia – Data zakończenia</string>
+    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">%1$s – Data zakończenia</string>
+    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">Data rozpoczęcia – %1$s</string>
+    <string name="mtrl_picker_range_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s – %2$s</string>
     <string name="mtrl_picker_date_header_unselected" tools:ignore="ResourceName" tools:override="true">Wybrana data</string>
+    <string name="mtrl_picker_date_header_selected" translatable="false" tools:ignore="ResourceName" tools:override="true">%1$s</string>
+    <string name="mtrl_picker_confirm" translatable="false" tools:ignore="ResourceName" tools:override="true">@android:string/ok</string>
     <string name="mtrl_picker_text_input_date_hint" tools:ignore="ResourceName" tools:override="true">Data</string>
     <string name="mtrl_picker_text_input_date_range_start_hint" tools:ignore="ResourceName" tools:override="true">Data rozpoczęcia</string>
     <string name="mtrl_picker_text_input_date_range_end_hint" tools:ignore="ResourceName" tools:override="true">Data zakończenia</string>
-    <string name="mtrl_picker_save" tools:ignore="ResourceName" tools:override="true">Zapisać</string>
+    <string name="mtrl_picker_save" tools:ignore="ResourceName" tools:override="true">Zapisz</string>
     <string name="mtrl_picker_invalid_range" tools:ignore="ResourceName" tools:override="true">Nieprawidłowy zakres.</string>
     <string name="mtrl_picker_out_of_range" tools:ignore="ResourceName" tools:override="true">Poza zakresem: %1$s</string>
-    <string name="mtrl_picker_invalid_format" tools:ignore="ResourceName" tools:override="true">Niepoprawny format.</string>
+    <string name="mtrl_picker_invalid_format" tools:ignore="ResourceName" tools:override="true">Nieprawidłowy format.</string>
     <string name="mtrl_picker_invalid_format_use" tools:ignore="ResourceName" tools:override="true">Użyj: %1$s</string>
     <string name="mtrl_picker_invalid_format_example" tools:ignore="ResourceName" tools:override="true">Przykład: %1$s</string>
-    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:ignore="ResourceName" tools:override="true">Przełącz do trybu wprowadzania kalendarza</string>
-    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">Przejdź do trybu wprowadzania tekstu</string>
+    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:ignore="ResourceName" tools:override="true">Przełącz na tryb wprowadzania z kalendarza</string>
+    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">Przełącz na tryb wprowadzania tekstu</string>
     <string name="mtrl_picker_a11y_prev_month" tools:ignore="ResourceName" tools:override="true">Zmień na poprzedni miesiąc</string>
-    <string name="mtrl_picker_a11y_next_month" tools:ignore="ResourceName" tools:override="true">Zmień na następny miesiąc</string>
-    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">Stuknij, aby przejść do wyboru roku</string>
-    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">Stuknij, aby przejść do wyboru dnia</string>
+    <string name="mtrl_picker_a11y_next_month" tools:ignore="ResourceName" tools:override="true">Zmień na kolejny miesiąc</string>
+    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">Dotknij, aby przełączyć na wybór roku</string>
+    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">Dotknij, aby przełączyć na wybór dnia</string>
     <string name="mtrl_picker_day_of_week_column_header" tools:ignore="ResourceName" tools:override="true">Kolumna dni: %1$s</string>
-    <string name="mtrl_picker_announce_current_selection" tools:ignore="ResourceName" tools:override="true">Aktualny wybór: %1$s</string>
+    <string name="mtrl_picker_announce_current_selection" tools:ignore="ResourceName" tools:override="true">Bieżący wybór: %1$s</string>
     <string name="mtrl_picker_navigate_to_year_description" tools:ignore="ResourceName" tools:override="true">Przejdź do roku %1$s</string>
-    <string name="time_picker_hour_label" tools:ignore="ResourceName" tools:override="true">godzina</string>
-    <string name="time_picker_minute_label" tools:ignore="ResourceName" tools:override="true">minuta</string>
+
+    <!-- Material Time Picker Strings -->
+    <string name="time_picker_hour_label" tools:ignore="ResourceName" tools:override="true">godz.</string>
+    <string name="time_picker_minute_label" tools:ignore="ResourceName" tools:override="true">min</string>
     <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">Ustaw czas</string>
     <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">Wprowadź prawidłowy czas</string>
-    <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Wpisz czas</string>
+    <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Wpisz godzinę</string>
 
     <string name="rsb_consent_text_question_error">[pl-PL]*Field Required</string>
 

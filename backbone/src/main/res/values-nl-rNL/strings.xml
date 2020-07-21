@@ -3,7 +3,7 @@
 
     <!-- Consent Section -->
     <string name="rsb_consent">Toestemming</string>
-    <string name="rsb_consent_section_welcome">Verzameling van gegevens</string>
+    <string name="rsb_consent_section_welcome">Welkom</string>
     <string name="rsb_consent_section_data_gathering">Verzameling van gegevens</string>
     <string name="rsb_consent_section_privacy">Privacy</string>
     <string name="rsb_consent_section_data_use">Gegevensgebruik</string>
@@ -26,11 +26,11 @@
     <!-- Consent sharing step -->
 
     <!-- Consent doc step -->
-    <string name="rsb_consent_review_alert_title">Controle</string>
+    <string name="rsb_consent_review_alert_title">Evaluatie</string>
     <string name="rsb_consent_review_cancel">Annuleren</string>
 
     <string name="rsb_saving_consent">Bezig uw toestemming op te slaan</string>
-    <string name="rsb_please_wait">Een ogenblik geduld&#8230;</string>
+    <string name="rsb_please_wait">Een ogenblik geduld alstublieft&#8230;</string>
 
     <!-- Consent form step -->
     <string name="rsb_consent_dob_full">Geboortedatum</string>
@@ -64,17 +64,17 @@
     <string name="rsb_invalid_answer_default">Ongeldig antwoord, probeer het nog eens!</string>
     <string name="rsb_invalid_answer_date_over">Ongeldig antwoord, datum moet vóór %1$s liggen</string>
     <string name="rsb_invalid_answer_date_under">Ongeldig antwoord, datum moet na %1$s liggen</string>
-    <string name="rsb_invalid_answer_integer_over">Ongeldig antwoord, datum moet na %1$s liggen</string>
+    <string name="rsb_invalid_answer_integer_over">Ongeldig antwoord, uw waarde moet %1$s of lager zijn</string>
     <string name="rsb_invalid_answer_integer_under">Ongeldig antwoord, uw waarde moet %1$s of hoger zijn</string>
     <string name="rsb_invalid_answer_choice">Selecteer een waarde!</string>
     <string name="rsb_invalid_answer_date_none">Kies een datum.</string>
     <string name="rsb_birth_date_too_old">U moet %1$s jaar of jonger zijn</string>
-    <string name="rsb_birth_date_too_young">U moet ten minste %1$s jaar oud zijn</string>
+    <string name="rsb_birth_date_too_young">U moet ten minste %1$s jaar zijn</string>
 
     <!-- Pin Code -->
 
     <!-- Body Hints -->
-    <string name="rsb_hint_step_body_int">Voer een getal in %1$d-%2$d</string>
+    <string name="rsb_hint_step_body_int">Voer een getal %1$d-%2$d in</string>
     <string name="rsb_hint_step_body_dec">Voer een getal in %1$.2f-%2$.2f</string>
     <string name="rsb_hint_step_body_int_no_max">Voer een getal in</string>
     <string name="rsb_hint_step_body_date">Voer een datum in</string>
@@ -96,12 +96,13 @@
     <string name="rsb_error_assetvideoview_button">OK</string>
 
     <!-- Consent -->
-    <string name="rsb_consent_doc_line_printed_name">Naam %1$s (afgedrukt)</string>
-    <string name="rsb_consent_doc_line_signature">Handtekening %1$s</string>
+    <string name="rsb_consent_doc_line_printed_name">Naam van %1$s (afgedrukt)</string>
+    <string name="rsb_consent_doc_line_signature">Handtekening van %1$s</string>
     <string name="rsb_consent_doc_line_date">Datum</string>
     <string name="rsb_consent_role">Deelnemer</string>
 
     <!-- Edit -->
+    <string name="rsb_consent_review_save">Opslaan</string>
     <string name="rsb_edit_step_alert_cancel_positive">JA, NIET MEER BEWERKEN</string>
     <string name="rsb_edit_step_alert_cancel_discard">NEE, DOORGAAN MET BEWERKEN</string>
     <string name="rsb_edit_step_alert_cancel_title">Wilt u stoppen met bewerken?</string>
@@ -109,43 +110,48 @@
     <string name="rsb_edit_step_alert_step_save_title">Wilt u de wijzigingen opslaan?</string>
     <string name="rsb_edit_step_alert_step_save_content">Andere antwoorden kunnen worden gewist en er kan u worden gevraagd nieuwe informatie in te dienen.</string>
     <string name="rsb_edit_step_alert_step_save_discard">Nee, niet opslaan</string>
-    <string name="rsb_edit_step_alert_step_save_positive">Ja, opslaan.</string>
-    <string name="rsb_consent_review_save">Opslaan</string>
+    <string name="rsb_edit_step_alert_step_save_positive">Ja, opslaan</string>
     <string name="rsb_edit_step_alert_step_skip_title">Wilt u deze stap overslaan?</string>
     <string name="rsb_edit_step_alert_step_skip_content">Uw oorspronkelijke antwoord gaat verloren.</string>
     <string name="rsb_edit_step_alert_step_skip_discard">NEE, NIET OVERSLAAN</string>
     <string name="rsb_edit_step_alert_step_skip_positive">Ja, overslaan</string>
     <string name="rsb_edit_step">Bewerken</string>
-    <string name="mtrl_picker_range_header_title" tools:ignore="ResourceName" tools:override="true">Selecteer een datumbereik</string>
-    <string name="mtrl_picker_date_header_title" tools:ignore="ResourceName" tools:override="true">Selecteer een datum</string>
-    <string name="mtrl_picker_range_header_unselected" tools:ignore="ResourceName" tools:override="true">Begindatum - Einddatum</string>
-    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">%1$s - Einddatum</string>
-    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">Begindatum - %1$s</string>
+
+    <!-- Material Date Picker Strings -->
+    <string name="mtrl_picker_range_header_title" tools:ignore="ResourceName" tools:override="true">Kies een datumbereik</string>
+    <string name="mtrl_picker_date_header_title" tools:ignore="ResourceName" tools:override="true">Kies een datum</string>
+    <string name="mtrl_picker_range_header_unselected" tools:ignore="ResourceName" tools:override="true">Startdatum - Einddatum</string>
+    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">%1$s – Einddatum</string>
+    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">Startdatum – %1$s</string>
     <string name="mtrl_picker_range_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s – %2$s</string>
     <string name="mtrl_picker_date_header_unselected" tools:ignore="ResourceName" tools:override="true">Geselecteerde datum</string>
+    <string name="mtrl_picker_date_header_selected" translatable="false" tools:ignore="ResourceName" tools:override="true">%1$s</string>
+    <string name="mtrl_picker_confirm" translatable="false" tools:ignore="ResourceName" tools:override="true">@android:string/ok</string>
     <string name="mtrl_picker_text_input_date_hint" tools:ignore="ResourceName" tools:override="true">Datum</string>
     <string name="mtrl_picker_text_input_date_range_start_hint" tools:ignore="ResourceName" tools:override="true">Startdatum</string>
     <string name="mtrl_picker_text_input_date_range_end_hint" tools:ignore="ResourceName" tools:override="true">Einddatum</string>
     <string name="mtrl_picker_save" tools:ignore="ResourceName" tools:override="true">Opslaan</string>
     <string name="mtrl_picker_invalid_range" tools:ignore="ResourceName" tools:override="true">Ongeldig bereik.</string>
     <string name="mtrl_picker_out_of_range" tools:ignore="ResourceName" tools:override="true">Buiten bereik: %1$s</string>
-    <string name="mtrl_picker_invalid_format" tools:ignore="ResourceName" tools:override="true">Ongeldig formaat.</string>
+    <string name="mtrl_picker_invalid_format" tools:ignore="ResourceName" tools:override="true">Ongeldig format.</string>
     <string name="mtrl_picker_invalid_format_use" tools:ignore="ResourceName" tools:override="true">Gebruik: %1$s</string>
     <string name="mtrl_picker_invalid_format_example" tools:ignore="ResourceName" tools:override="true">Voorbeeld: %1$s</string>
-    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:ignore="ResourceName" tools:override="true">Schakel over naar de kalenderinvoermodus</string>
-    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">Schakel over naar de tekstinvoermodus</string>
-    <string name="mtrl_picker_a11y_prev_month" tools:ignore="ResourceName" tools:override="true">Verander naar vorige maand</string>
-    <string name="mtrl_picker_a11y_next_month" tools:ignore="ResourceName" tools:override="true">Verander naar volgende maand</string>
-    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">Tik om over te schakelen naar het selecteren van een jaar</string>
-    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">Tik om over te schakelen naar het selecteren van een dag</string>
+    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:ignore="ResourceName" tools:override="true">Schakel naar kalenderinvoer modus</string>
+    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">Schakel naar tekstinvoer modus</string>
+    <string name="mtrl_picker_a11y_prev_month" tools:ignore="ResourceName" tools:override="true">Wijzig naar vorige maand</string>
+    <string name="mtrl_picker_a11y_next_month" tools:ignore="ResourceName" tools:override="true">Wijzig naar volgende maand</string>
+    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">Typ om te schakelen om een jaar te selecteren</string>
+    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">Typ om te schakelen om een dag te selecteren</string>
     <string name="mtrl_picker_day_of_week_column_header" tools:ignore="ResourceName" tools:override="true">Kolom van dagen: %1$s</string>
     <string name="mtrl_picker_announce_current_selection" tools:ignore="ResourceName" tools:override="true">Huidige selectie: %1$s</string>
     <string name="mtrl_picker_navigate_to_year_description" tools:ignore="ResourceName" tools:override="true">Navigeer naar jaar %1$s</string>
+
+    <!-- Material Time Picker Strings -->
     <string name="time_picker_hour_label" tools:ignore="ResourceName" tools:override="true">uur</string>
     <string name="time_picker_minute_label" tools:ignore="ResourceName" tools:override="true">minuut</string>
-    <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">Tijd instellen</string>
+    <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">Stel tijd in</string>
     <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">Voer een geldige tijd in</string>
-    <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Voer tijd in</string>
+    <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Typ een tijd</string>
 
     <string name="rsb_consent_text_question_error">[nl-rNL]*Field Required</string>
 </resources>

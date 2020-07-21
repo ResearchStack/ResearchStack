@@ -3,49 +3,46 @@
 
     <!-- Consent Section -->
     <string name="rsb_consent">Hozzájárulás</string>
-    <string name="rsb_consent_section_welcome">Üdvözüljük</string>
-    <string name="rsb_consent_section_data_gathering">Adatok gyűjtése</string>
+    <string name="rsb_consent_section_welcome">Üdvözöljük</string>
+    <string name="rsb_consent_section_data_gathering">Adatgyűjtés</string>
     <string name="rsb_consent_section_privacy">Adatvédelem</string>
-    <string name="rsb_consent_section_data_use">Adatok használata</string>
-    <string name="rsb_consent_section_time_commitment">Időráfordítás </string>
-    <string name="rsb_consent_section_study_survey">Vizsgálati felmérés</string>
-    <string name="rsb_consent_section_study_tasks">Vizsgálati feladatok</string>
+    <string name="rsb_consent_section_data_use">Adathasználat</string>
+    <string name="rsb_consent_section_time_commitment">Időbeli elkötelezettség</string>
+    <string name="rsb_consent_section_study_survey">Tanulmány felmérés</string>
+    <string name="rsb_consent_section_study_tasks">Tanulmányi feladatok</string>
     <string name="rsb_consent_section_withdrawing">Kilépés</string>
 
     <!-- Consent section learn more -->
-    <string name="rsb_consent_section_more_info">Tudjon meg többet</string>
-    <string name="rsb_consent_section_more_info_data_gathering">Tudjon meg többet arról, hogyan történik
-        az adatok begyűjtése
+    <string name="rsb_consent_section_more_info">További információ</string>
+    <string name="rsb_consent_section_more_info_data_gathering">További információ az adatgyűjtési eljárásról
     </string>
-    <string name="rsb_consent_section_more_info_data_use">Tudjon meg többet arról, hogyan kerülnek az adatok felhasználásra</string>
-    <string name="rsb_consent_section_more_info_privacy">Tudjon meg többet arról, hogyan vigyázunk az
-        adataira és a személyazonosságára
+    <string name="rsb_consent_section_more_info_data_use">További információ az adatok felhasználásáról</string>
+    <string name="rsb_consent_section_more_info_privacy">Tudjon meg többet az adatai és a személyazonossága védelméről
     </string>
-    <string name="rsb_consent_section_more_info_welcome">Tudjon meg többet legelőször a vizsgálatról</string>
-    <string name="rsb_consent_section_more_info_study_survey">Tudjon meg többet a vizsgálati felmérésről
+    <string name="rsb_consent_section_more_info_welcome">Először tudjon meg többet a vizsgálatról</string>
+    <string name="rsb_consent_section_more_info_study_survey">További információ a tanulmányi felmérésről
     </string>
-    <string name="rsb_consent_section_more_info_time_commitment">Tudjon meg többet arról, hogy\'
-        hogyan befolyásolja a vizsgálat az Ön idejét
+    <string name="rsb_consent_section_more_info_time_commitment">Tudjon meg többet a vizsgálat hatásáról az Ön idejére
     </string>
-    <string name="rsb_consent_section_more_info_study_tasks">Tudjon meg többet a feladatokról
+    <string name="rsb_consent_section_more_info_study_tasks">További információ a kapcsolódó feladatokról
     </string>
-    <string name="rsb_consent_section_more_info_withdrawing">Tudjon meg többet a kilépésről</string>
+    <string name="rsb_consent_section_more_info_withdrawing">További információ a visszavonásról</string>
 
     <!-- Consent sharing step -->
 
     <!-- Consent doc step -->
-    <string name="rsb_consent_review_alert_title">Áttekintés</string>
+    <string name="rsb_consent_review_alert_title">Felülvizsgálat</string>
     <string name="rsb_consent_review_cancel">Mégse</string>
 
     <string name="rsb_saving_consent">Hozzájárulás mentése</string>
     <string name="rsb_please_wait">Kérjük, várjon&#8230;</string>
 
     <!-- Consent form step -->
-    <string name="rsb_consent_dob_full">Születési idő </string>
+    <string name="rsb_consent_dob_full">Születési idő</string>
 
     <!-- Consent sig step -->
     <string name="rsb_consent_signature_title">Aláírás</string>
-    <string name="rsb_consent_signature_instruction">Kérjük, írja alá az ujjával a vonalon lent.
+    <string name="rsb_consent_signature_instruction">Kérjük, írja alá az ujjával az alábbi sorban.
     </string>
     <string name="rsb_consent_signature_placeholder">Írja alá itt</string>
     <string name="rsb_consent_signature_clear">Törlés</string>
@@ -56,39 +53,37 @@
     <string name="rsb_done">Kész</string>
     <string name="rsb_step_skip">Kihagyás</string>
     <string name="rsb_next">következő</string>
-    <string name="rsb_name_first">Utónév </string>
-    <string name="rsb_name_last">Vezetéknév </string>
+    <string name="rsb_name_first">Keresztnév</string>
+    <string name="rsb_name_last">Vezetéknév</string>
     <string name="rsb_disagree">Nem ért egyet</string>
     <string name="rsb_agree">Egyetért</string>
     <string name="rsb_cancel">Mégse</string>
-    <string name="rsb_format_step_title"> %1$s / %2$slépés</string>
+    <string name="rsb_format_step_title">%1$s. lépés %2$s</string>
     <string name="rsb_hours">Óra</string>
     <string name="rsb_minutes">Perc</string>
-    <string name="rsb_task_cancel_title">Kilépés a tevékenységből</string>
-    <string name="rsb_task_cancel_text">Biztos benne, hogy ki szeretne lépni ebből a tevékenységből és elveti annak az eredményeit?</string>
+    <string name="rsb_task_cancel_title">Tevékenység elhagyása</string>
+    <string name="rsb_task_cancel_text">Biztosan kilép ebből a tevékenységből, és elveti az eredményeket?</string>
     <string name="rsb_task_cancel_positive">Eredmények elvetése</string>
 
     <!-- Step Errors -->
     <string name="rsb_error_invalid_signature">Érvénytelen aláírás</string>
     <string name="rsb_invalid_answer_default">Érvénytelen válasz, próbálja újra!</string>
-    <string name="rsb_invalid_answer_date_over">Érvénytelen válasz, a dátum legyen korábbi, mint %1$s</string>
-    <string name="rsb_invalid_answer_date_under">Érvénytelen válasz, a dátum legyen későbbi, mint %1$s</string>
-    <string name="rsb_invalid_answer_integer_over">Érvénytelen válasz, az érték legyen pont %1$s vagy alacsonyabb</string>
-    <string name="rsb_invalid_answer_integer_under">Érvénytelen válasz, az érték legyen pont %1$s vagy magasabb</string>
-    <string name="rsb_invalid_answer_choice">Válasszon ki egy értéket!</string>
-    <string name="rsb_invalid_answer_date_none">Válasszon ki egy dátumot.</string>
-    <string name="rsb_birth_date_too_old">Önnek   %1$s évesnek vagy fiatalabbnak kell lennie</string>
-    <string name="rsb_birth_date_too_young">Önnek legalább    %1$s évesnek kell lennie</string>
-
-    <!-- Pin Code -->
+    <string name="rsb_invalid_answer_date_over">Érvénytelen válasz, a dátumnak %1$s előtt kell lennie</string>
+    <string name="rsb_invalid_answer_date_under">Érvénytelen válasz, a dátumnak %1$s után kell lennie</string>
+    <string name="rsb_invalid_answer_integer_over">Érvénytelen válasz, az értéknek %1$s kell lennie vagy alacsonyabbnak</string>
+    <string name="rsb_invalid_answer_integer_under">Érvénytelen válasz, az értéknek %1$s kell lennie vagy magasabbnak</string>
+    <string name="rsb_invalid_answer_choice">Kérjük, válasszon értéket!</string>
+    <string name="rsb_invalid_answer_date_none">Kérjük, válasszon egy dátumot.</string>
+    <string name="rsb_birth_date_too_old">Legfeljebb %1$s éves lehet vagy fiatalabb</string>
+    <string name="rsb_birth_date_too_young">Legalább %1$s évesnek kell lennie</string>
 
     <!-- Body Hints -->
     <string name="rsb_hint_step_body_int">Adjon meg egy számot %1$d-%2$d</string>
     <string name="rsb_hint_step_body_dec">Adjon meg egy számot %1$.2f-%2$.2f</string>
     <string name="rsb_hint_step_body_int_no_max">Adjon meg egy számot</string>
     <string name="rsb_hint_step_body_date">Adjon meg egy dátumot</string>
-    <string name="rsb_hint_step_body_time">Adjon meg egy időt</string>
-    <string name="rsb_hint_step_body_datetime">Adjon meg egy dátumot és időt</string>
+    <string name="rsb_hint_step_body_time">Adjon meg egy időpontot</string>
+    <string name="rsb_hint_step_body_datetime">Adjon meg egy dátumot és időpontot</string>
     <string name="rsb_hint_step_body_text">Válasz</string>
 
     <!-- Graphing -->
@@ -98,18 +93,19 @@
     <!-- AssetVideoView -->
     <!-- Title for error alert when a video cannot be played.  it can be used by any app. -->
     <!-- Text for error alert when a video container is not valid for progressive download/playback. -->
-    <string name="rsb_error_assetvideoview_invalid_progressive_playback">Ez a videó\' nem alkalmas sugárzásra erre a készülékre.</string>
+    <string name="rsb_error_assetvideoview_invalid_progressive_playback">Ez a videó nem érvényes az eszközre történő streameléshez.</string>
     <!-- Text for error alert when a video cannot be played. it can be used by any app. -->
-    <string name="rsb_error_assetvideoview_unknown">A\' videót nem lehet lejátszani.</string>
+    <string name="rsb_error_assetvideoview_unknown">Nem lehet lejátszani ezt a videót.</string>
     <!-- Button to close error alert when a video cannot be played -->
-    <string name="rsb_error_assetvideoview_button">OK</string>
+    <string name="rsb_error_assetvideoview_button">OKÉ</string>
 
     <!-- Consent -->
-    <string name="rsb_consent_doc_line_printed_name">%1$s\'s Név (nyomtatott)</string>
-    <string name="rsb_consent_doc_line_signature">%1$s\'s Aláírás</string>
+    <string name="rsb_consent_doc_line_printed_name">%1$s neve (nyomtatott betűkkel)</string>
+    <string name="rsb_consent_doc_line_signature">%1$s aláírása</string>
     <string name="rsb_consent_doc_line_date">Dátum</string>
     <string name="rsb_consent_role">Résztvevő</string>
     <!-- Edit -->
+    <string name="rsb_consent_review_save">Mentés</string>
     <string name="rsb_edit_step_alert_cancel_positive">IGEN, A MÓDOSÍTÁSOK LEÁLLÍTÁSA</string>
     <string name="rsb_edit_step_alert_cancel_discard">NEM, FOLYTASSA A SZERKESZTÉST</string>
     <string name="rsb_edit_step_alert_cancel_title">Szeretné abbahagyni a módosítást?</string>
@@ -118,42 +114,47 @@
     <string name="rsb_edit_step_alert_step_save_content">Előfordulhat, hogy az egyéb válaszokat töröljük, és arra kérjük, hogy küldjön be új információkat.</string>
     <string name="rsb_edit_step_alert_step_save_discard">Nem, elvetés</string>
     <string name="rsb_edit_step_alert_step_save_positive">Igen, mentés</string>
-    <string name="rsb_consent_review_save">Mentés</string>
     <string name="rsb_edit_step_alert_step_skip_title">Kihagyja ezt a lépést?</string>
     <string name="rsb_edit_step_alert_step_skip_content">Az eredeti válaszát elvetjük.</string>
     <string name="rsb_edit_step_alert_step_skip_discard">NEM, NE HAGYJA KI</string>
     <string name="rsb_edit_step_alert_step_skip_positive">Igen, kihagyom</string>
     <string name="rsb_edit_step">Szerkesztés</string>
+
+    <!-- Material Date Picker Strings -->
     <string name="mtrl_picker_range_header_title" tools:ignore="ResourceName" tools:override="true">Válasszon egy dátumtartományt</string>
     <string name="mtrl_picker_date_header_title" tools:ignore="ResourceName" tools:override="true">Válasszon egy dátumot</string>
-    <string name="mtrl_picker_range_header_unselected" tools:ignore="ResourceName" tools:override="true">Kezdő dátum - záró dátum</string>
-    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">%1$s - záró dátum</string>
-    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">Kezdési dátum - %1$s</string>
-    <string name="mtrl_picker_range_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s - %2$s</string>
+    <string name="mtrl_picker_range_header_unselected" tools:ignore="ResourceName" tools:override="true">Kezdési dátum – Befejezési dátum</string>
+    <string name="mtrl_picker_range_header_only_start_selected" tools:ignore="ResourceName" tools:override="true">%1$s – Befejezési dátum</string>
+    <string name="mtrl_picker_range_header_only_end_selected" tools:ignore="ResourceName" tools:override="true">Kezdési dátum – %1$s</string>
+    <string name="mtrl_picker_range_header_selected" tools:ignore="ResourceName" tools:override="true">%1$s – %2$s</string>
     <string name="mtrl_picker_date_header_unselected" tools:ignore="ResourceName" tools:override="true">Kiválasztott dátum</string>
+    <string name="mtrl_picker_date_header_selected" translatable="false" tools:ignore="ResourceName" tools:override="true">%1$s</string>
+    <string name="mtrl_picker_confirm" translatable="false" tools:ignore="ResourceName" tools:override="true">@android:string/ok</string>
     <string name="mtrl_picker_text_input_date_hint" tools:ignore="ResourceName" tools:override="true">Dátum</string>
-    <string name="mtrl_picker_text_input_date_range_start_hint" tools:ignore="ResourceName" tools:override="true">Kezdő dátum</string>
-    <string name="mtrl_picker_text_input_date_range_end_hint" tools:ignore="ResourceName" tools:override="true">Záró dátum</string>
-    <string name="mtrl_picker_save" tools:ignore="ResourceName" tools:override="true">Megment</string>
+    <string name="mtrl_picker_text_input_date_range_start_hint" tools:ignore="ResourceName" tools:override="true">Kezdési dátum</string>
+    <string name="mtrl_picker_text_input_date_range_end_hint" tools:ignore="ResourceName" tools:override="true">Befejezési dátum</string>
+    <string name="mtrl_picker_save" tools:ignore="ResourceName" tools:override="true">Mentés</string>
     <string name="mtrl_picker_invalid_range" tools:ignore="ResourceName" tools:override="true">Érvénytelen tartomány.</string>
-    <string name="mtrl_picker_out_of_range" tools:ignore="ResourceName" tools:override="true">Tartományon kívül: %1$s</string>
+    <string name="mtrl_picker_out_of_range" tools:ignore="ResourceName" tools:override="true">Tartományon kívül esik: %1$s</string>
     <string name="mtrl_picker_invalid_format" tools:ignore="ResourceName" tools:override="true">Érvénytelen formátum.</string>
-    <string name="mtrl_picker_invalid_format_use" tools:ignore="ResourceName" tools:override="true">Használat: %1$s</string>
-    <string name="mtrl_picker_invalid_format_example" tools:ignore="ResourceName" tools:override="true">Példa: %1$s</string>
-    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:ignore="ResourceName" tools:override="true">Váltás naptárbeviteli módra</string>
-    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">Váltás szöveges beviteli módra</string>
-    <string name="mtrl_picker_a11y_prev_month" tools:ignore="ResourceName" tools:override="true">Váltás az előző hónapra</string>
-    <string name="mtrl_picker_a11y_next_month" tools:ignore="ResourceName" tools:override="true">Váltás a következő hónapra</string>
-    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">Koppintson az év kiválasztására</string>
-    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">Koppintson a nap kiválasztására</string>
-    <string name="mtrl_picker_day_of_week_column_header" tools:ignore="ResourceName" tools:override="true">Napok oszlopa: %1$s</string>
-    <string name="mtrl_picker_announce_current_selection" tools:ignore="ResourceName" tools:override="true">Jelenlegi választás: %1$s</string>
-    <string name="mtrl_picker_navigate_to_year_description" tools:ignore="ResourceName" tools:override="true">Keresse meg a (z) %1$s évet</string>
+    <string name="mtrl_picker_invalid_format_use" tools:ignore="ResourceName" tools:override="true">Használja a következőt: %1$s</string>
+    <string name="mtrl_picker_invalid_format_example" tools:ignore="ResourceName" tools:override="true">Például: %1$s</string>
+    <string name="mtrl_picker_toggle_to_calendar_input_mode" tools:ignore="ResourceName" tools:override="true">Átváltás naptárbeviteli módra</string>
+    <string name="mtrl_picker_toggle_to_text_input_mode" tools:ignore="ResourceName" tools:override="true">Átváltás szövegbeviteli módra</string>
+    <string name="mtrl_picker_a11y_prev_month" tools:ignore="ResourceName" tools:override="true">Átváltás az előző hónapra</string>
+    <string name="mtrl_picker_a11y_next_month" tools:ignore="ResourceName" tools:override="true">Átváltás a következő hónapra</string>
+    <string name="mtrl_picker_toggle_to_year_selection" tools:ignore="ResourceName" tools:override="true">Koppintson az év kiválasztásához</string>
+    <string name="mtrl_picker_toggle_to_day_selection" tools:ignore="ResourceName" tools:override="true">Koppintson a nap kiválasztásához</string>
+    <string name="mtrl_picker_day_of_week_column_header" tools:ignore="ResourceName" tools:override="true">Napokból álló oszlop: %1$s</string>
+    <string name="mtrl_picker_announce_current_selection" tools:ignore="ResourceName" tools:override="true">Aktuális kijelölés: %1$s</string>
+    <string name="mtrl_picker_navigate_to_year_description" tools:ignore="ResourceName" tools:override="true">Ugrás a következő évre: %1$s</string>
+
+    <!-- Material Time Picker Strings -->
     <string name="time_picker_hour_label" tools:ignore="ResourceName" tools:override="true">óra</string>
     <string name="time_picker_minute_label" tools:ignore="ResourceName" tools:override="true">perc</string>
-    <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">Beállítani az időt</string>
-    <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">Adjon meg egy érvényes időt</string>
-    <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Írja be az időt</string>
+    <string name="time_picker_header_text" tools:ignore="ResourceName" tools:override="true">Idő beállítása</string>
+    <string name="time_picker_input_error" tools:ignore="ResourceName" tools:override="true">Adjon meg egy érvényes időpontot</string>
+    <string name="time_picker_prompt_label" tools:ignore="ResourceName" tools:override="true">Gépelje be az időpontot</string>
 
     <string name="rsb_consent_text_question_error">[hu-rHU]*Field Required</string>
 
