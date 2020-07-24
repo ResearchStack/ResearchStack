@@ -2,6 +2,13 @@
 
 ### Change log
 
+#### v1.8.0
+- UI clean up for most of step's layouts.
+- Add new languages: ms_MY, ta_IN, pt_BR, es_419, sk_SK
+- Update Material Library
+- Deprecate all the classes associated with branch management/task handling.
+- Bug fixes
+
 #### v1.7.2
 - Add translation for Google's Date Picker & Time Picker.
 - Add Date/Time format in Consent.
