@@ -32,8 +32,9 @@ import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.TextUtils;
 
 import java.lang.reflect.Constructor;
+import java.util.Map;
 
-public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout {
+public class SurveyStepLayout extends FixedSubmitBarLayout implements FormStepLayout {
     public static final String TAG = SurveyStepLayout.class.getSimpleName();
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -349,5 +350,17 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
 
     public StepBody getStepBody() {
         return stepBody;
+    }
+
+    @Override
+    public void revertAllChildren(StepResult originalResult) {
+        Map<String, Object> results = originalResult.getResults();
+        for(Map.Entry<String, Object> result : results.entrySet()) {
+            String id = result.getKey();
+            Object value = result.getValue();
+            if (value instanceof StepResult) {
+                ((StepResult) stepResult.getResultForIdentifier(id)).setResult(((StepResult) value).getResult());
+            }
+        }
     }
 }
