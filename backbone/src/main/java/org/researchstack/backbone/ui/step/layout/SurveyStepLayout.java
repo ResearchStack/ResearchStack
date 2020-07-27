@@ -355,12 +355,18 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements FormStepLa
     @Override
     public void revertAllChildren(StepResult originalResult) {
         Map<String, Object> results = originalResult.getResults();
-        for(Map.Entry<String, Object> result : results.entrySet()) {
+        for (Map.Entry<String, Object> result : results.entrySet()) {
             String id = result.getKey();
             Object value = result.getValue();
             if (value instanceof StepResult) {
-                ((StepResult) stepResult.getResultForIdentifier(id)).setResult(((StepResult) value).getResult());
+                if (stepResult.getResultForIdentifier(id) != null)
+                    ((StepResult) stepResult.getResultForIdentifier(id)).setResult(((StepResult) value).getResult());
             }
         }
+    }
+
+    @Override
+    public Boolean isFormStep() {
+        return stepBody instanceof FormBody;
     }
 }

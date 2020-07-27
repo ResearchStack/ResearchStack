@@ -5,4 +5,5 @@ import org.researchstack.backbone.step.Step;
 
 public interface FormStepLayout extends StepLayout {
     void revertAllChildren(StepResult result);
+    Boolean isFormStep();
 }
