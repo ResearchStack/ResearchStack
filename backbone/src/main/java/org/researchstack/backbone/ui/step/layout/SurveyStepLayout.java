@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.jetbrains.annotations.NotNull;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.result.StepResult;
@@ -34,7 +35,7 @@ import org.researchstack.backbone.utils.TextUtils;
 import java.lang.reflect.Constructor;
 import java.util.Map;
 
-public class SurveyStepLayout extends FixedSubmitBarLayout implements FormStepLayout {
+public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout {
     public static final String TAG = SurveyStepLayout.class.getSimpleName();
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -162,6 +163,15 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements FormStepLa
     @Override
     public StepResult getStepResult() {
         return stepBody.getStepResult(isSkipped);
+    }
+
+    @Override
+    public void revertToOriginalStepResult(@NotNull StepResult originalResult) {
+        if (isFormStep()) {
+            revertAllChildren(originalResult);
+        } else {
+            stepResult.setResult(originalResult.getResult());
+        }
     }
 
     public void initStepLayout() {
@@ -352,20 +362,19 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements FormStepLa
         return stepBody;
     }
 
-    @Override
-    public void revertAllChildren(StepResult originalResult) {
+    public void revertAllChildren(@NotNull StepResult originalResult) {
         Map<String, Object> results = originalResult.getResults();
         for (Map.Entry<String, Object> result : results.entrySet()) {
             String id = result.getKey();
             Object value = result.getValue();
             if (value instanceof StepResult) {
-                if (stepResult.getResultForIdentifier(id) != null)
+                if (stepResult.getResultForIdentifier(id) != null) {
                     ((StepResult) stepResult.getResultForIdentifier(id)).setResult(((StepResult) value).getResult());
+                }
             }
         }
     }
 
-    @Override
     public Boolean isFormStep() {
         return stepBody instanceof FormBody;
     }

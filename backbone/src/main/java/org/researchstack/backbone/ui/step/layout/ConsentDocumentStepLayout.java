@@ -12,6 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 
+import org.jetbrains.annotations.NotNull;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.ConsentDocumentStep;
@@ -92,6 +93,11 @@ public class ConsentDocumentStepLayout extends ConstraintLayout implements StepL
 
     @Override
     public void isEditView(boolean isEditView) {
+        // no-op: Only needed when the user is on edit mode inside regular steps
+    }
+
+    @Override
+    public void revertToOriginalStepResult(@NotNull StepResult originalResult) {
         // no-op: Only needed when the user is on edit mode inside regular steps
     }
 

@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.core.text.HtmlCompat;
 
+import org.jetbrains.annotations.NotNull;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.result.StepResult;
@@ -69,6 +70,11 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
 
     @Override
     public void isEditView(boolean isEditView) {
+        // no-op: Only needed when the user is on edit mode inside regular steps
+    }
+
+    @Override
+    public void revertToOriginalStepResult(@NotNull StepResult originalResult) {
         // no-op: Only needed when the user is on edit mode inside regular steps
     }
 
