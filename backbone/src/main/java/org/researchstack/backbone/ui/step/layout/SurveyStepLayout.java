@@ -166,9 +166,9 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     }
 
     @Override
-    public void revertToOriginalStepResult(@NotNull StepResult originalResult) {
+    public void setStepResultTo(@NotNull StepResult originalResult) {
         if (isFormStep()) {
-            revertAllChildren(originalResult);
+            setFormStepChildrenResultsTo(originalResult);
         } else {
             stepResult.setResult(originalResult.getResult());
         }
@@ -362,8 +362,8 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         return stepBody;
     }
 
-    public void revertAllChildren(@NotNull StepResult originalResult) {
-        Map<String, Object> results = originalResult.getResults();
+    private void setFormStepChildrenResultsTo(@NotNull StepResult newChildrenResult) {
+        Map<String, Object> results = newChildrenResult.getResults();
         for (Map.Entry<String, Object> result : results.entrySet()) {
             String id = result.getKey();
             Object value = result.getValue();
@@ -375,7 +375,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         }
     }
 
-    public Boolean isFormStep() {
+    private Boolean isFormStep() {
         return stepBody instanceof FormBody;
     }
 }

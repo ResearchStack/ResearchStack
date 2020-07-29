@@ -96,7 +96,7 @@ public class ConsentSignatureStepLayout extends ConstraintLayout implements Step
     }
 
     @Override
-    public void revertToOriginalStepResult(@NotNull StepResult originalResult) {
+    public void setStepResultTo(@NotNull StepResult originalResult) {
         // no-op: Only needed when the user is on edit mode inside regular steps
     }
 

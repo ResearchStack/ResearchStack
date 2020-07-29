@@ -33,8 +33,8 @@ public interface StepLayout {
     StepResult getStepResult();
 
     /**
-     * A method to revert the current result to the original one. This is need for the edit step
-     * @param originalResult
+     * Replaces the Step's existing result, with a new one. For FormSteps, each children (that has a response in the new result) will have its result replaced too.
+     * @param newResult The new result set
      */
-    void revertToOriginalStepResult(@NotNull StepResult originalResult);
+    void setStepResultTo(@NotNull StepResult newResult);
 }

@@ -74,7 +74,7 @@ public class InstructionStepLayout extends FixedSubmitBarLayout implements StepL
     }
 
     @Override
-    public void revertToOriginalStepResult(@NotNull StepResult originalResult) {
+    public void setStepResultTo(@NotNull StepResult originalResult) {
         // no-op: Only needed when the user is on edit mode inside regular steps
     }
 

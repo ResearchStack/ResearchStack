@@ -99,7 +99,7 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
     }
 
     @Override
-    public void revertToOriginalStepResult(@NotNull StepResult originalResult) {
+    public void setStepResultTo(@NotNull StepResult originalResult) {
         // no-op : This step doesn't have a result
     }
 
