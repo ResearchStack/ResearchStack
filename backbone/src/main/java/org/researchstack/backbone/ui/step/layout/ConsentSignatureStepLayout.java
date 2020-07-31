@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.jetbrains.annotations.NotNull;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.ConsentSignatureStep;
@@ -92,6 +93,11 @@ public class ConsentSignatureStepLayout extends ConstraintLayout implements Step
     @Override
     public StepResult getStepResult() {
         return result;
+    }
+
+    @Override
+    public void setStepResultTo(@NotNull StepResult originalResult) {
+        // no-op: Only needed when the user is on edit mode inside regular steps
     }
 
     private void initializeStep() {

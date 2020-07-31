@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.jetbrains.annotations.NotNull;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.model.ConsentSection;
 import org.researchstack.backbone.result.StepResult;
@@ -95,6 +96,11 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
     public StepResult getStepResult() {
         // This step doesn't have a result, so we're returning null instead
         return null;
+    }
+
+    @Override
+    public void setStepResultTo(@NotNull StepResult originalResult) {
+        // no-op : This step doesn't have a result
     }
 
     @Override
