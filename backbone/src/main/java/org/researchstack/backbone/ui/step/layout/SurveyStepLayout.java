@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.jetbrains.annotations.NotNull;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.result.StepResult;
@@ -32,6 +33,7 @@ import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.TextUtils;
 
 import java.lang.reflect.Constructor;
+import java.util.Map;
 
 public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout {
     public static final String TAG = SurveyStepLayout.class.getSimpleName();
@@ -161,6 +163,15 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     @Override
     public StepResult getStepResult() {
         return stepBody.getStepResult(isSkipped);
+    }
+
+    @Override
+    public void setStepResultTo(@NotNull StepResult originalResult) {
+        if (isFormStep()) {
+            setFormStepChildrenResultsTo(originalResult);
+        } else {
+            stepResult.setResult(originalResult.getResult());
+        }
     }
 
     public void initStepLayout() {
@@ -349,5 +360,22 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
 
     public StepBody getStepBody() {
         return stepBody;
+    }
+
+    private void setFormStepChildrenResultsTo(@NotNull StepResult newChildrenResult) {
+        Map<String, Object> results = newChildrenResult.getResults();
+        for (Map.Entry<String, Object> result : results.entrySet()) {
+            String id = result.getKey();
+            Object value = result.getValue();
+            if (value instanceof StepResult) {
+                if (stepResult.getResultForIdentifier(id) != null) {
+                    ((StepResult) stepResult.getResultForIdentifier(id)).setResult(((StepResult) value).getResult());
+                }
+            }
+        }
+    }
+
+    private Boolean isFormStep() {
+        return stepBody instanceof FormBody;
     }
 }
