@@ -10,6 +10,10 @@ import org.researchstack.backbone.ui.step.layout.StepLayout;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+/**
+ * @deprecated Deprecated as part of the new step layouts refactor. The SubmitBar is now part of the NRSBaseStepFragment
+ */
+@Deprecated
 public abstract class FixedSubmitBarLayout extends ConstraintLayout implements StepLayout {
     public FixedSubmitBarLayout(Context context) {
         super(context);

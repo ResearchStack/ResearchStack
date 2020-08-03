@@ -6,6 +6,10 @@ import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 
+/**
+ * @deprecated Deprecated as part of the new step layouts refactor. Use NRSStepLayout instead.
+ */
+@Deprecated
 public interface StepLayout {
     void initialize(Step step, StepResult result);
 
