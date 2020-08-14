@@ -7,26 +7,25 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.ContextThemeWrapper;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.jakewharton.rxbinding.widget.RxTextView;
-
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.StorageAccess;
 import org.researchstack.backbone.storage.file.PinCodeConfig;
+import org.researchstack.backbone.storage.file.StorageAccessException;
 import org.researchstack.backbone.storage.file.StorageAccessListener;
 import org.researchstack.backbone.ui.views.PinCodeLayout;
 import org.researchstack.backbone.utils.LogExt;
-import org.researchstack.backbone.utils.ObservableUtils;
 import org.researchstack.backbone.utils.ThemeUtils;
 
 import java.util.List;
 
-import rx.Observable;
 import rx.functions.Action1;
 
 public class PinCodeActivity extends AppCompatActivity implements StorageAccessListener {
@@ -134,16 +133,16 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
         storageAccessUnregister();
 
         // Show pincode layout
-        PinCodeConfig config = StorageAccess.getInstance().getPinCodeConfig();
+        final PinCodeConfig config = StorageAccess.getInstance().getPinCodeConfig();
 
         int theme = ThemeUtils.getPassCodeTheme(this);
         pinCodeLayout = new PinCodeLayout(new ContextThemeWrapper(this, theme));
         pinCodeLayout.setBackgroundColor(Color.WHITE);
 
-        int errorColor = getResources().getColor(R.color.rsb_error);
+        final int errorColor = getResources().getColor(R.color.rsb_error);
 
-        TextView summary = (TextView) pinCodeLayout.findViewById(R.id.text);
-        EditText pincode = (EditText) pinCodeLayout.findViewById(R.id.pincode);
+        final TextView summary = (TextView) pinCodeLayout.findViewById(R.id.text);
+        final EditText pincode = (EditText) pinCodeLayout.findViewById(R.id.pincode);
 
         toggleKeyboardAction = enable -> {
             pincode.setEnabled(enable);
@@ -155,33 +154,50 @@ public class PinCodeActivity extends AppCompatActivity implements StorageAccessL
             }
         };
 
-        RxTextView.textChanges(pincode).map(CharSequence::toString).doOnNext(pin -> {
-            if (summary.getCurrentTextColor() == errorColor) {
-                summary.setTextColor(ThemeUtils.getTextColorPrimary(PinCodeActivity.this));
-                pinCodeLayout.resetSummaryText();
+        pincode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String pin = s + "";
+                if (summary.getCurrentTextColor() == errorColor) {
+                    summary.setTextColor(ThemeUtils.getTextColorPrimary(PinCodeActivity.this));
+                    pinCodeLayout.resetSummaryText();
+                }
+
+                if (pin.length() != config.getPinLength()) {
+                    return;
+                }
+
+                pincode.setEnabled(false);
+                pinCodeLayout.showProgress(true);
+
+                boolean success;
+                try {
+                    StorageAccess.getInstance().authenticate(PinCodeActivity.this, pin);
+                    success = true;
+                } catch(StorageAccessException throwable) {
+                    throwable.printStackTrace();
+                    success = false;
+                }
+
+                if (!success) {
+                    toggleKeyboardAction.call(true);
+                    summary.setText(R.string.rsb_pincode_enter_error);
+                    summary.setTextColor(errorColor);
+                    pinCodeLayout.showProgress(false);
+                } else {
+                    getWindowManager().removeView(pinCodeLayout);
+                    pinCodeLayout = null;
+                    // authenticate() no longer calls notifyReady(), call this after auth
+                    requestStorageAccess();
+                }
             }
-        }).filter(pin -> pin != null && pin.length() == config.getPinLength()).doOnNext(pin -> {
-            pincode.setEnabled(false);
-            pinCodeLayout.showProgress(true);
-        }).flatMap(pin -> Observable.fromCallable(() -> {
-            StorageAccess.getInstance().authenticate(PinCodeActivity.this, pin);
-            return true;
-        }).compose(ObservableUtils.applyDefault()).doOnError(throwable -> {
-            toggleKeyboardAction.call(true);
-            throwable.printStackTrace();
-            summary.setText(R.string.rsb_pincode_enter_error);
-            summary.setTextColor(errorColor);
-            pinCodeLayout.showProgress(false);
-        }).onErrorResumeNext(throwable1 -> {
-            return Observable.empty();
-        })).subscribe(success -> {
-            if (!success) {
-                toggleKeyboardAction.call(true);
-            } else {
-                getWindowManager().removeView(pinCodeLayout);
-                pinCodeLayout = null;
-                // authenticate() no longer calls notifyReady(), call this after auth
-                requestStorageAccess();
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
             }
         });
 
