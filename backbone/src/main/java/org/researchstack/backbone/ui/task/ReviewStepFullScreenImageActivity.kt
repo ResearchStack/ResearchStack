@@ -18,7 +18,7 @@ import org.researchstack.backbone.step.Step
 import org.researchstack.backbone.ui.step.fragments.ReviewStepFragment
 import org.researchstack.backbone.utils.LocalizationUtils
 
-
+@Deprecated(message = "This is no longer needed as ResearchStack's ReviewStepLayout class is deprecated, please use Axon's ReviewStepFullScreenImageActivity instead ")
 class ReviewStepFullScreenImageActivity : AppCompatActivity(), View.OnClickListener {
     private val viewModel: ReviewStepFullScreenImageViewModel by viewModel { parametersOf(intent) }
 

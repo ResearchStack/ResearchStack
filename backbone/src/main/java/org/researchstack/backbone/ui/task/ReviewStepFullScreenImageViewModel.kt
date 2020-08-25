@@ -9,6 +9,7 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.FileNotFoundException
 
+@Deprecated(message = "This is no longer needed as ResearchStack's ReviewStepLayout class is deprecated, please use Axon's ReviewStepFullScreenImageViewModel instead ")
 class ReviewStepFullScreenImageViewModel(intent: Intent) : ViewModel() {
     private val imageUrl = intent.extras?.getString(ReviewStepFullScreenImageActivity.EXTRA_IMAGE_URL)
 
