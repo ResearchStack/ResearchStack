@@ -43,11 +43,8 @@ public class TaskFactory {
         public static final String Countdown4StepIdentifier = "countdown4";
         public static final String Countdown5StepIdentifier = "countdown5";
 
-        // Tapping Step Identifiers
+        // Tapping Identifiers
         public static final String TappingStepIdentifier = "tapping";
-        
-        //Touch Anywhere Step Identifier
-        public static final String TouchAnywhereStepIdentifier = "touchAnywhere";
 
         // Conclusion Step Identifiers
         public static final String ConclusionStepIdentifier = "conclusion";
@@ -57,13 +54,6 @@ public class TaskFactory {
         public static final String ActiveTaskLeftHandIdentifier         = "left";
         public static final String ActiveTaskRightHandIdentifier        = "right";
         public static final String ActiveTaskSkipHandStepIdentifier     = "skipHand";
-        
-        // Active Task Steps Side Identifiers
-        public static final String ActiveTaskMostAffectedSideIdentifier = "mostAffected";
-        public static final String ActiveTaskLeftSideIdentifier         = "left";
-        public static final String ActiveTaskRightSideIdentifier        = "right";
-        public static final String ActiveTaskBothSidesStepIdentifier    = "bothSides";
-        public static final String ActiveTaskSkipSideStepIdentifier     = "skipSide";
     }
 
     public static CompletionStep makeCompletionStep(Context context) {

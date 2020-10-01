@@ -1,18 +1,11 @@
 package org.researchstack.backbone.step.active.recorder;
 
 import android.content.Context;
-import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 import android.os.Build;
-import android.os.Bundle;
-import android.support.annotation.VisibleForTesting;
-import android.support.v4.content.LocalBroadcastManager;
 
-import com.google.common.base.Strings;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonObject;
 
 import org.researchstack.backbone.step.Step;
@@ -20,11 +13,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.*;
 
 import androidx.annotation.VisibleForTesting;
-
 
 /**
  * Created by TheMDP on 2/5/17.
@@ -32,7 +23,7 @@ import androidx.annotation.VisibleForTesting;
  * The DeviceMotionRecorder incorporates a bunch of sensor fusion sensor readings
  * together to paint a broad picture of the device's orientation and movement over time.
  *
- * This class is an attempt at recording data in a similar way to iOS's device motion recorder.
+ * This class is an attempt at recording data in a similar way as iOS' device motion recorder.
  *
  * @see <a href="https://developer.android.com/reference/android/hardware/SensorEvent.html#values">
  *      Sensor values</a>
@@ -55,16 +46,6 @@ public class DeviceMotionRecorder extends SensorRecorder {
     public static final Set<Integer> ROTATION_VECTOR_TYPES;
 
     public static final String ROTATION_REFERENCE_COORDINATE_KEY = "referenceCoordinate";
-
-    public static final String TIMESTAMP_KEY = "timestamp";
-    public static final String END_DATE = "endDate";
-    public static final String BROADCAST_ROTATION_VECTOR_UPDATE_ACTION = "BroadcastRotationVectorUpdate";
-    public static final String BROADCAST_ROTATION_VECTOR_UPDATE_KEY = "RotationVectorUpdate";
-    public static final String BROADCAST_ACCELEROMETER_UPDATE_ACTION = "BroadcastAccelerometerUpdate";
-    public static final String BROADCAST_ACCELEROMETER_UPDATE_KEY = "AccelerometerUpdate";
-
-    private Context appContext;
-    private JsonObject jsonObject;
 
     static {
         // build mapping for sensor type and its data type value
@@ -104,11 +85,10 @@ public class DeviceMotionRecorder extends SensorRecorder {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             sensorTypeMapBuilder.put(Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR, "attitude");
         }
-        SENSOR_TYPE_TO_DATA_TYPE = sensorTypeMapBuilder.build();
+        SENSOR_TYPE_TO_DATA_TYPE = sensorTypeMapBuilder;
 
-        // build mapping for rotation type
+        // build mappint for rotation type
         HashSet<Integer> rotationTypeBuilder = new HashSet<>();
-        //ImmutableSet.Builder<Integer> rotationTypeBuilder = ImmutableSet.builder();
         rotationTypeBuilder.add(Sensor.TYPE_ROTATION_VECTOR);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             rotationTypeBuilder.add(Sensor.TYPE_GAME_ROTATION_VECTOR);
@@ -117,7 +97,6 @@ public class DeviceMotionRecorder extends SensorRecorder {
             rotationTypeBuilder.add(Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR);
         }
         ROTATION_VECTOR_TYPES = rotationTypeBuilder;
-        //ROTATION_VECTOR_TYPES = rotationTypeBuilder.build();
     }
 
     public static final String X_KEY    = "x";
@@ -154,12 +133,15 @@ public class DeviceMotionRecorder extends SensorRecorder {
                 && hasAvailableType(availableSensorList, Sensor.TYPE_ACCELEROMETER_UNCALIBRATED)) {
             sensorTypeList.add(Sensor.TYPE_ACCELEROMETER_UNCALIBRATED);
         }
+
         if (hasAvailableType(availableSensorList, Sensor.TYPE_GRAVITY)) {
             sensorTypeList.add(Sensor.TYPE_GRAVITY);
         }
+
         if (hasAvailableType(availableSensorList, Sensor.TYPE_LINEAR_ACCELERATION)) {
             sensorTypeList.add(Sensor.TYPE_LINEAR_ACCELERATION);
         }
+
         if (hasAvailableType(availableSensorList, Sensor.TYPE_GYROSCOPE)) {
             sensorTypeList.add(Sensor.TYPE_GYROSCOPE);
         }
@@ -167,6 +149,7 @@ public class DeviceMotionRecorder extends SensorRecorder {
                 && hasAvailableType(availableSensorList, Sensor.TYPE_GYROSCOPE_UNCALIBRATED)) {
             sensorTypeList.add(Sensor.TYPE_GYROSCOPE_UNCALIBRATED);
         }
+
         if (hasAvailableType(availableSensorList, Sensor.TYPE_MAGNETIC_FIELD)) {
             sensorTypeList.add(Sensor.TYPE_MAGNETIC_FIELD);
         }
@@ -174,6 +157,7 @@ public class DeviceMotionRecorder extends SensorRecorder {
                 && hasAvailableType(availableSensorList, Sensor.TYPE_MAGNETIC_FIELD_UNCALIBRATED)) {
             sensorTypeList.add(Sensor.TYPE_MAGNETIC_FIELD_UNCALIBRATED);
         }
+
         if (hasAvailableType(availableSensorList, Sensor.TYPE_ROTATION_VECTOR)) {
             sensorTypeList.add(Sensor.TYPE_ROTATION_VECTOR);
         }
@@ -187,8 +171,10 @@ public class DeviceMotionRecorder extends SensorRecorder {
                 sensorTypeList.add(Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR);
             }
         }
+
         return sensorTypeList;
     }
+
 
     @Override
     public void recordSensorEvent(SensorEvent sensorEvent, JsonObject jsonObject) {
@@ -196,7 +182,6 @@ public class DeviceMotionRecorder extends SensorRecorder {
         String sensorTypeKey = SENSOR_TYPE_TO_DATA_TYPE.get(sensorType);
 
         if (sensorTypeKey!=null || sensorTypeKey.length() > 0) {
-        //if (Strings.isNullOrEmpty(sensorTypeKey)) {
             logger.warn("Unable find type key for sensor type: "
                     + sensorType);
             return;
@@ -208,10 +193,6 @@ public class DeviceMotionRecorder extends SensorRecorder {
         switch (sensorType) {
             case Sensor.TYPE_ACCELEROMETER:
                 recordAccelerometerEvent(sensorEvent, jsonObject);
-                sendAccelerometerUpdateBroadcast(
-                        jsonObject.get(X_KEY).getAsFloat(),
-                        jsonObject.get(Y_KEY).getAsFloat(),
-                        jsonObject.get(Z_KEY).getAsFloat());
                 break;
             case Sensor.TYPE_GRAVITY:
                 recordGravityEvent(sensorEvent, jsonObject);
@@ -234,17 +215,11 @@ public class DeviceMotionRecorder extends SensorRecorder {
             case Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR:
             case Sensor.TYPE_ROTATION_VECTOR:
                 recordRotationVector(sensorEvent, jsonObject);
-                sendRotationVectorUpdateBroadcast(
-                        jsonObject.get(X_KEY).getAsFloat(),
-                        jsonObject.get(Y_KEY).getAsFloat(),
-                        jsonObject.get(Z_KEY).getAsFloat(),
-                        jsonObject.get(W_KEY).getAsFloat());
                 break;
             default:
                 logger.warn("Unable to record sensor type: " + sensorType);
         }
     }
-
     /**
      * @see <a href="https://source.android.com/devices/sensors/sensor-types#accelerometer">
      *     Sensor Types: Accelerometer</a>
@@ -279,10 +254,9 @@ public class DeviceMotionRecorder extends SensorRecorder {
         jsonObject.addProperty(Y_KEY, sensorEvent.values[1] / GRAVITY_SI_CONVERSION);
         jsonObject.addProperty(Z_KEY, sensorEvent.values[2] / GRAVITY_SI_CONVERSION);
     }
-
     /**
      * Sensor.TYPE_ROTATION_VECTOR relative to East-North-Up coordinate frame.
-     * Sensor.TYPE_GAME_ROTATION_VECTOR no magnetometer
+     * Sensor.TYPE_GAME_ROTATION_VECTOR  no magnetometer
      * Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR similar to a rotation vector sensor but using a
      *  magnetometer and no gyroscope
      *
@@ -308,7 +282,6 @@ public class DeviceMotionRecorder extends SensorRecorder {
             jsonObject.addProperty(ROTATION_REFERENCE_COORDINATE_KEY, "East-Up-North");
         }
 
-        //The first three elements of the rotation vector are equal to the last three components of a unit quaternion:
         // x = rot_axis.y * sin(theta/2)
         jsonObject.addProperty(X_KEY, sensorEvent.values[0]);
         // y = rot_axis.y * sin(theta/2)
@@ -317,7 +290,6 @@ public class DeviceMotionRecorder extends SensorRecorder {
         jsonObject.addProperty(Z_KEY, sensorEvent.values[2]);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            //The fourth element of the rotation vector is equal to the first component of a unit quaternion:
             // w = cos(theta/2)
             jsonObject.addProperty(W_KEY, sensorEvent.values[3]);
 
@@ -360,117 +332,5 @@ public class DeviceMotionRecorder extends SensorRecorder {
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
         // no-op
-    }
-
-    protected void sendRotationVectorUpdateBroadcast(float x, float y, float z, float w) {
-        RotationVectorUpdateHolder dataHolder = new RotationVectorUpdateHolder();
-        dataHolder.setX(x);
-        dataHolder.setY(y);
-        dataHolder.setZ(z);
-        dataHolder.setW(w);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(BROADCAST_ROTATION_VECTOR_UPDATE_KEY, dataHolder);
-        Intent intent = new Intent(BROADCAST_ROTATION_VECTOR_UPDATE_ACTION);
-        intent.putExtras(bundle);
-        intent.setAction(DeviceMotionRecorder.BROADCAST_ROTATION_VECTOR_UPDATE_ACTION);
-        LocalBroadcastManager.getInstance(appContext).
-                sendBroadcast(intent);
-    }
-
-    protected void sendAccelerometerUpdateBroadcast(float ax, float ay, float az) {
-        AccelerometerUpdateHolder dataHolder = new AccelerometerUpdateHolder();
-        dataHolder.setAx(ax);
-        dataHolder.setAy(ay);
-        dataHolder.setAz(az);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(BROADCAST_ACCELEROMETER_UPDATE_KEY, dataHolder);
-        Intent intent = new Intent(BROADCAST_ACCELEROMETER_UPDATE_ACTION);
-        intent.putExtras(bundle);
-        intent.setAction(DeviceMotionRecorder.BROADCAST_ACCELEROMETER_UPDATE_ACTION);
-        LocalBroadcastManager.getInstance(appContext).
-                sendBroadcast(intent);
-    }
-
-    /**
-     * @param intent must have action of BROADCAST_ROTATION_VECTOR_UPDATE_ACTION
-     * @return the RotationVectorUpdateHolder contained in the broadcast
-     */
-    public static RotationVectorUpdateHolder getRotationVectorUpdateHolder(Intent intent) {
-        if (intent.getAction() == null ||
-                !intent.getAction().equals(BROADCAST_ROTATION_VECTOR_UPDATE_ACTION) ||
-                intent.getExtras() == null ||
-                !intent.getExtras().containsKey(BROADCAST_ROTATION_VECTOR_UPDATE_KEY)) {
-            return null;
-        }
-        return (RotationVectorUpdateHolder) intent.getExtras()
-                .getSerializable(BROADCAST_ROTATION_VECTOR_UPDATE_KEY);
-    }
-
-    public static class RotationVectorUpdateHolder implements Serializable {
-        private float x, y, z, w;
-
-        public float getX() { return x; }
-        public void setX(float x) {
-            this.x = x;
-        }
-
-        public float getY() {
-            return y;
-        }
-        public void setY(float y) {
-            this.y = y;
-        }
-
-        public float getZ() {
-            return z;
-        }
-        public void setZ(float z) {
-            this.z = z;
-        }
-
-        public float getW() {
-            return w;
-        }
-        public void setW(float w) {
-            this.w = w;
-        }
-    }
-
-    /**
-     * @param intent must have action of BROADCAST_ACCELEROMETER_UPDATE_ACTION
-     * @return the AccelerometerUpdateHolder contained in the broadcast
-     */
-    public static AccelerometerUpdateHolder getAccelerometerUpdateHolder(Intent intent) {
-        if (intent.getAction() == null ||
-                !intent.getAction().equals(BROADCAST_ACCELEROMETER_UPDATE_ACTION) ||
-                intent.getExtras() == null ||
-                !intent.getExtras().containsKey(BROADCAST_ACCELEROMETER_UPDATE_KEY)) {
-            return null;
-        }
-        return (AccelerometerUpdateHolder) intent.getExtras()
-                .getSerializable(BROADCAST_ACCELEROMETER_UPDATE_KEY);
-    }
-
-    public static class AccelerometerUpdateHolder implements Serializable {
-        private float ax, ay, az;
-
-        public float getAx() { return ax; }
-        public void setAx(float ax) {
-            this.ax = ax;
-        }
-
-        public float getAy() {
-            return ay;
-        }
-        public void setAy(float ay) {
-            this.ay = ay;
-        }
-
-        public float getAz() {
-            return az;
-        }
-        public void setAz(float az) {
-            this.az = az;
-        }
     }
 }
