@@ -88,7 +88,7 @@ public class WalkingTaskStepLayout extends ActiveStepLayout {
                 }
             }
         };
-        IntentFilter intentFilter = new IntentFilter(PedometerRecorder.PEDOMETER_UPDATE_ACTION);
+        IntentFilter intentFilter = new IntentFilter(PedometerRecorder.BROADCAST_PEDOMETER_UPDATE_ACTION);
         LocalBroadcastManager.getInstance(appContext)
                 .registerReceiver(pedometerReceiver, intentFilter);
     }
