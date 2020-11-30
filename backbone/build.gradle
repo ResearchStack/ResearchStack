@@ -43,7 +43,7 @@ android {
     }
 
     resourcePrefix 'rsb_'
-    buildToolsVersion = '28.0.3'
+    buildToolsVersion = '29.0.2'
 }
 
 // Reading in data from local.properties is used here to grab key/value pairs used below in ext
