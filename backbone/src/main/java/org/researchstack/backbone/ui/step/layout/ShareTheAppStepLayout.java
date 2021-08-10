@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.graphics.PorterDuff;
 import android.net.Uri;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +20,6 @@ import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.ShareTheAppStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
-import org.researchstack.backbone.ui.views.AlertFrameLayout;
 import org.researchstack.backbone.ui.views.FixedSubmitBarLayout;
 import org.researchstack.backbone.utils.ResUtils;
 import org.researchstack.backbone.utils.TextUtils;
@@ -28,8 +27,6 @@ import org.researchstack.backbone.utils.ThemeUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import rx.functions.Action1;
 
 /**
  * Created by TheMDP on 1/26/17.

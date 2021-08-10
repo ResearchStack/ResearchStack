@@ -1,15 +1,13 @@
 package org.researchstack.backbone.step.active.recorder;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.MainThread;
+import androidx.annotation.MainThread;
 
-import com.google.common.collect.Sets;
 import com.google.gson.JsonObject;
 
 import org.researchstack.backbone.DataProvider;

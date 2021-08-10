@@ -19,7 +19,7 @@
         android:layout_gravity="center_horizontal"
         style="@style/RsbLearnTitle"
         />
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
