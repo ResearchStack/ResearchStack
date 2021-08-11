@@ -2,8 +2,8 @@ package org.researchstack.backbone.step.active.recorder;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.MainThread;
-import android.support.v4.content.LocalBroadcastManager;
+import androidx.annotation.MainThread;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.researchstack.backbone.result.Result;
 import org.researchstack.backbone.step.Step;

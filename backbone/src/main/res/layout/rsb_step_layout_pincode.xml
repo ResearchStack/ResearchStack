@@ -22,7 +22,7 @@
         android:text="@string/rsb_pincode_enter_summary"
         android:textColorLink="?attr/colorAccent" />
 
-    <android.support.v7.widget.AppCompatEditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/pincode"
         android:layout_width="match_parent"
         android:layout_height="@dimen/rsb_item_size_default"
@@ -40,7 +40,7 @@
         android:visibility="gone"
         tools:visibility="gone" />
 
-    <android.support.v7.widget.AppCompatButton
+    <androidx.appcompat.widget.AppCompatButton
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:id="@+id/rsb_forgot_passcode_button"
         android:layout_width="wrap_content"

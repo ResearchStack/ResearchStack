@@ -6,7 +6,6 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.text.InputType;
-import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -280,7 +279,7 @@ public class DateQuestionBody implements StepBody {
     }
 
     private void displayErrorMessage(Context context, String errorMessage) {
-        new android.support.v7.app.AlertDialog.Builder(context)
+        new androidx.appcompat.app.AlertDialog.Builder(context)
                 .setMessage(errorMessage)
                 .setPositiveButton(R.string.rsb_ok, null).create().show();
     }

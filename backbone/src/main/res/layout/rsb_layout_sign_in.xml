@@ -28,7 +28,7 @@
             android:gravity="center_vertical"
             android:minHeight="@dimen/rsb_item_size_default">
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/rsb_padding_small"
@@ -36,7 +36,7 @@
                 android:gravity="right"
                 android:text="@string/rsb_username" />
 
-            <android.support.v7.widget.AppCompatEditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -51,7 +51,7 @@
             android:gravity="center_vertical"
             android:minHeight="@dimen/rsb_item_size_default">
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="0"
@@ -60,7 +60,7 @@
                 android:gravity="right"
                 android:text="@string/rsb_password" />
 
-            <android.support.v7.widget.AppCompatEditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -82,7 +82,7 @@
         app:negativeActionTitle="@string/rsb_exit"
         app:positiveActionTitle="@string/rsb_submit" />
 
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/forgot_password"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="wrap_content"

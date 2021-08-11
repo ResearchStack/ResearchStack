@@ -8,7 +8,7 @@ import android.graphics.Path;
 import android.graphics.PixelFormat;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 /**
  * Created by mdephillips on 4/20/15

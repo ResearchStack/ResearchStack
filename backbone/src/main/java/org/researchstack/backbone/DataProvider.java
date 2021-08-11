@@ -2,7 +2,7 @@ package org.researchstack.backbone;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import org.researchstack.backbone.model.ConsentSignatureBody;
 import org.researchstack.backbone.model.SchedulesAndTasksModel;

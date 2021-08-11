@@ -36,11 +36,11 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Vibrator;
 import android.speech.tts.TextToSpeech;
-import android.support.annotation.Nullable;
-import android.support.annotation.RawRes;
-import android.support.annotation.RequiresPermission;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.LocalBroadcastManager;
+import androidx.annotation.Nullable;
+import androidx.annotation.RawRes;
+import androidx.annotation.RequiresPermission;
+import androidx.core.app.NotificationCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.google.gson.Gson;

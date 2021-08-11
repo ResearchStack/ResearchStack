@@ -2,7 +2,7 @@ package org.researchstack.backbone.ui.step.layout;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.text.format.DateUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
