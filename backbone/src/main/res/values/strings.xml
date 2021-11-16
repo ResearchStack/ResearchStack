@@ -792,4 +792,17 @@
     <string name="rsb_ax_graph_point">Point: %1$d</string>
     <string name="rsb_AX_AUDIO_BAR_GRAPH">Audio Bar Graph</string>
 
+    <!-- Permissions -->
+    <string name="rsb_permission_camera_name">Camera</string>
+    <string name="rsb_permission_camera_description">Required to take selfie image</string>
+    <string name="rsb_permission_write_external_storage_name">External Storage Write</string>
+    <string name="rsb_permission_write_external_storage_description">Required to record collected data</string>
+    <string name="rsb_permission_record_audio_name">Record Audio</string>
+    <string name="rsb_permission_record_audio_description">Required to complete audio recording collection tasks</string>
+    <string name="rsb_permission_permission_check_title">Permissions Check</string>
+    <string name="rsb_permission_permission_check_text">Please grant the requested permissions to continue</string>
+
+    <!-- Support for audio and selfie tasks -->
+    <string name="rsb_selfie_capture_test_title">Selfie Capture Test</string>
+    <string name="rsb_active_selfie_capture_test_title">Selfie Capture Active Task</string>
 </resources>

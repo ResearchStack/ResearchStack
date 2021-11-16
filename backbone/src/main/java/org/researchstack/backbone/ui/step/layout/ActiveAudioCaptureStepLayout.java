@@ -102,7 +102,7 @@ public class ActiveAudioCaptureStepLayout extends ActiveStepLayout {
         TextView captureButtonText = (TextView)this.findViewById(R.id.audioCaptureButtonText);
         if (stepResult == null) {
             time.setText(buildStartTime());
-            time.setTextColor(ContextCompat.getColor(getContext(), R.color.black));
+            time.setTextColor(ContextCompat.getColor(getContext(), R.color.rsb_black));
             captureButtonText.setText(BUTTON_RECORD);
         } else {
             time.setText(((AudioCaptureResults)stepResult.getResult()).lastRecordedTime);
@@ -183,7 +183,7 @@ public class ActiveAudioCaptureStepLayout extends ActiveStepLayout {
             captureButtonText.setText(BUTTON_RECORD);
             TextView time = (TextView)activity.findViewById(R.id.audioCaptureTime);
             time.setText(buildStartTime());
-            time.setTextColor(ContextCompat.getColor(getContext(), R.color.black));
+            time.setTextColor(ContextCompat.getColor(getContext(), R.color.rsb_black));
             outputFile.delete();
             dialog.dismiss();
         });
@@ -277,7 +277,7 @@ public class ActiveAudioCaptureStepLayout extends ActiveStepLayout {
                  if (remaining < 0)
                      remaining = 0;
                  if (remaining <= 3000) {
-                     timeView.setTextColor(ContextCompat.getColor(getContext(), R.color.red));
+                     timeView.setTextColor(ContextCompat.getColor(getContext(), R.color.rsb_red));
                  }
                  timeView.setText(df.format(remaining));
             });

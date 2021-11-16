@@ -62,8 +62,8 @@ public class ActiveAudioCaptureBuilder {
             PermissionRequestManager.PermissionRequest request = new PermissionRequestManager.PermissionRequest(
                     Manifest.permission.RECORD_AUDIO,
                     R.drawable.ic_baseline_mic_24,
-                    R.string.permission_record_audio_name,
-                    R.string.permission_record_audio_description);
+                    R.string.rsb_permission_record_audio_name,
+                    R.string.rsb_permission_record_audio_description);
             request.setIsBlockingPermission(true);
             request.setIsSystemPermission(true);
             newRequests.add(request);
@@ -73,8 +73,8 @@ public class ActiveAudioCaptureBuilder {
             PermissionRequestManager.PermissionRequest request = new PermissionRequestManager.PermissionRequest(
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     R.drawable.ic_baseline_storage_24,
-                    R.string.permission_write_external_storage_name,
-                    R.string.permission_write_external_storage_description);
+                    R.string.rsb_permission_write_external_storage_name,
+                    R.string.rsb_permission_write_external_storage_description);
             request.setIsBlockingPermission(true);
             request.setIsSystemPermission(true);
             newRequests.add(request);
@@ -83,8 +83,8 @@ public class ActiveAudioCaptureBuilder {
         if (!newRequests.isEmpty()) {
             PermissionRequestManager.getInstance().setPermissionRequests(newRequests);
             PermissionsStep step1 = new PermissionsStep("permissionsStep",
-                    context.getString(R.string.permission_permission_check_title),
-                    context.getString(R.string.permission_permission_check_text));
+                    context.getString(R.string.rsb_permission_permission_check_title),
+                    context.getString(R.string.rsb_permission_permission_check_text));
             steps.add(step1);
         }
 

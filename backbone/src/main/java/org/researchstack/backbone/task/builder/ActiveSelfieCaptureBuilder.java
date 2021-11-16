@@ -52,8 +52,8 @@ public class ActiveSelfieCaptureBuilder {
             PermissionRequestManager.PermissionRequest request = new PermissionRequestManager.PermissionRequest(
                     Manifest.permission.CAMERA,
                     R.drawable.ic_baseline_photo_camera_24,
-                    R.string.permission_camera_name,
-                    R.string.permission_camera_description);
+                    R.string.rsb_permission_camera_name,
+                    R.string.rsb_permission_camera_description);
             request.setIsBlockingPermission(true);
             request.setIsSystemPermission(true);
             newRequests.add(request);
@@ -63,8 +63,8 @@ public class ActiveSelfieCaptureBuilder {
             PermissionRequestManager.PermissionRequest request = new PermissionRequestManager.PermissionRequest(
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     R.drawable.ic_baseline_storage_24,
-                    R.string.permission_write_external_storage_name,
-                    R.string.permission_write_external_storage_description);
+                    R.string.rsb_permission_write_external_storage_name,
+                    R.string.rsb_permission_write_external_storage_description);
             request.setIsBlockingPermission(true);
             request.setIsSystemPermission(true);
             newRequests.add(request);
@@ -73,15 +73,15 @@ public class ActiveSelfieCaptureBuilder {
         if (!newRequests.isEmpty()) {
             PermissionRequestManager.getInstance().setPermissionRequests(newRequests);
             PermissionsStep step1 = new PermissionsStep("permissionsStep",
-                    context.getString(R.string.permission_permission_check_title),
-                    context.getString(R.string.permission_permission_check_text));
+                    context.getString(R.string.rsb_permission_permission_check_title),
+                    context.getString(R.string.rsb_permission_permission_check_text));
             steps.add(step1);
         }
 
         InstructionStep step2 = new InstructionStep("intro",
                 infoTitle,
                 infoInstructions);
-        step2.setStepTitle(R.string.active_selfie_capture_test_title);
+        step2.setStepTitle(R.string.rsb_active_selfie_capture_test_title);
         step2.setImage("rsb_tremor_in_hand");
         steps.add(step2);
 
