@@ -11,11 +11,11 @@ apply plugin: "kotlin-kapt"
 version = '2.0.0-SNAPSHOT'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 26
+        minSdkVersion 26
+        targetSdkVersion 29
         versionCode 7
         versionName version
         vectorDrawables.useSupportLibrary = true
@@ -119,10 +119,14 @@ dependencies {
     testImplementation 'org.powermock:powermock-module-junit4-rule:1.7.1'
     testImplementation 'org.powermock:powermock-module-junit4:1.7.1'
 
-
-
     testImplementation 'org.robolectric:robolectric:4.2.1'
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
+
+    // Required for camera support face detection
+    implementation "androidx.camera:camera-camera2:1.0.1"
+    implementation "androidx.camera:camera-lifecycle:1.0.1"
+    implementation "androidx.camera:camera-view:1.0.0-alpha27"
+    implementation 'com.google.mlkit:face-detection:16.1.2'
 }
 
 
