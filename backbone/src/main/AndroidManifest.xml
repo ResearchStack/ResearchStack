@@ -4,7 +4,7 @@
 
     <!-- We allow users to secure their data using their fingerprint see -->
     <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
-
+    
     <!-- ActiveSteps may vibrate the phone on start and on finish -->
     <!-- Apps should include this if you want ActiveSteps to vibrate -->
     <!-- <uses-permission android:name="android.permission.VIBRATE"/> -->
@@ -16,5 +16,24 @@
 
     <!-- Needs to be added if your app uses an task with AudioStep -->
     <!--<uses-permission android:name="android.permission.RECORD_AUDIO" /> -->
+
+    <!-- Needs to be added if your app requires image capture using the camera -->
+    <!-- <uses-permission android:name="android.permission.CAMERA"/> -->
+    <!-- <uses-feature android:name="android.hardware.camera.any" /> -->
+
+    <!-- Needs to be added if your app must write files to external storage -->
+    <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/> -->
+
+    <!-- Required to write files to internal app storage in the files directory -->
+    <!-- <provider
+        android:name="androidx.core.content.FileProvider"
+        android:authorities="org.researchstack.backbone.fileprovider"
+        android:exported="false"
+        android:grantUriPermissions="true">
+        <meta-data
+            android:name="android.support.FILE_PROVIDER_PATHS"
+            android:resource="@xml/file_paths">
+        </meta-data>
+    </provider> -->
 
 </manifest>
