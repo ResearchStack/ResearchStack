@@ -12,12 +12,14 @@ public class ActiveSelfieCaptureFactory {
                                          String infoText,
                                          String infoInstructions,
                                          String captureText,
-                                         String captureInstructions) {
+                                         String captureInstructions,
+                                         int waitTimeSeconds) {
         return new ActiveSelfieCaptureBuilder()
                 .setIdentifier(identifier)
                 .setContext(context)
                 .setInfoText(infoText, infoInstructions)
                 .setCaptureText(captureText, captureInstructions)
+                .setWaitTimeSeconds(waitTimeSeconds)
                 .build();
     }
 }

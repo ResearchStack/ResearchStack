@@ -55,29 +55,14 @@
             android:gravity="bottom|center_horizontal"
             android:orientation="horizontal">
 
-            <FrameLayout
-                android:id="@+id/selfieCaptureButtonFrame"
+            <TextView
+                android:id="@+id/selfieCaptureTime"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/selfieCaptureButton"
-                    android:layout_width="@dimen/rsb_step_layout_tapping_interval_button_size"
-                    android:layout_height="@dimen/rsb_step_layout_tapping_interval_button_size"
-                    android:layout_margin="@dimen/rsb_padding_large"
-                    app:theme="@style/Base.Widget.AppCompat.ImageButton" />
-
-                <TextView
-                    style="@style/TextAppearance.AppCompat.Headline"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:clickable="false"
-                    android:elevation="16dp"
-                    android:text="Snap"
-                    android:textColor="@color/rsb_step_layout_tapping_button_text_color" />
-
-            </FrameLayout>
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:textSize="48sp"
+                android:textStyle="bold"
+                android:visibility="gone"/>
         </LinearLayout>
     </LinearLayout>
 

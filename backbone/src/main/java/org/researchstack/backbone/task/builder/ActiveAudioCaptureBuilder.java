@@ -69,16 +69,16 @@ public class ActiveAudioCaptureBuilder {
             newRequests.add(request);
         }
 
-        if (!PermissionRequestManager.getInstance().hasPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            PermissionRequestManager.PermissionRequest request = new PermissionRequestManager.PermissionRequest(
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    R.drawable.ic_baseline_storage_24,
-                    R.string.rsb_permission_write_external_storage_name,
-                    R.string.rsb_permission_write_external_storage_description);
-            request.setIsBlockingPermission(true);
-            request.setIsSystemPermission(true);
-            newRequests.add(request);
-        }
+//        if (!PermissionRequestManager.getInstance().hasPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+//            PermissionRequestManager.PermissionRequest request = new PermissionRequestManager.PermissionRequest(
+//                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//                    R.drawable.ic_baseline_storage_24,
+//                    R.string.rsb_permission_write_external_storage_name,
+//                    R.string.rsb_permission_write_external_storage_description);
+//            request.setIsBlockingPermission(true);
+//            request.setIsSystemPermission(true);
+//            newRequests.add(request);
+//        }
 
         if (!newRequests.isEmpty()) {
             PermissionRequestManager.getInstance().setPermissionRequests(newRequests);

@@ -21,6 +21,8 @@ public class ActiveSelfieCaptureBuilder {
 
     private Context context;
     private String identifier, infoTitle, infoInstructions, captureTitle, captureInstructions;
+    private ActiveSelfieCaptureStep.DrawOverlayListener drawOverlayListener;
+    private int waitTimeSeconds;
 
     public ActiveSelfieCaptureBuilder setIdentifier(String identifier) {
         this.identifier = identifier;
@@ -44,6 +46,16 @@ public class ActiveSelfieCaptureBuilder {
         return this;
     }
 
+    public ActiveSelfieCaptureBuilder setDrawOverlayListener(ActiveSelfieCaptureStep.DrawOverlayListener drawOverlayListener) {
+        this.drawOverlayListener = drawOverlayListener;
+        return this;
+    }
+
+    public ActiveSelfieCaptureBuilder setWaitTimeSeconds(int waitTimeSeconds) {
+        this.waitTimeSeconds = waitTimeSeconds;
+        return this;
+    }
+
     public Task build() {
         List<Step> steps = new ArrayList<>();
 
@@ -59,16 +71,16 @@ public class ActiveSelfieCaptureBuilder {
             newRequests.add(request);
         }
 
-        if (!PermissionRequestManager.getInstance().hasPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            PermissionRequestManager.PermissionRequest request = new PermissionRequestManager.PermissionRequest(
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    R.drawable.ic_baseline_storage_24,
-                    R.string.rsb_permission_write_external_storage_name,
-                    R.string.rsb_permission_write_external_storage_description);
-            request.setIsBlockingPermission(true);
-            request.setIsSystemPermission(true);
-            newRequests.add(request);
-        }
+//        if (!PermissionRequestManager.getInstance().hasPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+//            PermissionRequestManager.PermissionRequest request = new PermissionRequestManager.PermissionRequest(
+//                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//                    R.drawable.ic_baseline_storage_24,
+//                    R.string.rsb_permission_write_external_storage_name,
+//                    R.string.rsb_permission_write_external_storage_description);
+//            request.setIsBlockingPermission(true);
+//            request.setIsSystemPermission(true);
+//            newRequests.add(request);
+//        }
 
         if (!newRequests.isEmpty()) {
             PermissionRequestManager.getInstance().setPermissionRequests(newRequests);
@@ -90,6 +102,9 @@ public class ActiveSelfieCaptureBuilder {
                 captureTitle,
                 null);
         step3.setInstructionsText(captureInstructions);
+        step3.setCaptureWaitTimeSeconds(waitTimeSeconds);
+        if (drawOverlayListener != null)
+            step3.setDrawOverlayListener(drawOverlayListener);
         steps.add(step3);
 
         steps.add(TaskFactory.makeCompletionStep(context));

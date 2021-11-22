@@ -1,9 +1,6 @@
 package org.researchstack.backbone.step.active;
 
 import android.graphics.Canvas;
-import android.media.Image;
-
-import com.google.mlkit.vision.face.Face;
 
 import org.researchstack.backbone.ui.step.layout.ActiveSelfieCaptureStepLayout;
 
@@ -12,7 +9,8 @@ import java.io.Serializable;
 public class ActiveSelfieCaptureStep extends ActiveStep {
 
     private String instructionsText;
-    private FaceDetectListener faceDetectListener;
+    private DrawOverlayListener drawOverlayListener;
+    private int captureWaitTimeSeconds;
 
     public ActiveSelfieCaptureStep(String identifier, String title, String detailText) {
         super(identifier, title, detailText);
@@ -30,15 +28,23 @@ public class ActiveSelfieCaptureStep extends ActiveStep {
         return this.instructionsText;
     }
 
-    public FaceDetectListener getFaceDetectListener() {
-        return faceDetectListener;
+    public DrawOverlayListener getDrawOverlayListener() {
+        return drawOverlayListener;
     }
 
-    public void setFaceDetectListener(FaceDetectListener faceDetectListener) {
-        this.faceDetectListener = faceDetectListener;
+    public void setDrawOverlayListener(DrawOverlayListener drawOverlayListener) {
+        this.drawOverlayListener = drawOverlayListener;
     }
 
-    public interface FaceDetectListener extends Serializable {
-        void overlayDraw(Canvas overlay, Face face, Image faceImage);
+    public int getCaptureWaitTimeSeconds() {
+        return captureWaitTimeSeconds;
+    }
+
+    public void setCaptureWaitTimeSeconds(int captureWaitTimeSeconds) {
+        this.captureWaitTimeSeconds = captureWaitTimeSeconds;
+    }
+
+    public interface DrawOverlayListener extends Serializable {
+        void draw(Canvas overlay);
     }
 }
