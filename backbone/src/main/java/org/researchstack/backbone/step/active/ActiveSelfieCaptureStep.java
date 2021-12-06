@@ -1,6 +1,11 @@
 package org.researchstack.backbone.step.active;
 
 import android.graphics.Canvas;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.media.Image;
+
+import com.google.mlkit.vision.face.Face;
 
 import org.researchstack.backbone.ui.step.layout.ActiveSelfieCaptureStepLayout;
 
@@ -46,5 +51,6 @@ public class ActiveSelfieCaptureStep extends ActiveStep {
 
     public interface DrawOverlayListener extends Serializable {
         void draw(Canvas overlay);
+        boolean isFaceInPosition(RectF overlay, RectF faceImage, Rect face);
     }
 }

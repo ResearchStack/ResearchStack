@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.RectF;
 import android.media.Image;
 import android.net.Uri;
 import android.view.View;
@@ -194,8 +195,16 @@ public class ActiveSelfieCaptureStepLayout extends ActiveStepLayout {
                                         return;
                                     }
 
-                                    if (!countdownManager.isCountdownRunning())
+                                    boolean isFaceInPosition = (drawOverlayListener == null) ? true :
+                                        drawOverlayListener.isFaceInPosition(
+                                            new RectF(0, 0, previewView.getBitmap().getWidth(), previewView.getBitmap().getHeight()),
+                                            new RectF(0, 0, faceImage.getWidth(), faceImage.getHeight()),
+                                            faces.iterator().next().getBoundingBox());
+                                    boolean isCountdownRunning = countdownManager.isCountdownRunning();
+                                    if (!isCountdownRunning && isFaceInPosition)
                                         countdownManager.start();
+                                    else if (isCountdownRunning && !isFaceInPosition)
+                                        countdownManager.stop();
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 } finally {
