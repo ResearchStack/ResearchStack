@@ -79,18 +79,19 @@ public class ActiveSelfieCaptureFactory {
 
         @Override
         public boolean isFaceInPosition(RectF overlay, RectF faceImage, Rect face) {
-            float vWidth = overlay.width();
-            float vHeight = overlay.height();
-            float wWidth = faceImage.width();
-            float wHeight = faceImage.height();
-
-            // flip the left and right coordinates for the face bounds
-            PointF t1 = transform(wWidth, wHeight, vWidth, vHeight, translate(wWidth, wHeight, face, new PointF(face.right, face.top)));
-            PointF t2 = transform(wWidth, wHeight, vWidth, vHeight, translate(wWidth, wHeight, face, new PointF(face.left, face.bottom)));
-            RectF vFaceBounds = new RectF(t1.x, t1.y, t2.x, t2.y);
-            RectF vMinBounds = getViewportBoundingBox(vWidth, vHeight, new RectF(50f, 50f, 150f, 150f));
-
-            return vFaceBounds.contains(vMinBounds);
+//            float vWidth = overlay.width();
+//            float vHeight = overlay.height();
+//            float wWidth = faceImage.width();
+//            float wHeight = faceImage.height();
+//
+//            // flip the left and right coordinates for the face bounds
+//            PointF t1 = transform(wWidth, wHeight, vWidth, vHeight, translate(wWidth, wHeight, face, new PointF(face.right, face.top)));
+//            PointF t2 = transform(wWidth, wHeight, vWidth, vHeight, translate(wWidth, wHeight, face, new PointF(face.left, face.bottom)));
+//            RectF vFaceBounds = new RectF(t1.x, t1.y, t2.x, t2.y);
+//            RectF vMinBounds = getViewportBoundingBox(vWidth, vHeight, new RectF(50f, 50f, 150f, 150f));
+//
+//            return vFaceBounds.contains(vMinBounds);
+            return true;
         }
 
         private PointF translate(float width, float height, Rect bounds, PointF p) {
