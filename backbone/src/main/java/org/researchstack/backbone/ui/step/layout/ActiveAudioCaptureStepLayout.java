@@ -206,9 +206,9 @@ public class ActiveAudioCaptureStepLayout extends ActiveStepLayout {
             recorder.setOutputFormat(MediaRecorder.OutputFormat.AAC_ADTS);
             recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
             recorder.setOutputFile(outputFile);
-            recorder.setAudioChannels(2);
+            recorder.setAudioChannels(1);
             recorder.setAudioSamplingRate(96000); // highest supported for AAC
-            recorder.setAudioEncodingBitRate(256);
+            recorder.setAudioEncodingBitRate(512000);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 recorder.setPreferredMicrophoneDirection(MicrophoneDirection.MIC_DIRECTION_TOWARDS_USER);
             }
