@@ -129,7 +129,10 @@ public class ActiveAudioCaptureStepLayout extends ActiveStepLayout {
 
     private String buildStartTime() {
         int durationSeconds = ((ActiveAudioCaptureStep)step).getStepDuration();
-        return "00:" + durationSeconds + ".0";
+        long current = System.currentTimeMillis();
+        long time = current - (current - (durationSeconds * 1000));
+        SimpleDateFormat df = new SimpleDateFormat("mm:ss.S");
+        return df.format(time);
     }
 
     private StepResult buildStepResult() {
