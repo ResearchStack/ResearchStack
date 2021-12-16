@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Capture image layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/selfieCaptureLayout"
+        android:layout_weight="20"
+        android:gravity="fill">
+
+        <TextView
+            android:id="@+id/selfieCaptureTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#2196F3"
+            android:textSize="24sp"
+            android:textStyle="bold|italic"
+            android:padding="5dp"/>
+
+        <TextView
+            android:id="@+id/selfieCaptureDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/camera_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="5">
+
+            <androidx.camera.view.PreviewView
+                android:id="@+id/camera_preview"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintDimensionRatio="0.9"/>
+
+            <ImageView
+                android:id="@+id/camera_preview_overlay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toTopOf="@+id/camera_preview"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom|center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/selfieCaptureTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:textSize="48sp"
+                android:textStyle="bold"
+                android:visibility="gone"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Review image layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/selfieReviewLayout"
+        android:layout_weight="20"
+        android:gravity="fill"
+        android:visibility="gone">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:padding="5dp">
+
+            <ImageView
+                android:id="@+id/selfieDisplayThumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintDimensionRatio="0.7"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            xmlns:app = "http://schemas.android.com/apk/res-auto">
+
+            <FrameLayout
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:id="@+id/selfieResetButtonFrame">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    app:theme = "@style/Base.Widget.AppCompat.ImageButton"
+                    android:id = "@+id/selfieResetButton"
+                    android:layout_width = "@dimen/rsb_step_layout_tapping_interval_button_size"
+                    android:layout_height = "@dimen/rsb_step_layout_tapping_interval_button_size"
+                    android:layout_margin = "@dimen/rsb_padding_large"/>
+
+                <TextView
+                    style = "@style/TextAppearance.AppCompat.Headline"
+                    android:layout_width = "wrap_content"
+                    android:layout_height = "wrap_content"
+                    android:layout_gravity = "center"
+                    android:text = "Reset"
+                    android:elevation = "16dp"
+                    android:textColor = "@color/rsb_step_layout_tapping_button_text_color"
+                    android:clickable = "false"/>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:id="@+id/selfieSubmitButtonFrame">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    app:theme = "@style/Base.Widget.AppCompat.ImageButton"
+                    android:id = "@+id/selfieSubmitButton"
+                    android:layout_width = "@dimen/rsb_step_layout_tapping_interval_button_size"
+                    android:layout_height = "@dimen/rsb_step_layout_tapping_interval_button_size"
+                    android:layout_margin = "@dimen/rsb_padding_large"/>
+
+                <TextView
+                    style = "@style/TextAppearance.AppCompat.Headline"
+                    android:layout_width = "wrap_content"
+                    android:layout_height = "wrap_content"
+                    android:layout_gravity = "center"
+                    android:text = "Submit"
+                    android:elevation = "16dp"
+                    android:textColor = "@color/rsb_step_layout_tapping_button_text_color"
+                    android:clickable = "false"/>
+
+            </FrameLayout>
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>
