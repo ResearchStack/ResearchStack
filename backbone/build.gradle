@@ -115,7 +115,7 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v2.2.3'
 
     implementation 'com.scottyab:aes-crypto:0.0.3'
-    implementation 'co.touchlab.squeaky:squeaky-query:0.4.0.0'
+    api 'co.touchlab.squeaky:squeaky-query:0.4.0.0'
     annotationProcessor 'co.touchlab.squeaky:squeaky-processor:0.4.0.0'
     implementation 'net.zetetic:android-database-sqlcipher:4.0.1@aar'
 
