@@ -7,7 +7,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.4'
+        classpath 'com.android.tools.build:gradle:4.0.0'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
         classpath 'me.tatarka:gradle-retrolambda:3.2.3'
         // workaround lint bug concerning lombok (used by retrolambda)
