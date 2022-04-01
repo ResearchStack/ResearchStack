@@ -179,7 +179,7 @@ public class DateQuestionBody implements StepBody {
                     },
                     calendar.get(Calendar.HOUR_OF_DAY),
                     calendar.get(Calendar.MINUTE),
-                    true).show();
+                    false).show();
 
         } else if (format.getStyle() == AnswerFormat.DateAnswerStyle.DateAndTime) {
             new DatePickerDialog(contextWrapper,
@@ -196,7 +196,7 @@ public class DateQuestionBody implements StepBody {
                                 },
                                 calendar.get(Calendar.HOUR_OF_DAY),
                                 calendar.get(Calendar.MINUTE),
-                                true).show();
+                                false).show();
                     },
                     calendar.get(Calendar.YEAR),
                     calendar.get(Calendar.MONTH),
