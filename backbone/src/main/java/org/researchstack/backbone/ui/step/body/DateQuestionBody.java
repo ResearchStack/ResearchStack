@@ -152,7 +152,7 @@ public class DateQuestionBody implements StepBody {
     private void showDialog(TextView tv) {
         // need to find a material date picker, since it's not in the support library
         ContextThemeWrapper contextWrapper = new ContextThemeWrapper(tv.getContext(),
-                R.style.Theme_Backbone);
+                R.style.Platform_AppCompat_Light);
         if (format.getStyle() == AnswerFormat.DateAnswerStyle.Date) {
             new DatePickerDialog(contextWrapper,
                     (view, year, monthOfYear, dayOfMonth) -> {
@@ -167,7 +167,7 @@ public class DateQuestionBody implements StepBody {
                     calendar.get(Calendar.MONTH),
                     calendar.get(Calendar.DAY_OF_MONTH)).show();
         } else if (format.getStyle() == AnswerFormat.DateAnswerStyle.TimeOfDay) {
-            new TimePickerDialog(contextWrapper,
+            new TimePickerDialog(contextWrapper,3,
                     (view, hourOfDay, minute) -> {
                         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                         calendar.set(Calendar.MINUTE, minute);
@@ -185,7 +185,7 @@ public class DateQuestionBody implements StepBody {
             new DatePickerDialog(contextWrapper,
                     (dview, year, monthOfYear, dayOfMonth) -> {
                         calendar.set(year, monthOfYear, dayOfMonth);
-                        new TimePickerDialog(contextWrapper,
+                        new TimePickerDialog(contextWrapper,3,
                                 (tview, hourOfDay, minute) -> {
                                     calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                                     calendar.set(Calendar.MINUTE, minute);
