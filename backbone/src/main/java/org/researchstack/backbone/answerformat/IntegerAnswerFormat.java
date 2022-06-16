@@ -57,7 +57,7 @@ public class IntegerAnswerFormat extends TextAnswerFormat {
      * @return the max value, Integer.MAX_VALUE if maxValue is 0
      */
     public int getMaxValue() {
-        return (maxValue == 0) ? Integer.MAX_VALUE : maxValue;
+        return (maxValue == 0) ? 0 : maxValue;
     }
 
     /**
