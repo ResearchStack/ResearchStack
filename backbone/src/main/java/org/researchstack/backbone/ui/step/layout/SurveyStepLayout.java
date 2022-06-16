@@ -1,24 +1,24 @@
 package org.researchstack.backbone.ui.step.layout;
 
+import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
-import android.support.annotation.StringRes;
 import android.text.Html;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.MainThread;
+import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
+
 import org.researchstack.backbone.R;
-import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
-import org.researchstack.backbone.ui.ViewWebDocumentActivity;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.body.BodyAnswer;
 import org.researchstack.backbone.ui.step.body.StepBody;
@@ -36,18 +36,18 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     // Data used to initializeLayout and return
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     private QuestionStep questionStep;
-    private StepResult stepResult;
+    protected StepResult stepResult;
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Communicate w/ host
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    private StepCallbacks callbacks;
+    protected StepCallbacks callbacks;
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Child Views
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     private LinearLayout container;
-    private StepBody stepBody;
+    protected StepBody stepBody;
 
     public SurveyStepLayout(Context context) {
         super(context);
@@ -73,7 +73,6 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
 
         this.questionStep = (QuestionStep) step;
         this.stepResult = result;
-
         initializeStep();
     }
 
@@ -85,7 +84,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     /**
      * Method allowing a step to consume a back event.
      *
-     * @return
+     * @return a boolean indication whether the back event is consumed
      */
     @Override
     public boolean isBackEventConsumed() {
@@ -117,27 +116,9 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         SubmitBar submitBar = (SubmitBar) findViewById(R.id.rsb_submit_bar);
         submitBar.setPositiveAction(v -> onNextClicked());
 
+        submitBar.setVisibility(View.VISIBLE);
         if (questionStep != null) {
-            if (!TextUtils.isEmpty(questionStep.getTitle())) {
-                title.setVisibility(View.VISIBLE);
-                title.setText(questionStep.getTitle());
-            }
-
-            if (!TextUtils.isEmpty(questionStep.getText())) {
-                summary.setVisibility(View.VISIBLE);
-                summary.setText(Html.fromHtml(questionStep.getText()));
-                summary.setMovementMethod(new TextViewLinkHandler() {
-                    @Override
-                    public void onLinkClick(String url) {
-                        String path = ResourcePathManager.getInstance().
-                                generateAbsolutePath(ResourcePathManager.Resource.TYPE_HTML, url);
-                        Intent intent = ViewWebDocumentActivity.newIntentForPath(getContext(),
-                                questionStep.getTitle(),
-                                path);
-                        getContext().startActivity(intent);
-                    }
-                });
-            }
+            setupTitleLayout(getContext(), questionStep, title, summary);
 
             if (questionStep.isOptional()) {
                 submitBar.setNegativeTitle(R.string.rsb_step_skip);
@@ -148,13 +129,39 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         }
     }
 
+    @NonNull
+    @MainThread
+    // Protected and static so that FormStepLayout can access this method
+    protected static void setupTitleLayout(Context context, QuestionStep questionStep, TextView title, TextView summary) {
+        if (!TextUtils.isEmpty(questionStep.getTitle())) {
+            title.setVisibility(View.VISIBLE);
+            title.setText(questionStep.getTitle());
+        }
+
+        if (!TextUtils.isEmpty(questionStep.getText())) {
+            summary.setVisibility(View.VISIBLE);
+            summary.setText(Html.fromHtml(questionStep.getText()));
+            summary.setMovementMethod(new TextViewLinkHandler() {
+                @Override
+                public void onLinkClick(String url) {
+
+                }
+            });
+        }
+    }
+
     public void initStepBody() {
         LogExt.i(getClass(), "initStepBody()");
 
-        LayoutInflater inflater = LayoutInflater.from(getContext());
         stepBody = createStepBody(questionStep, stepResult);
-        View body = stepBody.getBodyView(StepBody.VIEW_TYPE_DEFAULT, inflater, this);
+        View body = stepBody.getBodyView(StepBody.VIEW_TYPE_DEFAULT, layoutInflater, this);
+        replaceStepBodyView(container, body);
+    }
 
+    @NonNull
+    @MainThread
+    // Protected and static so that FormStepLayout can access this method
+    protected static void replaceStepBodyView(LinearLayout container, View body) {
         if (body != null) {
             View oldView = container.findViewById(R.id.rsb_survey_step_body);
             int bodyIndex = container.indexOfChild(oldView);
@@ -165,9 +172,12 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     }
 
     @NonNull
-    private StepBody createStepBody(QuestionStep questionStep, StepResult result) {
+    @MainThread
+    // Protected and static so that FormStepLayout can access this method
+    protected static StepBody createStepBody(QuestionStep questionStep, StepResult result) {
         try {
             Class cls = questionStep.getStepBodyClass();
+
             Constructor constructor = cls.getConstructor(Step.class, StepResult.class);
             return (StepBody) constructor.newInstance(questionStep, result);
         } catch (Exception e) {
@@ -181,9 +191,16 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         return super.onSaveInstanceState();
     }
 
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(this.getWindowToken(), 0);
+        }
+    }
+
     protected void onNextClicked() {
         BodyAnswer bodyAnswer = stepBody.getBodyAnswerState();
-
+        hideKeyboard();
         if (bodyAnswer == null || !bodyAnswer.isValid()) {
             Toast.makeText(getContext(),
                     bodyAnswer == null
@@ -191,10 +208,13 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
                             : bodyAnswer.getString(getContext()),
                     Toast.LENGTH_SHORT).show();
         } else {
-            callbacks.onSaveStep(StepCallbacks.ACTION_NEXT,
-                    getStep(),
-                    stepBody.getStepResult(false));
+            onComplete();
         }
+    }
+
+    protected void onComplete() {
+        stepResult = stepBody.getStepResult(false);
+        callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, getStep(), stepResult);
     }
 
     public void onSkipClicked() {

@@ -1,8 +1,6 @@
 package org.researchstack.backbone.ui.step.body;
 
 import android.content.res.Resources;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.AppCompatCheckBox;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,16 +15,20 @@ import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+
+import androidx.appcompat.widget.AppCompatCheckBox;
+import androidx.core.content.ContextCompat;
 
 public class MultiChoiceQuestionBody<T> implements StepBody {
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Constructor Fields
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
     private QuestionStep step;
-    private StepResult<T[]> result;
+    private StepResult<ArrayList<T>> result;
     private ChoiceAnswerFormat format;
     private Choice<T>[] choices;
     private Set<T> currentSelected;
@@ -40,9 +42,9 @@ public class MultiChoiceQuestionBody<T> implements StepBody {
         // Restore results
         currentSelected = new HashSet<>();
 
-        T[] resultArray = this.result.getResult();
-        if (resultArray != null && resultArray.length > 0) {
-            currentSelected.addAll(Arrays.asList(resultArray));
+        ArrayList<T> resultArray = this.result.getResult();
+        if (resultArray != null && resultArray instanceof List<?>) {
+            currentSelected.addAll(resultArray);
         }
     }
 
@@ -123,9 +125,9 @@ public class MultiChoiceQuestionBody<T> implements StepBody {
     public StepResult getStepResult(boolean skipped) {
         if (skipped) {
             currentSelected.clear();
-            result.setResult((T[]) currentSelected.toArray());
+            result.setResult(null);
         } else {
-            result.setResult((T[]) currentSelected.toArray());
+            result.setResult(new ArrayList<>(currentSelected));
         }
         return result;
     }

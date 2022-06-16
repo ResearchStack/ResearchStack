@@ -8,7 +8,7 @@
         <item name="android:paddingRight">@dimen/rsb_margin_right</item>
         <item name="android:paddingTop">@dimen/rsb_padding_medium</item>
         <item name="android:paddingBottom">@dimen/rsb_padding_medium</item>
-        <item name="android:textColor">?attr/colorAccent</item>
+        <item name="android:textColor">@color/rsb_black</item>
         <item name="android:textSize">@dimen/rsb_text_size_title</item>
     </style>
 
@@ -19,6 +19,16 @@
         <item name="android:paddingRight">@dimen/rsb_margin_right</item>
         <item name="android:paddingTop">@dimen/rsb_padding_wedge</item>
         <item name="android:paddingBottom">@dimen/rsb_padding_small</item>
+    </style>
+
+    <style name="Backbone.Survey.Summary.Detail" parent="">
+        <item name="android:layout_marginTop">@dimen/rsb_padding_wedge</item>
+        <item name="android:layout_marginBottom">@dimen/rsb_padding_small</item>
+        <item name="android:paddingLeft">@dimen/rsb_margin_left</item>
+        <item name="android:paddingRight">@dimen/rsb_margin_right</item>
+        <item name="android:paddingTop">@dimen/rsb_padding_wedge</item>
+        <item name="android:paddingBottom">@dimen/rsb_padding_small</item>
+        <item name="android:textSize">@dimen/rsb_text_size_detail</item>
     </style>
 
     <style name="Backbone.Survey.Summary.Link">
@@ -128,5 +138,53 @@
         <item name="android:minHeight">48dp</item>
         <item name="android:gravity">center_vertical</item>
     </style>
+
+    <style name="RsbLearnTitle">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_marginTop">8dp</item>
+    </style>
+
+    <style name="RsbLearnItemLogo">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+    </style>
+
+
+    <style name="TextColorPreference">
+        <item name="preferenceTextColor">?attr/colorAccent</item>
+    </style>
+
+    <style name="StudyOverviewTabStyle">
+        <item name="tabIndicatorColor">@android:color/white</item>
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="tabTextColor">#6FFF</item>
+        <item name="tabSelectedTextColor">@android:color/white</item>
+    </style>
+
+    <style name="StudyOverviewItem">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+    </style>
+
+    <style name="Base.Button.Backbone.Onboarding" parent="@style/Widget.AppCompat.Button" tools:ignore="ResourceName">
+        <item name="android:layout_width">160dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="Button.Backbone.Onboarding" parent="@style/Base.Button.Backbone.Onboarding" tools:ignore="ResourceName" />
+
 
 </resources>

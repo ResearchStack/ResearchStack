@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools = "http://schemas.android.com/tools">
+
+	<style name = "Button.Backbone.Onboarding" parent = "@style/Base.Button.Backbone.Onboarding"
+	       tools:ignore = "ResourceName">
+		<item name = "android:stateListAnimator">@drawable/rsb_btn_state_onboarding_anim</item>
+	</style>
+
+	<style name = "rsb_toolbarTheme" parent = "@style/ThemeOverlay.AppCompat.ActionBar">
+		<!-- Customize color of navigation drawer icon and back arrow -->
+		<item name = "android:background">?attr/colorPrimary</item>
+		<item name = "colorControlNormal">@android:color/white</item>
+		<item name = "actionMenuTextColor">@android:color/white</item>
+		<item name = "android:textColor">@color/rsb_white</item>
+		<item name = "android:textColorSecondary">@color/rsb_white</item>
+	</style>
+
+</resources>

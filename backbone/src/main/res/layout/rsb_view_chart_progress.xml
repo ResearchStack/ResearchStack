@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             tools:text="Amount of pie eaten" />
 
-        <android.support.v7.widget.AppCompatButton
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/view_chart_progress_finish"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="wrap_content"

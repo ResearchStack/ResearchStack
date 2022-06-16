@@ -4,9 +4,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.StringRes;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -22,6 +19,9 @@ import com.jakewharton.rxbinding.view.RxView;
 
 import org.researchstack.backbone.R;
 
+import androidx.annotation.StringRes;
+import androidx.cardview.widget.CardView;
+import androidx.core.graphics.drawable.DrawableCompat;
 import rx.Subscription;
 import rx.functions.Action1;
 

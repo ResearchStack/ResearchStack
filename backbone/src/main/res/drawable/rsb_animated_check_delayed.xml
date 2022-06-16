@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- AS throws warning here, but support library supports it -->
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+                 xmlns:tools="http://schemas.android.com/tools"
+                 android:drawable="@drawable/rsb_check_mark"
+                 tools:ignore="NewApi">
+    <target
+        android:name="tick"
+        android:animation="@anim/rsb_check_animation_delayed"/>
+</animated-vector>

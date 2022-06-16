@@ -3,10 +3,12 @@ package org.researchstack.backbone.ui.step.body;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.res.Resources;
-import android.support.v7.view.ContextThemeWrapper;
+import android.text.InputType;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -82,8 +84,9 @@ public class DateQuestionBody implements StepBody {
             title.setVisibility(View.GONE);
         }
 
-        TextView textView = (TextView) view.findViewById(R.id.value);
+        EditText textView = view.findViewById(R.id.value);
         textView.setSingleLine(true);
+        textView.setInputType(InputType.TYPE_NULL);
         if (step.getPlaceholder() != null) {
             textView.setHint(step.getPlaceholder());
         } else {
@@ -149,7 +152,7 @@ public class DateQuestionBody implements StepBody {
     private void showDialog(TextView tv) {
         // need to find a material date picker, since it's not in the support library
         ContextThemeWrapper contextWrapper = new ContextThemeWrapper(tv.getContext(),
-                R.style.Theme_Backbone);
+                R.style.Platform_AppCompat_Light);
         if (format.getStyle() == AnswerFormat.DateAnswerStyle.Date) {
             new DatePickerDialog(contextWrapper,
                     (view, year, monthOfYear, dayOfMonth) -> {
@@ -164,7 +167,7 @@ public class DateQuestionBody implements StepBody {
                     calendar.get(Calendar.MONTH),
                     calendar.get(Calendar.DAY_OF_MONTH)).show();
         } else if (format.getStyle() == AnswerFormat.DateAnswerStyle.TimeOfDay) {
-            new TimePickerDialog(contextWrapper,
+            new TimePickerDialog(contextWrapper,3,
                     (view, hourOfDay, minute) -> {
                         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                         calendar.set(Calendar.MINUTE, minute);
@@ -176,13 +179,13 @@ public class DateQuestionBody implements StepBody {
                     },
                     calendar.get(Calendar.HOUR_OF_DAY),
                     calendar.get(Calendar.MINUTE),
-                    true).show();
+                    false).show();
 
         } else if (format.getStyle() == AnswerFormat.DateAnswerStyle.DateAndTime) {
             new DatePickerDialog(contextWrapper,
                     (dview, year, monthOfYear, dayOfMonth) -> {
                         calendar.set(year, monthOfYear, dayOfMonth);
-                        new TimePickerDialog(contextWrapper,
+                        new TimePickerDialog(contextWrapper,3,
                                 (tview, hourOfDay, minute) -> {
                                     calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                                     calendar.set(Calendar.MINUTE, minute);
@@ -193,7 +196,7 @@ public class DateQuestionBody implements StepBody {
                                 },
                                 calendar.get(Calendar.HOUR_OF_DAY),
                                 calendar.get(Calendar.MINUTE),
-                                true).show();
+                                false).show();
                     },
                     calendar.get(Calendar.YEAR),
                     calendar.get(Calendar.MONTH),

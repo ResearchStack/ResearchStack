@@ -1,11 +1,11 @@
 package org.researchstack.backbone.model;
 
-import android.support.annotation.NonNull;
-
 import java.io.Serializable;
 import java.util.UUID;
 
-public class ConsentSignature implements Serializable, Cloneable {
+import androidx.annotation.NonNull;
+
+public class ConsentSignature implements Serializable {
 
     /**
      * A Boolean value indicating whether the user needs to enter their name during consent review.
@@ -68,6 +68,7 @@ public class ConsentSignature implements Serializable, Cloneable {
      */
     private String signatureDateFormatString;
 
+    /* Default identifier for serilization/deserialization */
     public ConsentSignature() {
         this.requiresName = true;
         this.requiresSignatureImage = true;
