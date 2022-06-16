@@ -38,7 +38,11 @@ public class IntegerAnswerFormat extends AnswerFormat {
      * @return the max value, 0 if no max
      */
     public int getMaxValue() {
+<<<<<<< Updated upstream
         return maxValue;
+=======
+        return (maxValue == 0) ? 0 : maxValue;
+>>>>>>> Stashed changes
     }
 
     /**
