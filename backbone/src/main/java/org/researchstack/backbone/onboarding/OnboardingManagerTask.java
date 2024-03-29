@@ -1,7 +1,7 @@
 package org.researchstack.backbone.onboarding;
 
 import android.content.Context;
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
 
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.model.survey.factory.ConsentDocumentFactory;

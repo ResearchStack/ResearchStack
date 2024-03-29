@@ -120,6 +120,16 @@ public class StepResult<T> extends Result {
         return answerFormat;
     }
 
+    /**
+     * Sets the {@link AnswerFormat} for this step result. May be useful when processing the
+     * result.
+     *
+     * @param answerFormat the answer format associated with the step
+     */
+    public void setAnswerFormat(AnswerFormat answerFormat) {
+        this.answerFormat = answerFormat;
+    }
+
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("StepResult{");

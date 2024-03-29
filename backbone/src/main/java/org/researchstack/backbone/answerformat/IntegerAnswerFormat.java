@@ -81,11 +81,11 @@ public class IntegerAnswerFormat extends TextAnswerFormat {
             if (intAnswer < getMinValue()) {
                 return new BodyAnswer(false,
                         R.string.rsb_invalid_answer_integer_under,
-                        String.valueOf(getMinValue()));
-            } else if (intAnswer > getMaxValue()) {
+                        getMinValue());
+            } else if (getMaxValue() > 0 && intAnswer > getMaxValue()) {
                 return new BodyAnswer(false,
                         R.string.rsb_invalid_answer_integer_over,
-                        String.valueOf(getMaxValue()));
+                        getMaxValue());
             }
 
         }

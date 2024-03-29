@@ -2,8 +2,8 @@ package org.researchstack.backbone.ui.step.layout;
 
 import android.content.Context;
 import android.os.Parcelable;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,7 +12,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 
 import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.step.SubstepListStep;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;

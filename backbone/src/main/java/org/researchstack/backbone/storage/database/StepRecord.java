@@ -2,17 +2,18 @@ package org.researchstack.backbone.storage.database;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
+import org.researchstack.backbone.answerformat.AnswerFormat;
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.utils.FormatHelper;
 import org.researchstack.backbone.utils.TextUtils;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
-
-import co.touchlab.squeaky.field.DatabaseField;
-import co.touchlab.squeaky.table.DatabaseTable;
 
 @DatabaseTable
 public class StepRecord {
@@ -38,6 +39,12 @@ public class StepRecord {
     @DatabaseField
     public Date completed;
 
+    @DatabaseField(canBeNull = false)
+    public String answerFormatClass;
+
+    @DatabaseField
+    public String answerFormat;
+
     @DatabaseField
     public String result;
 
@@ -45,10 +52,26 @@ public class StepRecord {
         StepResult result = new StepResult(new Step(record.stepId));
         result.setStartDate(record.started);
         result.setEndDate(record.completed);
-        if (!TextUtils.isEmpty(record.result)) {
-            result.setResults(GSON.fromJson(record.result, Map.class));
-        }
 
+        AnswerFormat answerFormat = null;
+        if (record.answerFormatClass != null) {
+            try {
+                answerFormat = (AnswerFormat) GSON.fromJson(record.answerFormat, Class.forName(record.answerFormatClass));
+                result.setAnswerFormat(answerFormat);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        if (!TextUtils.isEmpty(record.result)) {
+            Map resultValues = GSON.fromJson(record.result, Map.class);
+            for (Object resultKey : resultValues.keySet()) {
+                if (resultValues.get(resultKey) instanceof List) {
+                    Object[] value = ((List) resultValues.get(resultKey)).toArray();
+                    resultValues.put(resultKey, value);
+                }
+            }
+            result.setResults(resultValues);
+        }
         return result;
     }
 }

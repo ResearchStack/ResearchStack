@@ -90,7 +90,7 @@ public class LoginStepLayoutTest {
         verify(mockDataProvider).signIn(any(), eq(EMAIL), eq(PASSWORD));
         verify(mockDataProvider, never()).signInWithExternalId(any(), any());
 
-        verifyStatic();
+        verifyStatic(StepLayoutHelper.class);
         StepLayoutHelper.safePerform(same(loginResult), any(), any());
     }
 
@@ -114,7 +114,7 @@ public class LoginStepLayoutTest {
         verify(mockDataProvider, never()).signIn(any(), any(), any());
         verify(mockDataProvider).signInWithExternalId(any(), eq(EXTERNAL_ID));
 
-        verifyStatic();
+        verifyStatic(StepLayoutHelper.class);
         StepLayoutHelper.safePerform(same(loginResult), any(), any());
     }
 
@@ -133,7 +133,7 @@ public class LoginStepLayoutTest {
         // Verify dependencies.
         verifyZeroInteractions(mockDataProvider);
 
-        verifyStatic(never());
+        verifyStatic(StepLayoutHelper.class, never());
         StepLayoutHelper.safePerform(any(), any(), any());
     }
 }

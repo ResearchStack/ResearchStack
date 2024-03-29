@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <android.support.design.widget.FloatingActionButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 app:theme="@style/Base.Widget.AppCompat.ImageButton"
                 android:id="@+id/rsb_tapping_interval_button_left"
                 android:layout_width="@dimen/rsb_step_layout_tapping_interval_button_size"
@@ -57,7 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <android.support.design.widget.FloatingActionButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 app:theme="@style/Base.Widget.AppCompat.ImageButton"
                 android:id="@+id/rsb_tapping_interval_button_right"
                 android:layout_width="@dimen/rsb_step_layout_tapping_interval_button_size"

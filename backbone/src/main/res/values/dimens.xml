@@ -40,6 +40,7 @@
     <dimen name="rsb_step_layout_countdown_size">@dimen/rsb_step_layout_image_height</dimen>
 
     <dimen name="rsb_step_layout_tapping_interval_button_size">100dp</dimen>
+    <dimen name="medium_spacing">16dp</dimen>
 
 
     <dimen name="rsb_btn_elevation_material">2dp</dimen>

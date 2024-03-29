@@ -5,6 +5,10 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.support.ConnectionSource;
+import com.j256.ormlite.table.TableUtils;
 
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
@@ -16,12 +20,9 @@ import org.researchstack.backbone.utils.LogExt;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import co.touchlab.squeaky.dao.Dao;
-import co.touchlab.squeaky.db.sqlite.SQLiteDatabaseImpl;
-import co.touchlab.squeaky.db.sqlite.SqueakyOpenHelper;
-import co.touchlab.squeaky.table.TableUtils;
 
 /**
  * A simple database implementation of {@link AppDatabase} the has no encryption and only has tables
@@ -35,7 +36,7 @@ import co.touchlab.squeaky.table.TableUtils;
  * 'co.touchlab.squeaky:squeaky-processor:0.4.0'` to your dependencies and add android-apt:
  * https://bitbucket.org/hvisser/android-apt)
  */
-public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase {
+public class DatabaseHelper extends OrmLiteSqliteOpenHelper implements AppDatabase {
     public static final String DEFAULT_NAME = "appdb";
     public static final int DEFAULT_VERSION = 1;
 
@@ -44,18 +45,17 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase {
     }
 
     @Override
-    public void onCreate(android.database.sqlite.SQLiteDatabase sqLiteDatabase) {
+    public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
         try {
-            TableUtils.createTables(new SQLiteDatabaseImpl(sqLiteDatabase),
-                    TaskRecord.class,
-                    StepRecord.class);
+            TableUtils.createTable(connectionSource,TaskRecord.class);
+            TableUtils.createTable(connectionSource,StepRecord.class);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public void onUpgrade(android.database.sqlite.SQLiteDatabase sqLiteDatabase, int i, int i1) {
+    public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
         // handle future db upgrades here
     }
 
@@ -75,7 +75,7 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase {
             getDao(TaskRecord.class).create(taskRecord);
 
             Gson gson = new GsonBuilder().setDateFormat(FormatHelper.DATE_FORMAT_ISO_8601).create();
-            Dao<StepRecord> stepResultDao = getDao(StepRecord.class);
+            Dao<StepRecord, ?> stepResultDao = getDao(StepRecord.class);
 
             for (StepResult stepResult : taskResult.getResults().values()) {
                 if (stepResult != null) {
@@ -84,6 +84,8 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase {
                     stepRecord.taskId = taskResult.getIdentifier();
                     stepRecord.stepId = stepResult.getIdentifier();
                     stepRecord.completed = stepResult.getEndDate();
+                    stepRecord.answerFormatClass = stepResult.getAnswerFormat().getClass().getName();
+                    stepRecord.answerFormat = gson.toJson(stepResult.getAnswerFormat());
                     if (!stepResult.getResults().isEmpty()) {
                         stepRecord.result = gson.toJson(stepResult.getResults());
                     }
@@ -101,16 +103,15 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase {
         LogExt.d(getClass(), "loadTaskResults() id: " + taskIdentifier);
 
         try {
-            List<TaskRecord> taskRecords = getDao(TaskRecord.class).queryForEq(TaskRecord.TASK_ID,
-                    taskIdentifier).orderBy(TaskRecord.COMPLETED + " DESC").limit(1).list();
+            List<TaskRecord> taskRecords = getDao(TaskRecord.class).queryForEq(TaskRecord.TASK_ID, taskIdentifier);
+            Collections.sort(taskRecords, new TaskRecord.SortByCompleted());
 
             if (taskRecords.isEmpty()) {
                 return null;
             }
 
             TaskRecord record = taskRecords.get(0);
-            List<StepRecord> stepRecords = getDao(StepRecord.class).queryForEq(StepRecord.TASK_RECORD_ID,
-                    record.id).list();
+            List<StepRecord> stepRecords = getDao(StepRecord.class).queryForEq(StepRecord.TASK_RECORD_ID, record.id);
             return TaskRecord.toTaskResult(record, stepRecords);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -123,12 +124,11 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase {
 
         try {
             List<TaskResult> results = new ArrayList<>();
-            List<TaskRecord> taskRecords = getDao(TaskRecord.class).queryForEq(TaskRecord.TASK_ID,
-                    taskIdentifier).list();
+            List<TaskRecord> taskRecords = getDao(TaskRecord.class).queryForEq(TaskRecord.TASK_ID, taskIdentifier);
 
             for (TaskRecord record : taskRecords) {
                 List<StepRecord> stepRecords = getDao(StepRecord.class).queryForEq(StepRecord.TASK_RECORD_ID,
-                        record.id).list();
+                        record.id);
                 TaskResult result = TaskRecord.toTaskResult(record, stepRecords);
                 results.add(result);
             }
@@ -145,8 +145,7 @@ public class DatabaseHelper extends SqueakyOpenHelper implements AppDatabase {
 
         try {
             List<StepResult> results = new ArrayList<>();
-            List<StepRecord> stepRecords = getDao(StepRecord.class).queryForEq(StepRecord.STEP_ID,
-                    stepIdentifier).list();
+            List<StepRecord> stepRecords = getDao(StepRecord.class).queryForEq(StepRecord.STEP_ID, stepIdentifier);
 
             for (StepRecord stepRecord : stepRecords) {
                 StepResult result = StepRecord.toStepResult(stepRecord);

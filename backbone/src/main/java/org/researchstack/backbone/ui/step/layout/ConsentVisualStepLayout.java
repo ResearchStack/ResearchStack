@@ -4,7 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
-import android.support.v4.graphics.drawable.DrawableCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+import android.text.Html;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
@@ -92,12 +93,14 @@ public class ConsentVisualStepLayout extends FixedSubmitBarLayout implements Ste
         }
 
         // Set Title
-        TextView titleView = findViewById(R.id.title);
-        titleView.setText(getTitle());
+        TextView titleView = (TextView) findViewById(R.id.title);
+        String title = TextUtils.isEmpty(data.getTitle()) ? getResources().getString(data.getType()
+                .getTitleResId()) : data.getTitle();
+        titleView.setText(Html.fromHtml(title));
 
         // Set Summary
-        TextView summaryView = findViewById(R.id.summary);
-        summaryView.setText(getSummary());
+        TextView summaryView = (TextView) findViewById(R.id.summary);
+        summaryView.setText(Html.fromHtml(data.getSummary()));
 
         // Set more info
         TextView moreInfoView = findViewById(R.id.more_info);

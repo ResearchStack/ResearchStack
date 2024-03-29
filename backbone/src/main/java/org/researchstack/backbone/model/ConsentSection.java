@@ -1,5 +1,5 @@
 package org.researchstack.backbone.model;
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -165,7 +165,7 @@ public class ConsentSection implements Serializable
         return customImageName;
     }
 
-    void setCustomImageName(String imageName) {
+    public void setCustomImageName(String imageName) {
         customImageName = imageName;
     }
 

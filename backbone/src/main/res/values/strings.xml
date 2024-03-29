@@ -185,6 +185,7 @@
     <string name="rsb_hint_step_body_date">Enter a date</string>
     <string name="rsb_hint_step_body_time">Enter a time</string>
     <string name="rsb_hint_step_body_datetime">Enter a date and a time</string>
+    <string name="rsb_hint_step_body_monthyear">Enter a Month/Year</string>
     <string name="rsb_hint_step_body_text">Answer</string>
 
     <!-- Graphing -->

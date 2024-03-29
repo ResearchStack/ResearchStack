@@ -1,7 +1,7 @@
 package org.researchstack.backbone.utils;
 
 import android.content.Context;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.RequiresApi;
 
 import org.researchstack.backbone.StorageAccess;
 
