@@ -1,13 +1,14 @@
 package org.researchstack.backbone.storage.database;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 import org.researchstack.backbone.result.StepResult;
 import org.researchstack.backbone.result.TaskResult;
 
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-
-import co.touchlab.squeaky.field.DatabaseField;
-import co.touchlab.squeaky.table.DatabaseTable;
 
 @DatabaseTable
 public class TaskRecord {
@@ -40,4 +41,21 @@ public class TaskRecord {
         }
         return taskResult;
     }
+
+
+    public static class SortByCompleted implements Comparator<TaskRecord> {
+        public int compare(TaskRecord a, TaskRecord b) {
+            if (a.completed == null && b.completed == null) {
+                return 0; // Both are null, consider them equal
+            }
+            if (a.completed == null) {
+                return -1; // a is null, so it should come before b
+            }
+            if (b.completed == null) {
+                return 1; // b is null, so a should come before it
+            }
+            return a.completed.compareTo(b.completed); // Both are non-null, compare normally
+        }
+    }
+
 }

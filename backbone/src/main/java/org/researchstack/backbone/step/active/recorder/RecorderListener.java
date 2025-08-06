@@ -1,10 +1,9 @@
 package org.researchstack.backbone.step.active.recorder;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import org.researchstack.backbone.result.Result;
-import org.researchstack.backbone.step.active.recorder.Recorder;
 
 /**
  * Created by TheMDP on 2/5/17.

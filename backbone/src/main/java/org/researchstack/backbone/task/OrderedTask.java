@@ -69,7 +69,7 @@ public class OrderedTask extends Task implements Serializable {
     @Override
     public Step getStepAfterStep(Step step, TaskResult result) {
         if (step == null) {
-            return steps.get(0);
+            return this.steps.isEmpty() ? null : this.steps.get(0);
         }
 
         int nextIndex = steps.indexOf(step) + 1;

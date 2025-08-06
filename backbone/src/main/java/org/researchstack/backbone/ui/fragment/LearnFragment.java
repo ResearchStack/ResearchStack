@@ -3,11 +3,11 @@ package org.researchstack.backbone.ui.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,8 +110,13 @@ public class LearnFragment extends Fragment {
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             if (viewType == VIEW_TYPE_HEADER) {
-                View view = inflater.inflate(R.layout.preference_category_material, parent, false);
-                return new HeaderViewHolder(view);
+                TextView textView = new TextView(context);
+                textView.setTextAppearance(android.R.style.TextAppearance_Material_Headline);
+                textView.setTextColor(ContextCompat.getColor(context, android.R.color.darker_gray));
+                textView.setPadding(16, 24, 16, 8);
+                textView.setId(android.R.id.title); // important if your logic relies on it
+                return new HeaderViewHolder(textView);
+
             } else {
                 View view = inflater.inflate(R.layout.rsb_item_row_learn, parent, false);
                 return new ViewHolder(view);

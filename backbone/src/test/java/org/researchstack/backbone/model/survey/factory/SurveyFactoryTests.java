@@ -1,6 +1,6 @@
 package org.researchstack.backbone.model.survey.factory;
 
-import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
+import androidx.core.hardware.fingerprint.FingerprintManagerCompat;
 import android.text.InputType;
 
 import com.google.gson.reflect.TypeToken;
@@ -24,7 +24,6 @@ import org.researchstack.backbone.answerformat.TextAnswerFormat;
 import org.researchstack.backbone.model.ConsentDocument;
 import org.researchstack.backbone.model.ConsentSection;
 import org.researchstack.backbone.model.ProfileInfoOption;
-import org.researchstack.backbone.model.survey.IntegerRangeSurveyItem;
 import org.researchstack.backbone.model.survey.SurveyItem;
 import org.researchstack.backbone.onboarding.MockResourceManager;
 import org.researchstack.backbone.onboarding.ReConsentInstructionStep;

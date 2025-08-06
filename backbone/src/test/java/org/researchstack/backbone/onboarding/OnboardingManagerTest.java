@@ -1,6 +1,6 @@
 package org.researchstack.backbone.onboarding;
 
-import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
+import androidx.core.hardware.fingerprint.FingerprintManagerCompat;
 
 import org.junit.Before;
 import org.junit.Test;

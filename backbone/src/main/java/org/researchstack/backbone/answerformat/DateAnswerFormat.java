@@ -92,6 +92,7 @@ public class DateAnswerFormat extends AnswerFormat
         if(style == DateAnswerStyle.Date) return Type.Date;
         if(style == DateAnswerStyle.DateAndTime) return Type.DateAndTime;
         if(style == DateAnswerStyle.TimeOfDay) return Type.TimeOfDay;
+        if(style == DateAnswerStyle.MonthYear) return Type.MonthYear;
 
         return Type.None;
     }

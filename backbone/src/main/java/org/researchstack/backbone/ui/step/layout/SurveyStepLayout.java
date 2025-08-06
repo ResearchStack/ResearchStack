@@ -1,14 +1,15 @@
 package org.researchstack.backbone.ui.step.layout;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.Parcelable;
-import android.support.annotation.MainThread;
-import android.support.annotation.NonNull;
-import android.support.annotation.StringRes;
+import androidx.annotation.MainThread;
+import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 import android.text.Html;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,7 +17,6 @@ import android.widget.Toast;
 import org.researchstack.backbone.R;
 import org.researchstack.backbone.ResourcePathManager;
 import org.researchstack.backbone.result.StepResult;
-import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.QuestionStep;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.ui.ViewWebDocumentActivity;
@@ -51,6 +51,8 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     private LinearLayout container;
     protected StepBody     stepBody;
 
+    private boolean readOnlyMode = false;
+
     public SurveyStepLayout(Context context)
     {
         super(context);
@@ -64,6 +66,14 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     public SurveyStepLayout(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
+    }
+
+    public boolean isReadOnlyMode() {
+        return readOnlyMode;
+    }
+
+    public void setReadOnlyMode(boolean readOnlyMode) {
+        this.readOnlyMode = readOnlyMode;
     }
 
     public void initialize(Step step)
@@ -154,7 +164,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
         if(! TextUtils.isEmpty(questionStep.getTitle()))
         {
             title.setVisibility(View.VISIBLE);
-            title.setText(questionStep.getTitle());
+            title.setText(Html.fromHtml(questionStep.getTitle()));
         }
 
         if(! TextUtils.isEmpty(questionStep.getText()))
@@ -183,7 +193,15 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
 
         stepBody = createStepBody(questionStep, stepResult);
         View body = stepBody.getBodyView(StepBody.VIEW_TYPE_DEFAULT, layoutInflater, this);
-        replaceStepBodyView(container, body);
+
+        if (readOnlyMode) {
+            ReadOnlyStepBlocker readOnlyStepBlocker = new ReadOnlyStepBlocker(getContext());
+            readOnlyStepBlocker.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+            readOnlyStepBlocker.addView(body);
+            replaceStepBodyView(container, readOnlyStepBlocker);
+        } else {
+            replaceStepBodyView(container, body);
+        }
     }
 
     @NonNull
@@ -228,7 +246,7 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     {
         BodyAnswer bodyAnswer = stepBody.getBodyAnswerState();
 
-        if(bodyAnswer == null || ! bodyAnswer.isValid())
+        if ((bodyAnswer == null || ! bodyAnswer.isValid()) && !readOnlyMode)
         {
             Toast.makeText(getContext(),
                            bodyAnswer == null
@@ -243,8 +261,19 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     }
 
     protected void onComplete() {
-        stepResult = stepBody.getStepResult(false);
-        callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, getStep(), stepResult);
+        // WORKAROUND : Hide softkeyboard before transaction
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null && container != null) {
+            imm.hideSoftInputFromWindow(container.getWindowToken(), 0);
+        }
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                stepResult = stepBody.getStepResult(false);
+                callbacks.onSaveStep(StepCallbacks.ACTION_NEXT, getStep(), stepResult);
+            }
+        }, 100);
     }
 
     public void onSkipClicked()
@@ -267,5 +296,4 @@ public class SurveyStepLayout extends FixedSubmitBarLayout implements StepLayout
     {
         return getResources().getString(stringResId);
     }
-
 }

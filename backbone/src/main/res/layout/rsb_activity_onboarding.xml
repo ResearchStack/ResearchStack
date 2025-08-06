@@ -78,7 +78,7 @@
         android:visibility="gone"
         tools:visibility="visible"
     >
-        <android.support.v7.widget.LinearLayoutCompat
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/pager_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -91,7 +91,7 @@
             android:orientation="vertical"
             app:elevation="24dp">
 
-            <android.support.design.widget.TabLayout
+            <com.google.android.material.tabs.TabLayout
                 android:id="@+id/pager_title_strip"
                 style="@style/StudyOverviewTabStyle"
                 android:layout_width="match_parent"
@@ -99,14 +99,14 @@
                 android:layout_gravity="top"
                 app:tabMode="scrollable" android:fillViewport="false"/>
 
-            <android.support.v4.view.ViewPager
+            <androidx.viewpager.widget.ViewPager
                 android:id="@+id/pager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/white"
                 app:elevation="16dp"
             />
-        </android.support.v7.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
     </FrameLayout>
 
     <LinearLayout
@@ -118,7 +118,7 @@
 
         <Space android:layout_width="16dp" android:layout_height="match_parent"/>
 
-        <android.support.v7.widget.AppCompatButton
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/intro_skip"
             style="@style/Button.Backbone.Onboarding"
             android:text="@string/rsb_skip_signup"
@@ -126,7 +126,7 @@
             app:backgroundTint="@color/rsb_submit_bar_negative"
             tools:visibility="visible"
         />
-        <android.support.v7.widget.AppCompatButton
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/intro_sign_up"
             style="@style/Button.Backbone.Onboarding"
             android:text="@string/rsb_join_study"
@@ -134,7 +134,7 @@
         <Space android:layout_width="16dp" android:layout_height="match_parent"/>
     </LinearLayout>
 
-    <android.support.v7.widget.AppCompatButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/intro_sign_in"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"

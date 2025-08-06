@@ -8,11 +8,9 @@ import android.media.MediaRecorder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.content.LocalBroadcastManager;
 import android.webkit.MimeTypeMap;
 
 import org.researchstack.backbone.R;
-import org.researchstack.backbone.result.AudioResult;
 import org.researchstack.backbone.result.FileResult;
 import org.researchstack.backbone.step.Step;
 import org.researchstack.backbone.utils.LogExt;

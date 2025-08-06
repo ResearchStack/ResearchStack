@@ -28,18 +28,19 @@ import org.researchstack.backbone.DataResponse;
 import org.researchstack.backbone.utils.StepLayoutHelper;
 import rx.Observable;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyBoolean;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.same;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
+
 import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.verifyStatic;
+import static org.powermock.api.mockito.PowerMockito.verifyZeroInteractions;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(StepLayoutHelper.class)
@@ -90,7 +91,7 @@ public class LoginStepLayoutTest {
         verify(mockDataProvider).signIn(any(), eq(EMAIL), eq(PASSWORD));
         verify(mockDataProvider, never()).signInWithExternalId(any(), any());
 
-        verifyStatic();
+        verifyStatic(StepLayoutHelper.class);
         StepLayoutHelper.safePerform(same(loginResult), any(), any());
     }
 
@@ -114,7 +115,7 @@ public class LoginStepLayoutTest {
         verify(mockDataProvider, never()).signIn(any(), any(), any());
         verify(mockDataProvider).signInWithExternalId(any(), eq(EXTERNAL_ID));
 
-        verifyStatic();
+        verifyStatic(StepLayoutHelper.class);
         StepLayoutHelper.safePerform(same(loginResult), any(), any());
     }
 
@@ -133,7 +134,7 @@ public class LoginStepLayoutTest {
         // Verify dependencies.
         verifyZeroInteractions(mockDataProvider);
 
-        verifyStatic(never());
+        verifyStatic(StepLayoutHelper.class, never());
         StepLayoutHelper.safePerform(any(), any(), any());
     }
 }

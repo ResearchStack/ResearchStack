@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
-import android.support.annotation.LayoutRes;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.IdRes;
+import androidx.annotation.LayoutRes;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
@@ -22,6 +22,7 @@ import org.researchstack.backbone.task.OrderedTask;
 import org.researchstack.backbone.task.Task;
 import org.researchstack.backbone.ui.callbacks.StepCallbacks;
 import org.researchstack.backbone.ui.step.layout.StepLayout;
+import org.researchstack.backbone.ui.step.layout.SurveyStepLayout;
 import org.researchstack.backbone.ui.views.StepSwitcher;
 import org.researchstack.backbone.utils.LogExt;
 import org.researchstack.backbone.utils.StepLayoutHelper;
@@ -30,9 +31,11 @@ import java.util.Date;
 
 public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
 {
-    public static final String EXTRA_TASK        = "ViewTaskActivity.ExtraTask";
-    public static final String EXTRA_TASK_RESULT = "ViewTaskActivity.ExtraTaskResult";
-    public static final String EXTRA_STEP        = "ViewTaskActivity.ExtraStep";
+    public static final String EXTRA_STRING          = "ViewTaskActivity.ExtraString";
+    public static final String EXTRA_TASK           = "ViewTaskActivity.ExtraTask";
+    public static final String EXTRA_TASK_RESULT    = "ViewTaskActivity.ExtraTaskResult";
+    public static final String EXTRA_STEP           = "ViewTaskActivity.ExtraStep";
+    public static final String EXTRA_READONLY       = "ViewTaskActivity.ReadOnly";
 
     protected StepSwitcher root;
     protected Toolbar toolbar;
@@ -49,13 +52,39 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
     }
     protected TaskResult taskResult;
 
+    public TaskResult getTaskResult() {
+        return taskResult;
+    }
+
+    private boolean readOnlyMode = false;
     protected int currentStepAction;
+
+    private String mExtraString = null;
 
     public static Intent newIntent(Context context, Task task)
     {
         Intent intent = new Intent(context, ViewTaskActivity.class);
         intent.putExtra(EXTRA_TASK, task);
         return intent;
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(EXTRA_TASK, task);
+        outState.putSerializable(EXTRA_TASK_RESULT, taskResult);
+        outState.putSerializable(EXTRA_STEP, currentStep);
+        outState.putBoolean(EXTRA_READONLY, readOnlyMode);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        this.taskResult = (TaskResult)savedInstanceState.getSerializable(EXTRA_TASK_RESULT);
+        this.task = (Task)savedInstanceState.getSerializable(EXTRA_TASK);
+        this.currentStep = (Step)savedInstanceState.getSerializable(EXTRA_STEP);
+        this.readOnlyMode = savedInstanceState.getBoolean(EXTRA_READONLY,false);
     }
 
     @Override
@@ -71,6 +100,8 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
 
         root = (StepSwitcher) findViewById(getViewSwitcherRootId());
 
+        readOnlyMode = getIntent().getBooleanExtra(EXTRA_READONLY, false);
+
         if(savedInstanceState == null)
         {
             task = (Task) getIntent() .getSerializableExtra(EXTRA_TASK);
@@ -85,6 +116,12 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
             if (getIntent().hasExtra(EXTRA_STEP)) {
                 currentStep = (Step)getIntent().getSerializableExtra(EXTRA_STEP);
             }
+
+            if (getIntent().hasExtra(EXTRA_STRING)) {
+                mExtraString = getIntent().getStringExtra(EXTRA_STRING);
+            }
+
+
 
             taskResult.setStartDate(new Date());
         }
@@ -142,7 +179,7 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         Step previousStep = task.getStepBeforeStep(currentStep, taskResult);
         if(previousStep == null)
         {
-            discardResultsAndFinish();
+            showConfirmExitDialog();
         }
         else
         {
@@ -199,6 +236,10 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
 
         // Return the Class & constructor
         StepLayout stepLayout = StepLayoutHelper.createLayoutFromStep(step, this);
+        if (stepLayout instanceof SurveyStepLayout) {
+            SurveyStepLayout surveyStepLayout = (SurveyStepLayout)stepLayout;
+            surveyStepLayout.setReadOnlyMode(readOnlyMode);
+        }
         setupStepLayoutBeforeInitializeIsCalled(stepLayout);
         stepLayout.initialize(step, result);
 
@@ -223,6 +264,8 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         taskResult.setEndDate(new Date());
         Intent resultIntent = new Intent();
         resultIntent.putExtra(EXTRA_TASK_RESULT, taskResult);
+        resultIntent.putExtra(EXTRA_TASK, task);
+        resultIntent.putExtra(EXTRA_STRING, mExtraString);
         setResult(RESULT_OK, resultIntent);
         finish();
     }
@@ -295,14 +338,6 @@ public class ViewTaskActivity extends PinCodeActivity implements StepCallbacks
         notifyStepOfBackPress();
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState)
-    {
-        super.onSaveInstanceState(outState);
-        outState.putSerializable(EXTRA_TASK, task);
-        outState.putSerializable(EXTRA_TASK_RESULT, taskResult);
-        outState.putSerializable(EXTRA_STEP, currentStep);
-    }
 
     protected void notifyStepOfBackPress()
     {

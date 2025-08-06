@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
+import androidx.annotation.Nullable;
+import com.google.android.material.tabs.TabLayout;
 import android.util.AttributeSet;
 
 import org.researchstack.backbone.R;

@@ -71,23 +71,26 @@ public class IntegerAnswerFormat extends TextAnswerFormat {
     }
 
     public BodyAnswer validateAnswer(String inputString) {
-
         // If no answer is recorded
         if (TextUtils.isEmpty(inputString)) {
             return BodyAnswer.INVALID;
         } else {
-            // Parse value from editText
-            Integer intAnswer = Integer.valueOf(inputString);
-            if (intAnswer < getMinValue()) {
-                return new BodyAnswer(false,
-                        R.string.rsb_invalid_answer_integer_under,
-                        String.valueOf(getMinValue()));
-            } else if (intAnswer > getMaxValue()) {
-                return new BodyAnswer(false,
-                        R.string.rsb_invalid_answer_integer_over,
-                        String.valueOf(getMaxValue()));
+            try {
+                // Parse value from editText
+                Integer intAnswer = Integer.valueOf(inputString);
+                if (intAnswer < getMinValue()) {
+                    return new BodyAnswer(false,
+                            R.string.rsb_invalid_answer_integer_under,
+                            getMinValue());
+                } else if (getMaxValue() > 0 && intAnswer > getMaxValue()) {
+                    return new BodyAnswer(false,
+                            R.string.rsb_invalid_answer_integer_over,
+                            getMaxValue());
+                }
+            } catch (NumberFormatException e) {
+                // If the input string cannot be parsed to an integer, return INVALID
+                return BodyAnswer.INVALID;
             }
-
         }
 
         return BodyAnswer.VALID;

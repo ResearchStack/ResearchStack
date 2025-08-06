@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             tools:text="Amount of pie eaten" />
 
-        <android.support.v7.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/view_chart_line_expand"
             style="@style/Widget.AppCompat.ActionButton"
             android:layout_width="wrap_content"

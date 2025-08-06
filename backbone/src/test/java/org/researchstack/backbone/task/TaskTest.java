@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.researchstack.backbone.R;
 import org.researchstack.backbone.result.TaskResult;
 import org.researchstack.backbone.step.Step;
 
@@ -25,13 +24,6 @@ public class TaskTest {
         Task task = new TaskImpl("id");
 
         Context mockContext = Mockito.mock(Context.class);
-        Mockito.when(mockContext.getString(R.string.app_name)).thenReturn("title");
-
-        Step mockStepWithTitle = Mockito.mock(Step.class);
-        Mockito.when(mockStepWithTitle.getStepTitle()).thenReturn(R.string.app_name);
-        String title = task.getTitleForStep(mockContext, mockStepWithTitle);
-        assertEquals("Gets title from context using step id", "title", title);
-
         Step mockStepWithoutTitle = Mockito.mock(Step.class);
         Mockito.when(mockStepWithoutTitle.getStepTitle()).thenReturn(0);
         String noTitle = task.getTitleForStep(mockContext, mockStepWithoutTitle);

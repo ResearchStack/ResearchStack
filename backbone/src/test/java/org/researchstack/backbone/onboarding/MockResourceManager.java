@@ -1,6 +1,6 @@
 package org.researchstack.backbone.onboarding;
 
-import org.mockito.Matchers;
+import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.researchstack.backbone.ResourceManager;
 import org.researchstack.backbone.ResourcePathManager;
@@ -28,11 +28,11 @@ public class MockResourceManager extends ResourceManager {
         addResource(resourceName, new Resource(type, null, resourceName));
         if (type == ResourcePathManager.Resource.TYPE_HTML) {
             PowerMockito
-                    .when(ResourcePathManager.getResourceAsString(Matchers.any(), Matchers.anyString()))
+                    .when(ResourcePathManager.getResourceAsString(Mockito.any(), Mockito.anyString()))
                     .thenReturn(resourceName);
         } else {
             PowerMockito
-                    .when(ResourcePathManager.getResourceAsString(Matchers.any(), Matchers.matches(resourceName)))
+                    .when(ResourcePathManager.getResourceAsString(Mockito.any(), Mockito.matches(resourceName)))
                     .thenReturn(getJsonStringForResourceName(resourceName));
         }
     }

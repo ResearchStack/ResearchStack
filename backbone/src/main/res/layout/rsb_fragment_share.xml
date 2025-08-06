@@ -34,7 +34,7 @@
         android:text="@string/rsb_share_the_app_message"
         android:layout_margin="16dp"/>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/share_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

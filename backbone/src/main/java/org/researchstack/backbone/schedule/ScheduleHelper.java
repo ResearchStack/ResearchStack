@@ -8,7 +8,11 @@ import com.cronutils.parser.CronParser;
 
 import org.joda.time.DateTime;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Date;
+import java.util.Optional;
 
 
 public class ScheduleHelper {
@@ -21,8 +25,16 @@ public class ScheduleHelper {
         Cron cron = cronParser.parse(cronString);
 
         ExecutionTime executionTime = ExecutionTime.forCron(cron);
-        DateTime nextExecution = executionTime.nextExecution(now);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            Instant instant = Instant.ofEpochMilli(now.getMillis());
+            ZoneId zoneId = ZoneId.of(now.getZone().getID());
+            ZonedDateTime zdt = ZonedDateTime.ofInstant(instant, zoneId);
 
-        return nextExecution.toDate();
+            Optional<ZonedDateTime> nextExecution = executionTime.nextExecution(zdt);
+            if(nextExecution.isPresent()){
+                return Date.from(nextExecution.get().toInstant());
+            }
+        }
+        return lastExecution;
     }
 }

@@ -76,7 +76,11 @@ public abstract class Task implements Serializable {
      * @return the title to display
      */
     public String getTitleForStep(Context context, Step step) {
-        return step.getStepTitle() != 0 ? context.getString(step.getStepTitle()) : "";
+        if (step != null && step.getStepTitle() != 0) {
+            return context.getString(step.getStepTitle());
+        } else {
+            return "";
+        }
     }
 
     /**
